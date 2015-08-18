@@ -30,7 +30,8 @@ namespace GyorokRentService
         public MainWindow()
         {
 #if DEBUG
-            try
+            // TODO: Jogosultság hiányában nem tudja olvasni az EventLog-ot
+            /*try
             {
                 if (!EventLog.SourceExists("Totál Szervíz"))
                 {
@@ -40,7 +41,7 @@ namespace GyorokRentService
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Source + Environment.NewLine + Environment.NewLine + exc.Message + Environment.NewLine + exc.InnerException);
-            }
+            }*/
 #endif
 
             try

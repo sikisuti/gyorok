@@ -28,17 +28,19 @@ namespace LoggerLib
 
         public void WriteLog(string message, EventLogEntryType type)
         {
-            log.WriteEntry(message, type);
+            // TODO: Jogosultság hiányában nem tud írni az EventViewer-be
+            //log.WriteEntry(message, type);
         }
 
         public void WriteExceptionToLog(Exception ex)
         {
-            WriteLog(ex.Message, EventLogEntryType.Error);
+            // TODO: Jogosultság hiányában nem tud írni az EventViewer-be
+            /*WriteLog(ex.Message, EventLogEntryType.Error);
             while (ex.InnerException != null)
             {
                 ex = ex.InnerException;
                 WriteLog(ex.Message, EventLogEntryType.Error);
-            }
+            }*/
         }
     }
 }
