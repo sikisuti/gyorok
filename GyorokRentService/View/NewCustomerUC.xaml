@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="GyorokRentService.View.NewCustomerUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GyorokRentService.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="538" d:DesignWidth="650" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:my="clr-namespace:GyorokRentService.View">
+    
+    <UserControl.Resources>
+        <Style TargetType="{x:Type DatePickerTextBox}">
+            <Setter Property="Text" Value="Válassz dátumot" />
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Label Content="Kölcsönző neve:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,58,0,0" Name="label1" VerticalAlignment="Top" Width="173" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="189,60,0,0" Name="textBox1" Panel.ZIndex="1" Text="{Binding newCustomerName}" VerticalAlignment="Top" Width="289" />
+        <Label Content="Azonosító szám:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,94,0,0" Name="label2" VerticalAlignment="Top" Width="173" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="189,96,0,0" Name="textBox2" Panel.ZIndex="1" Text="{Binding newCustomerIdNumber}" VerticalAlignment="Top" Width="289" />
+        <Label Content="Anyja neve:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" IsEnabled="{Binding isPerson}" Margin="10,130,0,0" Name="label3" Padding="5,5,5,0" VerticalAlignment="Top" Width="173" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" IsEnabled="{Binding isPerson}" Margin="189,132,0,0" Name="comboBox1" Panel.ZIndex="1" Text="{Binding newMothersName}" VerticalAlignment="Top" Width="289" />
+        <Label Content="Cím:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,169,0,0" Name="label4" Padding="5,5,5,0" VerticalAlignment="Top" Width="137" />
+        <Label Content="{Binding postalCode}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="189,169,0,0" Name="label11" Padding="5,5,5,0" VerticalAlignment="Top" Width="50" />
+        <Label Content="{Binding city}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="245,169,0,0" Name="label12" Padding="5,5,5,0" VerticalAlignment="Top" Width="260" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="189,204,0,0" Name="label5" Panel.ZIndex="1" Text="{Binding newCustomerAddress}" VerticalAlignment="Top" Width="410" />
+        <Label Content="Telefon:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,238,0,0" Name="label6" Padding="5,5,5,0" VerticalAlignment="Top" Width="173" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="189,240,0,0" Name="label7" Panel.ZIndex="1" Text="{Binding newCustomerPhone}" VerticalAlignment="Top" Width="289" />
+        <Label Content="Születési dátum:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" IsEnabled="{Binding isPerson}" Margin="10,274,0,0" Name="label8" Padding="5,5,5,0" VerticalAlignment="Top" Width="173" />
+        <DatePicker SelectedDate="{Binding newBirthDate}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="189,273,0,0" Name="birthDatePicker" VerticalAlignment="Top" Width="289" IsEnabled="{Binding isPerson}"/>
+        <Label Content="Munkahely:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" IsEnabled="{Binding isPerson}" Margin="10,310,0,0" Name="lblWorkPlace" Padding="5,5,5,0" VerticalAlignment="Top" Width="173" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" IsEnabled="{Binding isPerson}" Margin="189,312,0,0" Name="txtWorkPlace" Panel.ZIndex="1" Text="{Binding newWorkPlace}" VerticalAlignment="Top" Width="410" />
+        <Label Content="Megjegyzés:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,346,0,0" Name="lblProblems" Padding="5,5,5,0" VerticalAlignment="Top" Width="173" />
+        <TextBox AcceptsReturn="True" Background="White" FontSize="16" FontWeight="Normal" Height="78" HorizontalAlignment="Left" Margin="10,382,0,0" Name="textBlock1" Text="{Binding comment}" TextWrapping="Wrap" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible" Width="290"/>
+        <Label Content="Problémák:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="306,346,0,0" Name="label10" Padding="5,5,5,0" VerticalAlignment="Top" Width="173" />
+        <TextBox AcceptsReturn="True" Background="White" FontSize="16" FontWeight="Normal" Height="78" HorizontalAlignment="Left" Margin="306,382,0,0" Name="textBlock2" Text="{Binding problems}" TextWrapping="Wrap" VerticalAlignment="Top" VerticalScrollBarVisibility="Visible" Width="293" />
+        <Button FontSize="16" FontWeight="Normal" Command="{Binding insertNewCustomer}" Height="64" HorizontalAlignment="Left" Margin="500,466,0,0" Name="button1" VerticalAlignment="Top" Width="64" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
+            <Image HorizontalAlignment="Left" Margin="0,0,0,0" Name="imgTakeAway" Stretch="Fill" VerticalAlignment="Top" Source="/GyorokRentService;component/Images/IconAccept64.png" />
+        </Button>
+        <RadioButton Visibility="{Binding visibleMode}" FontSize="16" FontWeight="Normal" GroupName="1" IsChecked="{Binding isFirm}" Content="Cég" Height="25" HorizontalAlignment="Left" Margin="130,19,0,0" Name="radioButton1" VerticalAlignment="Top" />
+        <RadioButton FontSize="16" FontWeight="Normal" GroupName="2" IsChecked="{Binding isPerson}" Content="Magánszemély" Height="25" HorizontalAlignment="Left" Margin="248,19,0,0" Name="radioButton2" VerticalAlignment="Top" />
+        <Label Content="Kedvezmény:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" IsEnabled="{Binding isPerson}" Margin="12,484,0,0" Name="label9" Padding="5,5,5,0" VerticalAlignment="Top" Width="117" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="119,486,0,0" Name="textBox3" Panel.ZIndex="1" Text="{Binding defaultDiscount}" HorizontalContentAlignment="Right" VerticalAlignment="Top" Width="38" />
+        <Label Content="%" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="154,486,0,0" Name="label13" Padding="5,5,5,0" VerticalAlignment="Top" Width="29" />
+        <Button Content="..." Command="{Binding openCityChooser}" Height="23" HorizontalAlignment="Left" Margin="154,173,0,0" Name="button2" VerticalAlignment="Top" Width="29" />
+    </Grid>
+</UserControl>

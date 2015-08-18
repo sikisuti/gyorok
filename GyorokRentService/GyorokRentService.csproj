@@ -1,0 +1,505 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{69666028-A3D3-4408-A2B1-97D091499072}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GyorokRentService</RootNamespace>
+    <AssemblyName>GyorokRentService</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>IconService.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GalaSoft.MvvmLight">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Laurent Bugnion (GalaSoft)\Mvvm Light Toolkit\Binaries\WPF35SP1\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Laurent Bugnion (GalaSoft)\Mvvm Light Toolkit\Binaries\WPF35SP1\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Laurent Bugnion (GalaSoft)\Mvvm Light Toolkit\Binaries\WPF35SP1\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Laurent Bugnion (GalaSoft)\Mvvm Light Toolkit\Binaries\WPF35SP1\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>D:\Siki\Gyorok\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AppMessages.cs" />
+    <Compile Include="Converters.cs" />
+    <Compile Include="CustomInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomInstaller.Designer.cs">
+      <DependentUpon>CustomInstaller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Print\PrintRent.cs" />
+    <Compile Include="Print\printService.cs" />
+    <Compile Include="RentCalculates.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="ViewModel\CustomerSum_ViewModel.cs" />
+    <Compile Include="ViewModel\NewCity_ViewModel.cs" />
+    <Compile Include="ViewModel\NewPart_ViewModel.cs" />
+    <Compile Include="ViewModel\NewRentGroup_ViewModel.cs" />
+    <Compile Include="ViewModel\NewRent_ViewModel.cs" />
+    <Compile Include="ViewModel\NewService_ViewModel.cs" />
+    <Compile Include="ViewModel\NewTool_ViewModel.cs" />
+    <Compile Include="ViewModel\NewWorksheetGroup_ViewModel.cs" />
+    <Compile Include="ViewModel\SearchCity_ViewModel.cs" />
+    <Compile Include="ViewModel\SearchRental_ViewModel.cs" />
+    <Compile Include="ViewModel\searchTool_ModelView.cs" />
+    <Compile Include="ViewModel\CustomerSelector_ViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\NewCustomerWindow_ViewModel.cs" />
+    <Compile Include="ViewModel\NewCustomer_ViewModel.cs" />
+    <Compile Include="ViewModel\RentalsSum_ViewModel.cs" />
+    <Compile Include="ViewModel\searchCustomer_ModelView.cs" />
+    <Compile Include="ViewModel\ServiceSum_ViewModel.cs" />
+    <Compile Include="ViewModel\ServiceWork_ViewModel.cs" />
+    <Compile Include="ViewModel\Settings_ViewModel.cs" />
+    <Compile Include="ViewModel\ToolSelector_ViewModel.cs" />
+    <Compile Include="View\CustomerSum.xaml.cs">
+      <DependentUpon>CustomerSum.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewCityWindow.xaml.cs">
+      <DependentUpon>NewCityWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewPart.xaml.cs">
+      <DependentUpon>NewPart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewRent.xaml.cs">
+      <DependentUpon>NewRent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewRentGroupWindow.xaml.cs">
+      <DependentUpon>NewRentGroupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewService.xaml.cs">
+      <DependentUpon>NewService.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewTool.xaml.cs">
+      <DependentUpon>NewTool.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewWorksheetGroupWindow.xaml.cs">
+      <DependentUpon>NewWorksheetGroupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchCity.xaml.cs">
+      <DependentUpon>SearchCity.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchRental.xaml.cs">
+      <DependentUpon>SearchRental.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\searchTool.xaml.cs">
+      <DependentUpon>searchTool.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CustomerSelector.xaml.cs">
+      <DependentUpon>CustomerSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewCustomerUC.xaml.cs">
+      <DependentUpon>NewCustomerUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewCustomerWindow.xaml.cs">
+      <DependentUpon>NewCustomerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RentalsSum.xaml.cs">
+      <DependentUpon>RentalsSum.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\searchCustomer.xaml.cs">
+      <DependentUpon>searchCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchCustomerWindow.xaml.cs">
+      <DependentUpon>SearchCustomerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ServiceDetailsWindow.xaml.cs">
+      <DependentUpon>ServiceDetailsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ServiceSum.xaml.cs">
+      <DependentUpon>ServiceSum.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ServiceWork.xaml.cs">
+      <DependentUpon>ServiceWork.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ToolSelector.xaml.cs">
+      <DependentUpon>ToolSelector.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="View\CustomerSum.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewCityWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewPart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewRent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewRentGroupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewService.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewTool.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewWorksheetGroupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SearchCity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SearchRental.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\searchTool.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CustomerSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewCustomerUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RentalsSum.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\searchCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SearchCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ServiceDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ServiceSum.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ServiceWork.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ToolSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="CustomInstaller.resx">
+      <DependentUpon>CustomInstaller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconEdit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconDelete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconEdit48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconOK48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconAddPerson32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconDelPerson32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconNext64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconPageAdd64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconPageRemove48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconDelete64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconAccept64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconSave32.png" />
+    <Resource Include="Images\IconSave48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconAccept128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconUndo128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconPrint48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconWarning32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconNext32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconPageAdd48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconCheckmark24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconNextBlue64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconCheckmarkBlue24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconDelete24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconRemove24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconPageEdit48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconAcceptBlue64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconCheckmarkGreen24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconAddPerson64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconDelPerson64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LoggerLib\LoggerLib.csproj">
+      <Project>{EA922396-E5C4-400A-A053-C2A514F78846}</Project>
+      <Name>LoggerLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLConnectionLib\SQLConnectionLib.csproj">
+      <Project>{EAC624D3-6081-434F-AB93-6C1278909693}</Project>
+      <Name>SQLConnectionLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconSettings48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="IconService.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconService.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconAddProcess.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\IconRemoveProcess64.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DBScripts\CreateUserAndRestoreProc.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dependencies\GalaSoft.MvvmLight.dll" />
+    <Content Include="Dependencies\GalaSoft.MvvmLight.Extras.dll" />
+    <Resource Include="Dependencies\GalaSoft.MvvmLight.Extras.xml" />
+    <Resource Include="Dependencies\GalaSoft.MvvmLight.xml" />
+    <Content Include="Dependencies\Microsoft.Practices.ServiceLocation.dll" />
+    <Resource Include="Dependencies\Microsoft.Practices.ServiceLocation.xml" />
+    <Content Include="Dependencies\System.Windows.Interactivity.dll" />
+    <Resource Include="Dependencies\System.Windows.Interactivity.xml" />
+    <Content Include="Dependencies\WPFToolkit.Extended.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

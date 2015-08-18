@@ -1,0 +1,30 @@
+﻿<Window x:Class="GyorokRentService.View.NewCityWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:VM="clr-namespace:GyorokRentService.ViewModel"
+        Title="NewCityWindow" Height="160" Width="315">
+    
+    <Window.DataContext>
+        <VM:NewCity_ViewModel/>
+    </Window.DataContext>
+    
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Irányítószám:" Grid.Column="0" Grid.Row="0" Margin="5"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding postalCode}" Margin="5" Width="50" HorizontalAlignment="Left"/>
+            <TextBlock Text="Város:" Grid.Column="0" Grid.Row="1" Margin="5"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding city}" Margin="5" Width="200" HorizontalAlignment="Left"/>
+        </Grid>
+        <Button Command="{Binding addNewCity}" Grid.Column="1" Name="button1" Margin="5" Height="48" Width="48" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}">
+            <Image Source="/GyorokRentService;component/Images/IconAccept64.png" Stretch="Fill"/>
+        </Button>
+    </StackPanel>
+</Window>

@@ -1,0 +1,96 @@
+﻿<Window x:Class="GyorokRentService.View.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:GyorokRentService.ViewModel"
+        xmlns:conv="clr-namespace:GyorokRentService"
+        Title="Beállítások" SizeToContent="WidthAndHeight">
+    <Window.DataContext>
+        <local:Settings_ViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <conv:IsLocalhostToBool x:Key="localToBool"/>        
+    </Window.Resources>
+    <StackPanel>
+    <TabControl Height="450" Width="600">
+        <TabItem Header="Beállítások" FontSize="16" FontWeight="Bold">
+    <Grid>
+        <Label Height="50" Width="200" Margin="10,10,0,0" Name="label1" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <TextBlock Text="Beállítások" FontSize="30" FontWeight="Bold" TextDecorations="Underline"/>
+        </Label>
+        <Label FontSize="16" FontWeight="Bold" Height="30" Content="Szerver azonosító:" HorizontalAlignment="Left" Margin="43,104,0,0" Name="label2" VerticalAlignment="Top" />
+        <TextBox FontSize="16" FontWeight="Normal" Text="{Binding serverIP}" Height="30" HorizontalAlignment="Left" Margin="196,104,0,0" Name="textBox1" VerticalAlignment="Top" Width="149" />
+        <Label Padding="5,5,5,0" Content="Cégnév:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,162,0,0" Name="label3" VerticalAlignment="Top" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,162,0,0" Name="textBox2" Text="{Binding companyName}" VerticalAlignment="Top" Width="314" />
+        <Label Padding="5,5,5,0" Content="Cím:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,198,0,0" Name="label4" VerticalAlignment="Top" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,198,0,0" Name="textBox3" Text="{Binding companyAddress}" VerticalAlignment="Top" Width="314" />
+        <Label Padding="5,5,5,0" Content="Telefon 1:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,234,0,0" Name="label5" VerticalAlignment="Top" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,234,0,0" Name="textBox4" Text="{Binding companyPhone1}" VerticalAlignment="Top" Width="149" />
+        <Label Content="Telefon 2:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,270,0,0" Name="label6" Padding="5,5,5,0" VerticalAlignment="Top" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,270,0,0" Name="textBox5" Text="{Binding companyPhone2}" VerticalAlignment="Top" Width="149" />
+        <Label Content="Tisztítás költsége:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,368,0,0" Name="label7" Padding="5,5,5,0" VerticalAlignment="Top" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,368,0,0" Name="textBox6" Text="{Binding costOfClean, StringFormat=C0, UpdateSourceTrigger=PropertyChanged}" xml:lang="hu-HU" VerticalAlignment="Top" Width="149" />
+        <Label Content="Nyitvatartás:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,306,0,0" Name="label8" Padding="5,5,5,0" VerticalAlignment="Top" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,306,0,0" Name="textBox7" Text="{Binding openTime}" VerticalAlignment="Top" Width="314" />
+        <!--<Label Content="Felhasználónév:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,155,0,0" Name="label3" VerticalAlignment="Top" />
+        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,155,0,0" Name="textBox2" Text="{Binding userName}" VerticalAlignment="Top" Width="149" />
+        <Label Content="Jelszó:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,191,0,0" Name="label4" VerticalAlignment="Top" />
+        <PasswordBox PasswordChar="*" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,191,0,0" Name="textBox3" pass="{Binding password}" VerticalAlignment="Top" Width="149" />-->
+    </Grid>
+        </TabItem>
+            <TabItem Header="Mentés" FontSize="16" FontWeight="Bold" IsEnabled="{Binding serverIP, Converter={StaticResource localToBool}}">
+            <StackPanel Margin="10">
+                <Label Content="Automatikus mentési helyek:"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Elsődleges:" FontWeight="Normal" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <TextBox Text="{Binding PrimaryBackupPath}" Width="300" Height="30" FontWeight="Normal"/>
+                        <Button Content="..." Command="{Binding selectPrimaryBackupPath}" Width="30" Height="30" Margin="10"/>
+                    </StackPanel>
+                    <Label Grid.Row="1" Content="Másodlagos:" FontWeight="Normal" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                        <TextBox Text="{Binding SecondaryBackupPath}" Width="300" Height="30" FontWeight="Normal"/>
+                        <Button Content="..." Command="{Binding selectSecondaryBackupPath}" Width="30" Height="30" Margin="10"/>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Orientation="Horizontal" Margin="0,50">
+                    <Label Content="Kézi mentés: " VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding backupPath}" Width="300" Height="30" VerticalAlignment="Center" FontWeight="Normal"/>
+                    <Button Content="..." Command="{Binding selectBackupPath}" Width="30" Height="30" Margin="10"/>
+                    <Button Content="Mentés" Command="{Binding doBackup}" Height="30" Width="80" Margin="10"/>
+                </StackPanel>
+            </StackPanel>
+        </TabItem>
+            <TabItem Header="Visszaállítás" FontSize="16" FontWeight="Bold" IsEnabled="{Binding serverIP, Converter={StaticResource localToBool}}">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Visszaállítás innen: " VerticalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <TextBox Text="{Binding restorePath}" Width="300" Height="30" VerticalAlignment="Center" FontWeight="Normal"/>
+                        <Button Content="..." Command="{Binding selectRestorePath}" Width="30" Height="30" Margin="10"/>
+                    </StackPanel>
+                </Grid>
+                <Button Content="Visszaállítás" Command="{Binding doRestore}" Height="30" Width="100" Grid.Row="1" Margin="10"/>
+            </Grid>
+        </TabItem>
+        </TabControl>
+        <Button Command="{Binding saveSettings}" Height="48" Margin="10" Name="button2" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}" >
+            <Image Source="/GyorokRentService;component/Images/IconSave48.png"/>
+        </Button>
+    </StackPanel>
+</Window>

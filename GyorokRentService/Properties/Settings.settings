@@ -1,0 +1,39 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GyorokRentService.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ServerIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">localhost</Value>
+    </Setting>
+    <Setting Name="UserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gyorok</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gyorok</Value>
+    </Setting>
+    <Setting Name="CompanyName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Totál Szerszámgép Szervíz</Value>
+    </Setting>
+    <Setting Name="CompanyAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2400 Dunaújváros, Tisza u. 1.</Value>
+    </Setting>
+    <Setting Name="CompanyPhone1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">06 (25) 500-565</Value>
+    </Setting>
+    <Setting Name="CompanyPhone2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">06 (30) 9512-781</Value>
+    </Setting>
+    <Setting Name="OpenTime" Type="System.String" Scope="User">
+      <Value Profile="(Default)">hétfő-péntek: 7.00-12-00; 13.00-16.00|NL|szombat         7.00-12.00</Value>
+    </Setting>
+    <Setting Name="CostOfClean" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="PrimaryBackupPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Temp\1</Value>
+    </Setting>
+    <Setting Name="SecondaryBackupPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Temp\2</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

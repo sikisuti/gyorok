@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="GyorokRentService.View.CustomerSum"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="680" d:DesignWidth="1200">
+    <Grid>
+        <ListBox ItemsSource="{Binding customerList}" SelectedItem="{Binding selectedCustomer}" FontSize="16" FontWeight="Normal" Height="500" HorizontalAlignment="Left" Margin="47,30,0,0" Name="listBox1" VerticalAlignment="Top" Width="1000">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding customerName}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding customerAddress}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>
