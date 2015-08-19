@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GyorokRentService", "GyorokRentService\GyorokRentService.csproj", "{69666028-A3D3-4408-A2B1-97D091499072}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Print", "Print\Print.csproj", "{96B3A5F5-C26D-470B-82C9-FC824B0A29E0}"
@@ -11,11 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerLib", "LoggerLib\Logg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionTester", "ConnectionTester\ConnectionTester.csproj", "{F1ED419A-F882-4686-BA5C-5CAA33231753}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{CDDF1FCF-7037-4440-8D37-DC72333D0693}"
+EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -80,8 +80,24 @@ Global
 		{F1ED419A-F882-4686-BA5C-5CAA33231753}.Release|Mixed Platforms.Build.0 = Release|x86
 		{F1ED419A-F882-4686-BA5C-5CAA33231753}.Release|x86.ActiveCfg = Release|x86
 		{F1ED419A-F882-4686-BA5C-5CAA33231753}.Release|x86.Build.0 = Release|x86
+		{CDDF1FCF-7037-4440-8D37-DC72333D0693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDDF1FCF-7037-4440-8D37-DC72333D0693}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDDF1FCF-7037-4440-8D37-DC72333D0693}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CDDF1FCF-7037-4440-8D37-DC72333D0693}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CDDF1FCF-7037-4440-8D37-DC72333D0693}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CDDF1FCF-7037-4440-8D37-DC72333D0693}.Debug|x86.Build.0 = Debug|Any CPU
+		{CDDF1FCF-7037-4440-8D37-DC72333D0693}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDDF1FCF-7037-4440-8D37-DC72333D0693}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDDF1FCF-7037-4440-8D37-DC72333D0693}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CDDF1FCF-7037-4440-8D37-DC72333D0693}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CDDF1FCF-7037-4440-8D37-DC72333D0693}.Release|x86.ActiveCfg = Release|Any CPU
+		{CDDF1FCF-7037-4440-8D37-DC72333D0693}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
