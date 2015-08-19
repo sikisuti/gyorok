@@ -490,6 +490,9 @@
     <Resource Include="Dependencies\GalaSoft.MvvmLight.xml" />
     <Content Include="Dependencies\Microsoft.Practices.ServiceLocation.dll" />
     <Resource Include="Dependencies\Microsoft.Practices.ServiceLocation.xml" />
+    <Content Include="Dependencies\Ninject.dll" />
+    <Content Include="Dependencies\Ninject.pdb" />
+    <Resource Include="Dependencies\Ninject.xml" />
     <Content Include="Dependencies\System.Windows.Interactivity.dll" />
     <Resource Include="Dependencies\System.Windows.Interactivity.xml" />
     <Content Include="Dependencies\WPFToolkit.Extended.dll" />
