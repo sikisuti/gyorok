@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using NLog;
 
 namespace GyorokRentService
 {
@@ -20,6 +21,8 @@ namespace GyorokRentService
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         ServiceWork_ViewModel serviceWorkVM;
         ServiceSum_ViewModel serviceSumVM;
 
@@ -29,24 +32,10 @@ namespace GyorokRentService
         /// </summary>
         public MainWindow()
         {
-#if DEBUG
-            // TODO: Jogosultság hiányában nem tudja olvasni az EventLog-ot
-            /*try
-            {
-                if (!EventLog.SourceExists("Totál Szervíz"))
-                {
-                    EventLog.CreateEventSource("Totál Szervíz", "Application");
-                }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Source + Environment.NewLine + Environment.NewLine + exc.Message + Environment.NewLine + exc.InnerException);
-            }*/
-#endif
-
             try
             {
-                LoggerLib.Logger.Execute.WriteLog("Application started", EventLogEntryType.Information);
+                logger.Info("Application started");
+                //LoggerLib.Logger.Execute.WriteLog("Application started", EventLogEntryType.Information);
 
                 var mainVM = new MainViewModel();
                 this.DataContext = mainVM;
