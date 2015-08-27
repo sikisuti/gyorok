@@ -199,15 +199,22 @@ namespace SQLConnectionLib
 
             ec = new EntityConnection(sb.ConnectionString);
 
-            UpdateDb();
-            UpdateTables();
-            UpdateViews();
+            try
+            {
+                UpdateDb();
+                UpdateTables();
+                UpdateViews();
 
-            customersVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Customers").tableVersion;
-            partsVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Parts").tableVersion;
-            rentalsVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Rentals").tableVersion;
-            serviceWorksheetsVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "ServiceWorksheets").tableVersion;
-            toolsVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Tools").tableVersion;
+                customersVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Customers").tableVersion;
+                partsVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Parts").tableVersion;
+                rentalsVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Rentals").tableVersion;
+                serviceWorksheetsVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "ServiceWorksheets").tableVersion;
+                toolsVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Tools").tableVersion;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             
         }
 
@@ -237,13 +244,9 @@ namespace SQLConnectionLib
                 db.Connection.Open();
                 db.Connection.Close();
             }
-            catch (Exception) // Ez soha nem dob hibát !?
+            catch (Exception ex) // Ez soha nem dob hibát !?
             {
-                Logger.Execute.WriteLog("Unable to access database" + Environment.NewLine + Environment.NewLine +
-                                        "Connection string:" + Environment.NewLine +
-                                        ec.ConnectionString, 
-                                        EventLogEntryType.Error);
-                throw;
+                throw ex;
             }
         }
 
@@ -479,13 +482,7 @@ namespace SQLConnectionLib
             }
             catch (Exception ex)
             {
-                Logger.Execute.WriteLog(ex.Message, EventLogEntryType.Error);
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
-                    Logger.Execute.WriteLog(ex.Message, EventLogEntryType.Error);
-                }  
-                throw;
+                throw ex;
             }
         }
 
@@ -520,18 +517,12 @@ namespace SQLConnectionLib
                 }
             }
             catch (Exception ex)
-            {
-                Logger.Execute.WriteLog(ex.Message, EventLogEntryType.Error);
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
-                    Logger.Execute.WriteLog(ex.Message, EventLogEntryType.Error);
-                }                
+            {            
                 if (connection.State == ConnectionState.Open)
                 {
                     connection.Close();
                 }
-                throw;
+                throw ex;
             }
         }
     }

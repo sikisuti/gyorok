@@ -101,6 +101,10 @@
       <Name>SQLConnectionLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dependencies\GalaSoft.MvvmLight.dll" />
+    <Resource Include="Dependencies\GalaSoft.MvvmLight.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

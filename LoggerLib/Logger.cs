@@ -18,13 +18,13 @@ namespace LoggerLib
             
         }
 
-        public static Logger Execute
-        {
-            get
-            {
-                return execute;
-            }
-        }
+        //public static Logger Execute
+        //{
+        //    get
+        //    {
+        //        return execute;
+        //    }
+        //}
 
         public void WriteLog(string message, EventLogEntryType type)
         {

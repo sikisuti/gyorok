@@ -13,6 +13,9 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using NLog;
+using GyorokRentService.Components;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GyorokRentService
 {
@@ -35,81 +38,51 @@ namespace GyorokRentService
             try
             {
                 logger.Info("Application started");
-                //LoggerLib.Logger.Execute.WriteLog("Application started", EventLogEntryType.Information);
 
                 var mainVM = new MainViewModel();
                 this.DataContext = mainVM;
 
-                SQLConnection.Execute.DataSource = Properties.Settings.Default.ServerIP + @"\sqlexpress";
-                SQLConnection.Execute.InitialCatalog = @"dbGyorok";
-                SQLConnection.Execute.IntegratedSecurity = false;
-                SQLConnection.Execute.PersistSecurityInfo = false;
-                SQLConnection.Execute.MultipleActiveResultSets = true;
-                SQLConnection.Execute.App = @"EntityFramework";
-                SQLConnection.Execute.UserName = @"gyorok";
-                SQLConnection.Execute.Password = @"gyorok";
-                SQLConnection.Execute.Provider = @"System.Data.SqlClient";
-                SQLConnection.Execute.MetaData = @"res://*/dbGyorok.csdl|res://*/dbGyorok.ssdl|res://*/dbGyorok.msl";
+                Task initDbTask = Task.Factory.StartNew(InitDatabase);
+                initDbTask.ContinueWith((x) => { ProcessStatusDisplayViewModel.Instance.ProcessList.Add(new ProcessItem("End of db init")); }, TaskScheduler.FromCurrentSynchronizationContext());
 
-                SQLConnection.Execute.Init();
+                DoBackup();
 
-                if (Properties.Settings.Default.ServerIP == "." || 
-                    Properties.Settings.Default.ServerIP.ToLower() == "localhost" ||
-                    Properties.Settings.Default.ServerIP == string.Empty)
-                {
-                    try
-                    {
-                        SQLConnection.Execute.DoBackup(Properties.Settings.Default.PrimaryBackupPath + @"\");
-                        var fileName = Directory.GetFiles(Properties.Settings.Default.PrimaryBackupPath).Select(x => new FileInfo(x)).OrderByDescending(f => f.LastWriteTime).FirstOrDefault().Name;
-                        // TODO: ...
-                        File.Copy(Properties.Settings.Default.PrimaryBackupPath + @"\" + fileName, Properties.Settings.Default.SecondaryBackupPath + @"\" + fileName, true);
-                    }
-                    catch (Exception ex)
-                    {
-                        LoggerLib.Logger.Execute.WriteExceptionToLog(ex);
-                    }
-                }
+                //serviceWorkVM = new ServiceWork_ViewModel();
+                //serviceSumVM = new ServiceSum_ViewModel();
 
-                serviceWorkVM = new ServiceWork_ViewModel();
-                serviceSumVM = new ServiceSum_ViewModel();
+                //ServiceWork serviceWorkScreen = new ServiceWork();
+                //View.ServiceSum serviceSumScreen = new View.ServiceSum();
 
-                ServiceWork serviceWorkScreen = new ServiceWork();
-                View.ServiceSum serviceSumScreen = new View.ServiceSum();
+                //InitializeComponent();
 
-                InitializeComponent();
+                //serviceWorkScreen.DataContext = serviceWorkVM;
+                //grdService.Children.Add(serviceWorkScreen);
 
-                serviceWorkScreen.DataContext = serviceWorkVM;
-                grdService.Children.Add(serviceWorkScreen);
+                //serviceSumScreen.DataContext = serviceSumVM;
+                //grdServiceSum.Children.Add(serviceSumScreen);
 
-                serviceSumScreen.DataContext = serviceSumVM;
-                grdServiceSum.Children.Add(serviceSumScreen);
+                //var UCCustomerSelector = new CustomerSelector(CustomerType.Rent);
+                //grdCustomer.Children.Add(UCCustomerSelector);
+                //var ServiceCustomerSelector = new CustomerSelector(CustomerType.Service);
+                //grdNewWSCustomer.Children.Add(ServiceCustomerSelector);
 
-                var UCCustomerSelector = new CustomerSelector(CustomerType.Rent);
-                grdCustomer.Children.Add(UCCustomerSelector);
-                var ServiceCustomerSelector = new CustomerSelector(CustomerType.Service);
-                grdNewWSCustomer.Children.Add(ServiceCustomerSelector);
+                //var UCToolSelector = new ToolSelector();
+                //grdToolSelect.Children.Add(UCToolSelector);
 
-                var UCToolSelector = new ToolSelector();
-                grdToolSelect.Children.Add(UCToolSelector);
+                //var UCRentalSum = new RentalsSum();
+                //grdRentalSum.Children.Add(UCRentalSum);
 
-                var UCRentalSum = new RentalsSum();
-                grdRentalSum.Children.Add(UCRentalSum);
+                //var UCNewService = new NewService();
+                //grdNewService.Children.Add(UCNewService);
 
-                var UCNewService = new NewService();
-                grdNewService.Children.Add(UCNewService);
-
-                var UCNewRent = new NewRent();
-                grdNewRent.Children.Add(UCNewRent);
+                //var UCNewRent = new NewRent();
+                //grdNewRent.Children.Add(UCNewRent);
             }
             catch (System.Exception e)
             {
-                MessageBox.Show("Adatbázis kapcsolati hiba!");
+                MessageBox.Show("Általános hiba!");
 
-                LoggerLib.Logger.Execute.WriteLog("General error" + Environment.NewLine + Environment.NewLine +
-                                        "Source: " + e.Source + Environment.NewLine + Environment.NewLine +
-                                        "Message:" + Environment.NewLine + e.Message + Environment.NewLine + Environment.NewLine +
-                                        "Inner Exception:" + Environment.NewLine + e.InnerException,
-                                        EventLogEntryType.Error);
+                logger.Fatal(e, "General error");
             }
         }
 
@@ -154,6 +127,52 @@ namespace GyorokRentService
                 }
             }
 
+        }
+
+        private void InitDatabase()
+        {
+            ProcessStatusDisplayViewModel.Instance.ProcessList.Add(new ProcessItem("Kapcsolódás az adatbázishoz"));
+
+            SQLConnection.Execute.DataSource = Properties.Settings.Default.ServerIP + @"\" + Properties.Settings.Default.ServerInstanceName;
+            SQLConnection.Execute.InitialCatalog = Properties.Settings.Default.InitialCatalog;
+            SQLConnection.Execute.IntegratedSecurity = Properties.Settings.Default.IntegratedSecurity;
+            SQLConnection.Execute.PersistSecurityInfo = Properties.Settings.Default.PersistSecurityInfo;
+            SQLConnection.Execute.MultipleActiveResultSets = Properties.Settings.Default.MultipleActiveResultSets;
+            SQLConnection.Execute.App = Properties.Settings.Default.App;
+            SQLConnection.Execute.UserName = Properties.Settings.Default.UserName;
+            SQLConnection.Execute.Password = Properties.Settings.Default.Password;
+            SQLConnection.Execute.Provider = Properties.Settings.Default.Provider;
+            SQLConnection.Execute.MetaData = Properties.Settings.Default.MetaData;
+
+            try
+            {
+                SQLConnection.Execute.Init();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Adatbázis kapcsolati hiba!");
+                logger.Fatal(ex, "Database connection error");
+            }
+        }
+
+        private void DoBackup()
+        {
+            if (Properties.Settings.Default.ServerIP == "." ||
+                    Properties.Settings.Default.ServerIP.ToLower() == "localhost" ||
+                    Properties.Settings.Default.ServerIP == string.Empty)
+            {
+                try
+                {
+                    SQLConnection.Execute.DoBackup(Properties.Settings.Default.PrimaryBackupPath + @"\");
+                    var fileName = Directory.GetFiles(Properties.Settings.Default.PrimaryBackupPath).Select(x => new FileInfo(x)).OrderByDescending(f => f.LastWriteTime).FirstOrDefault().Name;
+                    // TODO: ...
+                    File.Copy(Properties.Settings.Default.PrimaryBackupPath + @"\" + fileName, Properties.Settings.Default.SecondaryBackupPath + @"\" + fileName, true);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "Backup failure");
+                }
+            }
         }
     }
 }

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GyorokRentService.ViewModel"
         xmlns:view="clr-namespace:GyorokRentService.View"
+        xmlns:comp="clr-namespace:GyorokRentService.Components"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="Györök és Tsa. kölcsönző és szervíz"
@@ -185,8 +186,9 @@
     </Window.Resources>
     
     <Viewbox Stretch="Uniform" >
-        
-    <DockPanel LastChildFill="True" Width="1280" Height="850">
+
+        <DockPanel LastChildFill="True" Width="1280" Height="850">
+            <comp:ProcessStatusDisplay DockPanel.Dock="Bottom"/>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>

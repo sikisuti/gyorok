@@ -9,11 +9,14 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using GyorokRentService.View;
 using System.Windows.Forms;
+using NLog;
 
 namespace GyorokRentService.ViewModel
 {
     class Settings_ViewModel : ViewModelBase
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private string _serverIP;
         private string _userName;
         private string _password;
@@ -321,12 +324,14 @@ namespace GyorokRentService.ViewModel
                 }
                 else
                 {
+                    MessageBox.Show("Adj meg úrvonalat!");
                     return;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 MessageBox.Show("Mentés nem sikerült!");
+                logger.Error(ex, "Restore failure");
                 return;
             }
             MessageBox.Show("Mentés kész!");
@@ -348,9 +353,10 @@ namespace GyorokRentService.ViewModel
             {
                 SQLConnection.Execute.DoRestore(restorePath);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 MessageBox.Show("Visszaállítás nem sikerült!");
+                logger.Error(ex, "Restore failure");
                 return;
             }
             MessageBox.Show("Visszaállítás kész!");

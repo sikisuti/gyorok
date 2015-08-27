@@ -892,17 +892,12 @@ namespace GyorokRentService.ViewModel
         
         private void CalcPartCost()
         {
-            long cleanCost;
-
             try
             {
                 partCost = calc.getRentCost(selectedRent.rentalStart, calc.getNowInHour(), (long)selectedRent.actualPrice, (float)selectedRent.discount);
                 if (!isClean)
                 {
-                    if (long.TryParse(ConfigurationManager.AppSettings["CostOfClean"], out cleanCost)) ;
-                    {
-                        partCost += cleanCost;
-                    }
+                    partCost += Properties.Settings.Default.CostOfClean;
                 }
             }
             catch (Exception)
