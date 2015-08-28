@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GalaSoft.MvvmLight.Messaging;
 using SQLConnectionLib;
+using MiddleLayer.Representations;
 
 namespace GyorokRentService
 {
@@ -24,12 +25,12 @@ namespace GyorokRentService
 
         public static class CustomerToSelect
         {
-            public static void Send(Customers selectedCustomer)
+            public static void Send(CustomerBase_Representation selectedCustomer)
             {
                 Messenger.Default.Send(selectedCustomer, MessageTypes.customerToSelect);
             }
 
-            public static void Register(object recipient, Action<Customers> action)
+            public static void Register(object recipient, Action<CustomerBase_Representation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.customerToSelect, action);
             }
@@ -50,12 +51,12 @@ namespace GyorokRentService
 
         public static class CustomerModified
         {
-            public static void Send(Customers c)
+            public static void Send(CustomerBase_Representation c)
             {
                 Messenger.Default.Send(c, MessageTypes.customerModified);
             }
 
-            public static void Register(object recipient, Action<Customers> action)
+            public static void Register(object recipient, Action<CustomerBase_Representation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.customerModified, action);
             }
@@ -89,12 +90,12 @@ namespace GyorokRentService
 
         public static class ContactSelected
         {
-            public static void Send(Customers selectedContactPerson)
+            public static void Send(CustomerBase_Representation selectedContactPerson)
             {
                 Messenger.Default.Send(selectedContactPerson, MessageTypes.contactSelected);
             }
 
-            public static void Register(object recipient, Action<Customers> action)
+            public static void Register(object recipient, Action<CustomerBase_Representation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.contactSelected, action);
             }

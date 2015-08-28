@@ -11,286 +11,44 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using GyorokRentService.ViewModel;
 using SQLConnectionLib;
+using MiddleLayer.Representations;
+using MiddleLayer;
 
 namespace GyorokRentService.ViewModel
 {
     class CustomerSelector_ViewModel : ViewModelBase
     {
-        //dbGyorokEntities db;
         DateTime? dt;
-        ObservableCollection<SQLConnectionLib.Customers> temp = new ObservableCollection<SQLConnectionLib.Customers>();
-        private SQLConnectionLib.Customers _selectedCustomer;
-        public SQLConnectionLib.Customers selectedCustomer
+        ObservableCollection<CustomerBase_Representation> temp = new ObservableCollection<CustomerBase_Representation>();
+        private CustomerBase_Representation _selectedCustomer;
+        public CustomerBase_Representation selectedCustomer
         {
             get { return _selectedCustomer; }
             set
             {                
                 _selectedCustomer = value;
-                selectedCustomerName = value.customerName;
-                selectedIdNumber = value.IDNumber;
-                mothersName = value.mothersName;
-                customerAddress = value.customerAddress;
-                customerPhone = value.customerPhone;
-                if (value.isFirm)
-                {
-                    isFirm = true;
-                    birthDate = null;
-                    refreshContacts();
-                }
-                else
-                {
-                    isPerson = true;                    
-                    birthDate = value.birthDate;
-                    if (contacts != null)
-                    {
-                        contacts.Clear(); 
-                    }
-                }
-                workPlace = value.workPlace;
-                comment = value.comment;
-                problems = value.problems;
-                defaultDiscount = (float)value.defaultDiscount * 100;
                 isExpanded = false;
                 
             }
         }
         public CustomerType customerMode;
-        private long? _customerCityID;
-
-        private string _selectedCustomerName;
-        private string _selectedIdNumber;        
-        private string _mothersName;
-        private string _customerAddress;
-        private string _customerPhone;
-        private string _workPlace;
-        private string _comment;
-        private string _problems;
-        private bool _isPerson;
-        private bool _isFirm;
-        private DateTime? _birthDate;
+                
         private bool _isExpanded;
         private int _zExpander;
         private bool _readOnlyMode;
         private Visibility _modifyButtonVisibility;
         private Visibility _modifyEnableButtonVisibility;
-        private ObservableCollection<SQLConnectionLib.Customers> _contacts;
-        private SQLConnectionLib.Customers _selectedContact;
+        private CustomerBase_Representation _selectedContact;
         private Visibility _commentSaveVisibility;
         private Visibility _wrongMothersName;
         private Visibility _wrongAddress;
         private Visibility _wrongPhone;
         private Visibility _wrongBirthDate;
-        private Visibility _wrongWorkPlace;        
-        private float _defaultDiscount;
+        private Visibility _wrongWorkPlace; 
         private bool _customerSelected;
         private string _customerNameLabel;
         private string _city;
-
-        public string selectedCustomerName
-        {
-            get
-            {
-                return _selectedCustomerName;
-            }
-
-            set
-            {
-                if (_selectedCustomerName == value)
-                {
-                    return;
-                }
-
-                _selectedCustomerName = value;
-                RaisePropertyChanged("selectedCustomerName");
-            }
-        }
-        public string selectedIdNumber
-        {
-            get
-            {
-                return _selectedIdNumber;
-            }
-
-            set
-            {
-                if (_selectedIdNumber == value)
-                {
-                    return;
-                }                
-                _selectedIdNumber = value;
-                RaisePropertyChanged("selectedIdNumber");
-            }
-        }
-        public string mothersName
-        {
-            get
-            {
-                return _mothersName;
-            }
-
-            set
-            {
-                if (_mothersName == value && value != null && value != string.Empty)
-                {
-                    return;
-                }
-
-                _mothersName = value;
-                RaisePropertyChanged("mothersName");
-            }
-        }
-        public string customerAddress
-        {
-            get
-            {
-                return _customerAddress;
-            }
-
-            set
-            {
-                if (_customerAddress == value && value != null && value != string.Empty)
-                {
-                    return;
-                }
-
-                _customerAddress = value;
-                RaisePropertyChanged("customerAddress");
-            }
-        }
-        public string customerPhone
-        {
-            get
-            {
-                return _customerPhone;
-            }
-
-            set
-            {
-                if (_customerPhone == value && value != null && value != string.Empty)
-                {
-                    return;
-                }
-
-                _customerPhone = value;
-                RaisePropertyChanged("customerPhone");
-            }
-        }
-        public string workPlace
-        {
-            get
-            {
-                return _workPlace;
-            }
-
-            set
-            {
-                if (_workPlace == value && value != null && value != string.Empty)
-                {
-                    return;
-                }
-
-                _workPlace = value;
-                RaisePropertyChanged("workPlace");
-            }
-        }
-        public string comment
-        {
-            get
-            {
-                return _comment;
-            }
-
-            set
-            {
-                if (_comment == value)
-                {
-                    return;
-                }
-
-                _comment = value;
-                RaisePropertyChanged("comment");
-            }
-        }
-        public string problems
-        {
-            get
-            {
-                return _problems;
-            }
-
-            set
-            {
-                if (_problems == value)
-                {
-                    return;
-                }
-
-                _problems = value;
-                RaisePropertyChanged("problems");
-            }
-        }
-        public bool isPerson
-        {
-            get
-            {
-                return _isPerson;
-            }
-
-            set
-            {
-                if (_isPerson == value)
-                {
-                    return;
-                }
-
-                _isPerson = value;
-                RaisePropertyChanged("isPerson");
-                if (isPerson)
-                {
-                    isFirm = false;
-                }
-            }
-        }
-        public bool isFirm
-        {
-            get
-            {
-                return _isFirm;
-            }
-
-            set
-            {
-                if (_isFirm == value)
-                {
-                    return;
-                }
-
-                _isFirm = value;
-                RaisePropertyChanged("isFirm");
-                if (isFirm)
-                {
-                    isPerson = false;
-                }
-            }
-        }
-        public DateTime? birthDate
-        {
-            get
-            {
-                return _birthDate;
-            }
-
-            set
-            {
-                if (_birthDate == value && value != null)
-                {
-                    return;
-                }
-
-                _birthDate = value;
-                RaisePropertyChanged("birthDate");
-            }
-        }
+                   
         public bool isExpanded
         {
             get
@@ -381,25 +139,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("modifyEnableButtonVisibility");
             }
         }
-        public ObservableCollection<SQLConnectionLib.Customers> contacts
-        {
-            get
-            {
-                return _contacts;
-            }
-
-            set
-            {
-                if (_contacts == value)
-                {
-                    return;
-                }
-
-                _contacts = value;
-                RaisePropertyChanged("contacts");
-            }
-        }
-        public SQLConnectionLib.Customers selectedContact
+        public CustomerBase_Representation selectedContact
         {
             get
             {
@@ -530,24 +270,6 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("wrongWorkPlace");
             }
         }
-        public float defaultDiscount
-        {
-            get
-            {
-                return _defaultDiscount;
-            }
-
-            set
-            {
-                if (_defaultDiscount == value)
-                {
-                    return;
-                }
-
-                _defaultDiscount = value;
-                RaisePropertyChanged("defaultDiscount");
-            }
-        }
         public bool customerSelected
         {
             get
@@ -649,31 +371,11 @@ namespace GyorokRentService.ViewModel
         public ICommand doModify { get { return new RelayCommand(doModifyExecute, CandoModifyExecute); } }
         void doModifyExecute()
         {
-            Customers itemToModify = (from c in SQLConnection.Execute.CustomersTable where c.customerID == selectedCustomer.customerID select c).First();
-            itemToModify.customerName = selectedCustomerName;
-            itemToModify.IDNumber = selectedIdNumber;
-            itemToModify.mothersName = mothersName;
-            itemToModify.cityID = _customerCityID;
-            itemToModify.customerAddress = customerAddress;
-            itemToModify.customerPhone = customerPhone;
-            itemToModify.workPlace = workPlace;
-            itemToModify.comment = comment;
-            itemToModify.problems = problems;
-            if (itemToModify.isFirm)
-            {
-                itemToModify.birthDate = null;
-            }
-            else
-            {
-                itemToModify.birthDate = birthDate;
-            }
-            itemToModify.defaultDiscount = defaultDiscount / 100;
-            SQLConnection.Execute.SaveDb();
-            selectedCustomer = itemToModify;
-            AppMessages.CustomerModified.Send(itemToModify);
+            DataProxy.Instance.UpdateCustomer(selectedCustomer);
+            AppMessages.CustomerModified.Send(selectedCustomer);
             if (customerMode == CustomerType.Rent)
             {
-                CheckRentValidation(itemToModify); 
+                CheckRentValidation(selectedCustomer); 
             }
 
             readOnlyMode = true;
@@ -699,9 +401,7 @@ namespace GyorokRentService.ViewModel
         {
             try
             {
-                Contacts contact = SQLConnection.Execute.ContactsTable.First(c => c.firmID == selectedCustomer.customerID && c.agentID == selectedContact.customerID);
-                SQLConnection.Execute.ContactsTable.DeleteObject(contact);
-                SQLConnection.Execute.SaveDb();
+                DataProxy.Instance.DeleteContact(selectedCustomer, selectedContact);
                 refreshContacts();
             }
             catch (Exception)
@@ -717,11 +417,7 @@ namespace GyorokRentService.ViewModel
         public ICommand saveComments { get { return new RelayCommand(saveCommentsExecute, () => true); } }
         void saveCommentsExecute()
         {
-            
-            var modifiedCustomer = (from c in SQLConnection.Execute.CustomersTable where c.customerID == selectedCustomer.customerID select c).First();
-            modifiedCustomer.comment = _comment;
-            modifiedCustomer.problems = _problems;
-            SQLConnection.Execute.SaveDb();
+            DataProxy.Instance.UpdateCustomer(selectedCustomer);
 
             commentSaveVisibility = Visibility.Hidden;
         }
@@ -733,14 +429,12 @@ namespace GyorokRentService.ViewModel
         }
 
         public CustomerSelector_ViewModel()
-        {
-            
+        {            
         }
         public CustomerSelector_ViewModel(CustomerType ct)
         {
             if (!this.IsInDesignMode)
             {
-                isPerson = true;
                 commentSaveVisibility = Visibility.Hidden;
                 readOnlyMode = true;
                 modifyButtonVisibility = Visibility.Hidden;
@@ -765,16 +459,13 @@ namespace GyorokRentService.ViewModel
                     Cities customerCity;
 
                     selectedCustomer = c;
-                    if (selectedCustomer.cityID != null)
+                    if (selectedCustomer.city != null)
                     {
-                        customerCity = SQLConnection.Execute.CitiesTable.Single<Cities>(ci => ci.cityID == selectedCustomer.cityID);
-                        city = customerCity.postalCode + " " + customerCity.city;
-                        _customerCityID = customerCity.cityID;
+                        city = c.city.postalCode + " " + c.city.city;
                     }
                     else
                     {
                         city = string.Empty;
-                        _customerCityID = null;
                     }
                     customerSelected = true;
                     switch (customerMode)
@@ -793,7 +484,6 @@ namespace GyorokRentService.ViewModel
                     {
                         if (!readOnlyMode)
                         {
-                            _customerCityID = cty.cityID;
                             city = cty.postalCode + " " + cty.city;
                         }
                     });
@@ -809,16 +499,7 @@ namespace GyorokRentService.ViewModel
 
         private void addContact(SQLConnectionLib.Customers c)
         {
-            //List<SQLConnectionLib.Contacts> contactList = new List<Contacts>();
-            //contactList = SQLConnection.Execute.getContacts();
-            if (!SQLConnection.Execute.ContactsTable.Any(contact => contact.firmID == selectedCustomer.customerID && contact.agentID == c.customerID))
-            {
-                Contacts cont = new Contacts();
-                cont.firmID = selectedCustomer.customerID;
-                cont.agentID = c.customerID;
-                SQLConnection.Execute.ContactsTable.AddObject(cont);
-                SQLConnection.Execute.SaveDb();
-            }
+            DataProxy.Instance.AddContact(selectedCustomer, selectedContact);
             refreshContacts(); 
         }
 
@@ -844,7 +525,7 @@ namespace GyorokRentService.ViewModel
             selectedContact = firstCustomer;
         }
 
-        private void CheckRentValidation(Customers c){
+        private void CheckRentValidation(CustomerBase_Representation c){
             bool valid = true;
 
             if (customerAddress == null || customerAddress == string.Empty)

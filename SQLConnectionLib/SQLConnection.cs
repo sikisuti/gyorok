@@ -15,7 +15,7 @@ using LoggerLib;
 
 namespace SQLConnectionLib
 {
-    public sealed class SQLConnection
+    public class SQLConnection : ISQLConnection
     {
         public string DataSource { get; set; }
         public string InitialCatalog { get; set; }
@@ -28,7 +28,6 @@ namespace SQLConnectionLib
         public string UserName { get; set; }
         public string Password { get; set; }
 
-        private static readonly SQLConnection execute = new SQLConnection();
         private dbGyorokEntities db;
         EntityConnectionStringBuilder sb;
         private EntityConnection ec;
@@ -38,6 +37,8 @@ namespace SQLConnectionLib
         private long rentalsVersion;
         private long serviceWorksheetsVersion;
         private long toolsVersion;
+
+        #region Tables
 
         private ObjectSet<Customers> customersTable;
         public ObjectSet<Customers> CustomersTable
@@ -144,9 +145,10 @@ namespace SQLConnectionLib
             get { return citiesTable; }
             set { citiesTable = value; }
         }
-        
 
-        private SQLConnection()
+        #endregion
+
+        public SQLConnection()
         {
             //Logger.Execute.WriteLog("SQL connection instantiated", EventLogEntryType.Information);
         }
@@ -188,14 +190,6 @@ namespace SQLConnectionLib
                 throw ex;
             }
             
-        }
-
-        public static SQLConnection Execute
-        {
-            get
-            {                
-                return execute;
-            }
         }
 
         public void SaveDb()
@@ -249,16 +243,11 @@ namespace SQLConnectionLib
         {
             Customers actCustomer;
 
-            try
+            using (dbGyorokEntities db = new dbGyorokEntities(ec))
             {
-                actCustomer = SQLConnection.Execute.CustomersTable.Single<Customers>(c => c.customerID == pCustomerID);
+                actCustomer = db.Customers.Single(c => c.customerID == pCustomerID);
                 actCustomer.isDeleted = true;
                 SaveDb();
-           
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
 
@@ -266,15 +255,11 @@ namespace SQLConnectionLib
         {
             Tools actTool;
 
-            try
+            using (dbGyorokEntities db = new dbGyorokEntities(ec))
             {
-                actTool = SQLConnection.Execute.ToolsTable.Single<Tools>(t => t.toolID == pToolID);
+                actTool = db.Tools.Single(t => t.toolID == pToolID);
                 actTool.isDeleted = true;
                 SaveDb();
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
 
@@ -296,15 +281,11 @@ namespace SQLConnectionLib
         {
             Cities actCity;
 
-            try
+            using (dbGyorokEntities db = new dbGyorokEntities(ec))
             {
-                actCity = SQLConnection.Execute.CitiesTable.Single<Cities>(t => t.cityID == pCityID);
+                actCity = db.Cities.Single(t => t.cityID == pCityID);
                 actCity.isDeleted = true;
                 SaveDb();
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
 
@@ -495,6 +476,77 @@ namespace SQLConnectionLib
                     connection.Close();
                 }
                 throw ex;
+            }
+        }
+
+        public Customers GetCustomerById(long id)
+        {
+            Customers customer;
+
+            using (dbGyorokEntities gyorokDB = new dbGyorokEntities(ec))
+            {
+                customer = gyorokDB.Customers.SingleOrDefault(c => c.customerID == id);
+            }
+
+            return customer;
+        }
+
+        public void UpdateCustomer(Customers customer)
+        {
+            using (dbGyorokEntities db = new dbGyorokEntities(ec))
+            {
+                Customers customerToUpdate = db.Customers.SingleOrDefault(c => c.customerID == customer.customerID);
+                // TODO: Implement 
+                //if (customerToUpdate.rowVersion != customer.rowVersion)
+                //{
+                //    throw new Exception("Customer modification conflicted");
+                //}
+                customerToUpdate.birthDate = customer.birthDate;
+                customerToUpdate.cityID = customer.cityID;
+                customerToUpdate.comment = customer.comment;
+                customerToUpdate.customerAddress = customer.customerAddress;
+                customerToUpdate.customerName = customer.customerName;
+                customerToUpdate.customerPhone = customer.customerPhone;
+                customerToUpdate.defaultDiscount = customer.defaultDiscount;
+                customerToUpdate.IDNumber = customer.IDNumber;
+                customerToUpdate.isDeleted = customer.isDeleted;
+                customerToUpdate.isFirm = customer.isFirm;
+                customerToUpdate.mothersName = customer.mothersName;
+                customerToUpdate.problems = customer.problems;
+                customerToUpdate.rentCounter = customer.rentCounter;
+                customerToUpdate.serviceCounter = customer.serviceCounter;
+                customerToUpdate.workPlace = customer.workPlace;
+                db.SaveChanges();
+            }        
+        }
+
+        public void DeleteContact(Customers firm, Customers agent)
+        {
+            using (dbGyorokEntities db = new dbGyorokEntities(ec))
+            {
+                Contacts contactForDelete = db.Contacts.SingleOrDefault(c => c.firmID == firm.customerID && c.agentID == agent.customerID);
+                if (contactForDelete != null)
+                {
+                    db.Contacts.DeleteObject(contactForDelete);
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public void AddContact(Customers firm, Customers agent)
+        {
+            using (dbGyorokEntities db = new dbGyorokEntities(ec))
+            {
+                if (!db.Contacts.Any(c => c.firmID == firm.customerID && c.agentID == agent.customerID))
+                {
+                    Contacts newContact = new Contacts()
+                    {
+                        agentID = agent.customerID,
+                        firmID = firm.customerID
+                    };
+                    db.Contacts.AddObject(newContact);
+                    db.SaveChanges();
+                }
             }
         }
     }

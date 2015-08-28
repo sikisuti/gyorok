@@ -8,18 +8,9 @@ namespace SQLConnectionLib
 {
     public interface ISQLConnection
     {
-        ObjectSet<Customers> CustomersTable();
-        ObjectSet<Contacts> ContactsTable();
-        ObjectSet<Parts> PartsTable();
-        ObjectSet<Rentals> RentalsTable();
-        ObjectSet<PayTypes> payTypesTable();
-        ObjectSet<RentalGroups> rentalGroupsTable();
-        ObjectSet<Tools> toolsTable();
-        ObjectSet<ServiceWorksheets> serviceWorksheetsTable();
-        ObjectSet<ServiceGroups> serviceGroupsTable();
-        ObjectSet<ErrorTypes> errorTypesTable();
-        ObjectSet<ToolStatuses> toolStatusesTable();
-        ObjectSet<ServiceSum> serviceSumView();
-        ObjectSet<RentalSum> rentalSumView();
+        Customers GetCustomerById(long id);
+        void UpdateCustomer(Customers customer);
+        void DeleteContact(Customers firm, Customers agent);
+        void AddContact(Customers firm, Customers agent);
     }
 }

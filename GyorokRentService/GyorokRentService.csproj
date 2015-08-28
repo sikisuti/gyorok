@@ -457,9 +457,17 @@
     <Resource Include="Images\IconDelPerson64.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{cddf1fcf-7037-4440-8d37-dc72333d0693}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LoggerLib\LoggerLib.csproj">
       <Project>{EA922396-E5C4-400A-A053-C2A514F78846}</Project>
       <Name>LoggerLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MiddleLayer\MiddleLayer.csproj">
+      <Project>{e5dc6666-cdf8-46a6-a3c2-e8c5da228afe}</Project>
+      <Name>MiddleLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\SQLConnectionLib\SQLConnectionLib.csproj">
       <Project>{EAC624D3-6081-434F-AB93-6C1278909693}</Project>
