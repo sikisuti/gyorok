@@ -9,10 +9,8 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="Györök és Tsa. kölcsönző és szervíz"
-        x:Name="FrameView" WindowState="Normal" Height="960" Width="1280" WindowStartupLocation="Manual" WindowStyle="SingleBorderWindow" Left="0" Top="0">  
-    <!--<Window.DataContext>
-        <local:MainViewModel />
-    </Window.DataContext>-->   
+        x:Name="FrameView" WindowState="Maximized" WindowStyle="SingleBorderWindow">
+
     <Window.Resources>
         <Color x:Key="RentBackgroundColor">#FFF0FFF0</Color>
         <Color x:Key="RentMainColor">#FFA0FFA0</Color>
@@ -26,7 +24,7 @@
 
         <SolidColorBrush x:Key="RentBgBrush" Color="#FFF0FFF0"/>
         <SolidColorBrush x:Key="ServiceBgBrush" Color="#FFF0F0FF"/>
-        
+
         <LinearGradientBrush x:Key="RentMainBackground" EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="{StaticResource RentMainColor}" Offset="0" />
             <GradientStop Color="{StaticResource RentBackgroundColor}" Offset="1" />
@@ -172,7 +170,7 @@
                             <Border Name="Border" Background="{StaticResource ServiceSubBackground3}" BorderBrush="Black" BorderThickness="1,1,1,0">
                                 <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True"/>
                             </Border>
-                            
+
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
@@ -184,141 +182,151 @@
             </Setter>
         </Style>
     </Window.Resources>
-    
-    <Viewbox Stretch="Uniform" >
 
-        <DockPanel LastChildFill="True" Width="1280" Height="850">
-            <comp:ProcessStatusDisplay DockPanel.Dock="Bottom"/>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" FontSize="30" FontWeight="Bold" VerticalAlignment="Center" Height="50">Györök és Tsa. kölcsönző és szervíz</Label>
-                <Button Grid.Row="0" Command="{Binding openSettingsWindow}" Height="48" Margin="1200,1,0,0" Name="btnEditContacts" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
-                    <Image Source="/GyorokRentService;component/Images/IconSettings48.png" />
+    <!--<Viewbox Stretch="Uniform" >-->
+
+    <DockPanel LastChildFill="True">
+        <Grid DockPanel.Dock="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50" />
+            </Grid.ColumnDefinitions>
+            <Label FontSize="30" FontWeight="Bold">Györök és Tsa. kölcsönző és szervíz</Label>
+            <Button Grid.Column="1" 
+                    Command="{Binding openSettingsWindow}" 
+                    Name="btnEditContacts" 
+                    BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}"
+                    Margin="5">
+                <Image Source="/GyorokRentService;component/Images/IconSettings48.png" />
             </Button>
-            <TabControl Grid.Row="1" Name="tcRentOrService" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{x:Null}" BorderThickness="0">
-            <TabItem Style="{StaticResource StyleRentMain}" Header="Kölcsönzés" Name="tiRent" FontSize="20" FontWeight="Bold" ClipToBounds="False">
-                <Grid Background="{StaticResource RentBgBrush}">
-                    <TabControl Name="tcRentSub" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TabStripPlacement="Top" Background="{StaticResource RentBgBrush}" BorderThickness="0" BorderBrush="{x:Null}">
-                        <TabItem Style="{StaticResource StyleRentSub1}" Header="Új kölcsönzés" Name="tiNewRent">                            
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="50"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="30"/>
-                                </Grid.RowDefinitions>
+        </Grid>
+        <comp:ProcessStatusDisplay DockPanel.Dock="Bottom"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TabControl Name="tcRentOrService" BorderBrush="{x:Null}" BorderThickness="0">
+                <TabItem Style="{StaticResource StyleRentMain}" Header="Kölcsönzés" Name="tiRent" FontSize="20" FontWeight="Bold">
+                    <Grid Background="{StaticResource RentBgBrush}">
+                        <TabControl Name="tcRentSub" TabStripPlacement="Top" Background="{StaticResource RentBgBrush}" BorderThickness="0" BorderBrush="{x:Null}">
+                            <TabItem Style="{StaticResource StyleRentSub1}" Header="Új kölcsönzés" Name="tiNewRent">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
                                     <Grid Grid.Row="0">
-                                        <Label Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontWeight="Bold" Height="50" HorizontalAlignment="Left" Margin="0,0,0,0" Name="textBox4" VerticalAlignment="Top" Width="1200" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
+                                        <Label HorizontalAlignment="Center"
+                                               Margin="0" Padding="0"
+                                               FontSize="36" FontWeight="Bold" 
+                                               Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
                                             <Label.Content>
                                                 <TextBlock Text="Új kölcsönzés" TextDecorations="Underline"/>
                                             </Label.Content>
                                         </Label>
                                     </Grid>
-                                        <Grid Grid.Row="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="630"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Name="grdCustomer" Grid.Column="0" IsEnabled="{Binding rentChangeEnabled}" Grid.ColumnSpan="{Binding customerColumnSpan}" Panel.ZIndex="1">
-                                        <!--CustomerSelector added from codebehind-->
-                                    </Grid>
-                                    <Grid Grid.Column="1">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="350"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid Name="grdToolSelect" Grid.Row="0" Grid.RowSpan="{Binding toolRowSpan}" Panel.ZIndex="1">
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Name="grdCustomer" Grid.Column="0" IsEnabled="{Binding rentChangeEnabled}" Grid.ColumnSpan="{Binding customerColumnSpan}" Panel.ZIndex="1">
+                                            <!--CustomerSelector added from codebehind-->
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Name="grdToolSelect" Grid.Row="0" Grid.RowSpan="{Binding toolRowSpan}" Panel.ZIndex="1">
                                                 <!--ToolSelector added from codebehind-->
                                             </Grid>
-                                        <Grid Name="grdNewRent" Grid.Row="1">
+                                            <Grid Name="grdNewRent" Grid.Row="1">
                                                 <!--NewRent added from codebehind-->
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                            </Grid>
-                        </TabItem>
-                        <TabItem Style="{StaticResource StyleRentSub2}" Header="Kölcsönzések" Name="tiRentals">                            
-                            <Grid>
-                                <Grid.RowDefinitions>
+                            </TabItem>
+                            <TabItem Style="{StaticResource StyleRentSub2}" Header="Kölcsönzések" Name="tiRentalList">
+                                <Grid>
+                                    <Grid.RowDefinitions>
                                         <RowDefinition Height="50"/>
                                         <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="0">
-                                        <Label Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontWeight="Bold" Height="50" HorizontalAlignment="Left" Margin="0,0,0,0" Name="TitleRents" VerticalAlignment="Top" Width="1200" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
+                                        <Label Padding="0,0,0,0" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Name="TitleRents" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
                                             <Label.Content>
                                                 <TextBlock Text="Kölcsönzések" TextDecorations="Underline"/>
                                             </Label.Content>
-                                            </Label>
+                                        </Label>
                                     </Grid>
-                                        <Grid Name="grdRentalSum" Grid.Row="1">
+                                    <Grid Name="grdRentalSum" Grid.Row="1">
                                         <!--RentalSum added from codebehind-->
                                     </Grid>
-                            </Grid>
-                        </TabItem>
-                    </TabControl>
-                </Grid>
-            </TabItem>
-            <TabItem Style="{StaticResource StyleServiceMain}" Header="Szervíz" Name="tiNewService" FontSize="20" FontWeight="Bold">
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                </TabItem>
+                <TabItem Style="{StaticResource StyleServiceMain}" Header="Szervíz" Name="tiService" FontSize="20" FontWeight="Bold">
                     <Grid  Background="{StaticResource ServiceBgBrush}">
-                <TabControl HorizontalAlignment="Left" Name="tcService" VerticalAlignment="Top" SelectionChanged="tcService_SelectionChanged">
-                        <TabItem Style="{StaticResource StyleServiceSub1}" Header="Új munkalap" Name="tiNewWorksheet">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="30"/>
-                            </Grid.RowDefinitions>
+                        <TabControl Name="tcService" SelectionChanged="tcService_SelectionChanged">
+                            <TabItem Style="{StaticResource StyleServiceSub1}" Header="Új munkalap" Name="tiNewWorksheet">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
                                     <Grid Grid.Row="0">
-                                        <Label Padding="0,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="36" FontWeight="Bold" Height="50" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="1,0,0,0" Name="textBox1" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="1200">
+                                        <Label Padding="0,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center">
                                             <Label.Content>
                                                 <TextBlock Text="Új munkalap" TextDecorations="Underline"/>
                                             </Label.Content>
                                         </Label>
                                     </Grid>
-                                        <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="650"/>
-                                    <ColumnDefinition Width="550"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid Name="grdNewWSCustomer" IsEnabled="{Binding serviceChangeEnabled}" Grid.Column="0" Grid.ColumnSpan="{Binding customerColumnSpan}" Panel.ZIndex="1">
-                                    <!--CustomerSelector added from codebehind-->
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Name="grdNewWSCustomer" IsEnabled="{Binding serviceChangeEnabled}" Grid.Column="0" Grid.ColumnSpan="{Binding customerColumnSpan}" Panel.ZIndex="1">
+                                            <!--CustomerSelector added from codebehind-->
+                                        </Grid>
+                                        <Grid Name="grdNewService" Grid.Column="1">
+                                            <!--NewService added from codebehind-->
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
-                                <Grid Name="grdNewService" Grid.Column="1">
-                                        <!--NewService added from codebehind-->
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </TabItem>
-                        <TabItem Style="{StaticResource StyleServiceSub2}" Header="Javítás" Name="tiService">
-                        <Grid>
+                            </TabItem>
+                            <TabItem Style="{StaticResource StyleServiceSub2}" Header="Javítás" Name="tiWorksheet">
+                                <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="50"/>
                                         <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="0">
-                                        <Label Padding="0,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="36" FontWeight="Bold" Height="50" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="1,0,0,0" Name="titleService" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="1200">
+                                        <Label Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Name="titleService">
                                             <Label.Content>
                                                 <TextBlock Text="Javítás" TextDecorations="Underline"/>
                                             </Label.Content>
                                         </Label>
                                     </Grid>
-                                        <Grid Grid.Row="1" Name="grdService"/>
+                                    <Grid Grid.Row="1" Name="grdService"/>
                                     <!--<view:ServiceWork/>-->
-                        </Grid>
-                    </TabItem>
-                        <TabItem Style="{StaticResource StyleServiceSub3}" Header="Munkalapok" Name="tiWorksheets" >
-                        <Grid>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Style="{StaticResource StyleServiceSub3}" Header="Munkalapok" Name="tiWorksheetList" >
+                                <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="50"/>
                                         <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="0">
-                                        <Label Padding="0,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="36" FontWeight="Bold" Height="50" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="1,0,0,0" Name="titleServiceSum" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="1200">
+                                        <Label Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Name="titleServiceSum" >
                                             <Label.Content>
                                                 <TextBlock Text="Munkalapok" TextDecorations="Underline"/>
                                             </Label.Content>
@@ -326,9 +334,9 @@
                                     </Grid>
                                     <Grid Grid.Row="1" Name="grdServiceSum"/>
                                     <!--<view:ServiceSum/>-->
-                        </Grid>
-                    </TabItem>
-                </TabControl>
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
                     </Grid>
                 </TabItem>
                 <!--<TabItem Style="{StaticResource StyleServiceMain}" Header="Ügyféltörzs" Name="tiCustomerSum" FontSize="20" FontWeight="Bold">
@@ -337,7 +345,7 @@
                     </Grid>
                 </TabItem>-->
             </TabControl>
-            </Grid>
-        </DockPanel>
-    </Viewbox>
+        </Grid>
+    </DockPanel>
+    <!--</Viewbox>-->
 </Window>

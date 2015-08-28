@@ -151,34 +151,6 @@ namespace SQLConnectionLib
             //Logger.Execute.WriteLog("SQL connection instantiated", EventLogEntryType.Information);
         }
 
-        //public void Init(string serverIP)
-        //{
-        //    EntityConnectionStringBuilder sb = new EntityConnectionStringBuilder();
-        //    string userName;
-        //    string password;
-        //    string ip;
-
-        //    sb.Metadata = @"res://*/dbGyorok.csdl|res://*/dbGyorok.ssdl|res://*/dbGyorok.msl";
-        //    sb.Provider = @"System.Data.SqlClient";
-        //    userName = "gyorok";
-        //    password = "gyorok";
-        //    if (new List<string> { "", ".", "local", "localhost" }.Contains(serverIP))
-        //    {
-        //        ip = ".";
-        //    }
-        //    else
-        //    {
-        //        ip = serverIP; 
-        //    }
-        //    sb.ProviderConnectionString = @"data source=" + ip + @"\sqlexpress;initial catalog=dbGyorok;persist security info=False;user id=" + userName + ";password=" + password + ";multipleactiveresultsets=True;App=EntityFramework";
-        //    //sb.ProviderConnectionString = @"data source=.\sqlexpress;initial catalog=dbGyorok;integrated security=True;multipleactiveresultsets=True;App=EntityFramework";
-        //    ec = new EntityConnection(sb.ConnectionString);            
-            
-        //    UpdateDb();
-        //    UpdateTables();
-        //    UpdateViews();    
-        //}
-
         public void Init()
         {
             SqlConnectionStringBuilder pConnStr = new SqlConnectionStringBuilder();
@@ -244,7 +216,7 @@ namespace SQLConnectionLib
                 db.Connection.Open();
                 db.Connection.Close();
             }
-            catch (Exception ex) // Ez soha nem dob hibát !?
+            catch (Exception ex)
             {
                 throw ex;
             }

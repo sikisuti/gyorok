@@ -42,10 +42,10 @@ namespace GyorokRentService
                 var mainVM = new MainViewModel();
                 this.DataContext = mainVM;
 
-                Task initDbTask = Task.Factory.StartNew(InitDatabase);
-                initDbTask.ContinueWith((x) => { ProcessStatusDisplayViewModel.Instance.ProcessList.Add(new ProcessItem("End of db init")); }, TaskScheduler.FromCurrentSynchronizationContext());
+                //Task initDbTask = Task.Factory.StartNew(InitDatabase);
+                //initDbTask.ContinueWith((x) => { ProcessStatusDisplayViewModel.Instance.ProcessList.Add(new ProcessItem("End of db init")); }, TaskScheduler.FromCurrentSynchronizationContext());
 
-                DoBackup();
+                //DoBackup();
 
                 //serviceWorkVM = new ServiceWork_ViewModel();
                 //serviceSumVM = new ServiceSum_ViewModel();
@@ -53,7 +53,7 @@ namespace GyorokRentService
                 //ServiceWork serviceWorkScreen = new ServiceWork();
                 //View.ServiceSum serviceSumScreen = new View.ServiceSum();
 
-                //InitializeComponent();
+                InitializeComponent();
 
                 //serviceWorkScreen.DataContext = serviceWorkVM;
                 //grdService.Children.Add(serviceWorkScreen);
@@ -61,8 +61,8 @@ namespace GyorokRentService
                 //serviceSumScreen.DataContext = serviceSumVM;
                 //grdServiceSum.Children.Add(serviceSumScreen);
 
-                //var UCCustomerSelector = new CustomerSelector(CustomerType.Rent);
-                //grdCustomer.Children.Add(UCCustomerSelector);
+                var UCCustomerSelector = new CustomerSelector(CustomerType.Rent);
+                grdCustomer.Children.Add(UCCustomerSelector);
                 //var ServiceCustomerSelector = new CustomerSelector(CustomerType.Service);
                 //grdNewWSCustomer.Children.Add(ServiceCustomerSelector);
 
@@ -94,8 +94,9 @@ namespace GyorokRentService
             {
                 selectedTab = e.AddedItems[0] as TabItem;  // Gets selected tab 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                logger.Error(ex, "Tab selection failure");
             }
 
             if (selectedTab != null)
