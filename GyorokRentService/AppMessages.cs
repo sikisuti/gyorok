@@ -38,12 +38,12 @@ namespace GyorokRentService
 
         public static class CustomerToRent
         {
-            public static void Send(Customers selectedCustomer)
+            public static void Send(CustomerBase_Representation selectedCustomer)
             {
                 Messenger.Default.Send(selectedCustomer, MessageTypes.customerToRent);
             }
 
-            public static void Register(object recipient, Action<Customers> action)
+            public static void Register(object recipient, Action<CustomerBase_Representation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.customerToRent, action);
             }

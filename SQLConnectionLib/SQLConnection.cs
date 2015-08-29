@@ -549,5 +549,21 @@ namespace SQLConnectionLib
                 }
             }
         }
+
+        public List<Customers> GetContacts(Customers firm)
+        {
+            using (dbGyorokEntities db = new dbGyorokEntities(ec))
+            {
+                return db.Customers.Where(c => c.Contacts1.Any(ca => ca.firmID == firm.customerID)).ToList();
+            }
+        }
+
+        public Cities GetCityById(long id)
+        {
+            using (dbGyorokEntities db = new dbGyorokEntities(ec))
+            {
+                return db.Cities.SingleOrDefault(c => c.cityID == id);
+            }
+        }
     }
 }

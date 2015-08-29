@@ -505,30 +505,17 @@ namespace GyorokRentService.ViewModel
 
         private void refreshContacts()
         {
-            bool first = true;
-            Customers firstCustomer = new Customers();
-            temp.Clear();
-            var qrycontacts = from agent in SQLConnection.Execute.CustomersTable
-                              join firm in SQLConnection.Execute.ContactsTable on agent.customerID equals firm.agentID
-                              where firm.firmID == selectedCustomer.customerID
-                              select agent;
-            foreach (Customers item in qrycontacts)
+            selectedCustomer.contacts = DataProxy.Instance.GetContacts(selectedCustomer);
+            if (selectedCustomer.contacts != null && selectedCustomer.contacts.Count() > 0)
             {
-                temp.Add(item);
-                if (first)
-                {
-                    firstCustomer = item;
-                    first = false;
-                }
-            }
-            contacts = temp;
-            selectedContact = firstCustomer;
+                selectedContact = selectedCustomer.contacts.FirstOrDefault();
+            }            
         }
 
         private void CheckRentValidation(CustomerBase_Representation c){
             bool valid = true;
 
-            if (customerAddress == null || customerAddress == string.Empty)
+            if (selectedCustomer.customerAddress == null || selectedCustomer.customerAddress == string.Empty)
             {
                 wrongAddress = Visibility.Visible;
                 valid = false;
@@ -538,7 +525,7 @@ namespace GyorokRentService.ViewModel
                 wrongAddress = Visibility.Hidden;
             }
 
-            if (customerPhone == null || customerPhone == string.Empty)
+            if (selectedCustomer.customerPhone == null || selectedCustomer.customerPhone == string.Empty)
             {
                 wrongPhone = Visibility.Visible;
                 valid = false;
@@ -548,9 +535,9 @@ namespace GyorokRentService.ViewModel
                 wrongPhone = Visibility.Hidden;
             }
 
-            if (!isFirm)
+            if (!selectedCustomer.isFirm)
             {
-                if (mothersName == null || mothersName == string.Empty)
+                if (selectedCustomer.mothersName == null || selectedCustomer.mothersName == string.Empty)
                 {
                     wrongMothersName = Visibility.Visible;
                     valid = false;
@@ -560,7 +547,7 @@ namespace GyorokRentService.ViewModel
                     wrongMothersName = Visibility.Hidden;
                 }
 
-                if (birthDate == null)
+                if (selectedCustomer.birthDate == null)
                 {
                     wrongBirthDate = Visibility.Visible;
                     valid = false;
@@ -570,7 +557,7 @@ namespace GyorokRentService.ViewModel
                     wrongBirthDate = Visibility.Hidden;
                 }
 
-                if (workPlace == null || workPlace == string.Empty)
+                if (selectedCustomer.workplace == null || selectedCustomer.workplace == string.Empty)
                 {
                     wrongWorkPlace = Visibility.Visible;
                     valid = false;

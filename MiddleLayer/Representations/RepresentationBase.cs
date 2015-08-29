@@ -51,5 +51,4 @@ namespace MiddleLayer.Representations
             }
         }
     }
-    }
 }

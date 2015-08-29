@@ -9,6 +9,8 @@ using System.Drawing;
 using System.Windows.Media;
 using System.ComponentModel;
 using SQLConnectionLib;
+using MiddleLayer;
+using MiddleLayer.Representations;
 
 namespace GyorokRentService
 {
@@ -659,7 +661,7 @@ namespace GyorokRentService
 
                 try
                 {
-                    Cities c = SQLConnection.Execute.CitiesTable.Single(cs => cs.cityID == (long)value);
+                    City_Representation c = DataProxy.Instance.GetCityById((long)value);
                     return c.postalCode + " " + c.city;
                 }
                 catch (Exception)

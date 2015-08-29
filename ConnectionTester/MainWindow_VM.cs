@@ -241,23 +241,25 @@ namespace ConnectionTester
         {
             Status += DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + Environment.NewLine;
 
-            SQLConnection.Execute.DataSource = DataSource;
-            SQLConnection.Execute.InitialCatalog = InitialCatalog;
-            SQLConnection.Execute.IntegratedSecurity = IntegratedSecurity;
-            SQLConnection.Execute.PersistSecurityInfo = PersistSecurityInfo;
-            SQLConnection.Execute.MultipleActiveResultSets = MultipleActiveResultSets;
-            SQLConnection.Execute.App = ApplicationName;
-            SQLConnection.Execute.UserName = UserName;
-            SQLConnection.Execute.Password = Password;
-            SQLConnection.Execute.Provider = Provider;
-            SQLConnection.Execute.MetaData = MetaData;
+            SQLConnection datasource = new SQLConnection();
+
+            datasource.DataSource = DataSource;
+            datasource.InitialCatalog = InitialCatalog;
+            datasource.IntegratedSecurity = IntegratedSecurity;
+            datasource.PersistSecurityInfo = PersistSecurityInfo;
+            datasource.MultipleActiveResultSets = MultipleActiveResultSets;
+            datasource.App = ApplicationName;
+            datasource.UserName = UserName;
+            datasource.Password = Password;
+            datasource.Provider = Provider;
+            datasource.MetaData = MetaData;
 
             List<ToolStatuses> cList = new List<ToolStatuses>();
 
             try
             {
                 Status += "Try to open database ... ";
-                SQLConnection.Execute.Init();
+                datasource.Init();
                 Status += "Database opened successfully!" + Environment.NewLine;
             }
             catch (Exception e)
@@ -277,7 +279,7 @@ namespace ConnectionTester
             try
             {
                 Status += "Try to retrieve tool statuses ... ";
-                cList = SQLConnection.Execute.ToolStatusesTable.ToList();
+                cList = datasource.ToolStatusesTable.ToList();
 
                 Status += Environment.NewLine;
                 foreach (ToolStatuses item in cList)

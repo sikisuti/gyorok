@@ -2,6 +2,7 @@
 using SQLConnectionLib;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace MiddleLayer
 
         private DataProxy()
         {
+            dataSource = new TestDatabase();
         }
 
         public CustomerBase_Representation GetCustomerById(long id)
@@ -34,13 +36,22 @@ namespace MiddleLayer
             dataSource.UpdateCustomer(RepresentationConverter.convertCustomer(customer));
         }
 
+        public ObservableCollection<CustomerBase_Representation> GetContacts(CustomerBase_Representation firm)
+        {
+            return new ObservableCollection<CustomerBase_Representation>(dataSource.GetContacts(RepresentationConverter.convertCustomer(firm)).Select(c => RepresentationConverter.convertCustomer(c)));
+        }
         public void DeleteContact(CustomerBase_Representation firm, CustomerBase_Representation agent)
         {
-            dataSource.DeleteContact(RepresentationConverter.convertCustomer(agent), RepresentationConverter.convertCustomer(contact));
+            dataSource.DeleteContact(RepresentationConverter.convertCustomer(firm), RepresentationConverter.convertCustomer(agent));
         }
         public void AddContact(CustomerBase_Representation firm, CustomerBase_Representation agent)
         {
             dataSource.AddContact(RepresentationConverter.convertCustomer(firm), RepresentationConverter.convertCustomer(agent));
+        }
+
+        public City_Representation GetCityById(long id)
+        {
+            return RepresentationConverter.convertCity(dataSource.GetCityById(id));
         }
     }
 }

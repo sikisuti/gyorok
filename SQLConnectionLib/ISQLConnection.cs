@@ -10,7 +10,11 @@ namespace SQLConnectionLib
     {
         Customers GetCustomerById(long id);
         void UpdateCustomer(Customers customer);
+
+        List<Customers> GetContacts(Customers firm);
         void DeleteContact(Customers firm, Customers agent);
         void AddContact(Customers firm, Customers agent);
+
+        Cities GetCityById(long id);
     }
 }

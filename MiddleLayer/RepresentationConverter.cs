@@ -55,5 +55,16 @@ namespace MiddleLayer
                 workPlace = customer.workplace
             };
         }
+
+        public static City_Representation convertCity(Cities city)
+        {
+            return new City_Representation()
+            {
+                city = city.city,
+                id = city.cityID,
+                isDeleted = city.isDeleted,
+                postalCode = city.postalCode
+            };
+        }
     }
 }
