@@ -2,15 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GyorokRentService.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ServerIP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">localhost</Value>
-    </Setting>
-    <Setting Name="UserName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">gyorok</Value>
-    </Setting>
-    <Setting Name="Password" Type="System.String" Scope="User">
-      <Value Profile="(Default)">gyorok</Value>
-    </Setting>
     <Setting Name="CompanyName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Totál Szerszámgép Szervíz</Value>
     </Setting>
@@ -28,36 +19,6 @@
     </Setting>
     <Setting Name="CostOfClean" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">100</Value>
-    </Setting>
-    <Setting Name="PrimaryBackupPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Temp\1</Value>
-    </Setting>
-    <Setting Name="SecondaryBackupPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Temp\2</Value>
-    </Setting>
-    <Setting Name="InitialCatalog" Type="System.String" Scope="User">
-      <Value Profile="(Default)">dbGyorok</Value>
-    </Setting>
-    <Setting Name="IntegratedSecurity" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="PersistSecurityInfo" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="MultipleActiveResultSets" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="App" Type="System.String" Scope="User">
-      <Value Profile="(Default)">EntityFramework</Value>
-    </Setting>
-    <Setting Name="Provider" Type="System.String" Scope="User">
-      <Value Profile="(Default)">System.Data.SqlClient</Value>
-    </Setting>
-    <Setting Name="MetaData" Type="System.String" Scope="User">
-      <Value Profile="(Default)">res://*/dbGyorok.csdl|res://*/dbGyorok.ssdl|res://*/dbGyorok.msl</Value>
-    </Setting>
-    <Setting Name="ServerInstanceName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">sqlexpress</Value>
     </Setting>
   </Settings>
 </SettingsFile>

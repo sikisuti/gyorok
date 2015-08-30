@@ -151,6 +151,17 @@ namespace SQLConnectionLib
         public SQLConnection()
         {
             //Logger.Execute.WriteLog("SQL connection instantiated", EventLogEntryType.Information);
+
+            DataSource = Properties.Settings.Default.ServerIP + @"\" + Properties.Settings.Default.ServerInstanceName;
+            InitialCatalog = Properties.Settings.Default.InitialCatalog;
+            IntegratedSecurity = Properties.Settings.Default.IntegratedSecurity;
+            PersistSecurityInfo = Properties.Settings.Default.PersistSecurityInfo;
+            MultipleActiveResultSets = Properties.Settings.Default.MultipleActiveResultSets;
+            App = Properties.Settings.Default.App;
+            UserName = Properties.Settings.Default.UserName;
+            Password = Properties.Settings.Default.Password;
+            Provider = Properties.Settings.Default.Provider;
+            MetaData = Properties.Settings.Default.MetaData;
         }
 
         public void Init()
@@ -424,13 +435,31 @@ namespace SQLConnectionLib
             }
         }
 
-        public void DoBackup(string path)
+        public void DoBackup(string path = null)
         {
+
             try
             {
-                using (dbGyorokEntities gyorokDB = new dbGyorokEntities(sb.ConnectionString))
+                if (Properties.Settings.Default.ServerIP == "." ||
+                    Properties.Settings.Default.ServerIP.ToLower() == "localhost" ||
+                    Properties.Settings.Default.ServerIP == string.Empty)
                 {
-                    gyorokDB.DoBackup(path);
+
+                    using (dbGyorokEntities gyorokDB = new dbGyorokEntities(sb.ConnectionString))
+                    {
+                        if (path == null)
+                        {
+                            gyorokDB.DoBackup(Properties.Settings.Default.PrimaryBackupPath + @"\");
+                            var fileName = Directory.GetFiles(Properties.Settings.Default.PrimaryBackupPath).Select(x => new FileInfo(x)).OrderByDescending(f => f.LastWriteTime).FirstOrDefault().Name;
+                            // TODO: ...
+                            File.Copy(Properties.Settings.Default.PrimaryBackupPath + @"\" + fileName, Properties.Settings.Default.SecondaryBackupPath + @"\" + fileName, true);
+                        }
+                        else
+                        {
+                            gyorokDB.DoBackup(path);
+                        }
+                    }
+                    
                 }
             }
             catch (Exception ex)

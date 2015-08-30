@@ -8,6 +8,9 @@ namespace SQLConnectionLib
 {
     public interface ISQLConnection
     {
+        void DoBackup(string path = null);
+        void DoRestore(string path);
+
         Customers GetCustomerById(long id);
         void UpdateCustomer(Customers customer);
 

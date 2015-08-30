@@ -32,6 +32,16 @@ namespace SQLConnectionLib
             throw new NotImplementedException();
         }
 
+        public void DoBackup(string path = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DoRestore(string path)
+        {
+            throw new NotImplementedException();
+        }
+
         public Cities GetCityById(long id)
         {
             throw new NotImplementedException();

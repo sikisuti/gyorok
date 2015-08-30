@@ -129,51 +129,5 @@ namespace GyorokRentService
             }
 
         }
-
-        private void InitDatabase()
-        {
-            ProcessStatusDisplayViewModel.Instance.ProcessList.Add(new ProcessItem("Kapcsolódás az adatbázishoz"));
-
-            SQLConnection.Execute.DataSource = Properties.Settings.Default.ServerIP + @"\" + Properties.Settings.Default.ServerInstanceName;
-            SQLConnection.Execute.InitialCatalog = Properties.Settings.Default.InitialCatalog;
-            SQLConnection.Execute.IntegratedSecurity = Properties.Settings.Default.IntegratedSecurity;
-            SQLConnection.Execute.PersistSecurityInfo = Properties.Settings.Default.PersistSecurityInfo;
-            SQLConnection.Execute.MultipleActiveResultSets = Properties.Settings.Default.MultipleActiveResultSets;
-            SQLConnection.Execute.App = Properties.Settings.Default.App;
-            SQLConnection.Execute.UserName = Properties.Settings.Default.UserName;
-            SQLConnection.Execute.Password = Properties.Settings.Default.Password;
-            SQLConnection.Execute.Provider = Properties.Settings.Default.Provider;
-            SQLConnection.Execute.MetaData = Properties.Settings.Default.MetaData;
-
-            try
-            {
-                SQLConnection.Execute.Init();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Adatbázis kapcsolati hiba!");
-                logger.Fatal(ex, "Database connection error");
-            }
-        }
-
-        private void DoBackup()
-        {
-            if (Properties.Settings.Default.ServerIP == "." ||
-                    Properties.Settings.Default.ServerIP.ToLower() == "localhost" ||
-                    Properties.Settings.Default.ServerIP == string.Empty)
-            {
-                try
-                {
-                    SQLConnection.Execute.DoBackup(Properties.Settings.Default.PrimaryBackupPath + @"\");
-                    var fileName = Directory.GetFiles(Properties.Settings.Default.PrimaryBackupPath).Select(x => new FileInfo(x)).OrderByDescending(f => f.LastWriteTime).FirstOrDefault().Name;
-                    // TODO: ...
-                    File.Copy(Properties.Settings.Default.PrimaryBackupPath + @"\" + fileName, Properties.Settings.Default.SecondaryBackupPath + @"\" + fileName, true);
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex, "Backup failure");
-                }
-            }
-        }
     }
 }
