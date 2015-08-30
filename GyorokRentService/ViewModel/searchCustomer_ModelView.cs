@@ -11,12 +11,14 @@ using System.Windows;
 using GyorokRentService.ViewModel;
 using SQLConnectionLib;
 using System.Windows.Media;
+using MiddleLayer.Representations;
+using MiddleLayer;
 
 namespace GyorokRentService.ViewModel
 {
     class searchCustomer_ModelView : ViewModelBase
     {
-        Customers _selectedCustomer; 
+        CustomerBase_Representation _selectedCustomer; 
         searchCustomerType _custORcont;
         //CustomerType _rentORservice;
         int filterType;
@@ -170,7 +172,7 @@ namespace GyorokRentService.ViewModel
             {
                 //db.Dispose();
                 //db = new dbGyorokEntities();
-                _selectedCustomer = (from c in SQLConnection.Execute.CustomersTable where c.customerID == _selectedCustomerID select c).First();
+                _selectedCustomer = DataProxy.Instance.GetCustomerById(_selectedCustomerID);
                 switch (_custORcont)
                 {
                     case searchCustomerType.searchCustomer:

@@ -34,7 +34,7 @@ namespace Print
             }
             catch (Exception ex)
             {
-                
+                throw ex;
             }
         }
 

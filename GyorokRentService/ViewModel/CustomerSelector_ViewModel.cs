@@ -497,7 +497,7 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        private void addContact(SQLConnectionLib.Customers c)
+        private void addContact(CustomerBase_Representation c)
         {
             DataProxy.Instance.AddContact(selectedCustomer, selectedContact);
             refreshContacts(); 

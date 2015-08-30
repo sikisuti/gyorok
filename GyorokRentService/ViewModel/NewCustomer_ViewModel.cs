@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MiddleLayer;
+using MiddleLayer.Representations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -316,14 +318,14 @@ namespace GyorokRentService.ViewModel
         {
             if (newCustomerName != null && newCustomerIdNumber != null)
             {
-                SQLConnectionLib.Customers newCustomer = new SQLConnectionLib.Customers();
+                CustomerBase_Representation newCustomer = new CustomerBase_Representation();
                 newCustomer.customerName = newCustomerName;
                 newCustomer.IDNumber = newCustomerIdNumber;
                 newCustomer.mothersName = newMothersName;
-                newCustomer.cityID = _cityID;
+                newCustomer.city.id = _cityID;
                 newCustomer.customerAddress = newCustomerAddress;
                 newCustomer.customerPhone = newCustomerPhone;
-                newCustomer.workPlace = newWorkPlace;
+                newCustomer.workplace = newWorkPlace;
                 newCustomer.comment = comment;
                 newCustomer.problems = problems;
                 newCustomer.isFirm = isFirm;
@@ -331,8 +333,7 @@ namespace GyorokRentService.ViewModel
                 newCustomer.defaultDiscount = defaultDiscount / 100;
                 newCustomer.rentCounter = 0;
                 newCustomer.serviceCounter = 0;
-                SQLConnection.Execute.CustomersTable.AddObject(newCustomer);
-                SQLConnection.Execute.SaveDb();
+                DataProxy.Instance.AddCustomer(newCustomer);
                 switch (_type)
                 {
                     case searchCustomerType.searchCustomer:

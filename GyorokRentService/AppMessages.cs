@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MiddleLayer.Representations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GalaSoft.MvvmLight.Messaging;
 using SQLConnectionLib;
-using MiddleLayer.Representations;
+
 
 namespace GyorokRentService
 {
@@ -77,12 +78,12 @@ namespace GyorokRentService
 
         public static class ContactPersonToSelect
         {
-            public static void Send(Customers selectedContactPerson)
+            public static void Send(CustomerBase_Representation selectedContactPerson)
             {
                 Messenger.Default.Send(selectedContactPerson, MessageTypes.contactPersonToSelect);
             }
 
-            public static void Register(object recipient, Action<Customers> action)
+            public static void Register(object recipient, Action<CustomerBase_Representation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.contactPersonToSelect, action);
             }

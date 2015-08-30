@@ -418,7 +418,7 @@ namespace GyorokRentService.ViewModel
             {
                 AppMessages.CustomerToSelect.Register(this, c => 
                 {
-                    _customerID = c.customerID;
+                    _customerID = c.id;
 
                     if (c.defaultDiscount != null)
                     {

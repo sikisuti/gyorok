@@ -27,6 +27,11 @@ namespace SQLConnectionLib
             throw new NotImplementedException();
         }
 
+        public void AddCustomer(Customers customer)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteContact(Customers firm, Customers agent)
         {
             throw new NotImplementedException();

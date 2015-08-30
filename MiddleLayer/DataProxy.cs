@@ -31,6 +31,10 @@ namespace MiddleLayer
         {
             return RepresentationConverter.convertCustomer(dataSource.GetCustomerById(id));
         }
+        public void AddCustomer(CustomerBase_Representation customer)
+        {
+            dataSource.AddCustomer(RepresentationConverter.convertCustomer(customer));
+        }
         public void UpdateCustomer(CustomerBase_Representation customer)
         {
             dataSource.UpdateCustomer(RepresentationConverter.convertCustomer(customer));

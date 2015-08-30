@@ -17,6 +17,15 @@ namespace SQLConnectionLib
 {
     public class SQLConnection : ISQLConnection
     {
+        private static SQLConnection _instance = new SQLConnection();
+        public static SQLConnection Execute
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+
         public string DataSource { get; set; }
         public string InitialCatalog { get; set; }
         public bool IntegratedSecurity { get; set; }
@@ -592,6 +601,15 @@ namespace SQLConnectionLib
             using (dbGyorokEntities db = new dbGyorokEntities(ec))
             {
                 return db.Cities.SingleOrDefault(c => c.cityID == id);
+            }
+        }
+
+        public void AddCustomer(Customers customer)
+        {
+            using (dbGyorokEntities db = new dbGyorokEntities(ec))
+            {
+                db.Customers.AddObject(customer);
+                db.SaveChanges();
             }
         }
     }

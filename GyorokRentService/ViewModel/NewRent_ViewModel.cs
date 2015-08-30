@@ -186,10 +186,10 @@ namespace GyorokRentService.ViewModel
                 rentCount = 0;
 
                 AppMessages.CustomerToRent.Register(this, c => { 
-                    _customerID = c.customerID;
+                    _customerID = c.id;
                     discount = (float)c.defaultDiscount * 100;
                 });
-                AppMessages.ContactSelected.Register(this, c => _contactID = c.customerID);
+                AppMessages.ContactSelected.Register(this, c => _contactID = c.id);
                 AppMessages.ToolToSelect.Register(this, tl =>
                 {
                     _toolID = tl.toolID;

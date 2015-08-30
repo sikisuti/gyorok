@@ -271,15 +271,16 @@ namespace GyorokRentService.ViewModel
         public ICommand saveSettings { get { return new RelayCommand(saveSettingsExecute, () => true); } }
         void saveSettingsExecute()
         {
-            Properties.Settings.Default.ServerIP = serverIP;
+            // TODO: implement DB settings management
+            //Properties.Settings.Default.ServerIP = serverIP;
             Properties.Settings.Default.CompanyName = companyName;
             Properties.Settings.Default.CompanyAddress = companyAddress;
             Properties.Settings.Default.CompanyPhone1 = companyPhone1;
             Properties.Settings.Default.CompanyPhone2 = companyPhone2;
             Properties.Settings.Default.OpenTime = openTime;
             Properties.Settings.Default.CostOfClean = costOfClean;
-            Properties.Settings.Default.PrimaryBackupPath = PrimaryBackupPath;
-            Properties.Settings.Default.SecondaryBackupPath = SecondaryBackupPath;
+            //Properties.Settings.Default.PrimaryBackupPath = PrimaryBackupPath;
+            //Properties.Settings.Default.SecondaryBackupPath = SecondaryBackupPath;
             Properties.Settings.Default.Save();
             AppMessages.SettingsSaved.Send("");
         }
@@ -364,17 +365,18 @@ namespace GyorokRentService.ViewModel
 
         public Settings_ViewModel()
         {
-            serverIP = Properties.Settings.Default.ServerIP;
-            userName = Properties.Settings.Default.UserName;
-            password = Properties.Settings.Default.Password;
+            // TODO: implement DB settings management
+            //serverIP = Properties.Settings.Default.ServerIP;
+            //userName = Properties.Settings.Default.UserName;
+            //password = Properties.Settings.Default.Password;
             companyName = Properties.Settings.Default.CompanyName;
             companyAddress = Properties.Settings.Default.CompanyAddress;
             companyPhone1 = Properties.Settings.Default.CompanyPhone1;
             companyPhone2 = Properties.Settings.Default.CompanyPhone2;
             openTime = Properties.Settings.Default.OpenTime;
             costOfClean = Properties.Settings.Default.CostOfClean;
-            PrimaryBackupPath = Properties.Settings.Default.PrimaryBackupPath;
-            SecondaryBackupPath = Properties.Settings.Default.SecondaryBackupPath;
+            //PrimaryBackupPath = Properties.Settings.Default.PrimaryBackupPath;
+            //SecondaryBackupPath = Properties.Settings.Default.SecondaryBackupPath;
         }
     }
 }

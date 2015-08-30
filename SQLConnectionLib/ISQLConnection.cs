@@ -12,6 +12,7 @@ namespace SQLConnectionLib
         void DoRestore(string path);
 
         Customers GetCustomerById(long id);
+        void AddCustomer(Customers customer);
         void UpdateCustomer(Customers customer);
 
         List<Customers> GetContacts(Customers firm);
