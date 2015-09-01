@@ -523,7 +523,7 @@ namespace SQLConnectionLib
 
             using (dbGyorokEntities gyorokDB = new dbGyorokEntities(ec))
             {
-                customer = gyorokDB.Customers.SingleOrDefault(c => c.customerID == id);
+                customer = gyorokDB.Customers.Include("Cities").Include("Contacts.Customers.Cities").SingleOrDefault(c => c.customerID == id);
             }
 
             return customer;
@@ -610,6 +610,39 @@ namespace SQLConnectionLib
             {
                 db.Customers.AddObject(customer);
                 db.SaveChanges();
+            }
+        }
+
+        // TODO: Is DetailedCustomer needed?
+        //public List<DetailedCustomers> GetDetailedCustomers()
+        //{
+        //    using (dbGyorokEntities db = new dbGyorokEntities(ec))
+        //    {
+        //        return db.DetailedCustomers.ToList();
+        //    }
+        //}
+
+        public List<Customers> GetAllCustomers()
+        {
+            using (dbGyorokEntities db = new dbGyorokEntities(ec))
+            {
+                return db.Customers.Include("Cities").Include("Contacts.Customers.Cities").ToList();
+            }
+        }
+
+        public List<Cities> GetAllCities()
+        {
+            using (dbGyorokEntities db = new dbGyorokEntities(ec))
+            {
+                return db.Cities.ToList();
+            }
+        }
+
+        public Contacts GetContactByFirmAndAgent(Customers firm, Customers agent)
+        {
+            using (dbGyorokEntities db = new dbGyorokEntities(ec))
+            {
+                return db.Contacts.SingleOrDefault(c => c.firmID == firm.customerID && c.agentID == agent.customerID);
             }
         }
     }

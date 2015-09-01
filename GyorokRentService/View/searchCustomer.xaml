@@ -15,7 +15,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
-        <ListBox FontSize="16" FontWeight="Normal" ItemsSource="{Binding foundCustomers}" SelectedValuePath="customerID" SelectedValue="{Binding selectedCustomerID}" Height="269" HorizontalAlignment="Left" Margin="12,53,0,0" Name="listBox1" VerticalAlignment="Top" Width="724">
+        <ListBox FontSize="16" FontWeight="Normal" ItemsSource="{Binding foundCustomers}" SelectedValuePath="id" SelectedValue="{Binding selectedCustomerID}" Height="269" HorizontalAlignment="Left" Margin="12,53,0,0" Name="listBox1" VerticalAlignment="Top" Width="724">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -30,7 +30,7 @@
                         <TextBlock Text="{Binding customerID}"/>
                         <TextBlock Text='{Binding customerName}' Grid.Column="1"/>
                         <TextBlock Text='{Binding postalCode}' Grid.Column="2"/>
-                        <TextBlock Text='{Binding city}' Grid.Column="3"/>
+                        <TextBlock Text='{Binding Cities.city}' Grid.Column="3"/>
                         <TextBlock Text='{Binding customerAddress}' Grid.Column="4"/>
                         <TextBlock Text='{Binding IDNumber}' Grid.Column="5"/>
                     </Grid>

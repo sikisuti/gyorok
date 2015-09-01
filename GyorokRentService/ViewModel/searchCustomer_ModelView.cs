@@ -18,13 +18,22 @@ namespace GyorokRentService.ViewModel
 {
     class searchCustomer_ModelView : ViewModelBase
     {
+        public event EventHandler CustomerSelected;
+        public void OnCustomerSelected(EventArgs e)
+        {
+            if (customerSelected != null)
+            {
+                CustomerSelected(_selectedCustomer, e);
+            }
+        }
+
         CustomerBase_Representation _selectedCustomer; 
         searchCustomerType _custORcont;
         //CustomerType _rentORservice;
         int filterType;
 
         private string _searchText;
-        private ObservableCollection<DetailedCustomers> _foundCustomers;
+        private ObservableCollection<CustomerBase_Representation> _foundCustomers;
         private long _selectedCustomerID;
         private Visibility _visibilityType;
         private Brush _firmBorderBrush;
@@ -105,7 +114,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("searchText");
             }
         }
-        public ObservableCollection<DetailedCustomers> foundCustomers
+        public ObservableCollection<CustomerBase_Representation> foundCustomers
         {
             get
             {
@@ -184,6 +193,7 @@ namespace GyorokRentService.ViewModel
                     default:
                         break;
                 }
+                OnCustomerSelected(null);
             }
             catch (Exception)
             {
@@ -287,13 +297,14 @@ namespace GyorokRentService.ViewModel
 
         private void RefreshCustomerList()
         {
+            foundCustomers = DataProxy.Instance.GetAllCustomers();
             if (filterType == 3)
             {
-                foundCustomers = new ObservableCollection<DetailedCustomers>(SQLConnection.Execute.DetailedCustomersView.Where<DetailedCustomers>(c => c.customerName.StartsWith(_searchText) && c.customerDeleted == false).OrderBy<DetailedCustomers, string>(oc => oc.customerName).ToList()); 
+                foundCustomers = new ObservableCollection<CustomerBase_Representation>(foundCustomers.Where(c => c.customerName.StartsWith(_searchText) && c.isDeleted == false).OrderBy(oc => oc.customerName)); 
             }
             else
             {
-                foundCustomers = new ObservableCollection<DetailedCustomers>(SQLConnection.Execute.DetailedCustomersView.Where(c => c.customerName.StartsWith(_searchText) && c.isFirm == (filterType == 1) && c.customerDeleted == false).OrderBy<DetailedCustomers, string>(oc => oc.customerName).ToList());
+                foundCustomers = new ObservableCollection<CustomerBase_Representation>(foundCustomers.Where(c => c.customerName.StartsWith(_searchText) && c.isFirm == (filterType == 1) && c.isDeleted == false).OrderBy(oc => oc.customerName));
             }
         }
     }

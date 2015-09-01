@@ -19,7 +19,7 @@
                 </i:Interaction.Triggers>
             </TextBox>
         </StackPanel>
-        <ListBox FontSize="16" FontWeight="Normal" Height="269" HorizontalAlignment="Left" ItemsSource="{Binding cityList}" Margin="5" Name="listBox1" SelectedValue="{Binding selectedCityID}" SelectedValuePath="cityID" Width="350">
+        <ListBox FontSize="16" FontWeight="Normal" Height="269" HorizontalAlignment="Left" ItemsSource="{Binding cityList}" Margin="5" Name="listBox1"  SelectedItem="{Binding selectedCity}" SelectedValuePath="cityID" Width="350">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

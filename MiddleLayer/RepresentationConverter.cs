@@ -14,7 +14,7 @@ namespace MiddleLayer
         public static CustomerBase_Representation convertCustomer(Customers customer)
         {
             // TODO: Implement concurency checking (rowVersion)
-            return new CustomerBase_Representation()
+            CustomerBase_Representation customerRepresentation = new CustomerBase_Representation()
             {
                 id = customer.customerID,
                 birthDate = customer.birthDate,
@@ -30,8 +30,24 @@ namespace MiddleLayer
                 problems = customer.problems,
                 rentCounter = customer.rentCounter,
                 serviceCounter = customer.serviceCounter,
-                workplace = customer.workPlace
+                workplace = customer.workPlace,
+                contacts = new ObservableCollection<CustomerBase_Representation>()
             };
+
+            if (customer.Contacts != null)
+            {
+                foreach (Contacts contact in customer.Contacts)
+                {
+                    customerRepresentation.contacts.Add(convertCustomer(contact.Customers1));
+                }
+            }
+
+            if (customer.Cities != null)
+            {
+                customerRepresentation.city = convertCity(customer.Cities);
+            }
+
+            return customerRepresentation;
         }
         public static Customers convertCustomer(CustomerBase_Representation customer)
         {
@@ -55,6 +71,31 @@ namespace MiddleLayer
                 workPlace = customer.workplace
             };
         }
+
+        // TODO: Is it needed?
+        //public static DetailedCustomer_Representatiton convertDetailedCustomer(DetailedCustomers customer)
+        //{
+        //    return new DetailedCustomer_Representatiton()
+        //    {
+        //        birthDate = customer.birthDate,
+        //        city = customer.city,
+        //        cityDeleted = customer.cityDeleted,
+        //        comment = customer.comment,
+        //        customerAddress = customer.customerAddress,
+        //        customerName = customer.customerName,
+        //        customerPhone = customer.customerPhone,
+        //        defaultDiscount = customer.defaultDiscount,
+        //        id = customer.customerID,
+        //        IDNumber = customer.IDNumber,
+        //        isFirm = customer.isFirm,
+        //        mothersName = customer.mothersName,
+        //        postalCode = customer.postalCode,
+        //        problems = customer.problems,
+        //        rentCounter = customer.rentCounter,
+        //        serviceCounter = customer.serviceCounter,
+        //        workplace = customer.workPlace
+        //    };
+        //}
 
         public static City_Representation convertCity(Cities city)
         {

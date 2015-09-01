@@ -18,17 +18,20 @@ namespace GyorokRentService.ViewModel
 {
     class CustomerSelector_ViewModel : ViewModelBase
     {
-        DateTime? dt;
         ObservableCollection<CustomerBase_Representation> temp = new ObservableCollection<CustomerBase_Representation>();
         private CustomerBase_Representation _selectedCustomer;
         public CustomerBase_Representation selectedCustomer
         {
             get { return _selectedCustomer; }
             set
-            {                
-                _selectedCustomer = value;
-                isExpanded = false;
-                
+            {
+                if (_selectedCustomer != value)
+                {
+                    _selectedCustomer = value;
+                    RaisePropertyChanged("selectedCustomer");
+                }
+
+                isExpanded = false;                
             }
         }
         public CustomerType customerMode;
@@ -425,6 +428,7 @@ namespace GyorokRentService.ViewModel
         void openCityChooserExecute()
         {
             View.SearchCity cityChooser = new View.SearchCity();
+            ((SearchCity_ViewModel)cityChooser.DataContext).citySelected += (s, a) => { TODO };
             cityChooser.ShowDialog();
         }
 
@@ -453,32 +457,6 @@ namespace GyorokRentService.ViewModel
                     default:
                         break;
                 }
-
-                AppMessages.CustomerToSelect.Register(this, c =>
-                {
-                    Cities customerCity;
-
-                    selectedCustomer = c;
-                    if (selectedCustomer.city != null)
-                    {
-                        city = c.city.postalCode + " " + c.city.city;
-                    }
-                    else
-                    {
-                        city = string.Empty;
-                    }
-                    customerSelected = true;
-                    switch (customerMode)
-                    {
-                        case CustomerType.Rent:
-                            CheckRentValidation(c);
-                            break;
-                        case CustomerType.Service:
-                            break;
-                        default:
-                            break;
-                    }
-                });
                 AppMessages.ContactPersonToSelect.Register(this, addContact);
                 AppMessages.CityToSelect.Register(this, cty =>
                     {
@@ -569,6 +547,22 @@ namespace GyorokRentService.ViewModel
             }
 
             if (valid) AppMessages.CustomerToRent.Send(c);
+        }
+
+        public void CustomerSelected(CustomerBase_Representation customer)
+        {
+            selectedCustomer = customer;
+            customerSelected = true;
+            switch (customerMode)
+            {
+                case CustomerType.Rent:
+                    CheckRentValidation(customer);
+                    break;
+                case CustomerType.Service:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

@@ -8,13 +8,24 @@ using GalaSoft.MvvmLight.Command;
 using SQLConnectionLib;
 using System.Collections.ObjectModel;
 using System.Windows;
+using MiddleLayer.Representations;
+using MiddleLayer;
 
 namespace GyorokRentService.ViewModel
 {
     class SearchCity_ViewModel : ViewModelBase
     {
-        private ObservableCollection<Cities> _cityList;
-        public ObservableCollection<Cities> cityList
+        public event EventHandler citySelected;
+        private void onCitySelected()
+        {
+            if (citySelected != null)
+            {
+                citySelected(selectCity, null);
+            }
+        }
+
+        private ObservableCollection<City_Representation> _cityList;
+        public ObservableCollection<City_Representation> cityList
         {
             get
             {
@@ -32,23 +43,18 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("cityList");
             }
         }
-        private long _selectedCityID;
-        public long selectedCityID
-        {
-            get
-            {
-                return _selectedCityID;
-            }
 
+        private City_Representation _selectedCity;
+        public City_Representation selectedCity
+        {
+            get { return _selectedCity; }
             set
             {
-                if (_selectedCityID == value)
+                if (_selectedCity != value)
                 {
-                    return;
+                    _selectedCity = value;
+                    RaisePropertyChanged("selectedCity");
                 }
-
-                _selectedCityID = value;
-                RaisePropertyChanged("selectedCityID");
             }
         }
         private string _searchText;
@@ -101,10 +107,8 @@ namespace GyorokRentService.ViewModel
         public ICommand selectCity { get { return new RelayCommand(selectCityExecute, () => true); } }
         void selectCityExecute()
         {
-            if (selectedCityID != 0)
+            if (selectedCity != null)
             {
-                Cities actCity = new Cities();
-
                 actCity = SQLConnection.Execute.CitiesTable.Single<Cities>(c => c.cityID == selectedCityID);
                 AppMessages.CityToSelect.Send(actCity); 
             }
@@ -122,7 +126,8 @@ namespace GyorokRentService.ViewModel
 
         private void RefreshCityList()
         {
-            cityList = new ObservableCollection<Cities>(SQLConnection.Execute.CitiesTable.Where<Cities>(c => c.city.StartsWith(_searchText) && c.isDeleted == false).OrderBy<Cities, string>(co => co.city).ToList<Cities>());            
+            ObservableCollection<City_Representation> cities = DataProxy.Instance.GetAllCities();
+            cityList = new ObservableCollection<City_Representation>(cities.Where(c => c.city.StartsWith(_searchText) && c.isDeleted == false).OrderBy(co => co.city));            
         }
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GyorokRentService.ViewModel;
+using MiddleLayer.Representations;
 
 namespace GyorokRentService.View
 {
@@ -30,8 +31,10 @@ namespace GyorokRentService.View
             InitializeComponent();
             var viewModel = new CustomerSelector_ViewModel(ct);
             this.DataContext = viewModel;
-            var gridContent = new searchCustomer(searchCustomerType.searchCustomer);
-            grdExpander.Children.Add(gridContent);
+            var customerPicker = new searchCustomer(searchCustomerType.searchCustomer);
+            grdExpander.Children.Add(customerPicker);
+
+            ((searchCustomer_ModelView)customerPicker.DataContext).CustomerSelected += (s, a) => { viewModel.CustomerSelected((CustomerBase_Representation)s); };
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MiddleLayer.Representations;
+﻿using Common.Dependency_Injection;
+using MiddleLayer.Representations;
 using SQLConnectionLib;
 using System;
 using System.Collections.Generic;
@@ -24,9 +25,13 @@ namespace MiddleLayer
 
         private DataProxy()
         {
-            dataSource = new TestDatabase();
+            dataSource = DIContainer.Instance.Get<ISQLConnection>();
         }
 
+        public ObservableCollection<CustomerBase_Representation> GetAllCustomers()
+        {
+            return new ObservableCollection<CustomerBase_Representation>(dataSource.GetAllCustomers().Select(c => RepresentationConverter.convertCustomer(c)));
+        }
         public CustomerBase_Representation GetCustomerById(long id)
         {
             return RepresentationConverter.convertCustomer(dataSource.GetCustomerById(id));
@@ -39,6 +44,11 @@ namespace MiddleLayer
         {
             dataSource.UpdateCustomer(RepresentationConverter.convertCustomer(customer));
         }
+
+        //public ObservableCollection<DetailedCustomer_Representatiton> GetAllDetailedCustomer()
+        //{
+        //    return new ObservableCollection<DetailedCustomer_Representatiton>(dataSource.GetDetailedCustomers().Select(c => RepresentationConverter.convertDetailedCustomer(c)));
+        //}
 
         public ObservableCollection<CustomerBase_Representation> GetContacts(CustomerBase_Representation firm)
         {
@@ -56,6 +66,11 @@ namespace MiddleLayer
         public City_Representation GetCityById(long id)
         {
             return RepresentationConverter.convertCity(dataSource.GetCityById(id));
+        }
+
+        public ObservableCollection<City_Representation> GetAllCities()
+        {
+            return new ObservableCollection<City_Representation>(dataSource.GetAllCities().Select(c => RepresentationConverter.convertCity(c)));
         }
     }
 }

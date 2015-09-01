@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Objects.DataClasses;
 using System.Linq;
 using System.Text;
 
@@ -7,34 +8,72 @@ namespace SQLConnectionLib
 {
     public class TestDatabase : ISQLConnection
     {
+        List<Cities> testCities = new List<Cities>();
         List<Customers> testCustomers = new List<Customers>();
+        List<DetailedCustomers> testDetailedCustomers = new List<DetailedCustomers>();
+        List<Contacts> testContacts = new List<Contacts>();
 
         public TestDatabase()
         {
-            testCustomers.Add(new Customers() { customerID = 1, birthDate = new DateTime(1980, 3, 2), customerAddress = "Almafa utca 32.", customerName = "Teszt Béla Károly", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = false, mothersName = "Kovács Laura", serviceCounter = 0, rentCounter = 0, workPlace = "ISD Dunaferr" });
-            testCustomers.Add(new Customers() { customerID = 2, birthDate = new DateTime(1980, 3, 2), customerAddress = "Almafa utca 32.", customerName = "Gipsz Jakab", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = false, mothersName = "Kovács Laura", serviceCounter = 0, rentCounter = 0, workPlace = "ISD Dunaferr" });
-            testCustomers.Add(new Customers() { customerID = 3, birthDate = new DateTime(1980, 3, 2), customerAddress = "Almafa utca 32.", customerName = "Halocsekerentyű Leokádia", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = false, mothersName = "Kovács Laura", serviceCounter = 0, rentCounter = 0, workPlace = "ISD Dunaferr" });
-            testCustomers.Add(new Customers() { customerID = 4, birthDate = new DateTime(1980, 3, 2), customerAddress = "Almafa utca 32.", customerName = "Vaszlavics Ilona", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = false, mothersName = "Kovács Laura", serviceCounter = 0, rentCounter = 0, workPlace = "ISD Dunaferr" });
-            testCustomers.Add(new Customers() { customerID = 5, birthDate = new DateTime(1980, 3, 2), customerAddress = "Almafa utca 32.", customerName = "Kotyogó Júlia", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = false, mothersName = "Kovács Laura", serviceCounter = 0, rentCounter = 0, workPlace = "ISD Dunaferr" });
+            Cities city01 = new Cities() { cityID = 1, city = "Dunaújváros", isDeleted = false, postalCode = "2400" };
+            testCities.Add(city01);
+            Cities city02 = new Cities() { cityID = 2, city = "Győr", isDeleted = false, postalCode = "1234" };
+            testCities.Add(city02);
+            Cities city03 = new Cities() { cityID = 3, city = "Balassagyarmat", isDeleted = false, postalCode = "5847" };
+            testCities.Add(city03);
 
-            testCustomers.Add(new Customers() { customerID = 100, customerAddress = "Almafa utca 32.", customerName = "Óvárosi Csavarbolt", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = true, serviceCounter = 0, rentCounter = 0 });
-            testCustomers.Add(new Customers() { customerID = 101, customerAddress = "Almafa utca 32.", customerName = "ISD Dunaferr", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = true, serviceCounter = 0, rentCounter = 0 });
-            testCustomers.Add(new Customers() { customerID = 102, customerAddress = "Almafa utca 32.", customerName = "Hankook", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = true, serviceCounter = 0, rentCounter = 0 });
+            Customers person01 = new Customers() { customerID = 1, birthDate = new DateTime(1980, 3, 2), Cities = city01, customerAddress = "Almafa utca 32.", customerName = "Teszt Béla Károly", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = false, mothersName = "Kovács Laura", serviceCounter = 0, rentCounter = 0, workPlace = "ISD Dunaferr" };
+            testCustomers.Add(person01);
+            Customers person02 = new Customers() { customerID = 2, birthDate = new DateTime(1980, 3, 2), Cities = city01, customerAddress = "Almafa utca 32.", customerName = "Gipsz Jakab", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = false, mothersName = "Kovács Laura", serviceCounter = 0, rentCounter = 0, workPlace = "ISD Dunaferr" };
+            testCustomers.Add(person02);
+            Customers person03 = new Customers() { customerID = 3, birthDate = new DateTime(1980, 3, 2), Cities = city01, customerAddress = "Almafa utca 32.", customerName = "Halocsekerentyű Leokádia", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = false, mothersName = "Kovács Laura", serviceCounter = 0, rentCounter = 0, workPlace = "ISD Dunaferr" };
+            testCustomers.Add(person03);
+            Customers person04 = new Customers() { customerID = 4, birthDate = new DateTime(1980, 3, 2), Cities = city01, customerAddress = "Almafa utca 32.", customerName = "Vaszlavics Ilona", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = false, mothersName = "Kovács Laura", serviceCounter = 0, rentCounter = 0, workPlace = "ISD Dunaferr" };
+            testCustomers.Add(person04);
+            Customers person05 = new Customers() { customerID = 5, birthDate = new DateTime(1980, 3, 2), Cities = city01, customerAddress = "Almafa utca 32.", customerName = "Kotyogó Júlia", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = false, mothersName = "Kovács Laura", serviceCounter = 0, rentCounter = 0, workPlace = "ISD Dunaferr" };
+            testCustomers.Add(person05);
+
+            Contacts firm01contact01 = new Contacts() { Customers1 = person02 };
+            testContacts.Add(firm01contact01);
+            Customers firm01 = new Customers() { customerID = 100, Cities = city01, customerAddress = "Almafa utca 32.", customerName = "Óvárosi Csavarbolt", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = true, Contacts = new EntityCollection<Contacts>() { firm01contact01 }, serviceCounter = 0, rentCounter = 0 };
+            testCustomers.Add(firm01);
+            Contacts firm02contact01 = new Contacts() { Customers1 = person01 };
+            testContacts.Add(firm02contact01);
+            Contacts firm02contact02 = new Contacts() { Customers1 = person04 };
+            testContacts.Add(firm02contact02);
+            Customers firm02 = new Customers() { customerID = 101, Cities = city01, customerAddress = "Almafa utca 32.", customerName = "ISD Dunaferr", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = true, Contacts = new EntityCollection<Contacts>() { firm02contact01, firm02contact02 }, serviceCounter = 0, rentCounter = 0 };
+            testCustomers.Add(firm02);
+            Customers firm03 = new Customers() { customerID = 102, Cities = city01, customerAddress = "Almafa utca 32.", customerName = "Hankook", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isDeleted = false, isFirm = true, serviceCounter = 0, rentCounter = 0 };
+            testCustomers.Add(firm03);
+
+            testDetailedCustomers.Add(new DetailedCustomers() { customerID = 5, birthDate = new DateTime(1980, 3, 2), cityID = city01.cityID, customerAddress = "Almafa utca 32.", customerName = "Kotyogó Júlia", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isFirm = false, mothersName = "Kovács Laura", serviceCounter = 0, rentCounter = 0, workPlace = "ISD Dunaferr", city = "Dunaújváros", cityDeleted = false, customerDeleted = false, postalCode = "2400" });
+
+            testDetailedCustomers.Add(new DetailedCustomers() { customerID = 102, cityID = city01.cityID, customerAddress = "Almafa utca 32.", customerName = "Hankook", customerPhone = "+36/30/517-6289", IDNumber = "JD245874", isFirm = true, serviceCounter = 0, rentCounter = 0, city = "Dunaújváros", cityDeleted = false, customerDeleted = false, postalCode = "2400" });
         }
 
         public void AddContact(Customers firm, Customers agent)
         {
-            throw new NotImplementedException();
+            Customers contactsFirm = GetCustomerById(firm.customerID);
+            Customers contactsAgent = GetCustomerById(agent.customerID);
+            Contacts newContact = new Contacts() { Customers1 = contactsAgent };
+            contactsFirm.Contacts.Add(newContact);
+            testContacts.Add(newContact);
         }
 
         public void AddCustomer(Customers customer)
         {
-            throw new NotImplementedException();
+            testCustomers.Add(customer);
         }
 
         public void DeleteContact(Customers firm, Customers agent)
         {
-            throw new NotImplementedException();
+            Contacts contactToDelete = GetContactByFirmAndAgent(firm, agent);
+            if (contactToDelete != null)
+            {
+                Customers contactsfirm = GetCustomerById(firm.customerID);
+                contactsfirm.Contacts.Remove(contactToDelete);
+                testContacts.Remove(contactToDelete);
+            }
         }
 
         public void DoBackup(string path = null)
@@ -49,7 +88,7 @@ namespace SQLConnectionLib
 
         public Cities GetCityById(long id)
         {
-            throw new NotImplementedException();
+            return testCities.SingleOrDefault(c => c.cityID == id);
         }
 
         public List<Customers> GetContacts(Customers firm)
@@ -62,9 +101,29 @@ namespace SQLConnectionLib
             return testCustomers.SingleOrDefault(c => c.customerID == id);
         }
 
+        public List<DetailedCustomers> GetDetailedCustomers()
+        {
+            return testDetailedCustomers;
+        }
+
         public void UpdateCustomer(Customers customer)
         {
-            throw new NotImplementedException();
+            testCustomers[testCustomers.FindIndex(c => c.customerID == customer.customerID)] = customer;
+        }
+
+        public List<Customers> GetAllCustomers()
+        {
+            return testCustomers;
+        }
+
+        public List<Cities> GetAllCities()
+        {
+            return testCities;
+        }
+
+        public Contacts GetContactByFirmAndAgent(Customers firm, Customers agent)
+        {
+            return testContacts.SingleOrDefault(c => c.firmID == firm.customerID && c.agentID == agent.customerID);
         }
     }
 }
