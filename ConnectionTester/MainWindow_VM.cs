@@ -224,16 +224,6 @@ namespace ConnectionTester
 
         public MainWindow_VM()
         {
-            DataSource = @".\sqlexpress";
-            InitialCatalog = @"dbGyorok";
-            IntegratedSecurity = false;
-            PersistSecurityInfo = false;
-            MultipleActiveResultSets = true;
-            ApplicationName = @"EntityFramework";
-            UserName = @"gyorok";
-            Password = @"gyorok";
-            Provider = @"System.Data.SqlClient";
-            MetaData = @"res://*/dbGyorok.csdl|res://*/dbGyorok.ssdl|res://*/dbGyorok.msl";
         }
 
         public ICommand StartTest { get { return new RelayCommand(StartTestExecute, () => true); } }
@@ -243,23 +233,11 @@ namespace ConnectionTester
 
             SQLConnection datasource = new SQLConnection();
 
-            datasource.DataSource = DataSource;
-            datasource.InitialCatalog = InitialCatalog;
-            datasource.IntegratedSecurity = IntegratedSecurity;
-            datasource.PersistSecurityInfo = PersistSecurityInfo;
-            datasource.MultipleActiveResultSets = MultipleActiveResultSets;
-            datasource.App = ApplicationName;
-            datasource.UserName = UserName;
-            datasource.Password = Password;
-            datasource.Provider = Provider;
-            datasource.MetaData = MetaData;
-
             List<ToolStatuses> cList = new List<ToolStatuses>();
 
             try
             {
                 Status += "Try to open database ... ";
-                datasource.Init();
                 Status += "Database opened successfully!" + Environment.NewLine;
             }
             catch (Exception e)

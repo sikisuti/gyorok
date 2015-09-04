@@ -6,10 +6,11 @@ using System.Data.Objects;
 
 namespace SQLConnectionLib
 {
-    public interface ISQLConnection
+    public interface ISQLConnection : IDisposable
     {
         void DoBackup(string path = null);
         void DoRestore(string path);
+        DbSettings GetSettings();
 
         Customers GetCustomerById(long id);
         List<Customers> GetAllCustomers();
@@ -26,5 +27,13 @@ namespace SQLConnectionLib
 
         Cities GetCityById(long id);
         List<Cities> GetAllCities();
+        void DeleteCityById(long id);
+
+        List<Tools> GetAllTools();
+        void UpdateTool(Tools tool);
+
+        Rentals GetLastRentalByToolId(long toolId);
+
+        RentalGroups GetRentalGroupById(long id);
     }
 }

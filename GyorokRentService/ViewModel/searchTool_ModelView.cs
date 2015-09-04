@@ -10,17 +10,45 @@ using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
 using GyorokRentService.ViewModel;
 using SQLConnectionLib;
+using MiddleLayer.Representations;
+using MiddleLayer;
+using System.Threading.Tasks;
+using Common.Enumerations;
 
 namespace GyorokRentService.ViewModel
 {
     class searchTool_ModelView : ViewModelBase
     {
+        public event EventHandler ToolSelected;
+        public void OnToolSelected()
+        {
+            if (this.ToolSelected != null)
+            {
+                ToolSelected(selectedTool, null);
+            }
+        }
+
         ObservableCollection<Tools> temp = new ObservableCollection<Tools>();
 
+        public List<Tool_Representation> allTools;
+
+        private bool _IsBusy;
+        public bool IsBusy
+        {
+            get { return _IsBusy; }
+            set
+            {
+                if (_IsBusy != value)
+                {
+                    _IsBusy = value;
+                    RaisePropertyChanged("IsBusy");
+                }
+            }
+        }
+
         private string _searchText;
-        private ObservableCollection<Tools> _foundTools;
-        private long _selectedToolID;
-        private Tools _selectedTool;
+        private ObservableCollection<Tool_Representation> _foundTools;
+        private Tool_Representation _selectedTool;
         private string _plannedBringBackDate;        
                 
         public string searchText
@@ -41,7 +69,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("searchText");
             }
         }
-        public ObservableCollection<Tools> foundTools
+        public ObservableCollection<Tool_Representation> foundTools
         {
             get
             {
@@ -59,27 +87,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("foundTools");
             }
         }
-        public long selectedToolID
-        {
-            get
-            {
-                return _selectedToolID;
-            }
-
-            set
-            {
-                if (_selectedToolID == value)
-                {
-                    return;
-                }
-
-                selectedTool = SQLConnection.Execute.ToolsTable.Single(t => t.toolID == value);
-                
-                _selectedToolID = value;
-                RaisePropertyChanged("selectedToolID");
-            }
-        }
-        public Tools selectedTool
+        public Tool_Representation selectedTool
         {
             get
             {
@@ -93,13 +101,11 @@ namespace GyorokRentService.ViewModel
                     return;
                 }
 
-                if (value.toolStatusID == 3)
+                if (value.toolStatus.id == (long)ToolStatusEnum.Rented)
                 {
-                    var r = SQLConnection.Execute.RentalsTable.Where(rt => rt.toolID == value.toolID);
-                    var lastr = r.Single(rs => rs.rentalID == r.Max(rm => rm.rentalID));
-                    var re = lastr.rentalEnd;
+                    Rental_Representation rental = DataProxy.Instance.GetLastRentalByToolId(value.id);
 
-                    plannedBringBackDate = "Vissza: " + re.ToString("D");
+                    plannedBringBackDate = "Vissza: " + rental.rentalEnd.ToString("D");
                 }
                 else
                 {
@@ -137,18 +143,7 @@ namespace GyorokRentService.ViewModel
         public ICommand toolSelected { get { return new RelayCommand(toolSelectedExecute, () => true); } }
         void toolSelectedExecute()
         {
-            try
-            {
-                //db.Dispose();
-                //db = new dbGyorokEntities();
-                _selectedTool = (from t in SQLConnection.Execute.ToolsTable where t.toolID == _selectedToolID select t).First();
-
-                AppMessages.ToolToSelect.Send(_selectedTool);
-            }
-            catch (Exception)
-            {
-                
-            }
+            OnToolSelected();
         }
         public ICommand openNewToolWindow { get { return new RelayCommand(openNewToolWindowExecute, () => true); } }
         void openNewToolWindowExecute()
@@ -184,13 +179,24 @@ namespace GyorokRentService.ViewModel
                 AppMessages.ToolListModified.Register(this, t => RefreshToolList());
                 AppMessages.RentalPaid.Register(this, p => RefreshToolList());
                 AppMessages.RentGroupClosed.Register(this, rg => RefreshToolList());
-                RefreshToolList();
             }
         }
 
-        private void RefreshToolList()
+        public void RefreshToolList()
         {
-            foundTools = new ObservableCollection<Tools>(SQLConnection.Execute.ToolsTable.Where<Tools>(t => t.toolName.StartsWith(_searchText) && t.isDeleted == false).OrderBy<Tools, string>(ot => ot.toolName).ToList<Tools>());                    
+            Task t = Task.Factory.StartNew(() =>
+            {
+                IsBusy = true;
+                allTools = DataProxy.Instance.GetAllTools();
+                FilterTools();
+                IsBusy = false;
+            });
+                     
+        }
+
+        private void FilterTools()
+        {
+            foundTools = new ObservableCollection<Tool_Representation>(allTools.Where(t => t.toolName.ToLower().StartsWith(_searchText.ToLower())).OrderBy(ot => ot.toolName).ToList());
         }
     }
 }

@@ -21,56 +21,135 @@ namespace MiddleLayer
             }
         }
 
-        ISQLConnection dataSource;
-
         private DataProxy()
         {
-            dataSource = DIContainer.Instance.Get<ISQLConnection>();
         }
 
-        public ObservableCollection<CustomerBase_Representation> GetAllCustomers()
+        private ISQLConnection DataSource
         {
-            return new ObservableCollection<CustomerBase_Representation>(dataSource.GetAllCustomers().Select(c => RepresentationConverter.convertCustomer(c)));
+            get
+            {
+                return DIContainer.Instance.Get<SQLConnection>();
+            }
+        }
+
+        public DbSettings_Representation GetDbSettings()
+        {
+            return RepresentationConverter.convertDbSettings(DataSource.GetSettings());
+        }
+
+        public List<CustomerBase_Representation> GetAllCustomers()
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                var customerList = dataSource.GetAllCustomers().Select(c => RepresentationConverter.convertCustomer(c));
+
+                // Too much time!
+                //foreach (var customer in customerList)
+                //{
+                //    // TODO: fill the contact list of the customer
+                //    customer.contacts = GetContacts(customer);
+                //}
+                return customerList.ToList(); 
+            }
         }
         public CustomerBase_Representation GetCustomerById(long id)
         {
-            return RepresentationConverter.convertCustomer(dataSource.GetCustomerById(id));
+            using (ISQLConnection dataSource = DataSource)
+            {
+                return RepresentationConverter.convertCustomer(dataSource.GetCustomerById(id)); 
+            }
         }
         public void AddCustomer(CustomerBase_Representation customer)
         {
-            dataSource.AddCustomer(RepresentationConverter.convertCustomer(customer));
+            using (ISQLConnection dataSource = DataSource)
+            {
+                dataSource.AddCustomer(RepresentationConverter.convertCustomer(customer)); 
+            }
         }
         public void UpdateCustomer(CustomerBase_Representation customer)
         {
-            dataSource.UpdateCustomer(RepresentationConverter.convertCustomer(customer));
+            using (ISQLConnection dataSource = DataSource)
+            {
+                dataSource.UpdateCustomer(RepresentationConverter.convertCustomer(customer)); 
+            }
         }
-
-        //public ObservableCollection<DetailedCustomer_Representatiton> GetAllDetailedCustomer()
-        //{
-        //    return new ObservableCollection<DetailedCustomer_Representatiton>(dataSource.GetDetailedCustomers().Select(c => RepresentationConverter.convertDetailedCustomer(c)));
-        //}
 
         public ObservableCollection<CustomerBase_Representation> GetContacts(CustomerBase_Representation firm)
         {
-            return new ObservableCollection<CustomerBase_Representation>(dataSource.GetContacts(RepresentationConverter.convertCustomer(firm)).Select(c => RepresentationConverter.convertCustomer(c)));
+            using (ISQLConnection dataSource = DataSource)
+            {
+                List<Customers> contactList = dataSource.GetContacts(RepresentationConverter.convertCustomer(firm));
+                List<CustomerBase_Representation> contactListRep = contactList.Select(c => RepresentationConverter.convertCustomer(c)).ToList();
+                return new ObservableCollection<CustomerBase_Representation>(contactListRep); 
+            }
         }
         public void DeleteContact(CustomerBase_Representation firm, CustomerBase_Representation agent)
         {
-            dataSource.DeleteContact(RepresentationConverter.convertCustomer(firm), RepresentationConverter.convertCustomer(agent));
+            using (ISQLConnection dataSource = DataSource)
+            {
+                dataSource.DeleteContact(RepresentationConverter.convertCustomer(firm), RepresentationConverter.convertCustomer(agent)); 
+            }
         }
         public void AddContact(CustomerBase_Representation firm, CustomerBase_Representation agent)
         {
-            dataSource.AddContact(RepresentationConverter.convertCustomer(firm), RepresentationConverter.convertCustomer(agent));
+            using (ISQLConnection dataSource = DataSource)
+            {
+                dataSource.AddContact(RepresentationConverter.convertCustomer(firm), RepresentationConverter.convertCustomer(agent)); 
+            }
         }
 
         public City_Representation GetCityById(long id)
         {
-            return RepresentationConverter.convertCity(dataSource.GetCityById(id));
+            using (ISQLConnection dataSource = DataSource)
+            {
+                return RepresentationConverter.convertCity(dataSource.GetCityById(id)); 
+            }
+        }
+        public List<City_Representation> GetAllCities()
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                return dataSource.GetAllCities().Select(c => RepresentationConverter.convertCity(c)).ToList(); 
+            }
+        }
+        public void DeleteCityById(long id)
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                dataSource.DeleteCityById(id); 
+            }
         }
 
-        public ObservableCollection<City_Representation> GetAllCities()
+        public List<Tool_Representation> GetAllTools()
         {
-            return new ObservableCollection<City_Representation>(dataSource.GetAllCities().Select(c => RepresentationConverter.convertCity(c)));
+            using (ISQLConnection dataSource = DataSource)
+            {
+                return dataSource.GetAllTools().Select(t => RepresentationConverter.convertTool(t)).ToList();
+            }
+        }
+        public void UpdateTool(Tool_Representation tool)
+        {
+            using (ISQLConnection datasource = DataSource)
+            {
+                datasource.UpdateTool(RepresentationConverter.convertTool(tool));
+            }
+        }
+
+        public Rental_Representation GetLastRentalByToolId(long toolId)
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                return RepresentationConverter.convertRental(dataSource.GetLastRentalByToolId(toolId));
+            }
+        }
+
+        public RentalGroup_Representation GetRentalGroupById(long id)
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                return RepresentationConverter.convertRentalGroup(dataSource.GetRentalGroupById(id));
+            }
         }
     }
 }

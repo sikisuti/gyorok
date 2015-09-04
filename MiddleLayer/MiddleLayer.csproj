@@ -56,8 +56,14 @@
     <Compile Include="RepresentationConverter.cs" />
     <Compile Include="Representations\City_Representation.cs" />
     <Compile Include="Representations\CustomerBase_Representation.cs" />
+    <Compile Include="Representations\DbSettings_Representation.cs" />
     <Compile Include="Representations\DetailedCustomer_Representatiton.cs" />
+    <Compile Include="Representations\PayType_Representation.cs" />
+    <Compile Include="Representations\RentalGroup_Representation.cs" />
+    <Compile Include="Representations\Rental_Representation.cs" />
     <Compile Include="Representations\RepresentationBase.cs" />
+    <Compile Include="Representations\ToolStatus_Representation.cs" />
+    <Compile Include="Representations\Tool_Representation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

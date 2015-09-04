@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GyorokRentService.ViewModel;
+using MiddleLayer.Representations;
 
 namespace GyorokRentService.View
 {
@@ -25,6 +26,20 @@ namespace GyorokRentService.View
             InitializeComponent();
             var viewModel = new ToolSelector_ViewModel();
             this.DataContext = viewModel;
+
+            searchTool searchToolWindow = new searchTool();
+            searchTool_ModelView searchToolVM = new searchTool_ModelView();
+            searchToolWindow.DataContext = searchToolVM;
+            this.grdExpander.Children.Add(searchToolWindow);
+
+            searchToolVM.ToolSelected += (s, a) => { viewModel.selectedTool = (Tool_Representation)s; };
+            viewModel.ToolPickerExpanded += (s, a) =>
+            {
+                if (searchToolVM.allTools == null && searchToolVM.IsBusy == false)
+                {
+                    searchToolVM.RefreshToolList();
+                }
+            };
         }
     }
 }

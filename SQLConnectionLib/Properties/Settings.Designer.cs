@@ -25,7 +25,7 @@ namespace SQLConnectionLib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
+        [global::System.Configuration.DefaultSettingValueAttribute("virtwin7")]
         public string ServerIP {
             get {
                 return ((string)(this["ServerIP"]));

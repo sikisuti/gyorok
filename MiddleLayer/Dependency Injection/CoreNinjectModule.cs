@@ -11,7 +11,7 @@ namespace MiddleLayer.Dependency_Injection
     {
         public override void Load()
         {
-            Bind<ISQLConnection>().To<TestDatabase>();
+            Bind<ISQLConnection>().To<SQLConnection>();
         }
     }
 }

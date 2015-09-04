@@ -51,6 +51,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dbGyorok.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DbSettings.cs" />
     <Compile Include="ISQLConnection.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

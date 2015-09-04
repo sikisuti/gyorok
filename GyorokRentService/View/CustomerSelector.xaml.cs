@@ -21,6 +21,8 @@ namespace GyorokRentService.View
     /// </summary>
     public partial class CustomerSelector : UserControl
     {
+        public searchCustomer_ModelView customerPicker_VM { get; set; }
+
         public CustomerSelector()
         {
             InitializeComponent();
@@ -34,7 +36,16 @@ namespace GyorokRentService.View
             var customerPicker = new searchCustomer(searchCustomerType.searchCustomer);
             grdExpander.Children.Add(customerPicker);
 
-            ((searchCustomer_ModelView)customerPicker.DataContext).CustomerSelected += (s, a) => { viewModel.CustomerSelected((CustomerBase_Representation)s); };
+            customerPicker_VM = customerPicker.DataContext as searchCustomer_ModelView;
+
+            customerPicker_VM.CustomerSelected += (s, a) => { viewModel.CustomerSelected((CustomerBase_Representation)s); };
+            viewModel.customerPickerExpanded += (s, a) => 
+            {
+                if (customerPicker_VM.allCustomer == null && customerPicker_VM.IsBusy == false)
+                {
+                    customerPicker_VM.RefreshCustomerList();
+                }
+            };
         }
     }
 }

@@ -18,7 +18,7 @@
             <TextBlock Text="Beállítások" FontSize="30" FontWeight="Bold" TextDecorations="Underline"/>
         </Label>
         <Label FontSize="16" FontWeight="Bold" Height="30" Content="Szerver azonosító:" HorizontalAlignment="Left" Margin="43,104,0,0" Name="label2" VerticalAlignment="Top" />
-        <TextBox FontSize="16" FontWeight="Normal" Text="{Binding serverIP}" Height="30" HorizontalAlignment="Left" Margin="196,104,0,0" Name="textBox1" VerticalAlignment="Top" Width="149" />
+        <TextBox FontSize="16" FontWeight="Normal" Text="{Binding dbSettings.ServerIP}" Height="30" HorizontalAlignment="Left" Margin="196,104,0,0" Name="textBox1" VerticalAlignment="Top" Width="149" />
         <Label Padding="5,5,5,0" Content="Cégnév:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,162,0,0" Name="label3" VerticalAlignment="Top" />
         <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,162,0,0" Name="textBox2" Text="{Binding companyName}" VerticalAlignment="Top" Width="314" />
         <Label Padding="5,5,5,0" Content="Cím:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,198,0,0" Name="label4" VerticalAlignment="Top" />
@@ -31,13 +31,13 @@
         <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,368,0,0" Name="textBox6" Text="{Binding costOfClean, StringFormat=C0, UpdateSourceTrigger=PropertyChanged}" xml:lang="hu-HU" VerticalAlignment="Top" Width="149" />
         <Label Content="Nyitvatartás:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,306,0,0" Name="label8" Padding="5,5,5,0" VerticalAlignment="Top" />
         <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,306,0,0" Name="textBox7" Text="{Binding openTime}" VerticalAlignment="Top" Width="314" />
-        <!--<Label Content="Felhasználónév:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,155,0,0" Name="label3" VerticalAlignment="Top" />
-        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,155,0,0" Name="textBox2" Text="{Binding userName}" VerticalAlignment="Top" Width="149" />
+                    <!--<Label Content="Felhasználónév:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,155,0,0" Name="label3" VerticalAlignment="Top" />
+                    <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,155,0,0" Name="textBox2" Text="{Binding dbSettings.userName}" VerticalAlignment="Top" Width="149" />
         <Label Content="Jelszó:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="43,191,0,0" Name="label4" VerticalAlignment="Top" />
-        <PasswordBox PasswordChar="*" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,191,0,0" Name="textBox3" pass="{Binding password}" VerticalAlignment="Top" Width="149" />-->
+                    <PasswordBox PasswordChar="*" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="196,191,0,0" Name="textBox3" pass="{Binding dbSettings.password}" VerticalAlignment="Top" Width="149" />-->
     </Grid>
         </TabItem>
-            <TabItem Header="Mentés" FontSize="16" FontWeight="Bold" IsEnabled="{Binding serverIP, Converter={StaticResource localToBool}}">
+            <TabItem Header="Mentés" FontSize="16" FontWeight="Bold" IsEnabled="{Binding dbSettings.ServerIP, Converter={StaticResource localToBool}}">
             <StackPanel Margin="10">
                 <Label Content="Automatikus mentési helyek:"/>
                 <Grid>
@@ -51,12 +51,12 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Elsődleges:" FontWeight="Normal" VerticalAlignment="Center"/>
                     <StackPanel Grid.Column="1" Orientation="Horizontal">
-                        <TextBox Text="{Binding PrimaryBackupPath}" Width="300" Height="30" FontWeight="Normal"/>
+                            <TextBox Text="{Binding dbSettings.primaryBackupPath}" Width="300" Height="30" FontWeight="Normal"/>
                         <Button Content="..." Command="{Binding selectPrimaryBackupPath}" Width="30" Height="30" Margin="10"/>
                     </StackPanel>
                     <Label Grid.Row="1" Content="Másodlagos:" FontWeight="Normal" VerticalAlignment="Center"/>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                        <TextBox Text="{Binding SecondaryBackupPath}" Width="300" Height="30" FontWeight="Normal"/>
+                            <TextBox Text="{Binding dbSettings.secondaryBackupPath}" Width="300" Height="30" FontWeight="Normal"/>
                         <Button Content="..." Command="{Binding selectSecondaryBackupPath}" Width="30" Height="30" Margin="10"/>
                     </StackPanel>
                 </Grid>
@@ -68,7 +68,7 @@
                 </StackPanel>
             </StackPanel>
         </TabItem>
-            <TabItem Header="Visszaállítás" FontSize="16" FontWeight="Bold" IsEnabled="{Binding serverIP, Converter={StaticResource localToBool}}">
+            <TabItem Header="Visszaállítás" FontSize="16" FontWeight="Bold" IsEnabled="{Binding dbSettings.ServerIP, Converter={StaticResource localToBool}}">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>

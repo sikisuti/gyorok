@@ -26,20 +26,9 @@ namespace SQLConnectionLib
             }
         }
 
-        public string DataSource { get; set; }
-        public string InitialCatalog { get; set; }
-        public bool IntegratedSecurity { get; set; }
-        public bool PersistSecurityInfo { get; set; }
-        public bool MultipleActiveResultSets { get; set; }
-        public string App { get; set; }
-        public string MetaData { get; set; }
-        public string Provider { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        private DbSettings dbSettings;
 
         private dbGyorokEntities db;
-        EntityConnectionStringBuilder sb;
-        private EntityConnection ec;
 
         private long customersVersion;
         private long partsVersion;
@@ -159,81 +148,32 @@ namespace SQLConnectionLib
 
         public SQLConnection()
         {
-            //Logger.Execute.WriteLog("SQL connection instantiated", EventLogEntryType.Information);
-
-            DataSource = Properties.Settings.Default.ServerIP + @"\" + Properties.Settings.Default.ServerInstanceName;
-            InitialCatalog = Properties.Settings.Default.InitialCatalog;
-            IntegratedSecurity = Properties.Settings.Default.IntegratedSecurity;
-            PersistSecurityInfo = Properties.Settings.Default.PersistSecurityInfo;
-            MultipleActiveResultSets = Properties.Settings.Default.MultipleActiveResultSets;
-            App = Properties.Settings.Default.App;
-            UserName = Properties.Settings.Default.UserName;
-            Password = Properties.Settings.Default.Password;
-            Provider = Properties.Settings.Default.Provider;
-            MetaData = Properties.Settings.Default.MetaData;
-        }
-
-        public void Init()
-        {
-            SqlConnectionStringBuilder pConnStr = new SqlConnectionStringBuilder();
-
-            pConnStr.DataSource = DataSource;
-            pConnStr.InitialCatalog = InitialCatalog;
-            pConnStr.IntegratedSecurity = IntegratedSecurity;
-            pConnStr.UserID = UserName;
-            pConnStr.Password = Password;
-            pConnStr.PersistSecurityInfo = PersistSecurityInfo;
-            pConnStr.MultipleActiveResultSets = MultipleActiveResultSets;
-            pConnStr.ApplicationName = App;
-
-            sb = new EntityConnectionStringBuilder();
-            sb.Provider = Provider;
-            sb.ProviderConnectionString = pConnStr.ConnectionString;
-            sb.Metadata = MetaData;
-
-            ec = new EntityConnection(sb.ConnectionString);
-
-            try
-            {
-                UpdateDb();
-                UpdateTables();
-                UpdateViews();
-
-                customersVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Customers").tableVersion;
-                partsVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Parts").tableVersion;
-                rentalsVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Rentals").tableVersion;
-                serviceWorksheetsVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "ServiceWorksheets").tableVersion;
-                toolsVersion = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Tools").tableVersion;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            
+            dbSettings = new DbSettings();
+            db = new dbGyorokEntities(dbSettings.GetEntityConnection());
         }
 
         public void SaveDb()
         {
-            db.SaveChanges();
-            UpdateDb();
-            UpdateTables();
-            UpdateViews();
+            ////db.SaveChanges();
+            //UpdateDb();
+            //UpdateTables();
+            //UpdateViews();
         }
 
         private void UpdateDb()
         {        
-            if (db != null) { db.Dispose(); }
+            //if (db != null) { db.Dispose(); }
 
-            try
-            {
-                db = new dbGyorokEntities(ec);
-                db.Connection.Open();
-                db.Connection.Close();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            //try
+            //{
+            //    db = new dbGyorokEntities(ec);
+            //    db.Connection.Open();
+            //    db.Connection.Close();
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
         }
 
         private void UpdateTables()
@@ -261,219 +201,124 @@ namespace SQLConnectionLib
 
         public void delCustomer(long pCustomerID)
         {
-            Customers actCustomer;
-
-            using (dbGyorokEntities db = new dbGyorokEntities(ec))
-            {
-                actCustomer = db.Customers.Single(c => c.customerID == pCustomerID);
-                actCustomer.isDeleted = true;
-                SaveDb();
-            }
+            Customers actCustomer = db.Customers.Single(c => c.customerID == pCustomerID);
+            actCustomer.isDeleted = true;
+            db.SaveChanges();
         }
 
         public void delTool(long pToolID)
         {
-            Tools actTool;
-
-            using (dbGyorokEntities db = new dbGyorokEntities(ec))
-            {
-                actTool = db.Tools.Single(t => t.toolID == pToolID);
-                actTool.isDeleted = true;
-                SaveDb();
-            }
+            Tools actTool = db.Tools.Single(t => t.toolID == pToolID);
+            actTool.isDeleted = true;
+            db.SaveChanges();
         }
 
         public void addCity(Cities newCity)
         {
-            try
-            {
-                CitiesTable.AddObject(newCity);
-                SaveDb();
-            }
-            catch (Exception)
-            {
-                
-                throw;
-            }
+            db.Cities.AddObject(newCity);
+            db.SaveChanges();
         }
 
         public void delCity(long pCityID)
         {
-            Cities actCity;
-
-            using (dbGyorokEntities db = new dbGyorokEntities(ec))
-            {
-                actCity = db.Cities.Single(t => t.cityID == pCityID);
-                actCity.isDeleted = true;
-                SaveDb();
-            }
+            Cities actCity = db.Cities.Single(t => t.cityID == pCityID);
+            actCity.isDeleted = true;
+            db.SaveChanges();
         }
 
         public bool IsCustomersConsistent()
         {
-            long ver;
+            long ver = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Customers").tableVersion; 
 
-            try
-            {
-                using (dbGyorokEntities gyorokDB = new dbGyorokEntities(sb.ConnectionString))
-                {
-                    ver = gyorokDB.TableVersions.Single<TableVersions>(tv => tv.tableName == "Customers").tableVersion; 
-                }
-
-                if (customersVersion >= ver)
-                {
-                    return true;
-                }
-                else
-                {
-                    customersVersion = ver;
-                    return false;
-                }
-            }
-            catch (Exception)
+            if (customersVersion >= ver)
             {
                 return true;
+            }
+            else
+            {
+                customersVersion = ver;
+                return false;
             }
         }
 
         public bool IsPartsConsistent()
         {
-            long ver;
+            long ver = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Parts").tableVersion;
 
-            try
-            {
-                using (dbGyorokEntities gyorokDB = new dbGyorokEntities(sb.ConnectionString))
-                {
-                    ver = gyorokDB.TableVersions.Single<TableVersions>(tv => tv.tableName == "Parts").tableVersion;
-                }
-
-                if (partsVersion >= ver)
-                {
-                    return true;
-                }
-                else
-                {
-                    partsVersion = ver;
-                    return false;
-                }
-            }
-            catch (Exception)
+            if (partsVersion >= ver)
             {
                 return true;
+            }
+            else
+            {
+                partsVersion = ver;
+                return false;
             }
         }
 
         public bool IsRentalsConsistent()
         {
-            long ver;
+            long ver = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Rentals").tableVersion;
 
-            try
-            {
-                using (dbGyorokEntities gyorokDB = new dbGyorokEntities(sb.ConnectionString))
-                {
-                    ver = gyorokDB.TableVersions.Single<TableVersions>(tv => tv.tableName == "Rentals").tableVersion;
-                }
-
-                if (rentalsVersion >= ver)
-                {
-                    return true;
-                }
-                else
-                {
-                    rentalsVersion = ver;
-                    return false;
-                }
-            }
-            catch (Exception)
+            if (rentalsVersion >= ver)
             {
                 return true;
+            }
+            else
+            {
+                rentalsVersion = ver;
+                return false;
             }
         }
 
         public bool IsServiceWorksheetsConsistent()
         {
-            long ver;
+            long ver = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "ServiceWorksheets").tableVersion;
 
-            try
-            {
-                using (dbGyorokEntities gyorokDB = new dbGyorokEntities(sb.ConnectionString))
-                {
-                    ver = gyorokDB.TableVersions.Single<TableVersions>(tv => tv.tableName == "ServiceWorksheets").tableVersion;
-                }
-
-                if (serviceWorksheetsVersion >= ver)
-                {
-                    return true;
-                }
-                else
-                {
-                    serviceWorksheetsVersion = ver;
-                    return false;
-                }
-            }
-            catch (Exception)
+            if (serviceWorksheetsVersion >= ver)
             {
                 return true;
+            }
+            else
+            {
+                serviceWorksheetsVersion = ver;
+                return false;
             }
         }
 
         public bool IsToolsConsistent()
         {
-            long ver;
+            long ver = db.TableVersions.Single<TableVersions>(tv => tv.tableName == "Tools").tableVersion;
 
-            try
-            {
-                using (dbGyorokEntities gyorokDB = new dbGyorokEntities(sb.ConnectionString))
-                {
-                    ver = gyorokDB.TableVersions.Single<TableVersions>(tv => tv.tableName == "Tools").tableVersion;
-                }
-
-                if (toolsVersion >= ver)
-                {
-                    return true;
-                }
-                else
-                {
-                    toolsVersion = ver;
-                    return false;
-                }
-            }
-            catch (Exception)
+            if (toolsVersion >= ver)
             {
                 return true;
+            }
+            else
+            {
+                toolsVersion = ver;
+                return false;
             }
         }
 
         public void DoBackup(string path = null)
         {
-
-            try
+            if (Properties.Settings.Default.ServerIP == "." ||
+                Properties.Settings.Default.ServerIP.ToLower() == "localhost" ||
+                Properties.Settings.Default.ServerIP == string.Empty)
             {
-                if (Properties.Settings.Default.ServerIP == "." ||
-                    Properties.Settings.Default.ServerIP.ToLower() == "localhost" ||
-                    Properties.Settings.Default.ServerIP == string.Empty)
-                {
-
-                    using (dbGyorokEntities gyorokDB = new dbGyorokEntities(sb.ConnectionString))
-                    {
-                        if (path == null)
-                        {
-                            gyorokDB.DoBackup(Properties.Settings.Default.PrimaryBackupPath + @"\");
-                            var fileName = Directory.GetFiles(Properties.Settings.Default.PrimaryBackupPath).Select(x => new FileInfo(x)).OrderByDescending(f => f.LastWriteTime).FirstOrDefault().Name;
-                            // TODO: ...
-                            File.Copy(Properties.Settings.Default.PrimaryBackupPath + @"\" + fileName, Properties.Settings.Default.SecondaryBackupPath + @"\" + fileName, true);
-                        }
-                        else
-                        {
-                            gyorokDB.DoBackup(path);
-                        }
-                    }
                     
+                if (path == null)
+                {
+                    db.DoBackup(Properties.Settings.Default.PrimaryBackupPath + @"\");
+                    var fileName = Directory.GetFiles(Properties.Settings.Default.PrimaryBackupPath).Select(x => new FileInfo(x)).OrderByDescending(f => f.LastWriteTime).FirstOrDefault().Name;
+                    // TODO: ...
+                    File.Copy(Properties.Settings.Default.PrimaryBackupPath + @"\" + fileName, Properties.Settings.Default.SecondaryBackupPath + @"\" + fileName, true);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                else
+                {
+                    db.DoBackup(path);
+                }                    
             }
         }
 
@@ -519,20 +364,12 @@ namespace SQLConnectionLib
 
         public Customers GetCustomerById(long id)
         {
-            Customers customer;
-
-            using (dbGyorokEntities gyorokDB = new dbGyorokEntities(ec))
-            {
-                customer = gyorokDB.Customers.Include("Cities").Include("Contacts.Customers.Cities").SingleOrDefault(c => c.customerID == id);
-            }
-
+            Customers customer = db.Customers.Include("Cities").Include("Contacts.Customers.Cities").SingleOrDefault(c => c.customerID == id);
             return customer;
         }
 
         public void UpdateCustomer(Customers customer)
         {
-            using (dbGyorokEntities db = new dbGyorokEntities(ec))
-            {
                 Customers customerToUpdate = db.Customers.SingleOrDefault(c => c.customerID == customer.customerID);
                 // TODO: Implement 
                 //if (customerToUpdate.rowVersion != customer.rowVersion)
@@ -555,26 +392,20 @@ namespace SQLConnectionLib
                 customerToUpdate.serviceCounter = customer.serviceCounter;
                 customerToUpdate.workPlace = customer.workPlace;
                 db.SaveChanges();
-            }        
         }
 
         public void DeleteContact(Customers firm, Customers agent)
         {
-            using (dbGyorokEntities db = new dbGyorokEntities(ec))
-            {
                 Contacts contactForDelete = db.Contacts.SingleOrDefault(c => c.firmID == firm.customerID && c.agentID == agent.customerID);
                 if (contactForDelete != null)
                 {
                     db.Contacts.DeleteObject(contactForDelete);
                     db.SaveChanges();
                 }
-            }
         }
 
         public void AddContact(Customers firm, Customers agent)
         {
-            using (dbGyorokEntities db = new dbGyorokEntities(ec))
-            {
                 if (!db.Contacts.Any(c => c.firmID == firm.customerID && c.agentID == agent.customerID))
                 {
                     Contacts newContact = new Contacts()
@@ -585,65 +416,92 @@ namespace SQLConnectionLib
                     db.Contacts.AddObject(newContact);
                     db.SaveChanges();
                 }
-            }
         }
 
         public List<Customers> GetContacts(Customers firm)
         {
-            using (dbGyorokEntities db = new dbGyorokEntities(ec))
-            {
                 return db.Customers.Where(c => c.Contacts1.Any(ca => ca.firmID == firm.customerID)).ToList();
-            }
         }
 
         public Cities GetCityById(long id)
         {
-            using (dbGyorokEntities db = new dbGyorokEntities(ec))
-            {
                 return db.Cities.SingleOrDefault(c => c.cityID == id);
-            }
         }
 
         public void AddCustomer(Customers customer)
         {
-            using (dbGyorokEntities db = new dbGyorokEntities(ec))
-            {
                 db.Customers.AddObject(customer);
                 db.SaveChanges();
-            }
         }
-
-        // TODO: Is DetailedCustomer needed?
-        //public List<DetailedCustomers> GetDetailedCustomers()
-        //{
-        //    using (dbGyorokEntities db = new dbGyorokEntities(ec))
-        //    {
-        //        return db.DetailedCustomers.ToList();
-        //    }
-        //}
 
         public List<Customers> GetAllCustomers()
         {
-            using (dbGyorokEntities db = new dbGyorokEntities(ec))
-            {
-                return db.Customers.Include("Cities").Include("Contacts.Customers.Cities").ToList();
-            }
+                return db.Customers.Include("Cities").Include("Contacts.Customers.Cities").Where(c => c.isDeleted == false).ToList();
         }
 
         public List<Cities> GetAllCities()
         {
-            using (dbGyorokEntities db = new dbGyorokEntities(ec))
-            {
                 return db.Cities.ToList();
-            }
         }
 
         public Contacts GetContactByFirmAndAgent(Customers firm, Customers agent)
         {
-            using (dbGyorokEntities db = new dbGyorokEntities(ec))
-            {
                 return db.Contacts.SingleOrDefault(c => c.firmID == firm.customerID && c.agentID == agent.customerID);
+        }
+
+        public void DeleteCityById(long id)
+        {
+                Cities cityToDelete = db.Cities.SingleOrDefault(c => c.cityID == id);
+                db.Cities.DeleteObject(cityToDelete);
+                db.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            if (db != null)
+            {
+                db.Dispose();
             }
+        }
+
+        public DbSettings GetSettings()
+        {
+            return dbSettings;
+        }
+
+        public void UpdateTool(Tools tool)
+        {
+            Tools toolToUpdate = db.Tools.SingleOrDefault(t => t.toolID == tool.toolID);
+            toolToUpdate.defaultDeposit = tool.defaultDeposit;
+            toolToUpdate.fromDate = tool.fromDate;
+            toolToUpdate.IDNumber = tool.IDNumber;
+            toolToUpdate.isDeleted = tool.isDeleted;
+            toolToUpdate.rentCounter = tool.rentCounter;
+            toolToUpdate.rentPrice = tool.rentPrice;
+            toolToUpdate.serialNumber = tool.serialNumber;
+            toolToUpdate.toolManufacturer = tool.toolManufacturer;
+            toolToUpdate.toolName = tool.toolName;
+            toolToUpdate.toolStatusID = tool.toolStatusID;
+            db.SaveChanges();
+        }
+
+        public List<Tools> GetAllTools()
+        {
+            return db.Tools.Include("ToolStatuses").Where(t => t.isDeleted == false).ToList();
+        }
+
+        public Rentals GetLastRentalByToolId(long toolId)
+        {
+            return db.Rentals.Include("Customers")
+                             .Include("Customers1")
+                             .Include("PayTypes")
+                             .Include("Tools")
+                            .Where(r => r.toolID == toolId).OrderByDescending(re => re.rentalID).FirstOrDefault();
+        }
+
+        public RentalGroups GetRentalGroupById(long id)
+        {
+            return db.RentalGroups.Include("Rentals").SingleOrDefault(rg => rg.groupID == id);
         }
     }
 }

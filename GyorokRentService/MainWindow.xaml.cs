@@ -66,8 +66,8 @@ namespace GyorokRentService
                 //var ServiceCustomerSelector = new CustomerSelector(CustomerType.Service);
                 //grdNewWSCustomer.Children.Add(ServiceCustomerSelector);
 
-                //var UCToolSelector = new ToolSelector();
-                //grdToolSelect.Children.Add(UCToolSelector);
+                var UCToolSelector = new ToolSelector();
+                grdToolSelect.Children.Add(UCToolSelector);
 
                 //var UCRentalSum = new RentalsSum();
                 //grdRentalSum.Children.Add(UCRentalSum);

@@ -20,6 +20,8 @@ namespace GyorokRentService.View
     /// </summary>
     public partial class searchCustomer : UserControl
     {
+        public searchCustomer_ModelView dataContext { get; set; }
+
         public searchCustomer()
         {
         }
@@ -27,8 +29,8 @@ namespace GyorokRentService.View
         public searchCustomer(searchCustomerType displayType)
         {
             InitializeComponent();
-            var viewModel = new searchCustomer_ModelView(displayType);
-            this.DataContext = viewModel;
+            dataContext = new searchCustomer_ModelView(displayType);
+            this.DataContext = dataContext;
         }
 
         private void textBox3_TextChanged(object sender, TextChangedEventArgs e)

@@ -370,7 +370,7 @@ namespace GyorokRentService.ViewModel
                 isPerson = true;
                 defaultDiscount = 0;
                 newBirthDate = null;
-                AppMessages.CityToSelect.Register(this, c => { _cityID = c.cityID; postalCode = c.postalCode; city = c.city; });
+                AppMessages.CityToSelect.Register(this, c => { _cityID = c.id; postalCode = c.postalCode; city = c.city; });
                 switch (displayType)
                 {
                     case searchCustomerType.searchCustomer:

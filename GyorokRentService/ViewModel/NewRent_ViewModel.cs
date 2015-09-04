@@ -197,7 +197,7 @@ namespace GyorokRentService.ViewModel
                 });
                 AppMessages.ToolModified.Register(this, tl =>
                 {
-                    _toolID = tl.toolID;
+                    _toolID = tl.id;
                     _actualPrice = tl.rentPrice;
                 });
                 AppMessages.NewRentRemoved.Register(this, r => rentCount -= 1);

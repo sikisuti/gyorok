@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using MiddleLayer.Representations;
 using MiddleLayer;
+using System.Threading.Tasks;
 
 namespace GyorokRentService.ViewModel
 {
@@ -20,7 +21,23 @@ namespace GyorokRentService.ViewModel
         {
             if (citySelected != null)
             {
-                citySelected(selectCity, null);
+                citySelected(selectedCity, null);
+            }
+        }
+
+        public List<City_Representation> allCities;
+
+        private bool _IsBusy;
+        public bool IsBusy
+        {
+            get { return _IsBusy; }
+            set
+            {
+                if (_IsBusy != value)
+                {
+                    _IsBusy = value;
+                    RaisePropertyChanged("IsBusy");
+                }
             }
         }
 
@@ -91,7 +108,7 @@ namespace GyorokRentService.ViewModel
         public ICommand delCity { get { return new RelayCommand(delCityExecute, () => true); } }
         void delCityExecute()
         {
-            if (selectedCityID != 0)
+            if (selectedCity != null)
             {
                 MessageBoxResult result;
 
@@ -99,7 +116,7 @@ namespace GyorokRentService.ViewModel
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    SQLConnection.Execute.delCity(selectedCityID);
+                    DataProxy.Instance.DeleteCityById(selectedCity.id);
                     RefreshCityList();
                 }
             }
@@ -109,8 +126,8 @@ namespace GyorokRentService.ViewModel
         {
             if (selectedCity != null)
             {
-                actCity = SQLConnection.Execute.CitiesTable.Single<Cities>(c => c.cityID == selectedCityID);
-                AppMessages.CityToSelect.Send(actCity); 
+                onCitySelected();
+                AppMessages.CityToSelect.Send(selectedCity); 
             }
         }
 
@@ -119,15 +136,22 @@ namespace GyorokRentService.ViewModel
             if (!IsInDesignMode)
             {
                 searchText = "";
-                RefreshCityList();
-                AppMessages.CityListModified.Register(this, cID => { RefreshCityList(); selectedCityID = cID; });
+                AppMessages.CityListModified.Register(this, cID => { RefreshCityList(); selectedCity.id = cID; });
             }
         }
 
-        private void RefreshCityList()
+        public void RefreshCityList()
         {
-            ObservableCollection<City_Representation> cities = DataProxy.Instance.GetAllCities();
-            cityList = new ObservableCollection<City_Representation>(cities.Where(c => c.city.StartsWith(_searchText) && c.isDeleted == false).OrderBy(co => co.city));            
+            Task t = Task.Factory.StartNew(() => 
+            { 
+                allCities = DataProxy.Instance.GetAllCities();
+                Filtering();
+            });
+        }
+
+        private void Filtering()
+        {
+            cityList = new ObservableCollection<City_Representation>(allCities.Where(c => c.city.ToLower().StartsWith(_searchText.ToLower()) && c.isDeleted == false).OrderBy(co => co.city));
         }
     }
 }

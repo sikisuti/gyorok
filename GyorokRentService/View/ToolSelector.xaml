@@ -19,7 +19,7 @@
         </LinearGradientBrush>
     </UserControl.BorderBrush>
     <Grid Height="600" Width="700" HorizontalAlignment="Left" VerticalAlignment="Top">
-        <Expander IsExpanded="{Binding isExpanded}" Header="{Binding selectedToolName}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Margin="155,82,0,0" Name="expander1" VerticalAlignment="Top" BorderThickness="5" Panel.ZIndex="{Binding zExpander}">
+        <Expander IsExpanded="{Binding isExpanded}" Header="{Binding selectedTool.toolName}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Margin="155,82,0,0" Name="expander1" VerticalAlignment="Top" BorderThickness="5" Panel.ZIndex="{Binding zExpander}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Expanded">
                     <i:InvokeCommandAction Command="{Binding onExpand}"/>
@@ -29,7 +29,8 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <Grid x:Name="grdExpander" VerticalAlignment="Top" HorizontalAlignment="Left" Background="White" Margin="0,0,0,0">
-                <view:searchTool HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <!--Added from codebehind
+                <view:searchTool HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
             </Grid>
         </Expander>
         <Button Visibility="{Binding modifyEnableButtonVisibility}" Command="{Binding switchModifyMode}" FontSize="16" FontWeight="Normal" Height="48" HorizontalAlignment="Left" Margin="300,273,0,0" Name="button1" VerticalAlignment="Top" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
@@ -43,16 +44,16 @@
             </Grid>
         </Button>
         <Label Content="Gép neve:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="12,85,0,0" Name="label1" VerticalAlignment="Top" Width="102" />
-        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedManufacturer}" Height="30" FontSize="16" FontWeight="Normal" HorizontalAlignment="Left" Margin="155,118,0,0" Name="textBox1" VerticalAlignment="Top" Width="198" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" Panel.ZIndex="1" />
+        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedTool.toolManufacturer}" Height="30" FontSize="16" FontWeight="Normal" HorizontalAlignment="Left" Margin="155,118,0,0" Name="textBox1" VerticalAlignment="Top" Width="198" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" Panel.ZIndex="1" />
         <Label Padding="5,5,5,0" Content="Gyártó:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="12,118,0,0" Name="label2" VerticalAlignment="Top" Width="137" />
-        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedIdNumber}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="155,154,0,0" Name="textBox2" VerticalAlignment="Top" Width="198" Panel.ZIndex="1" />
+        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedTool.IDNumber}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="155,154,0,0" Name="textBox2" VerticalAlignment="Top" Width="198" Panel.ZIndex="1" />
         <Label Padding="5,5,5,0" Content="Cikkszám:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="12,154,0,0" Name="label3" VerticalAlignment="Top" Width="137" />
-        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedSerial}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="155,190,0,0" Name="textBox3" VerticalAlignment="Top" Width="198" Panel.ZIndex="1" />
+        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedTool.serialNumber}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="155,190,0,0" Name="textBox3" VerticalAlignment="Top" Width="198" Panel.ZIndex="1" />
         <Label Padding="5,5,5,0" Content="Gyári azonosító:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="12,190,0,0" Name="label4" VerticalAlignment="Top" Width="137" />
-        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedRentPrice}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="155,226,0,0" Name="textBox4" VerticalAlignment="Top" Width="198" Panel.ZIndex="1" />
+        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedTool.rentPrice}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="155,226,0,0" Name="textBox4" VerticalAlignment="Top" Width="198" Panel.ZIndex="1" />
         <Label Padding="5,5,5,0" Content="Ár (Ft/nap):" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="12,226,0,0" Name="label5" VerticalAlignment="Top" Width="137" />
-        <TextBox Visibility="{Binding modifyButtonVisibility}"  BorderThickness="0" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="155,54,0,0" Name="textBox5" Panel.ZIndex="1" Text="{Binding selectedToolName}" VerticalAlignment="Top" Width="198" />
-        <TextBox Padding="5,5,5,0" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" IsReadOnly="{Binding readOnlyMode}" Margin="155,262,0,0" Name="textBox6" Panel.ZIndex="1" Text="{Binding defaultDeposit, StringFormat=C0}" xml:lang="hu-HU" VerticalAlignment="Top" Width="131" />
+        <TextBox Visibility="{Binding modifyButtonVisibility}"  BorderThickness="0" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="155,54,0,0" Name="textBox5" Panel.ZIndex="1" Text="{Binding selectedTool.toolName}" VerticalAlignment="Top" Width="198" />
+        <TextBox Padding="5,5,5,0" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" IsReadOnly="{Binding readOnlyMode}" Margin="155,262,0,0" Name="textBox6" Panel.ZIndex="1" Text="{Binding selectedTool.defaultDeposit, StringFormat=C0}" xml:lang="hu-HU" VerticalAlignment="Top" Width="131" />
         <Label Padding="5,5,5,0" Content="Kaukció:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="12,262,0,0" Name="label6" VerticalAlignment="Top" Width="79" />
         <Label Padding="0,0,0,0"  Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="32" FontWeight="Bold" Height="50" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Name="textBox7" Content="Gép" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="596" />
     </Grid>

@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dependency Injection\DIContainer.cs" />
+    <Compile Include="Enumerations\ErrorTypeEnum.cs" />
+    <Compile Include="Enumerations\PayTypeEnum.cs" />
+    <Compile Include="Enumerations\ToolStatusEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

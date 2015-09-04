@@ -130,12 +130,12 @@ namespace GyorokRentService
 
         public static class ToolModified
         {
-            public static void Send(Tools t)
+            public static void Send(Tool_Representation t)
             {
                 Messenger.Default.Send(t, MessageTypes.toolModified);
             }
 
-            public static void Register(object recipient, Action<Tools> action)
+            public static void Register(object recipient, Action<Tool_Representation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.toolModified, action);
             }
@@ -338,12 +338,12 @@ namespace GyorokRentService
 
         public static class CityToSelect
         {
-            public static void Send(Cities selectedCustomer)
+            public static void Send(City_Representation selectedCustomer)
             {
                 Messenger.Default.Send(selectedCustomer, MessageTypes.cityToSelect);
             }
 
-            public static void Register(object recipient, Action<Cities> action)
+            public static void Register(object recipient, Action<City_Representation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.cityToSelect, action);
             }

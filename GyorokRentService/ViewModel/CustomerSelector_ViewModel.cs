@@ -16,8 +16,17 @@ using MiddleLayer;
 
 namespace GyorokRentService.ViewModel
 {
-    class CustomerSelector_ViewModel : ViewModelBase
+    public class CustomerSelector_ViewModel : ViewModelBase
     {
+        public event EventHandler customerPickerExpanded;
+        public void OnCustomerPickerExpand()
+        {
+            if (customerPickerExpanded != null)
+            {
+                customerPickerExpanded(null, null);
+            }
+        }
+
         ObservableCollection<CustomerBase_Representation> temp = new ObservableCollection<CustomerBase_Representation>();
         private CustomerBase_Representation _selectedCustomer;
         public CustomerBase_Representation selectedCustomer
@@ -331,6 +340,7 @@ namespace GyorokRentService.ViewModel
         public ICommand onExpand { get { return new RelayCommand(onExpandExecute, CanonExpandExecute); } }
         void onExpandExecute()
         {
+            OnCustomerPickerExpand();
             zExpander = 2;
             AppMessages.CustomerExpandChanged.Send(true);
         }
@@ -393,6 +403,9 @@ namespace GyorokRentService.ViewModel
         void openEditContactsExecute()
         {
             View.SearchCustomerWindow ContactsWindow = new View.SearchCustomerWindow(searchCustomerType.searchContact);
+            View.searchCustomer searchContact = ContactsWindow.grdMain.Children[0] as View.searchCustomer;
+            searchCustomer_ModelView searchContactVM = searchContact.DataContext as searchCustomer_ModelView;
+            searchContactVM.CustomerSelected += (s, a) => { addContact((CustomerBase_Representation)s); };
             ContactsWindow.Show();
         }
         bool CanopenEditContactsExecute()
@@ -428,7 +441,7 @@ namespace GyorokRentService.ViewModel
         void openCityChooserExecute()
         {
             View.SearchCity cityChooser = new View.SearchCity();
-            ((SearchCity_ViewModel)cityChooser.DataContext).citySelected += (s, a) => { TODO };
+            ((SearchCity_ViewModel)cityChooser.DataContext).citySelected += (s, a) => { selectedCustomer.city = (City_Representation)s; };
             cityChooser.ShowDialog();
         }
 
@@ -457,14 +470,6 @@ namespace GyorokRentService.ViewModel
                     default:
                         break;
                 }
-                AppMessages.ContactPersonToSelect.Register(this, addContact);
-                AppMessages.CityToSelect.Register(this, cty =>
-                    {
-                        if (!readOnlyMode)
-                        {
-                            city = cty.postalCode + " " + cty.city;
-                        }
-                    });
 
                 wrongMothersName = Visibility.Hidden;
                 wrongAddress = Visibility.Hidden;
@@ -477,7 +482,7 @@ namespace GyorokRentService.ViewModel
 
         private void addContact(CustomerBase_Representation c)
         {
-            DataProxy.Instance.AddContact(selectedCustomer, selectedContact);
+            DataProxy.Instance.AddContact(selectedCustomer, c);
             refreshContacts(); 
         }
 
@@ -552,6 +557,7 @@ namespace GyorokRentService.ViewModel
         public void CustomerSelected(CustomerBase_Representation customer)
         {
             selectedCustomer = customer;
+            selectedCustomer.contacts = DataProxy.Instance.GetContacts(selectedCustomer);
             customerSelected = true;
             switch (customerMode)
             {

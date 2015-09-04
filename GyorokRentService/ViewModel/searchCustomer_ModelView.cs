@@ -13,10 +13,12 @@ using SQLConnectionLib;
 using System.Windows.Media;
 using MiddleLayer.Representations;
 using MiddleLayer;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GyorokRentService.ViewModel
 {
-    class searchCustomer_ModelView : ViewModelBase
+    public class searchCustomer_ModelView : ViewModelBase
     {
         public event EventHandler CustomerSelected;
         public void OnCustomerSelected(EventArgs e)
@@ -27,10 +29,26 @@ namespace GyorokRentService.ViewModel
             }
         }
 
+        public List<CustomerBase_Representation> allCustomer;
+
         CustomerBase_Representation _selectedCustomer; 
         searchCustomerType _custORcont;
         //CustomerType _rentORservice;
         int filterType;
+
+        private bool _IsBusy;
+        public bool IsBusy
+        {
+            get { return _IsBusy; }
+            set
+            {
+                if (_IsBusy != value)
+                {
+                    _IsBusy = value;
+                    RaisePropertyChanged("IsBusy");
+                }
+            }
+        }
 
         private string _searchText;
         private ObservableCollection<CustomerBase_Representation> _foundCustomers;
@@ -172,7 +190,7 @@ namespace GyorokRentService.ViewModel
         public ICommand searchTextChanged { get { return new RelayCommand(searchTextChangedExecute, () => true); } }
         void searchTextChangedExecute()
         {
-            RefreshCustomerList();
+            FilterList();
         }
         public ICommand customerSelected { get { return new RelayCommand(customerSelectedExecute, () => true); } }
         void customerSelectedExecute()
@@ -212,7 +230,7 @@ namespace GyorokRentService.ViewModel
             if (filterType != 1)
             {
                 filterType = 1;
-                RefreshCustomerList();
+                FilterList();
                 firmBorderBrush = null;
                 personBorderBrush = Brushes.Black;
                 bothBorderBrush = Brushes.Black;
@@ -224,7 +242,7 @@ namespace GyorokRentService.ViewModel
             if (filterType != 2)
             {
                 filterType = 2;
-                RefreshCustomerList();
+                FilterList();
                 firmBorderBrush = Brushes.Black;
                 personBorderBrush = null;
                 bothBorderBrush = Brushes.Black;
@@ -236,7 +254,7 @@ namespace GyorokRentService.ViewModel
             if (filterType != 3)
             {
                 filterType = 3;
-                RefreshCustomerList();
+                FilterList();
                 firmBorderBrush = Brushes.Black;
                 personBorderBrush = Brushes.Black;
                 bothBorderBrush = null;
@@ -262,7 +280,8 @@ namespace GyorokRentService.ViewModel
 
 
         public searchCustomer_ModelView()
-        {            
+        {
+            IsBusy = false;    
         }
         public searchCustomer_ModelView(searchCustomerType controlType)
         {
@@ -278,33 +297,43 @@ namespace GyorokRentService.ViewModel
                 {
                     case searchCustomerType.searchCustomer: 
                         filterType = 3;
-                        RefreshCustomerList();
                         _custORcont = searchCustomerType.searchCustomer;
                         visibilityType = Visibility.Visible;
                         AppMessages.CustomerModified.Register(this, s => RefreshCustomerList());
                         break;
                     case searchCustomerType.searchContact:
                         filterType = 2;
-                        RefreshCustomerList();
                         _custORcont = searchCustomerType.searchContact;
                         visibilityType = Visibility.Hidden;
                         break;
                     default:
                         break;
-                } 
+                }
+                IsBusy = false;
             }
         }
 
-        private void RefreshCustomerList()
+        public void RefreshCustomerList()
         {
-            foundCustomers = DataProxy.Instance.GetAllCustomers();
+            Task t = new Task(() => 
+            { 
+                IsBusy = true;
+                allCustomer = DataProxy.Instance.GetAllCustomers();
+                FilterList();
+                IsBusy = false;
+            });
+            t.Start();
+        }
+
+        private void FilterList()
+        {
             if (filterType == 3)
             {
-                foundCustomers = new ObservableCollection<CustomerBase_Representation>(foundCustomers.Where(c => c.customerName.StartsWith(_searchText) && c.isDeleted == false).OrderBy(oc => oc.customerName)); 
+                foundCustomers = new ObservableCollection<CustomerBase_Representation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower())).OrderBy(oc => oc.customerName));
             }
             else
             {
-                foundCustomers = new ObservableCollection<CustomerBase_Representation>(foundCustomers.Where(c => c.customerName.StartsWith(_searchText) && c.isFirm == (filterType == 1) && c.isDeleted == false).OrderBy(oc => oc.customerName));
+                foundCustomers = new ObservableCollection<CustomerBase_Representation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower()) && c.isFirm == (filterType == 1)).OrderBy(oc => oc.customerName));
             }
         }
     }

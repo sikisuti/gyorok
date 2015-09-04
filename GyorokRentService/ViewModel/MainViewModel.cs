@@ -98,9 +98,10 @@ namespace GyorokRentService.ViewModel
         
         public MainViewModel()
         {
-            t = new Timer(10000);
-            t.Start();
-            t.Elapsed += new ElapsedEventHandler(t_Elapsed);
+            // TODO: Concurency checking
+            //t = new Timer(10000);
+            //t.Start();
+            //t.Elapsed += new ElapsedEventHandler(t_Elapsed);
 
             AppMessages.CustomerExpandChanged.Register(this, setCustomerColumnSpan);
             AppMessages.ToolExpandChanged.Register(this, setToolRowSpan);

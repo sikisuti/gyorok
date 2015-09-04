@@ -11,6 +11,7 @@
         <c:ToolStatusToFontWeightConverter x:Key="toolStatToFW"/>
         <c:ToolStatusToForegroundConverter x:Key="toolStatToFG"/>
         <c:ToolStatusToBoolConverter x:Key="toolStatToBool"/>
+        <c:BooleanToVisibilityConverter x:Key="boolToVis"/>
     </UserControl.Resources>
     <Grid VerticalAlignment="Top">
         <Label Content="Keresés:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,10,0,0" Name="lblSearch" Padding="5,5,5,0" VerticalAlignment="Top" Width="87" />
@@ -21,7 +22,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
-        <ListBox FontSize="16" FontWeight="Normal" ItemsSource="{Binding foundTools}" SelectedValuePath="toolID" SelectedValue="{Binding selectedToolID}" Height="269" HorizontalAlignment="Left" Margin="12,53,0,0" Name="listBox1" VerticalAlignment="Top" Width="450">
+        <ListBox FontSize="16" FontWeight="Normal" ItemsSource="{Binding foundTools}" SelectedValuePath="toolID" SelectedItem="{Binding selectedTool}" Height="269" HorizontalAlignment="Left" Margin="12,53,0,0" Name="listBox1" VerticalAlignment="Top" Width="450">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -49,5 +50,12 @@
             <Image Source="/GyorokRentService;component/Images/IconRemoveProcess64.png" />
         </Button>
         <Label Content="{Binding plannedBringBackDate}" Height="35" Foreground="Red" FontSize="16" FontWeight="Normal" HorizontalAlignment="Left" Margin="140,348,0,0" Name="label1" VerticalAlignment="Top" />
+
+        <Border BorderBrush="Black" BorderThickness="1" Background="#80000000" Visibility="{Binding IsBusy, Converter={StaticResource boolToVis}}">
+            <Grid>
+                <TextBlock Margin="0" TextWrapping="Wrap" Text="Adatok betöltése..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Foreground="#7EFFFFFF"/>
+            </Grid>
+        </Border>
+
     </Grid>
 </UserControl>

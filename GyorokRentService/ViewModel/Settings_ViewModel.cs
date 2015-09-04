@@ -10,6 +10,8 @@ using GalaSoft.MvvmLight.Command;
 using GyorokRentService.View;
 using System.Windows.Forms;
 using NLog;
+using MiddleLayer.Representations;
+using MiddleLayer;
 
 namespace GyorokRentService.ViewModel
 {
@@ -17,9 +19,21 @@ namespace GyorokRentService.ViewModel
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private string _serverIP;
-        private string _userName;
-        private string _password;
+
+        private DbSettings_Representation _dbSettings;
+        public DbSettings_Representation dbSettings
+        {
+            get { return _dbSettings; }
+            set
+            {
+                if (_dbSettings != value)
+                {
+                    _dbSettings = value;
+                    RaisePropertyChanged("dbSettings");
+                }
+            }
+        }
+        
         private string _companyName;
         private string _companyAddress;
         private string _companyPhone1;
@@ -28,65 +42,7 @@ namespace GyorokRentService.ViewModel
         private long _costOfClean;
         private string _backupPath;
         private string _restorePath;
-        private string _primaryBackupPath;
-        private string _secondaryBackupPath; 
         
-        public string serverIP
-        {
-            get
-            {
-                return _serverIP;
-            }
-
-            set
-            {
-                if (_serverIP == value)
-                {
-                    return;
-                }
-
-
-
-                _serverIP = value;
-                RaisePropertyChanged("serverIP");
-            }
-        }
-        public string userName
-        {
-            get
-            {
-                return _userName;
-            }
-
-            set
-            {
-                if (_userName == value)
-                {
-                    return;
-                }
-
-                _userName = value;
-                RaisePropertyChanged("userName");
-            }
-        }
-        public string password
-        {
-            get
-            {
-                return _password;
-            }
-
-            set
-            {
-                if (_password == value)
-                {
-                    return;
-                }
-
-                _password = value;
-                RaisePropertyChanged("password");
-            }
-        }
         public string companyName
         {
             get
@@ -231,42 +187,6 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("restorePath");
             }
         }
-        public string PrimaryBackupPath
-        {
-            get
-            {
-                return _primaryBackupPath;
-            }
-
-            set
-            {
-                if (_primaryBackupPath == value)
-                {
-                    return;
-                }
-
-                _primaryBackupPath = value;
-                RaisePropertyChanged("PrimaryBackupPath");
-            }
-        }
-        public string SecondaryBackupPath
-        {
-            get
-            {
-                return _secondaryBackupPath;
-            }
-
-            set
-            {
-                if (_secondaryBackupPath == value)
-                {
-                    return;
-                }
-
-                _secondaryBackupPath = value;
-                RaisePropertyChanged("SecondaryBackupPath");
-            }
-        }
 
         public ICommand saveSettings { get { return new RelayCommand(saveSettingsExecute, () => true); } }
         void saveSettingsExecute()
@@ -301,7 +221,7 @@ namespace GyorokRentService.ViewModel
             saveDlg.ShowDialog();
             if (saveDlg.SelectedPath != null && saveDlg.SelectedPath != string.Empty)
             {
-                PrimaryBackupPath = saveDlg.SelectedPath;
+                dbSettings.primaryBackupPath = saveDlg.SelectedPath;
             }
         }
         public ICommand selectSecondaryBackupPath { get { return new RelayCommand(selectSecondaryBackupPathExecute, () => true); } }
@@ -311,7 +231,7 @@ namespace GyorokRentService.ViewModel
             saveDlg.ShowDialog();
             if (saveDlg.SelectedPath != null && saveDlg.SelectedPath != string.Empty)
             {
-                SecondaryBackupPath = saveDlg.SelectedPath;
+                dbSettings.secondaryBackupPath = saveDlg.SelectedPath;
             }
         }
         public ICommand doBackup { get { return new RelayCommand(doBackupExecute, () => true); } }
@@ -365,18 +285,13 @@ namespace GyorokRentService.ViewModel
 
         public Settings_ViewModel()
         {
-            // TODO: implement DB settings management
-            //serverIP = Properties.Settings.Default.ServerIP;
-            //userName = Properties.Settings.Default.UserName;
-            //password = Properties.Settings.Default.Password;
+            dbSettings = DataProxy.Instance.GetDbSettings();
             companyName = Properties.Settings.Default.CompanyName;
             companyAddress = Properties.Settings.Default.CompanyAddress;
             companyPhone1 = Properties.Settings.Default.CompanyPhone1;
             companyPhone2 = Properties.Settings.Default.CompanyPhone2;
             openTime = Properties.Settings.Default.OpenTime;
             costOfClean = Properties.Settings.Default.CostOfClean;
-            //PrimaryBackupPath = Properties.Settings.Default.PrimaryBackupPath;
-            //SecondaryBackupPath = Properties.Settings.Default.SecondaryBackupPath;
         }
     }
 }

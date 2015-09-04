@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ServerIP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">localhost</Value>
+      <Value Profile="(Default)">virtwin7</Value>
     </Setting>
     <Setting Name="UserName" Type="System.String" Scope="User">
       <Value Profile="(Default)">gyorok</Value>
