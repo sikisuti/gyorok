@@ -170,8 +170,6 @@ namespace GyorokRentService.ViewModel
         public ICommand doModify { get { return new RelayCommand(doModifyExecute, CandoModifyExecute); } }
         void doModifyExecute()
         {
-            long l;
-
             DataProxy.Instance.UpdateTool(selectedTool);
             AppMessages.ToolModified.Send(selectedTool);
 

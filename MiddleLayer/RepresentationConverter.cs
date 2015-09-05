@@ -33,6 +33,11 @@ namespace MiddleLayer
 
         public static CustomerBase_Representation convertCustomer(Customers customer)
         {
+            if (customer == null)
+            {
+                return null;
+            }
+
             // TODO: Implement concurency checking (rowVersion)
             CustomerBase_Representation customerRepresentation = new CustomerBase_Representation()
             {
@@ -114,6 +119,7 @@ namespace MiddleLayer
         {
             Tools convertedTool = new Tools()
             {
+                toolID = tool.id,
                 defaultDeposit = tool.defaultDeposit,
                 fromDate = tool.fromDate,
                 IDNumber = tool.IDNumber,
@@ -132,6 +138,7 @@ namespace MiddleLayer
         {
             Tool_Representation convertedTool = new Tool_Representation()
             {
+                id = tool.toolID,
                 defaultDeposit = tool.defaultDeposit,
                 fromDate = tool.fromDate,
                 IDNumber = tool.IDNumber,
@@ -151,6 +158,7 @@ namespace MiddleLayer
         {
             return new ToolStatus_Representation()
             {
+                id = toolStatus.toolStatusID,
                 statusName = toolStatus.statusName
             };
         }
@@ -163,7 +171,7 @@ namespace MiddleLayer
                 contact = convertCustomer(rental.Customers1),
                 customer = convertCustomer(rental.Customers),
                 discount = rental.discount,
-                group = DataProxy.Instance.GetRentalGroupById(rental.groupID),
+                //group = DataProxy.Instance.GetRentalGroupById(rental.groupID),    - Couses infinite cycle
                 isClean = rental.isClean,
                 id = rental.rentalID,
                 isPaid = rental.isPaid,
@@ -174,8 +182,8 @@ namespace MiddleLayer
                 tool = convertTool(rental.Tools)
             };
 
-            int selfIndex = convertedRental.group.rentals.IndexOf(convertedRental.group.rentals.SingleOrDefault(r => r.id == convertedRental.id));
-            convertedRental.group.rentals[selfIndex] = convertedRental;
+            //int selfIndex = convertedRental.group.rentals.IndexOf(convertedRental.group.rentals.SingleOrDefault(r => r.id == convertedRental.id));
+            //convertedRental.group.rentals[selfIndex] = convertedRental;
 
             return convertedRental;
         }

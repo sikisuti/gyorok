@@ -154,7 +154,7 @@ namespace GyorokRentService.ViewModel
         public ICommand delTool { get { return new RelayCommand(delToolExecute, () => true); } }
         void delToolExecute()
         {
-            if (_selectedToolID != 0)
+            if (_selectedTool != null)
             {
                 MessageBoxResult result;
 
@@ -162,8 +162,8 @@ namespace GyorokRentService.ViewModel
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    SQLConnection.Execute.delTool(_selectedToolID);
-                    _selectedToolID = 0;
+                    DataProxy.Instance.DeleteToolById(selectedTool.id);
+                    foundTools.Remove(selectedTool);
                     AppMessages.ToolListModified.Send("");
                 } 
             }

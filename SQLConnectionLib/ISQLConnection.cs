@@ -31,6 +31,7 @@ namespace SQLConnectionLib
 
         List<Tools> GetAllTools();
         void UpdateTool(Tools tool);
+        void DeleteToolById(long id);
 
         Rentals GetLastRentalByToolId(long toolId);
 

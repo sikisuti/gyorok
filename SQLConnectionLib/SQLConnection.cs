@@ -492,16 +492,25 @@ namespace SQLConnectionLib
 
         public Rentals GetLastRentalByToolId(long toolId)
         {
-            return db.Rentals.Include("Customers")
+            Rentals rental = db.Rentals.Include("Customers")
                              .Include("Customers1")
                              .Include("PayTypes")
                              .Include("Tools")
                             .Where(r => r.toolID == toolId).OrderByDescending(re => re.rentalID).FirstOrDefault();
+
+            return rental;
         }
 
         public RentalGroups GetRentalGroupById(long id)
         {
             return db.RentalGroups.Include("Rentals").SingleOrDefault(rg => rg.groupID == id);
+        }
+
+        public void DeleteToolById(long id)
+        {
+            Tools toolToDelete = db.Tools.SingleOrDefault(t => t.toolID == id);
+            toolToDelete.isDeleted = true;
+            db.SaveChanges();
         }
     }
 }

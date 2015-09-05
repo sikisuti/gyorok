@@ -135,6 +135,13 @@ namespace MiddleLayer
                 datasource.UpdateTool(RepresentationConverter.convertTool(tool));
             }
         }
+        public void DeleteToolById(long id)
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                dataSource.DeleteToolById(id);
+            }
+        }
 
         public Rental_Representation GetLastRentalByToolId(long toolId)
         {

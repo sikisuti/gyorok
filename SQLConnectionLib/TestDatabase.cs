@@ -157,5 +157,10 @@ namespace SQLConnectionLib
         {
             throw new NotImplementedException();
         }
+
+        public void DeleteToolById(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
