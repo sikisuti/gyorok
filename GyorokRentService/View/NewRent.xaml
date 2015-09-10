@@ -12,13 +12,15 @@
             <GradientStop Color="White" Offset="1" />
         </LinearGradientBrush>
     </UserControl.BorderBrush>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
     <Grid>
         <Label Content="Tervezett visszahozatal:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="136,12,0,0" Padding="5,5,5,0" Name="label2" VerticalAlignment="Top" />
-        <xctk:DateTimePicker Value="{Binding rentEnd}" Format="Custom" FormatString="yyyy/MMMM/dd HH:mm" FontSize="16" FontWeight="Normal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="136,42,0,0" Width="251" Height="30"/>
+        <xctk:DateTimePicker Value="{Binding selectedRental.rentalEnd}" Format="Custom" FormatString="yyyy/MMMM/dd HH:mm" FontSize="16" FontWeight="Normal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="136,42,0,0" Width="251" Height="30"/>
         <ComboBox IsEnabled="{Binding changeEnabled}" ItemsSource="{Binding payType}" SelectedItem="{Binding selectedPayType}" DisplayMemberPath="payTypeName" SelectedValuePath="payTypeID" SelectedIndex="0" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="136,100,0,0" Name="cmbPayType" VerticalAlignment="Top" Width="146" />
         <Label Content="Fizetési mód:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="12,100,0,0" Name="label3" Padding="5,5,5,0" VerticalAlignment="Top" Width="118" />
         <Label Content="Engedmény:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="12,147,0,0" Name="label6" Padding="5,5,5,0" VerticalAlignment="Top" Width="118" />
-        <TextBox BorderThickness="1" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="136,148,0,0" Name="textBox2" Text="{Binding discount}" VerticalAlignment="Top" Width="90" HorizontalContentAlignment="Right" />
+        <TextBox BorderThickness="1" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="136,148,0,0" Name="textBox2" Text="{Binding selectedRental.discount}" VerticalAlignment="Top" Width="90" HorizontalContentAlignment="Right" />
         <Label Content="%" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="228,147,0,0" Name="label7" Padding="5,5,5,0" VerticalAlignment="Top" Width="44" />
         <Button Command="{Binding addRent}" Height="64" HorizontalAlignment="Left" Margin="350,100,0,0" Name="button1" VerticalAlignment="Top" Width="64" Background="{x:Null}" BorderThickness="0" BorderBrush="{x:Null}">
             <Image HorizontalAlignment="Left" Margin="0,0,0,0" Name="image2" Stretch="Fill" VerticalAlignment="Top" Source="/GyorokRentService;component/Images/IconPageAdd64.png" />
@@ -32,4 +34,5 @@
         <TextBox IsReadOnly="True" BorderThickness="0" FontSize="10" FontWeight="Normal" Height="20" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="375,246,0,0" Name="textBox1" Text="{Binding rentCount}" VerticalAlignment="Top" Width="39" Background="{x:Null}" BorderBrush="{x:Null}" />
         <Label Content="db" FontSize="10" FontWeight="Normal" Height="20" HorizontalAlignment="Left" Margin="415,245,0,0" Name="label5" Padding="2,2,2,0" VerticalAlignment="Top" Width="24" />
     </Grid>
+    </ScrollViewer>
 </UserControl>

@@ -150,12 +150,48 @@ namespace MiddleLayer
                 return RepresentationConverter.convertRental(dataSource.GetLastRentalByToolId(toolId));
             }
         }
+        public void AddRental(Rental_Representation rental)
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                dataSource.AddRental(RepresentationConverter.convertRental(rental));
+            }
+        }
+        public void DeleteRentalById(long id)
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                dataSource.DeleteRentalById(id);
+            }
+        }
 
         public RentalGroup_Representation GetRentalGroupById(long id)
         {
             using (ISQLConnection dataSource = DataSource)
             {
                 return RepresentationConverter.convertRentalGroup(dataSource.GetRentalGroupById(id));
+            }
+        }
+        public void AddRentalGroup(RentalGroup_Representation rentalGroup)
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                RentalGroups rentalGroupToAdd = RepresentationConverter.convertRentalGroup(rentalGroup);
+                dataSource.AddRentalGroup(rentalGroupToAdd);
+
+                foreach (Rental_Representation rental in rentalGroup.rentals)
+                {
+                    rental.group.id = rentalGroupToAdd.groupID;
+                    AddRental(rental);
+                }
+            }
+        }
+
+        public List<PayType_Representation> GetPayTypes()
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                return dataSource.GetPayTypes().Select(pt => RepresentationConverter.convertPayType(pt)).ToList();
             }
         }
     }

@@ -9,32 +9,23 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="Györök és Tsa. kölcsönző és szervíz"
-        x:Name="FrameView" WindowState="Maximized" WindowStyle="SingleBorderWindow">
+        x:Name="FrameView" WindowState="Maximized" WindowStyle="SingleBorderWindow"
+        d:DesignHeight="300" d:DesignWidth="1000">
 
     <Window.Resources>
-        <Color x:Key="RentBackgroundColor">#FFF0FFF0</Color>
         <Color x:Key="RentMainColor">#FFA0FFA0</Color>
-        <Color x:Key="RentSubColor1">#FFB0FFB0</Color>
-        <Color x:Key="RentSubColor2">#FFC0FFC0</Color>
+        <Color x:Key="RentBackgroundColor">#FFF0FFF0</Color>
         <Color x:Key="ServiceBackgroundColor">#FFF0F0FF</Color>
         <Color x:Key="ServiceMainColor">#FFA0A0FF</Color>
         <Color x:Key="ServiceSubColor1">#FFB0B0FF</Color>
         <Color x:Key="ServiceSubColor2">#FFC0C0FF</Color>
         <Color x:Key="ServiceSubColor3">#FFD0D0FF</Color>
 
-        <SolidColorBrush x:Key="RentBgBrush" Color="#FFF0FFF0"/>
         <SolidColorBrush x:Key="ServiceBgBrush" Color="#FFF0F0FF"/>
+        <SolidColorBrush x:Key="RentBgBrush" Color="#FFF0FFF0"/>
 
         <LinearGradientBrush x:Key="RentMainBackground" EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="{StaticResource RentMainColor}" Offset="0" />
-            <GradientStop Color="{StaticResource RentBackgroundColor}" Offset="1" />
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="RentSubBackground1" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="{StaticResource RentSubColor1}" Offset="0" />
-            <GradientStop Color="{StaticResource RentBackgroundColor}" Offset="1" />
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="RentSubBackground2" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="{StaticResource RentSubColor2}" Offset="0" />
             <GradientStop Color="{StaticResource RentBackgroundColor}" Offset="1" />
         </LinearGradientBrush>
         <LinearGradientBrush x:Key="ServiceMainBackground" EndPoint="0.5,1" StartPoint="0.5,0">
@@ -58,44 +49,8 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Grid Width="300" Height="40">
+                        <Grid Width="300">
                             <Border Name="Border" Background="{StaticResource RentMainBackground}" BorderBrush="Black" BorderThickness="1,1,1,0">
-                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True"/>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource RentBgBrush}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="StyleRentSub1" TargetType="{x:Type TabItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Grid Width="200" Height="30">
-                            <Border Name="Border" Background="{StaticResource RentSubBackground1}" BorderBrush="Black" BorderThickness="1,1,1,0">
-                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True"/>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource RentBgBrush}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="StyleRentSub2" TargetType="{x:Type TabItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Grid Width="200">
-                            <Border Name="Border" Background="{StaticResource RentSubBackground2}" BorderBrush="Black" BorderThickness="1,1,1,0">
                                 <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True"/>
                             </Border>
                         </Grid>
@@ -122,6 +77,19 @@
                                 <Setter TargetName="Border" Property="Background" Value="{StaticResource ServiceBgBrush}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="StyleConfigMain" TargetType="{x:Type TabItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid>
+                            <Border Grid.Column="1" Name="Border" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
+                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Right" ContentSource="Header" RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -186,7 +154,7 @@
     <!--<Viewbox Stretch="Uniform" >-->
 
     <DockPanel LastChildFill="True">
-        <Grid DockPanel.Dock="Top">
+        <!--<Grid DockPanel.Dock="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -202,75 +170,11 @@
                     Margin="5">
                 <Image Source="/GyorokRentService;component/Images/IconSettings48.png" />
             </Button>
-        </Grid>
-        <comp:ProcessStatusDisplay DockPanel.Dock="Bottom"/>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <TabControl Name="tcRentOrService" BorderBrush="{x:Null}" BorderThickness="0">
-                <TabItem Style="{StaticResource StyleRentMain}" Header="Kölcsönzés" Name="tiRent" FontSize="20" FontWeight="Bold">
-                    <Grid Background="{StaticResource RentBgBrush}">
-                        <TabControl Name="tcRentSub" TabStripPlacement="Top" Background="{StaticResource RentBgBrush}" BorderThickness="0" BorderBrush="{x:Null}">
-                            <TabItem Style="{StaticResource StyleRentSub1}" Header="Új kölcsönzés" Name="tiNewRent">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Label HorizontalAlignment="Center"
-                                               Margin="0" Padding="0"
-                                               FontSize="36" FontWeight="Bold" 
-                                               Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
-                                            <Label.Content>
-                                                <TextBlock Text="Új kölcsönzés" TextDecorations="Underline"/>
-                                            </Label.Content>
-                                        </Label>
-                                    </Grid>
-                                    <Grid Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Name="grdCustomer" Grid.Column="0" IsEnabled="{Binding rentChangeEnabled}" Grid.ColumnSpan="{Binding customerColumnSpan}" Panel.ZIndex="1">
-                                            <!--CustomerSelector added from codebehind-->
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid Name="grdToolSelect" Grid.Row="0" Grid.RowSpan="{Binding toolRowSpan}" Panel.ZIndex="1">
-                                                <!--ToolSelector added from codebehind-->
-                                            </Grid>
-                                            <Grid Name="grdNewRent" Grid.Row="1">
-                                                <!--NewRent added from codebehind-->
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </TabItem>
-                            <TabItem Style="{StaticResource StyleRentSub2}" Header="Kölcsönzések" Name="tiRentalList">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Label Padding="0,0,0,0" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Name="TitleRents" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
-                                            <Label.Content>
-                                                <TextBlock Text="Kölcsönzések" TextDecorations="Underline"/>
-                                            </Label.Content>
-                                        </Label>
-                                    </Grid>
-                                    <Grid Name="grdRentalSum" Grid.Row="1">
-                                        <!--RentalSum added from codebehind-->
-                                    </Grid>
-                                </Grid>
-                            </TabItem>
-                        </TabControl>
-                    </Grid>
+        </Grid>-->
+        <!--<comp:ProcessStatusDisplay DockPanel.Dock="Bottom"/>-->
+        <TabControl Name="tcRentOrService" BorderBrush="{x:Null}" BorderThickness="0">
+            <TabItem Style="{StaticResource StyleRentMain}" Header="Kölcsönzés" Name="tiRent" FontSize="20" FontWeight="Bold">
+                    
                 </TabItem>
                 <TabItem Style="{StaticResource StyleServiceMain}" Header="Szervíz" Name="tiService" FontSize="20" FontWeight="Bold">
                     <Grid  Background="{StaticResource ServiceBgBrush}">
@@ -344,8 +248,20 @@
                         CustomerSum added from codebehind
                     </Grid>
                 </TabItem>-->
+            <TabItem Style="{StaticResource StyleConfigMain}">
+                <TabItem.Header>
+                    <Grid>
+                    <Button
+                    Command="{Binding openSettingsWindow}" 
+                    Name="btnEditContacts" 
+                    BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}"
+                    Margin="0" Padding="0"
+                    Height="30" Width="30">
+                        <Image Source="/GyorokRentService;component/Images/IconSettings48.png" />
+                    </Button>
+                    </Grid>
+                </TabItem.Header>
+            </TabItem>
             </TabControl>
-        </Grid>
     </DockPanel>
-    <!--</Viewbox>-->
 </Window>

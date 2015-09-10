@@ -162,5 +162,25 @@ namespace SQLConnectionLib
         {
             throw new NotImplementedException();
         }
+
+        public void DeleteRentalById(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddRentalGroup(RentalGroups rentalGroup)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddRental(Rentals rental)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PayTypes> GetPayTypes()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

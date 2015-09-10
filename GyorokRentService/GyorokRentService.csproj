@@ -137,10 +137,19 @@
     <Compile Include="CustomInstaller.Designer.cs">
       <DependentUpon>CustomInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="NewRent_SubTab.xaml.cs">
+      <DependentUpon>NewRent_SubTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Print\PrintRent.cs" />
     <Compile Include="Print\printService.cs" />
     <Compile Include="RentCalculates.cs" />
+    <Compile Include="Rent_Tab.xaml.cs">
+      <DependentUpon>Rent_Tab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\CustomerSum_ViewModel.cs" />
     <Compile Include="ViewModel\NewCity_ViewModel.cs" />
     <Compile Include="ViewModel\NewPart_ViewModel.cs" />
@@ -245,6 +254,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NewRent_SubTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Rent_Tab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CustomerSum.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

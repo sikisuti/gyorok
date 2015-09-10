@@ -187,6 +187,26 @@ namespace MiddleLayer
 
             return convertedRental;
         }
+        public static Rentals convertRental(Rental_Representation rental)
+        {
+            Rentals convertedRental = new Rentals()
+            {
+                actualPrice = rental.actualPrice,
+                contactID = rental.contact.id,
+                customerID = rental.customer.id,
+                discount = (float)rental.discount,
+                isClean = rental.isClean,
+                rentalID = rental.id,
+                isPaid = rental.isPaid,
+                payTypeID = rental.payType.id,
+                rentalEnd = rental.rentalEnd,
+                rentalRealEnd = rental.rentalRealEnd,
+                rentalStart = rental.rentalStart,
+                toolID = rental.tool.id
+            };
+
+            return convertedRental;
+        }
 
         public static RentalGroup_Representation convertRentalGroup(RentalGroups rentalGroup)
         {
@@ -199,6 +219,17 @@ namespace MiddleLayer
             {
                 convertedRentalGroup.rentals.Add(convertRental(rental));
             }
+
+            return convertedRentalGroup;
+        }
+        public static RentalGroups convertRentalGroup(RentalGroup_Representation rentalGroup)
+        {
+            RentalGroups convertedRentalGroup = new RentalGroups()
+            {
+                comment = rentalGroup.comment,
+                deposit = rentalGroup.deposit,
+                isOpen = rentalGroup.isOpen
+            };
 
             return convertedRentalGroup;
         }

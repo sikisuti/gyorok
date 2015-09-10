@@ -16,7 +16,7 @@ using MiddleLayer;
 
 namespace GyorokRentService.ViewModel
 {
-    class ToolSelector_ViewModel : ViewModelBase
+    public class ToolSelector_ViewModel : ViewModelBase
     {
         public event EventHandler ToolPickerExpanded;
         public void OnToolPickerExpanded()
@@ -145,7 +145,7 @@ namespace GyorokRentService.ViewModel
         {
             OnToolPickerExpanded();
             zExpander = 2;
-            AppMessages.ToolExpandChanged.Send(true);
+            //AppMessages.ToolExpandChanged.Send(true);
         }
         public ICommand onCollapse { get { return new RelayCommand(onCollapseExecute, () => true); } }
         void onCollapseExecute()
@@ -174,7 +174,7 @@ namespace GyorokRentService.ViewModel
             AppMessages.ToolModified.Send(selectedTool);
 
             readOnlyMode = true;
-            modifyButtonVisibility = Visibility.Hidden;
+            modifyButtonVisibility = Visibility.Collapsed;
             modifyEnableButtonVisibility = Visibility.Visible; 
         }
         bool CandoModifyExecute()
@@ -187,7 +187,7 @@ namespace GyorokRentService.ViewModel
             if (!this.IsInDesignMode)            
             {
                 readOnlyMode = true;
-                modifyButtonVisibility = Visibility.Hidden;
+                modifyButtonVisibility = Visibility.Collapsed;
                 modifyEnableButtonVisibility = Visibility.Visible;
 
                 //AppMessages.ToolToSelect.Register(this, setTool);

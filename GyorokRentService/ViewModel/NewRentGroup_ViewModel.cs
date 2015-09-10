@@ -8,41 +8,44 @@ using GalaSoft.MvvmLight.Command;
 using GyorokRentService.View;
 using System.Collections.ObjectModel;
 using SQLConnectionLib;
+using MiddleLayer.Representations;
+using MiddleLayer;
 
 namespace GyorokRentService.ViewModel
 {
     class NewRentGroup_ViewModel : ViewModelBase
     {
-        //dbGyorokEntities db = new dbGyorokEntities();
-        List<SQLConnectionLib.Rentals> newRents;
+        public event EventHandler rentGroupAccepted;
+        public void OnRentGroupAccepted()
+        {
+            if (rentGroupAccepted != null)
+            {
+                rentGroupAccepted(null, null);
+            }
+        }
 
-        private ObservableCollection<GroupRentals> _groupRentals = new ObservableCollection<GroupRentals>();
-        private GroupRentals _selectedRent;
-        private string _customerName;
-        private DateTime _rentStart;
-        private long _totalCost;
-        private long _deposit;
-        private string _comment;        
+        private RentalGroup_Representation _rentalGroup;
+        private Rental_Representation _selectedRent;   
         
-        public ObservableCollection<GroupRentals> groupRentals
+        public RentalGroup_Representation rentalGroup
         {
             get
             {
-                return _groupRentals;
+                return _rentalGroup;
             }
 
             set
             {
-                if (_groupRentals == value)
+                if (_rentalGroup == value)
                 {
                     return;
                 }
 
-                _groupRentals = value;
-                RaisePropertyChanged("groupRentals");
+                _rentalGroup = value;
+                RaisePropertyChanged("rentalGroup");
             }
         }
-        public GroupRentals selectedRent
+        public Rental_Representation selectedRent
         {
             get
             {
@@ -60,153 +63,41 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("selectedRent");
             }
         }
-        public string customerName
-        {
-            get
-            {
-                return _customerName;
-            }
-
-            set
-            {
-                if (_customerName == value)
-                {
-                    return;
-                }
-
-                _customerName = value;
-                RaisePropertyChanged("customerName");
-            }
-        }
-        public DateTime rentStart
-        {
-            get
-            {
-                return _rentStart;
-            }
-
-            set
-            {
-                if (_rentStart == value)
-                {
-                    return;
-                }
-
-                _rentStart = value;
-                RaisePropertyChanged("rentStart");
-            }
-        }
-        public long totalCost
-        {
-            get
-            {
-                return _totalCost;
-            }
-
-            set
-            {
-                if (_totalCost == value)
-                {
-                    return;
-                }
-
-                _totalCost = value;
-                RaisePropertyChanged("totalCost");
-            }
-        }
-        public long deposit
-        {
-            get
-            {
-                return _deposit;
-            }
-
-            set
-            {
-                if (_deposit == value)
-                {
-                    return;
-                }
-
-                _deposit = value;
-                RaisePropertyChanged("deposit");
-            }
-        }
-        public string comment
-        {
-            get
-            {
-                return _comment;
-            }
-
-            set
-            {
-                if (_comment == value)
-                {
-                    return;
-                }
-
-                _comment = value;
-                RaisePropertyChanged("comment");
-            }
-        }
 
         public ICommand deleteRent { get { return new RelayCommand(deleteRentExecute, () => true); } }
         void deleteRentExecute()
         {
-            Rentals delRent = new Rentals();
-
-            delRent = newRents.Find(nr => nr.toolID == selectedRent.ToolID);
-            newRents.Remove(delRent);
-            AppMessages.NewRentRemoved.Send(delRent);
-            totalCost -= (long)selectedRent.TotalPrice;
-            deposit = 0;
-            foreach (var item in newRents)
-            {
-                deposit += (long)SQLConnection.Execute.ToolsTable.Single(t => t.toolID == item.toolID).defaultDeposit;
-            }
-            groupRentals.Remove(selectedRent);
+            DataProxy.Instance.DeleteRentalById(selectedRent.id);
+            AppMessages.NewRentRemoved.Send(selectedRent);
+            rentalGroup.rentals.Remove(selectedRent);
         }
         public ICommand cancelGroup { get { return new RelayCommand(cancelGroupExecute, () => true); } }
         void cancelGroupExecute()
         {
-            AppMessages.RentGroupClosed.Send(newRents);            
+            AppMessages.RentGroupClosed.Send(null);            
         }
         public ICommand acceptGroup { get { return new RelayCommand(acceptGroupExecute, () => true); } }
         void acceptGroupExecute()
         {
-            if (newRents.Count == 0)
+            if (rentalGroup.rentals.Count == 0)
             {
                 return;
             }
 
-            SQLConnectionLib.Customers c = new SQLConnectionLib.Customers();
-            SQLConnectionLib.RentalGroups rg = new SQLConnectionLib.RentalGroups();
-            SQLConnectionLib.Tools t = new SQLConnectionLib.Tools();
-            long cIDtemp;
-
-            rg.deposit = deposit;
-            rg.comment = comment;
-            SQLConnection.Execute.RentalGroupsTable.AddObject(rg);
-            //db.SaveChanges();
-            cIDtemp = newRents[0].customerID;
-            c = SQLConnection.Execute.CustomersTable.Single(cust => cust.customerID == cIDtemp);
-            CalcStartHour();
-            foreach (Rentals item in newRents)
-            {
-
-                t = SQLConnection.Execute.ToolsTable.Single(tool => tool.toolID == item.toolID);
-                t.toolStatusID = 3;
-                t.rentCounter += 1;
-                item.groupID = rg.groupID;
-                item.rentalStart = rentStart;
-                item.isPaid = false;
-                SQLConnection.Execute.RentalsTable.AddObject(item);
-                c.rentCounter += 1;
+            RentalGroup_Representation rentalGroupToAdd = new RentalGroup_Representation() {  };
+            foreach (Rental_Representation rental in rentalGroup.rentals)
+            {                
+                rental.tool.toolStatus.id = 3;
+                rental.tool.rentCounter += 1;
+                rental.rentalStart = CalcStartHour();
+                rental.isPaid = false;
+                rental.customer.rentCounter += 1;
+                rentalGroupToAdd.rentals.Add(rental);
             }
-            SQLConnection.Execute.SaveDb();
-            new Print.PrintRent(rg.groupID);
-            AppMessages.RentGroupClosed.Send(newRents);
+            DataProxy.Instance.AddRentalGroup(rentalGroupToAdd);
+            new Print.PrintRent(rentalGroupToAdd.id);
+            OnRentGroupAccepted();
+            AppMessages.RentGroupClosed.Send(null);
         }
 
         public NewRentGroup_ViewModel()
@@ -214,42 +105,12 @@ namespace GyorokRentService.ViewModel
             
         }
 
-        public NewRentGroup_ViewModel(ref List<Rentals> r)
+        public NewRentGroup_ViewModel(RentalGroup_Representation r)
         {
-            try
-            {
-                newRents = r;
-                RentCalculates calc = new RentCalculates();
-
-                Rentals rTemp = new Rentals();
-                rTemp = r[0];
-                customerName = SQLConnection.Execute.CustomersTable.Single(c => c.customerID == rTemp.customerID).customerName;
-                CalcStartHour();
-                totalCost = 0;
-                deposit = 0;
-                foreach (Rentals item in r)
-                {
-                    groupRentals.Add(new GroupRentals());
-                    groupRentals[groupRentals.Count - 1].ToolName = SQLConnection.Execute.ToolsTable.Single(t => t.toolID == item.toolID).toolName;
-                    groupRentals[groupRentals.Count - 1].ToolNumber = SQLConnection.Execute.ToolsTable.Single(t => t.toolID == item.toolID).IDNumber;
-                    groupRentals[groupRentals.Count - 1].ToolID = item.toolID;
-                    groupRentals[groupRentals.Count - 1].RentEnd = item.rentalEnd;
-                    groupRentals[groupRentals.Count - 1].IntervalDay = calc.getIntervalDays(rentStart, item.rentalEnd);
-                    groupRentals[groupRentals.Count - 1].IntervalHour = calc.getIntervalHours(rentStart, item.rentalEnd);
-                    groupRentals[groupRentals.Count - 1].ActualPrice = item.actualPrice;
-                    groupRentals[groupRentals.Count - 1].Discount = item.discount;
-                    groupRentals[groupRentals.Count - 1].TotalPrice = calc.getRentCost(rentStart, item.rentalEnd, (long)item.actualPrice, (float)item.discount);
-
-                    totalCost += groupRentals[groupRentals.Count - 1].TotalPrice;
-                    deposit += (long)SQLConnection.Execute.ToolsTable.Single(t => t.toolID == item.toolID).defaultDeposit;
-                }
-            }
-            catch (Exception)
-            {                
-            }
+            rentalGroup = r;
         }
         
-        private void CalcStartHour()
+        private DateTime CalcStartHour()
         {
             int hour;
             if (DateTime.Now.Minute > 30)
@@ -267,75 +128,7 @@ namespace GyorokRentService.ViewModel
             {
                 hour = DateTime.Now.Hour;
             }
-            rentStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hour, 0, 0);
+            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hour, 0, 0);
         }
-    }
-
-    public class GroupRentals
-    {
-        private string toolName;
-        public string ToolName
-        {
-            get { return toolName; }
-            set { toolName = value; }
-        }
-
-        private string toolNumber;
-        public string ToolNumber
-        {
-            get { return toolNumber; }
-            set { toolNumber = value; }
-        }
-
-        private long toolID;
-        public long ToolID
-        {
-            get { return toolID; }
-            set { toolID = value; }
-        }        
-
-        private DateTime rentEnd;
-        public DateTime RentEnd
-        {
-            get { return rentEnd; }
-            set { rentEnd = value; }
-        }
-
-        private int intervalDay;
-        public int IntervalDay
-        {
-            get { return intervalDay; }
-            set { intervalDay = value; }
-        }
-
-        private int intervalHour;
-        public int IntervalHour
-        {
-            get { return intervalHour; }
-            set { intervalHour = value; }
-        }
-        
-
-        private long? actualPrice;
-        public long? ActualPrice
-        {
-            get { return actualPrice; }
-            set { actualPrice = value; }
-        }
-
-        private float? discount;
-        public float? Discount
-        {
-            get { return discount; }
-            set { discount = value; }
-        }
-
-        private long totalPrice;
-        public long TotalPrice
-        {
-            get { return totalPrice; }
-            set { totalPrice = value; }
-        }
-        
     }
 }

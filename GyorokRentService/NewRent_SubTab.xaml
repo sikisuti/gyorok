@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="GyorokRentService.NewRent_SubTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GyorokRentService"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Label HorizontalAlignment="Center"
+                                               Margin="0" Padding="0"
+                                               FontSize="36" FontWeight="Bold" 
+                                               Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
+                <Label.Content>
+                    <TextBlock Text="Új kölcsönzés" TextDecorations="Underline"/>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Name="grdCustomer" Grid.Column="0" IsEnabled="{Binding rentChangeEnabled}">
+                <!--CustomerSelector added from codebehind-->
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Name="grdToolSelect" Grid.Row="0">
+                    <!--ToolSelector added from codebehind-->
+                </Grid>
+                <Grid Name="grdNewRent" Grid.Row="1">
+                    <!--NewRent added from codebehind-->
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

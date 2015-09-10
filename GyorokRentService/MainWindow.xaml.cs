@@ -42,9 +42,6 @@ namespace GyorokRentService
                 var mainVM = new MainViewModel();
                 this.DataContext = mainVM;
 
-                //Task initDbTask = Task.Factory.StartNew(InitDatabase);
-                //initDbTask.ContinueWith((x) => { ProcessStatusDisplayViewModel.Instance.ProcessList.Add(new ProcessItem("End of db init")); }, TaskScheduler.FromCurrentSynchronizationContext());
-
                 //DoBackup();
 
                 //serviceWorkVM = new ServiceWork_ViewModel();
@@ -55,28 +52,22 @@ namespace GyorokRentService
 
                 InitializeComponent();
 
+                tiRent.Content = new Rent_Tab();
+
                 //serviceWorkScreen.DataContext = serviceWorkVM;
                 //grdService.Children.Add(serviceWorkScreen);
 
                 //serviceSumScreen.DataContext = serviceSumVM;
                 //grdServiceSum.Children.Add(serviceSumScreen);
-
-                var UCCustomerSelector = new CustomerSelector(CustomerType.Rent);
-                grdCustomer.Children.Add(UCCustomerSelector);
+                
                 //var ServiceCustomerSelector = new CustomerSelector(CustomerType.Service);
                 //grdNewWSCustomer.Children.Add(ServiceCustomerSelector);
-
-                var UCToolSelector = new ToolSelector();
-                grdToolSelect.Children.Add(UCToolSelector);
 
                 //var UCRentalSum = new RentalsSum();
                 //grdRentalSum.Children.Add(UCRentalSum);
 
                 //var UCNewService = new NewService();
                 //grdNewService.Children.Add(UCNewService);
-
-                //var UCNewRent = new NewRent();
-                //grdNewRent.Children.Add(UCNewRent);
             }
             catch (System.Exception e)
             {

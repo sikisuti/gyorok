@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GyorokRentService.View;
+using GyorokRentService.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,22 +13,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using GyorokRentService.ViewModel;
 
-namespace GyorokRentService.View
+namespace GyorokRentService
 {
     /// <summary>
-    /// Interaction logic for NewRent.xaml
+    /// Interaction logic for Rent_Tab.xaml
     /// </summary>
-    public partial class NewRent : UserControl
+    public partial class Rent_Tab : UserControl
     {
-        public NewRent_ViewModel newRent_VM { get; set; }
-
-        public NewRent()
+        public Rent_Tab()
         {
             InitializeComponent();
-            newRent_VM = new NewRent_ViewModel();
-            this.DataContext = newRent_VM;
+
+            tiNewRent.Content = new NewRent_SubTab();
         }
     }
 }

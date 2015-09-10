@@ -34,7 +34,12 @@ namespace SQLConnectionLib
         void DeleteToolById(long id);
 
         Rentals GetLastRentalByToolId(long toolId);
+        void AddRental(Rentals rental);
+        void DeleteRentalById(long id);
 
         RentalGroups GetRentalGroupById(long id);
+        void AddRentalGroup(RentalGroups rentalGroup);
+
+        List<PayTypes> GetPayTypes();
     }
 }

@@ -17,7 +17,7 @@ using Common.Enumerations;
 
 namespace GyorokRentService.ViewModel
 {
-    class searchTool_ModelView : ViewModelBase
+    public class searchTool_ModelView : ViewModelBase
     {
         public event EventHandler ToolSelected;
         public void OnToolSelected()

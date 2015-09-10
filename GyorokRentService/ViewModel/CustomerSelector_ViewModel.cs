@@ -27,6 +27,15 @@ namespace GyorokRentService.ViewModel
             }
         }
 
+        public event EventHandler customerPickerCollapsed;
+        public void OnCustomerPickerCollapse()
+        {
+            if (customerPickerCollapsed != null)
+            {
+                customerPickerCollapsed(null, null);
+            }
+        }
+
         ObservableCollection<CustomerBase_Representation> temp = new ObservableCollection<CustomerBase_Representation>();
         private CustomerBase_Representation _selectedCustomer;
         public CustomerBase_Representation selectedCustomer
@@ -351,6 +360,7 @@ namespace GyorokRentService.ViewModel
         public ICommand onCollapse { get { return new RelayCommand(onCollapseExecute, CanonCollapseExecute); } }
         void onCollapseExecute()
         {
+            OnCustomerPickerCollapse();
             zExpander = 0;
             AppMessages.CustomerExpandChanged.Send(false);
         }
@@ -392,7 +402,7 @@ namespace GyorokRentService.ViewModel
             }
 
             readOnlyMode = true;
-            modifyButtonVisibility = Visibility.Hidden;
+            modifyButtonVisibility = Visibility.Collapsed;
             modifyEnableButtonVisibility = Visibility.Visible;
         }
         bool CandoModifyExecute()
@@ -454,7 +464,7 @@ namespace GyorokRentService.ViewModel
             {
                 commentSaveVisibility = Visibility.Hidden;
                 readOnlyMode = true;
-                modifyButtonVisibility = Visibility.Hidden;
+                modifyButtonVisibility = Visibility.Collapsed;
                 modifyEnableButtonVisibility = Visibility.Visible;
 
                 customerMode = ct;

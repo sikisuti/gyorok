@@ -7,7 +7,8 @@
              xmlns:local="clr-namespace:GyorokRentService.ViewModel"
              xmlns:view="clr-namespace:GyorokRentService.View"
              xmlns:c="clr-namespace:GyorokRentService"
-             mc:Ignorable="d" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1">
+             FontSize="16"
+             mc:Ignorable="d" BorderThickness="1">
     
     <UserControl.Resources>
         <Style TargetType="{x:Type DatePickerTextBox}">
@@ -32,105 +33,167 @@
         <c:BooleanToVisibilityConverter x:Key="boolToVis"/>
         <c:MultiBooleanToBooleanConverter x:Key="multiBoolToBool"/>
     </UserControl.Resources>
-    <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-        <Label Content="{Binding customerNameLabel}" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="5,85,0,0" Name="label1" VerticalAlignment="Top" Width="131" />
-        <Label Padding="5,5,5,0" Content="Azonosító szám:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="5,121,0,0" Name="label2" VerticalAlignment="Top" Width="173" />
-        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedCustomer.IDNumber}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="184,121,0,0" Name="textBox2" VerticalAlignment="Top" Width="289" Panel.ZIndex="1" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
-        <Label Padding="5,5,5,0" IsEnabled="{Binding isPerson}" Content="Anyja neve:" FontSize="16" Height="30" HorizontalAlignment="Left" Margin="5,157,0,0" Name="label3" VerticalAlignment="Top" Width="173" FontWeight="Bold" />
-        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" IsEnabled="{Binding isPerson}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Text="{Binding selectedCustomer.mothersName}"  Margin="184,157,0,0" Name="comboBox1" VerticalAlignment="Top" Width="289" Panel.ZIndex="1" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
-        <Label Padding="5,5,5,0" Content="Cím:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="5,195,0,0" Name="label4" VerticalAlignment="Top" Width="97" />
-        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedCustomer.customerAddress}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="184,229,0,0" Name="label5" VerticalAlignment="Top" Width="410" Panel.ZIndex="1" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
-        <Label Padding="5,5,5,0" Content="Telefon:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="5,265,0,0" Name="label6" VerticalAlignment="Top" Width="173" />
-        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedCustomer.customerPhone}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="184,265,0,0" Name="label7" Panel.ZIndex="1" VerticalAlignment="Top" Width="289" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
-        <Label IsEnabled="{Binding isPerson}" Content="Születési dátum:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="5,301,0,0" Name="label8" Padding="5,5,5,0" VerticalAlignment="Top" Width="173" />
-        <TextBox Padding="5,5,5,0" IsReadOnly="True" Visibility="{Binding readOnlyMode, Converter={StaticResource boolToVis}, ConverterParameter=false}" Text="{Binding selectedCustomer.birthDate, StringFormat={}{0:D}}" xml:lang="hu-HU" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="184,301,0,0" Panel.ZIndex="1" VerticalAlignment="Top" Width="289" BorderThickness="0" Background="{x:Null}" />
-        <DatePicker Visibility="{Binding readOnlyMode, Converter={StaticResource boolToVis}, ConverterParameter=true}" Padding="5,5,5,0" SelectedDate="{Binding selectedCustomer.birthDate}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="184,301,0,0" Panel.ZIndex="1" VerticalAlignment="Top" Width="289" />
-        <Label IsEnabled="{Binding isPerson}" Content="Munkahely:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="5,337,0,0" Name="lblWorkPlace" Padding="5,5,5,0" VerticalAlignment="Top" Width="173" />
-        <TextBox Padding="5,5,5,0" IsReadOnly="{Binding readOnlyMode}" IsEnabled="{Binding isPerson}" Text="{Binding selectedCustomer.workPlace}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="184,337,0,0" Name="txtWorkPlace" Panel.ZIndex="1" VerticalAlignment="Top" Width="410" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
-        <Expander IsEnabled="{Binding readOnlyMode}" IsExpanded="{Binding isExpanded}" Header="{Binding selectedCustomer.customerName}" FontSize="20" FontWeight="Bold" Height="460" HorizontalAlignment="Left" Margin="183,82,0,0" Name="expander1" VerticalAlignment="Top" Width="760" BorderThickness="5" Panel.ZIndex="{Binding zExpander}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Expanded">
-                    <i:InvokeCommandAction Command="{Binding onExpand}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="Collapsed">
-                    <i:InvokeCommandAction Command="{Binding onCollapse}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <Grid x:Name="grdExpander" VerticalAlignment="Top" Background="White" Height="400" Width="750" Margin="0,0,0,0">
-                <!--Insert user control from codebehind-->
-            </Grid>
-        </Expander>
-        <Label Content="Megjegyzés:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="5,436,0,0" Name="lblProblems" Padding="5,5,5,0" VerticalAlignment="Top" Width="173" />
-        <TextBox IsEnabled="{Binding customerSelected}" Text="{Binding selectedCustomer.comment}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" FontSize="16" FontWeight="Normal" Height="99" HorizontalAlignment="Left" Margin="5,467,0,0" x:Name="textBlock1" VerticalAlignment="Top" Width="295" >
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="PreviewKeyDown">
-                    <i:InvokeCommandAction Command="{Binding mustSave}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </TextBox>
-        <Label Content="Problémák:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="306,436,0,0" Name="label10" Padding="5,5,5,0" VerticalAlignment="Top" Width="173" />
-        <TextBox IsEnabled="{Binding customerSelected}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" FontSize="16" FontWeight="Normal" Height="99" HorizontalAlignment="Left" Margin="306,467,0,0" Name="textBlock2" Text="{Binding selectedCustomer.problems, Mode=TwoWay}" VerticalAlignment="Top" Width="288" >
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="PreviewKeyDown">
-                    <i:InvokeCommandAction Command="{Binding mustSave}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </TextBox>
-        <Button IsEnabled="{Binding customerSelected}" Visibility="{Binding modifyEnableButtonVisibility}" Command="{Binding switchModifyMode}" FontSize="16" FontWeight="Normal" Height="48" HorizontalAlignment="Left" Margin="376,568,0,0" Name="button1" VerticalAlignment="Top" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <StackPanel Margin="5">
+            <Label Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="32" FontWeight="Bold" Content="Ügyfél" Height="50" HorizontalAlignment="Left" Name="textBox4" VerticalAlignment="Top" Width="630" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Margin="0,0,0,0" />
+    <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition MinWidth="300"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBox Grid.Column="2" Visibility="{Binding modifyButtonVisibility}" Text="{Binding selectedCustomer.customerName}" BorderThickness="0" />
+            <Label Content="{Binding customerNameLabel}" Grid.Row="1" FontWeight="Bold" />
+            <Expander IsEnabled="{Binding readOnlyMode}" IsExpanded="{Binding isExpanded}" 
+                  Grid.Row="1" Grid.Column="3"
+                  Header="{Binding selectedCustomer.customerName}" 
+                  FontSize="20" FontWeight="Bold"
+                  Name="expander1" 
+                  BorderThickness="5">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Expanded">
+                        <i:InvokeCommandAction Command="{Binding onExpand}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Collapsed">
+                        <i:InvokeCommandAction Command="{Binding onCollapse}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <Grid x:Name="grdExpander" VerticalAlignment="Top" Background="White" Margin="0,0,0,0">
+                    <!--Insert user control from codebehind-->
+                </Grid>
+            </Expander>
+            <Label Content="Azonosító szám:" Grid.Row="2" FontWeight="Bold" />
+            <TextBox Grid.Column="2" Grid.Row="2" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedCustomer.IDNumber}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
+            <Label IsEnabled="{Binding isPerson}" Content="Anyja neve:" Grid.Row="3" FontWeight="Bold" />
+                <Image Grid.Column="1" Grid.Row="3" Visibility="{Binding wrongMothersName}" Height="32" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
+                <TextBox IsReadOnly="{Binding readOnlyMode}" Grid.Row="3" Grid.Column="2" IsEnabled="{Binding isPerson}" Text="{Binding selectedCustomer.mothersName}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
+                <Label Content="Cím:" FontWeight="Bold" Grid.Row="4" />
+                <Button Grid.Column="1" Grid.Row="4" Visibility="{Binding readOnlyMode, Converter={StaticResource boolToVis}, ConverterParameter=true}" Command="{Binding openCityChooser}" Content="..." Height="23" Width="29" />
+                <Label Grid.Column="2" Grid.Row="4" Content="{Binding selectedCustomer.city.city}" />
+                <Image Visibility="{Binding wrongAddress}" Grid.Column="1" Grid.Row="5" Height="32" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
+                <TextBox Grid.Column="2" Grid.Row="5" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedCustomer.customerAddress}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
+                <Label Content="Telefon:" FontWeight="Bold" Grid.Row="6" />
+                <Image Grid.Column="1" Grid.Row="6" Visibility="{Binding wrongPhone}" Height="32" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
+                <TextBox Grid.Column="2" Grid.Row="6" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedCustomer.customerPhone}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
+                <Label Grid.Row="7" IsEnabled="{Binding isPerson}" Content="Születési dátum:" FontWeight="Bold" />
+                <Image Grid.Column="1" Grid.Row="7" Visibility="{Binding wrongBirthDate}" Height="32" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
+                <TextBox Grid.Column="2" Grid.Row="7" IsReadOnly="True" Visibility="{Binding readOnlyMode, Converter={StaticResource boolToVis}, ConverterParameter=false}" Text="{Binding selectedCustomer.birthDate, StringFormat={}{0:D}}" xml:lang="hu-HU"  BorderThickness="0" Background="{x:Null}" />
+                <DatePicker Grid.Column="2" Grid.Row="7" Visibility="{Binding readOnlyMode, Converter={StaticResource boolToVis}, ConverterParameter=true}" SelectedDate="{Binding selectedCustomer.birthDate}" />
+                <Label Grid.Row="8" IsEnabled="{Binding isPerson}" Content="Munkahely:" FontWeight="Bold" />
+                <Image Grid.Column="1" Grid.Row="8" Visibility="{Binding wrongWorkPlace}" Height="32" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
+                <TextBox Grid.Column="2" Grid.Row="8" IsReadOnly="{Binding readOnlyMode}" IsEnabled="{Binding isPerson}" Text="{Binding selectedCustomer.workPlace}"  BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
+        </Grid>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Kapcsolattartók:" Width="200" FontWeight="Bold" IsEnabled="{Binding selectedCustomer.isFirm}" />
+                <StackPanel>
+                    <StackPanel>
+                        <Button IsEnabled="{Binding isFirm}" Visibility="{Binding modifyButtonVisibility}" Command="{Binding openEditContacts}" Height="32" Width="32" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
+                            <Grid>
+                                <Image Source="/GyorokRentService;component/Images/IconAddPerson32.png" />
+                            </Grid>
+                        </Button>
+                        <Button IsEnabled="{Binding selectedCustomer.isFirm}" Visibility="{Binding modifyButtonVisibility}" Command="{Binding deleteContact}" Height="32" Width="32" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
+                            <Grid>
+                                <Image Source="/GyorokRentService;component/Images/IconDelPerson32.png" />
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+                <ListBox ItemsSource="{Binding selectedCustomer.contacts}" SelectedValue="{Binding selectedContact}" MinWidth="300" IsEnabled="{Binding selectedCustomer.isFirm}" MaxHeight="60" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition SharedSizeGroup="col0" Width="0"/>
+                                    <ColumnDefinition SharedSizeGroup="col1" Width="200"/>
+                                    <ColumnDefinition SharedSizeGroup="col3" Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding customerID}"/>
+                                <TextBlock Text='{Binding customerName}' Grid.Column="1"/>
+                                <TextBlock Text='{Binding IDNumber}' Grid.Column="2"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
             <Grid>
-                <Image Source="/GyorokRentService;component/Images/IconEdit48.png"/>
-            </Grid>
-        </Button>
-        <Button IsEnabled="{Binding isFirm}" Visibility="{Binding modifyButtonVisibility}" Command="{Binding openEditContacts}" FontSize="16" FontWeight="Normal" Height="32" HorizontalAlignment="Left" Margin="476,436,0,0" Name="btnEditContacts" VerticalAlignment="Top" Width="32" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
-            <Grid>
-                <Image Source="/GyorokRentService;component/Images/IconAddPerson32.png" />
-            </Grid>
-        </Button>
-        <Button IsEnabled="{Binding selectedCustomer.isFirm}" Visibility="{Binding modifyButtonVisibility}" Command="{Binding deleteContact}" FontSize="16" FontWeight="Normal" Height="32" HorizontalAlignment="Left" Margin="516,436,0,0" Name="btnDeleteContacts" VerticalAlignment="Top" Width="32" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
-            <Grid>
-                <Image Source="/GyorokRentService;component/Images/IconDelPerson32.png" />
-            </Grid>
-        </Button>
-        <Button Visibility="{Binding modifyButtonVisibility}" Command="{Binding doModify}" FontSize="16" FontWeight="Normal" Height="48" HorizontalAlignment="Left" Margin="451,568,0,0" Name="button2" VerticalAlignment="Top" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}" >
-            <Grid>
-                <Image Source="/GyorokRentService;component/Images/IconSave48.png"/>
-            </Grid>
-        </Button>
-        <TextBox Visibility="{Binding modifyButtonVisibility}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="183,58,0,0" Name="textBox1" Panel.ZIndex="1" Text="{Binding selectedCustomer.customerName}" VerticalAlignment="Top" Width="289" BorderThickness="0" />
-        <Label Content="Kapcsolattartók:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" IsEnabled="{Binding selectedCustomer.isFirm}" Margin="5,373,0,0" Name="label11" Padding="5,5,5,0" VerticalAlignment="Top" Width="173" />
-        <ListBox FontSize="16" FontWeight="Normal" ItemsSource="{Binding selectedCustomer.contacts}" SelectedValue="{Binding selectedContact}" IsEnabled="{Binding selectedCustomer.isFirm}"  Height="60" HorizontalAlignment="Left" Margin="183,375,0,0" x:Name="listBox1" VerticalAlignment="Top" Width="411" >
-            <ListBox.ItemTemplate>
-                <DataTemplate>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Margin="5">
+                    <Label Content="Megjegyzés:" FontWeight="Bold" />
+                    <TextBox IsEnabled="{Binding customerSelected}" Text="{Binding selectedCustomer.comment}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="99" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding mustSave}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="5">
+                    <Label Content="Problémák:" FontWeight="Bold" />
+                    <TextBox IsEnabled="{Binding customerSelected}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="99" Text="{Binding selectedCustomer.problems, Mode=TwoWay}" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewKeyDown">
+                                <i:InvokeCommandAction Command="{Binding mustSave}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                </StackPanel>
+                <Button Grid.ColumnSpan="2" Grid.Row="1" Command="{Binding saveComments}" Visibility="{Binding commentSaveVisibility}" Height="32" Width="32" BorderBrush="{x:Null}" BorderThickness="0" Background="{x:Null}">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition SharedSizeGroup="col0" Width="0"/>
-                            <ColumnDefinition SharedSizeGroup="col1" Width="200"/>
-                            <ColumnDefinition SharedSizeGroup="col3" Width="100"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding customerID}"/>
-                        <TextBlock Text='{Binding customerName}' Grid.Column="1"/>
-                        <TextBlock Text='{Binding IDNumber}' Grid.Column="2"/>
+                        <Image Source="/GyorokRentService;component/Images/IconSave32.png"/>
                     </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Button Command="{Binding saveComments}" Visibility="{Binding commentSaveVisibility}" Height="32" HorizontalAlignment="Left" Margin="276,571,0,0" Name="button3" VerticalAlignment="Top" Width="32" BorderBrush="{x:Null}" BorderThickness="0" Background="{x:Null}">
-            <Grid>
-                <Image Source="/GyorokRentService;component/Images/IconSave32.png"/>
+                </Button>
             </Grid>
-        </Button>
-        <Image Visibility="{Binding wrongMothersName}" Height="32" HorizontalAlignment="Left" Margin="146,157,0,0" Name="imgWrongMN" VerticalAlignment="Top" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
-        <Image Visibility="{Binding wrongAddress}" Height="32" HorizontalAlignment="Left" Margin="108,195,0,0" Name="imgWrongAdd" VerticalAlignment="Top" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
-        <Image Visibility="{Binding wrongPhone}" Height="32" HorizontalAlignment="Left" Margin="146,265,0,0" Name="imgWrongPhone" VerticalAlignment="Top" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
-        <Image Visibility="{Binding wrongBirthDate}" Height="32" HorizontalAlignment="Left" Margin="146,301,0,0" Name="imgWrongBirth" VerticalAlignment="Top" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
-        <Image Visibility="{Binding wrongWorkPlace}" Height="32" HorizontalAlignment="Left" Margin="146,337,0,0" Name="imgWrongWorkPlace" VerticalAlignment="Top" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
-        <Label Content="Kedvezmény:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="5,583,0,0" Name="label12" Padding="5,5,5,0" VerticalAlignment="Top" Width="131" />
-        <TextBox Padding="5,5,5,0" FontSize="16" FontWeight="Normal" Height="30" IsReadOnly="{Binding readOnlyMode}" Margin="137,583,0,0" Name="textBox3" Panel.ZIndex="1" Text="{Binding selectedCustomer.defaultDiscount}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="41" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" HorizontalContentAlignment="Right" />
-        <Label Content="%" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="174,583,0,0" Name="label13" Padding="5,5,5,0" VerticalAlignment="Top" Width="29" />
-        <Label Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="32" FontWeight="Bold" Content="Ügyfél" Height="50" HorizontalAlignment="Left" Name="textBox4" VerticalAlignment="Top" Width="630" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Margin="0,0,0,0" />
-        <Label Content="{Binding selectedCustomer.city.city}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="184,195,0,0" Name="label15" Padding="5,5,5,0" VerticalAlignment="Top" Width="315" />
-        <Button Visibility="{Binding readOnlyMode, Converter={StaticResource boolToVis}, ConverterParameter=true}" Command="{Binding openCityChooser}" Content="..." Height="23" HorizontalAlignment="Left" Margin="149,201,0,0" Name="button4" VerticalAlignment="Top" Width="29" />
-    </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Kedvezmény:" FontWeight="Bold" />
+                    <TextBox IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedCustomer.defaultDiscount}" Width="41" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
+                    <Label Content="%" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                    <Button IsEnabled="{Binding customerSelected}" Visibility="{Binding modifyEnableButtonVisibility}" Command="{Binding switchModifyMode}" Height="48" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
+                        <Grid>
+                            <Image Source="/GyorokRentService;component/Images/IconEdit48.png"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Visibility="{Binding modifyButtonVisibility}" Command="{Binding doModify}" Height="48" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}" >
+                        <Grid>
+                            <Image Source="/GyorokRentService;component/Images/IconSave48.png"/>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+                
+                
+                
+                
+                
+                
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
     <UserControl.BorderBrush>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="Black" Offset="0" />

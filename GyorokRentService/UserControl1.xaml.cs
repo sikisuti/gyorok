@@ -11,22 +11,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using GyorokRentService.ViewModel;
 
-namespace GyorokRentService.View
+namespace GyorokRentService
 {
     /// <summary>
-    /// Interaction logic for NewRent.xaml
+    /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class NewRent : UserControl
+    public partial class UserControl1 : UserControl
     {
-        public NewRent_ViewModel newRent_VM { get; set; }
-
-        public NewRent()
+        public UserControl1()
         {
             InitializeComponent();
-            newRent_VM = new NewRent_ViewModel();
-            this.DataContext = newRent_VM;
         }
     }
 }

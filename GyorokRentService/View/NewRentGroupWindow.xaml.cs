@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using GyorokRentService.ViewModel;
 using SQLConnectionLib;
+using MiddleLayer.Representations;
 
 namespace GyorokRentService.View
 {
@@ -24,10 +25,10 @@ namespace GyorokRentService.View
         {
             InitializeComponent();
         }
-        public NewRentGroupWindow(ref List<Rentals> r)
+        public NewRentGroupWindow(RentalGroup_Representation r)
         {
             InitializeComponent();
-            var viewModel = new NewRentGroup_ViewModel(ref r);
+            var viewModel = new NewRentGroup_ViewModel(r);
             this.DataContext = viewModel;
             AppMessages.RentGroupClosed.Register(this, s => this.Close());
         }

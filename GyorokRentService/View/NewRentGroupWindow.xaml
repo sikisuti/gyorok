@@ -29,7 +29,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Content="{Binding customerName}" FontSize="20" FontWeight="Normal" Height="40" HorizontalAlignment="Left" Margin="133,31,0,0" Name="label1" VerticalAlignment="Top" Width="324" />
+        <Label Content="{Binding rentals[0].customer.customerName}" FontSize="20" FontWeight="Normal" Height="40" HorizontalAlignment="Left" Margin="133,31,0,0" Name="label1" VerticalAlignment="Top" Width="324" />
         <Label Content="Bérlési idő kezdete:" FontSize="20" FontWeight="Bold" Height="40" HorizontalAlignment="Left" Margin="20,77,0,0" Name="label2" VerticalAlignment="Top" />
         <Label Content="Bérlő neve:" FontSize="20" FontWeight="Bold" Height="40" HorizontalAlignment="Left" Margin="20,31,0,0" Name="label3" VerticalAlignment="Top" />
         <TextBlock Text="{Binding rentStart, StringFormat='yyyy. MMMM dd'}" xml:lang="hu-HU" FontSize="20" FontWeight="Normal" Height="40" HorizontalAlignment="Left" Margin="219,81,0,0" Name="label4" VerticalAlignment="Top" Width="238" />

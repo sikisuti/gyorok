@@ -208,12 +208,12 @@ namespace GyorokRentService
 
         public static class NewRentRemoved
         {
-            public static void Send(Rentals r)
+            public static void Send(Rental_Representation r)
             {
                 Messenger.Default.Send(r, MessageTypes.newRentRemoved);
             }
 
-            public static void Register(object recipient, Action<Rentals> action)
+            public static void Register(object recipient, Action<Rental_Representation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.newRentRemoved, action);
             }

@@ -327,13 +327,16 @@ namespace GyorokRentService.ViewModel
 
         private void FilterList()
         {
-            if (filterType == 3)
+            if (allCustomer != null)
             {
-                foundCustomers = new ObservableCollection<CustomerBase_Representation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower())).OrderBy(oc => oc.customerName));
-            }
-            else
-            {
-                foundCustomers = new ObservableCollection<CustomerBase_Representation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower()) && c.isFirm == (filterType == 1)).OrderBy(oc => oc.customerName));
+                if (filterType == 3)
+                {
+                    foundCustomers = new ObservableCollection<CustomerBase_Representation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower())).OrderBy(oc => oc.customerName));
+                }
+                else
+                {
+                    foundCustomers = new ObservableCollection<CustomerBase_Representation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower()) && c.isFirm == (filterType == 1)).OrderBy(oc => oc.customerName));
+                } 
             }
         }
     }

@@ -21,24 +21,37 @@ namespace GyorokRentService.View
     /// </summary>
     public partial class ToolSelector : UserControl
     {
+        public searchTool_ModelView toolPicker_VM { get; set; }
+        Window toolPickerWindow;
+
         public ToolSelector()
         {
             InitializeComponent();
             var viewModel = new ToolSelector_ViewModel();
             this.DataContext = viewModel;
 
-            searchTool searchToolWindow = new searchTool();
-            searchTool_ModelView searchToolVM = new searchTool_ModelView();
-            searchToolWindow.DataContext = searchToolVM;
-            this.grdExpander.Children.Add(searchToolWindow);
+            searchTool toolPickerUC = new searchTool();
+            toolPicker_VM = new searchTool_ModelView();
+            toolPickerUC.DataContext = toolPicker_VM;
 
-            searchToolVM.ToolSelected += (s, a) => { viewModel.selectedTool = (Tool_Representation)s; };
+            toolPickerWindow = new Window()
+            {
+                Content = toolPickerUC,
+                SizeToContent = SizeToContent.WidthAndHeight
+            };
+
+            toolPicker_VM.ToolSelected += (s, a) => 
+            {
+                viewModel.selectedTool = (Tool_Representation)s;
+                toolPickerWindow.Hide();
+            };
             viewModel.ToolPickerExpanded += (s, a) =>
             {
-                if (searchToolVM.allTools == null && searchToolVM.IsBusy == false)
+                if (toolPicker_VM.allTools == null && toolPicker_VM.IsBusy == false)
                 {
-                    searchToolVM.RefreshToolList();
+                    toolPicker_VM.RefreshToolList();
                 }
+                toolPickerWindow.Show();
             };
         }
     }

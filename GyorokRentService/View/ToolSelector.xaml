@@ -7,6 +7,7 @@
              xmlns:view="clr-namespace:GyorokRentService.View"
              xmlns:c="clr-namespace:GyorokRentService"
              mc:Ignorable="d" BorderThickness="1">
+    
     <UserControl.Resources>
         <c:FilledToVisibilityConverter x:Key="fillToVis"/>
         <c:BooleanToReadOnlyTextBgConverter x:Key="readOnlyToBg"/>
@@ -18,8 +19,15 @@
             <GradientStop Color="White" Offset="1" />
         </LinearGradientBrush>
     </UserControl.BorderBrush>
-    <Grid Height="600" Width="700" HorizontalAlignment="Left" VerticalAlignment="Top">
-        <Expander IsExpanded="{Binding isExpanded}" Header="{Binding selectedTool.toolName}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Margin="155,82,0,0" Name="expander1" VerticalAlignment="Top" BorderThickness="5" Panel.ZIndex="{Binding zExpander}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+    <Grid>
+                <Expander IsExpanded="{Binding isExpanded}" 
+                  Header="{Binding selectedTool.toolName}" 
+                  FontSize="20" FontWeight="Bold" 
+                  Margin="155,82,0,0" 
+                  Name="expander1" 
+                  BorderThickness="5">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Expanded">
                     <i:InvokeCommandAction Command="{Binding onExpand}"/>
@@ -28,12 +36,13 @@
                     <i:InvokeCommandAction Command="{Binding onCollapse}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-            <Grid x:Name="grdExpander" VerticalAlignment="Top" HorizontalAlignment="Left" Background="White" Margin="0,0,0,0">
+            <Grid x:Name="grdExpander" Background="White" Margin="0,0,0,0" HorizontalAlignment="Left">
                 <!--Added from codebehind
                 <view:searchTool HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
             </Grid>
         </Expander>
-        <Button Visibility="{Binding modifyEnableButtonVisibility}" Command="{Binding switchModifyMode}" FontSize="16" FontWeight="Normal" Height="48" HorizontalAlignment="Left" Margin="300,273,0,0" Name="button1" VerticalAlignment="Top" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
+        
+            <Button Visibility="{Binding modifyEnableButtonVisibility}" Command="{Binding switchModifyMode}" FontSize="16" FontWeight="Normal" Height="48" HorizontalAlignment="Left" Margin="300,273,0,0" Name="button1" VerticalAlignment="Top" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
             <Grid>
                 <Image Source="/GyorokRentService;component/Images/IconEdit48.png"/>
             </Grid>
@@ -55,6 +64,7 @@
         <TextBox Visibility="{Binding modifyButtonVisibility}"  BorderThickness="0" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="155,54,0,0" Name="textBox5" Panel.ZIndex="1" Text="{Binding selectedTool.toolName}" VerticalAlignment="Top" Width="198" />
         <TextBox Padding="5,5,5,0" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" IsReadOnly="{Binding readOnlyMode}" Margin="155,262,0,0" Name="textBox6" Panel.ZIndex="1" Text="{Binding selectedTool.defaultDeposit, StringFormat=C0}" xml:lang="hu-HU" VerticalAlignment="Top" Width="131" />
         <Label Padding="5,5,5,0" Content="Kaukció:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="12,262,0,0" Name="label6" VerticalAlignment="Top" Width="79" />
-        <Label Padding="0,0,0,0"  Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="32" FontWeight="Bold" Height="50" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Name="textBox7" Content="Gép" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="596" />
+        <Label Padding="0,0,0,0"  Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="32" FontWeight="Bold" Height="50" HorizontalContentAlignment="Center" Name="textBox7" Content="Gép" VerticalAlignment="Top" VerticalContentAlignment="Center" />
     </Grid>
+    </ScrollViewer>
 </UserControl>

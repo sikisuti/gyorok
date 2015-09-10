@@ -10,25 +10,47 @@ using GalaSoft.MvvmLight.Command;
 using GyorokRentService.View;
 using System.Windows;
 using SQLConnectionLib;
+using MiddleLayer.Representations;
+using MiddleLayer;
 
 namespace GyorokRentService.ViewModel
 {
-    class NewRent_ViewModel : ViewModelBase
+    public class NewRent_ViewModel : ViewModelBase
     {
-        //dbGyorokEntities db;
         //Timer t;
-        List<SQLConnectionLib.Rentals> newRentGroup = new List<SQLConnectionLib.Rentals>();
-        long _customerID;
-        long? _contactID;
-        long _toolID;
-        long _actualPrice;
 
+        private RentalGroup_Representation _newRentalGroup;
+        public RentalGroup_Representation newRentalGroup
+        {
+            get { return _newRentalGroup; }
+            set
+            {
+                if (_newRentalGroup != value)
+                {
+                    _newRentalGroup = value;
+                    RaisePropertyChanged("newRentalGroup");
+                }
+            }
+        }
+
+        private Rental_Representation _selectedRental;
+        public Rental_Representation selectedRental
+        {
+            get { return _selectedRental; }
+            set
+            {
+                if (_selectedRental != value)
+                {
+                    _selectedRental = value;
+                    RaisePropertyChanged("selectedRental");
+                }
+            }
+        }
+        
         private DateTime _rentStart;
         private DateTime _rentEnd;
-        private List<SQLConnectionLib.PayTypes> _payType;
-        private SQLConnectionLib.PayTypes _selectedPayTypes;
-        private float _discount;
-        private int _rentCount;
+        private List<PayType_Representation> _payType;
+        private PayType_Representation _selectedPayTypes;
         private bool _changeEnabled;        
 
         public DateTime rentStart
@@ -67,7 +89,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("rentEnd");
             }
         }
-        public List<SQLConnectionLib.PayTypes> payType
+        public List<PayType_Representation> payType
         {
             get
             {
@@ -85,7 +107,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("payType");
             }
         }
-        public SQLConnectionLib.PayTypes selectedPayType
+        public PayType_Representation selectedPayType
         {
             get
             {
@@ -101,42 +123,6 @@ namespace GyorokRentService.ViewModel
 
                 _selectedPayTypes = value;
                 RaisePropertyChanged("selectedPayType");
-            }
-        }
-        public float discount
-        {
-            get
-            {
-                return _discount;
-            }
-
-            set
-            {
-                if (_discount == value)
-                {
-                    return;
-                }
-
-                _discount = value;
-                RaisePropertyChanged("discount");
-            }
-        }
-        public int rentCount
-        {
-            get
-            {
-                return _rentCount;
-            }
-
-            set
-            {
-                if (_rentCount == value)
-                {
-                    return;
-                }
-
-                _rentCount = value;
-                RaisePropertyChanged("rentCount");
             }
         }
         public bool changeEnabled
@@ -166,7 +152,13 @@ namespace GyorokRentService.ViewModel
         public ICommand openRentalGroupWindow { get { return new RelayCommand(openRentalGroupWindowExecute, () => true); } }
         void openRentalGroupWindowExecute()
         {
-            NewRentGroupWindow rg = new NewRentGroupWindow(ref newRentGroup);
+            NewRentGroupWindow rg = new NewRentGroupWindow(newRentalGroup);
+            NewRentGroup_ViewModel newRetGroup_VM = rg.DataContext as NewRentGroup_ViewModel;
+            newRetGroup_VM.rentGroupAccepted += (s, a) => 
+            {
+                newRentalGroup = new RentalGroup_Representation();
+                changeEnabled = true;
+            };
             rg.Show();
         }
 
@@ -174,39 +166,14 @@ namespace GyorokRentService.ViewModel
         {
             if (!this.IsInDesignMode)
             {
-                //db = new dbGyorokEntities();
                 //t = new Timer(300000);
                 //t.Start();
                 //t.Elapsed += new ElapsedEventHandler(t_Elapsed);
 
-                payType = SQLConnection.Execute.PayTypesTable.ToList();
-                AddNewRentalGroup();
-                CalcEndHour();
-                discount = 0;
-                rentCount = 0;
-
-                AppMessages.CustomerToRent.Register(this, c => { 
-                    _customerID = c.id;
-                    discount = (float)c.defaultDiscount * 100;
-                });
-                AppMessages.ContactSelected.Register(this, c => _contactID = c.id);
-                AppMessages.ToolToSelect.Register(this, tl =>
-                {
-                    _toolID = tl.toolID;
-                    _actualPrice = tl.rentPrice;
-                });
-                AppMessages.ToolModified.Register(this, tl =>
-                {
-                    _toolID = tl.id;
-                    _actualPrice = tl.rentPrice;
-                });
-                AppMessages.NewRentRemoved.Register(this, r => rentCount -= 1);
-                AppMessages.RentGroupClosed.Register(this, s =>
-                {
-                    newRentGroup.Clear();
-                    rentCount = 0;
-                    changeEnabled = true;
-                });
+                payType = DataProxy.Instance.GetPayTypes();
+                newRentalGroup = new RentalGroup_Representation();
+                selectedRental = new Rental_Representation();
+                
                 AppMessages.NewRentAdded.Register(this, r => changeEnabled = false);
                 changeEnabled = true;
             }
@@ -217,7 +184,7 @@ namespace GyorokRentService.ViewModel
         //    CalcStartHour();
         //}
 
-        private void CalcEndHour()
+        private DateTime CalcEndHour()
         {
             //rentStart = DateTime.Today;
             //rentEnd = DateTime.Today + TimeSpan.FromDays(1);
@@ -237,45 +204,25 @@ namespace GyorokRentService.ViewModel
             {
                 hour = DateTime.Now.Hour;
             }
-            rentEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hour, 0, 0);
+            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hour, 0, 0);
             //rentEnd = rentStart + TimeSpan.FromDays(1);
-        }
-
-        private void AddNewRentalGroup()
-        {  
-            //db.Dispose();
-            //db = new dbGyorokEntities();
-            newRentGroup.Clear();
-            selectedPayType = SQLConnection.Execute.PayTypesTable.Single(pt => pt.payTypeID == 1);
         }
 
         private void AddNewRent()
         {
             if (CheckFillsOK())
             {
-                newRentGroup.Add(new Rentals());
-                newRentGroup[newRentGroup.Count - 1].customerID = _customerID;
-                if (_contactID != 0)
-                {
-                    newRentGroup[newRentGroup.Count - 1].contactID = _contactID;
-                }
-                newRentGroup[newRentGroup.Count - 1].toolID = _toolID;
-                //newRentGroup[newRentGroup.Count - 1].rentalStart = rentStart;
-                newRentGroup[newRentGroup.Count - 1].rentalEnd = rentEnd;
-                newRentGroup[newRentGroup.Count - 1].actualPrice = _actualPrice;
-                newRentGroup[newRentGroup.Count - 1].payTypeID = selectedPayType.payTypeID;
-                newRentGroup[newRentGroup.Count - 1].discount = discount / 100;
-                newRentGroup[newRentGroup.Count - 1].isClean = true;
-                rentCount += 1;
-                AppMessages.NewRentAdded.Send(newRentGroup[newRentGroup.Count - 1]);
+                newRentalGroup.rentals.Add(selectedRental.Clone() as Rental_Representation);
+                selectedRental = new Rental_Representation();
+                AppMessages.NewRentAdded.Send(null);
             }
         }
 
         private bool CheckFillsOK()
         {
-            if (_customerID != 0)
+            if (selectedRental.customer != null || selectedRental.contact != null)
             {
-                if (_toolID != 0)
+                if (selectedRental.tool != null)
                 {
                     return true;
                 }
@@ -290,6 +237,17 @@ namespace GyorokRentService.ViewModel
                 MessageBox.Show("Válassz ügyfelet!");
                 return false;
             }
+        }
+
+        public void customerSelected(CustomerBase_Representation customer)
+        {
+            selectedRental.customer = customer;
+            selectedRental.discount = customer.defaultDiscount ?? 0;
+        }
+
+        public void toolSelected(Tool_Representation tool)
+        {
+            selectedRental.tool = tool;
         }
     }
 }

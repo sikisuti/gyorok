@@ -512,5 +512,31 @@ namespace SQLConnectionLib
             toolToDelete.isDeleted = true;
             db.SaveChanges();
         }
+
+        public void DeleteRentalById(long id)
+        {
+            Rentals rentalToDelete = db.Rentals.SingleOrDefault(r => r.rentalID == id);
+            if (rentalToDelete != null)
+            {
+                db.Rentals.DeleteObject(rentalToDelete);
+            }            
+        }
+
+        public void AddRentalGroup(RentalGroups rentalGroup)
+        {
+            db.RentalGroups.AddObject(rentalGroup);
+            db.SaveChanges();
+        }
+
+        public void AddRental(Rentals rental)
+        {
+            db.Rentals.AddObject(rental);
+            db.SaveChanges();
+        }
+
+        public List<PayTypes> GetPayTypes()
+        {
+            return db.PayTypes.ToList();
+        }
     }
 }

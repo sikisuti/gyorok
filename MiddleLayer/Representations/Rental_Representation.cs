@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MiddleLayer.Representations
 {
-    public class Rental_Representation : RepresentationBase
+    public class Rental_Representation : RepresentationBase, ICloneable
     {
         private CustomerBase_Representation _customer;
         public CustomerBase_Representation customer
@@ -120,8 +120,8 @@ namespace MiddleLayer.Representations
             }
         }
 
-        private float _discount;
-        public float discount
+        private double _discount;
+        public double discount
         {
             get { return _discount; }
             set
@@ -174,6 +174,18 @@ namespace MiddleLayer.Representations
                     RaisePropertyChanged("isPaid");
                 }
             }
+        }
+
+        public Rental_Representation()
+        {
+            rentalEnd = DateTime.Today.AddDays(1);
+        }
+
+        public object Clone()
+        {
+            Rental_Representation clonedRental = this.MemberwiseClone() as Rental_Representation;
+
+            return clonedRental;
         }
     }
 }
