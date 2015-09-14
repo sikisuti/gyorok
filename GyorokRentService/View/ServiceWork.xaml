@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GyorokRentService.ViewModel"
              xmlns:c="clr-namespace:GyorokRentService"
+             xmlns:conv="clr-namespace:GyorokRentService.Converters"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1200">
@@ -13,9 +14,9 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
-        <c:BooleanToVisibilityConverter x:Key="boolToVis"/>
+        <conv:BooleanToVisibilityConverter x:Key="boolToVis"/>
         <c:invFilledToVisibilityConverter x:Key="invFillToVis"/>
-        <c:BoolInverterConverter x:Key="InvBool"/>
+        <conv:BoolInverterConverter x:Key="InvBool"/>
         <c:MultiBooleanTrueFalseToVisibilityConverter x:Key="multiBoolTFToVis"/>
     </UserControl.Resources>
     <Grid>

@@ -63,5 +63,10 @@ namespace MiddleLayer.Representations
                 }
             }
         }
+
+        public RentalGroup_Representation()
+        {
+            rentals = new ObservableCollection<Rental_Representation>();
+        }
     }
 }

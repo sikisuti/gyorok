@@ -6,14 +6,15 @@
              xmlns:local="clr-namespace:GyorokRentService.ViewModel"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:c="clr-namespace:GyorokRentService"
+             xmlns:conv="clr-namespace:GyorokRentService.Converters"
              mc:Ignorable="d" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Height="680" Width="1200">
     <UserControl.DataContext>
         <local:ServiceSum_ViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
-        <c:BooleanToVisibilityConverter x:Key="boolToVis"/>
+        <conv:BooleanToVisibilityConverter x:Key="boolToVis"/>
         <c:invFilledToVisibilityConverter x:Key="invFillToVis"/>
-        <c:BoolInverterConverter x:Key="InvBool"/>
+        <conv:BoolInverterConverter x:Key="InvBool"/>
         <c:MultiBooleanTrueFalseToVisibilityConverter x:Key="multiBoolTFToVis"/>
         <c:statusToForegroundConverter x:Key="statusToForeground"/>
         <c:statusToFontWeightConverter x:Key="statusToFontWeight"/>

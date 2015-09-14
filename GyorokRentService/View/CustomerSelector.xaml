@@ -6,41 +6,25 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:local="clr-namespace:GyorokRentService.ViewModel"
              xmlns:view="clr-namespace:GyorokRentService.View"
-             xmlns:c="clr-namespace:GyorokRentService"
-             FontSize="16"
+             xmlns:root="clr-namespace:GyorokRentService"
+             xmlns:conv="clr-namespace:GyorokRentService.Converters"
+             xmlns:valid="clr-namespace:GyorokRentService.Validations"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             FontSize="16" FontWeight="Normal"
              mc:Ignorable="d" BorderThickness="1">
     
     <UserControl.Resources>
-        <Style TargetType="{x:Type DatePickerTextBox}">
-            <Setter Property="Text" Value=" " />
-        </Style>
-        <ControlTemplate x:Key="MyDisabledDatePicker">
-            <TextBlock 
-            Text="{Binding Path=SelectedDate, StringFormat={}{0:d}, RelativeSource={RelativeSource TemplatedParent}}" 
-            VerticalAlignment="Center" HorizontalAlignment="Left" Padding="10,0,0,0"/>
-        </ControlTemplate>
-        <Style TargetType="{x:Type DatePicker}">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}"  Value="false">
-                    <Setter Property="Template" Value="{StaticResource MyDisabledDatePicker}" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        
-        <c:FilledToVisibilityConverter x:Key="fillToVis"/>
-        <c:BooleanToReadOnlyTextBgConverter x:Key="readOnlyToBg"/>
-        <c:BooleanToReadOnlyTextBorderConverter x:Key="readOnlyToBorder"/>
-        <c:BooleanToVisibilityConverter x:Key="boolToVis"/>
-        <c:MultiBooleanToBooleanConverter x:Key="multiBoolToBool"/>
+        <ResourceDictionary Source="/RootResources.xaml"/>
     </UserControl.Resources>
+
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <StackPanel Margin="5">
-            <Label Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="32" FontWeight="Bold" Content="Ügyfél" Height="50" HorizontalAlignment="Left" Name="textBox4" VerticalAlignment="Top" Width="630" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Margin="0,0,0,0" />
+            <Label HorizontalContentAlignment="Center" FontSize="32" FontWeight="Bold" Content="Ügyfél" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" />
     <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition MaxWidth="200" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition MinWidth="300"/>
+                <ColumnDefinition MaxWidth="300"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -53,14 +37,15 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBox Grid.Column="2" Visibility="{Binding modifyButtonVisibility}" Text="{Binding selectedCustomer.customerName}" BorderThickness="0" />
+            <TextBox Grid.Column="2" Grid.Row="1"  Visibility="{Binding isEditable, Converter={StaticResource boolToVis}}" Text="{Binding selectedCustomer.customerName}" BorderThickness="0" />
             <Label Content="{Binding customerNameLabel}" Grid.Row="1" FontWeight="Bold" />
-            <Expander IsEnabled="{Binding readOnlyMode}" IsExpanded="{Binding isExpanded}" 
-                  Grid.Row="1" Grid.Column="3"
-                  Header="{Binding selectedCustomer.customerName}" 
-                  FontSize="20" FontWeight="Bold"
-                  Name="expander1" 
-                  BorderThickness="5">
+            <Expander x:Name="expCustomer"
+                      IsEnabled="{Binding isReadonly, Converter={StaticResource boolInverter}}" 
+                      Visibility="{Binding isEditable, Converter={StaticResource boolToVis}, ConverterParameter=true}"
+                      Grid.Row="1" Grid.Column="3"
+                      Header="{Binding selectedCustomer.customerName}" 
+                      FontSize="20" FontWeight="Bold"
+                      BorderThickness="5">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Expanded">
                         <i:InvokeCommandAction Command="{Binding onExpand}"/>
@@ -74,43 +59,80 @@
                 </Grid>
             </Expander>
             <Label Content="Azonosító szám:" Grid.Row="2" FontWeight="Bold" />
-            <TextBox Grid.Column="2" Grid.Row="2" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedCustomer.IDNumber}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
-            <Label IsEnabled="{Binding isPerson}" Content="Anyja neve:" Grid.Row="3" FontWeight="Bold" />
-                <Image Grid.Column="1" Grid.Row="3" Visibility="{Binding wrongMothersName}" Height="32" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
-                <TextBox IsReadOnly="{Binding readOnlyMode}" Grid.Row="3" Grid.Column="2" IsEnabled="{Binding isPerson}" Text="{Binding selectedCustomer.mothersName}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
+                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding selectedCustomer.IDNumber}" Style="{StaticResource CustomEditableTextBox}" />
+                <Label Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Content="Anyja neve:" Grid.Row="3" FontWeight="Bold" />
+                <TextBox Style="{StaticResource CustomEditableTextBox}" Grid.Row="3" Grid.Column="2" Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" >
+                    <TextBox.Text>
+                        <Binding Path="selectedCustomer.mothersName">
+                            <Binding.ValidationRules>
+                                <valid:FieldNotEmpty ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <Label Content="Cím:" FontWeight="Bold" Grid.Row="4" />
-                <Button Grid.Column="1" Grid.Row="4" Visibility="{Binding readOnlyMode, Converter={StaticResource boolToVis}, ConverterParameter=true}" Command="{Binding openCityChooser}" Content="..." Height="23" Width="29" />
+                <Button Grid.Column="1" Grid.Row="4" Visibility="{Binding isEditable, Converter={StaticResource boolToVis}}" Command="{Binding openCityChooser}" Content="..." Height="23" Width="29" />
                 <Label Grid.Column="2" Grid.Row="4" Content="{Binding selectedCustomer.city.city}" />
-                <Image Visibility="{Binding wrongAddress}" Grid.Column="1" Grid.Row="5" Height="32" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
-                <TextBox Grid.Column="2" Grid.Row="5" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedCustomer.customerAddress}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
+                <TextBox Grid.Column="2" Grid.Row="5" Style="{StaticResource CustomEditableTextBox}" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" >
+                    <TextBox.Text>
+                        <Binding Path="selectedCustomer.customerAddress">
+                            <Binding.ValidationRules>
+                                <valid:FieldNotEmpty ValidatesOnTargetUpdated="True"/>                                
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <Label Content="Telefon:" FontWeight="Bold" Grid.Row="6" />
-                <Image Grid.Column="1" Grid.Row="6" Visibility="{Binding wrongPhone}" Height="32" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
-                <TextBox Grid.Column="2" Grid.Row="6" IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedCustomer.customerPhone}" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
-                <Label Grid.Row="7" IsEnabled="{Binding isPerson}" Content="Születési dátum:" FontWeight="Bold" />
-                <Image Grid.Column="1" Grid.Row="7" Visibility="{Binding wrongBirthDate}" Height="32" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
-                <TextBox Grid.Column="2" Grid.Row="7" IsReadOnly="True" Visibility="{Binding readOnlyMode, Converter={StaticResource boolToVis}, ConverterParameter=false}" Text="{Binding selectedCustomer.birthDate, StringFormat={}{0:D}}" xml:lang="hu-HU"  BorderThickness="0" Background="{x:Null}" />
-                <DatePicker Grid.Column="2" Grid.Row="7" Visibility="{Binding readOnlyMode, Converter={StaticResource boolToVis}, ConverterParameter=true}" SelectedDate="{Binding selectedCustomer.birthDate}" />
-                <Label Grid.Row="8" IsEnabled="{Binding isPerson}" Content="Munkahely:" FontWeight="Bold" />
-                <Image Grid.Column="1" Grid.Row="8" Visibility="{Binding wrongWorkPlace}" Height="32" Width="32" Source="/GyorokRentService;component/Images/IconWarning32.png" />
-                <TextBox Grid.Column="2" Grid.Row="8" IsReadOnly="{Binding readOnlyMode}" IsEnabled="{Binding isPerson}" Text="{Binding selectedCustomer.workPlace}"  BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
-        </Grid>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Kapcsolattartók:" Width="200" FontWeight="Bold" IsEnabled="{Binding selectedCustomer.isFirm}" />
+                <TextBox Grid.Column="2" Grid.Row="6" Style="{StaticResource CustomEditableTextBox}" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+                    <TextBox.Text>
+                        <Binding Path="selectedCustomer.customerPhone">
+                            <Binding.ValidationRules>
+                                <valid:FieldNotEmpty ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Label Grid.Row="7" Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Content="Születési dátum:" FontWeight="Bold" />
+                <xctk:DateTimePicker Grid.Column="2" Grid.Row="7" 
+                                     Style="{StaticResource CustomEditableDatePicker}"
+                                     Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" 
+                                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+                    <xctk:DateTimePicker.Value>
+                        <Binding Path="selectedCustomer.birthDate">
+                            <Binding.ValidationRules>
+                                <valid:FieldNotEmpty ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </xctk:DateTimePicker.Value>
+                </xctk:DateTimePicker>
+                <Label Grid.Row="8" Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Content="Munkahely:" FontWeight="Bold" />
+                <TextBox Grid.Column="2" Grid.Row="8" Style="{StaticResource CustomEditableTextBox}" Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" >
+                    <TextBox.Text>
+                        <Binding Path="selectedCustomer.workplace">
+                            <Binding.ValidationRules>
+                                <valid:FieldNotEmpty ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}}">
+                <Label Content="Kapcsolattartók:" Width="200" FontWeight="Bold" />
                 <StackPanel>
                     <StackPanel>
-                        <Button IsEnabled="{Binding isFirm}" Visibility="{Binding modifyButtonVisibility}" Command="{Binding openEditContacts}" Height="32" Width="32" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
+                        <Button Visibility="{Binding isEditable, Converter={StaticResource boolToVis}}" Command="{Binding openEditContacts}" Height="32" Width="32" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
                             <Grid>
                                 <Image Source="/GyorokRentService;component/Images/IconAddPerson32.png" />
                             </Grid>
                         </Button>
-                        <Button IsEnabled="{Binding selectedCustomer.isFirm}" Visibility="{Binding modifyButtonVisibility}" Command="{Binding deleteContact}" Height="32" Width="32" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
+                        <Button Visibility="{Binding isEditable, Converter={StaticResource boolToVis}}" Command="{Binding deleteContact}" Height="32" Width="32" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
                             <Grid>
                                 <Image Source="/GyorokRentService;component/Images/IconDelPerson32.png" />
                             </Grid>
                         </Button>
                     </StackPanel>
                 </StackPanel>
-                <ListBox ItemsSource="{Binding selectedCustomer.contacts}" SelectedValue="{Binding selectedContact}" MinWidth="300" IsEnabled="{Binding selectedCustomer.isFirm}" MaxHeight="60" >
+                <ListBox ItemsSource="{Binding selectedCustomer.contacts}" SelectedValue="{Binding selectedContact}" MinWidth="300" MaxHeight="60" >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -119,7 +141,7 @@
                                     <ColumnDefinition SharedSizeGroup="col1" Width="200"/>
                                     <ColumnDefinition SharedSizeGroup="col3" Width="100"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding customerID}"/>
+                                <TextBlock Text="{Binding id}"/>
                                 <TextBlock Text='{Binding customerName}' Grid.Column="1"/>
                                 <TextBlock Text='{Binding IDNumber}' Grid.Column="2"/>
                             </Grid>
@@ -178,19 +200,12 @@
                             <Image Source="/GyorokRentService;component/Images/IconEdit48.png"/>
                         </Grid>
                     </Button>
-
-                    <Button Visibility="{Binding modifyButtonVisibility}" Command="{Binding doModify}" Height="48" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}" >
+                    <Button Visibility="{Binding isEditable, Converter={StaticResource boolToVis}}" Command="{Binding doModify}" Height="48" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}" >
                         <Grid>
                             <Image Source="/GyorokRentService;component/Images/IconSave48.png"/>
                         </Grid>
                     </Button>
-                </StackPanel>
-                
-                
-                
-                
-                
-                
+                </StackPanel>                
             </Grid>
         </StackPanel>
     </ScrollViewer>

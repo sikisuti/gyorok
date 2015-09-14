@@ -105,7 +105,6 @@ namespace GyorokRentService.ViewModel
 
             AppMessages.CustomerExpandChanged.Register(this, setCustomerColumnSpan);
             AppMessages.ToolExpandChanged.Register(this, setToolRowSpan);
-            AppMessages.NewRentAdded.Register(this, r => rentChangeEnabled = false);
             AppMessages.RentGroupClosed.Register(this, s => rentChangeEnabled = true);
             AppMessages.NewWorksheetAdded.Register(this, ws => serviceChangeEnabled = false);
             AppMessages.ServiceGroupClosed.Register(this, sg => serviceChangeEnabled = true);

@@ -17,6 +17,14 @@ namespace GyorokRentService.ViewModel
 {
     public class NewRent_ViewModel : ViewModelBase
     {
+        public event EventHandler RentGroupChanged;
+        public void OnRentGroupChanged()
+        {
+            if (RentGroupChanged != null)
+            {
+                RentGroupChanged(newRentalGroup, EventArgs.Empty);
+            }
+        }
         //Timer t;
 
         private RentalGroup_Representation _newRentalGroup;
@@ -174,7 +182,6 @@ namespace GyorokRentService.ViewModel
                 newRentalGroup = new RentalGroup_Representation();
                 selectedRental = new Rental_Representation();
                 
-                AppMessages.NewRentAdded.Register(this, r => changeEnabled = false);
                 changeEnabled = true;
             }
         }
@@ -214,7 +221,8 @@ namespace GyorokRentService.ViewModel
             {
                 newRentalGroup.rentals.Add(selectedRental.Clone() as Rental_Representation);
                 selectedRental = new Rental_Representation();
-                AppMessages.NewRentAdded.Send(null);
+                changeEnabled = false;
+                OnRentGroupChanged();
             }
         }
 

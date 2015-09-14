@@ -197,8 +197,6 @@ namespace GyorokRentService.ViewModel
         {
             try
             {
-                //db.Dispose();
-                //db = new dbGyorokEntities();
                 _selectedCustomer = DataProxy.Instance.GetCustomerById(_selectedCustomerID);
                 switch (_custORcont)
                 {
@@ -213,9 +211,9 @@ namespace GyorokRentService.ViewModel
                 }
                 OnCustomerSelected(null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                
+                throw ex;
             }
         }
         public ICommand openNewCustomerWindow { get { return new RelayCommand(openNewCustomerWindowExecute, () => true); } }

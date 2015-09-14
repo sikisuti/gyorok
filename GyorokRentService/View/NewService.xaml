@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GyorokRentService.ViewModel"
              xmlns:c="clr-namespace:GyorokRentService"
+             xmlns:conv="clr-namespace:GyorokRentService.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="660" d:DesignWidth="500" BorderThickness="1">
     <UserControl.BorderBrush>
@@ -17,7 +18,7 @@
         <local:NewService_ViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
-        <c:BooleanToVisibilityConverter x:Key="boolToVis"/>
+        <conv:BooleanToVisibilityConverter x:Key="boolToVis"/>
     </UserControl.Resources>
     <Grid>
         <Label Content="Munkalap szám:" FontSize="16" FontWeight="Bold" Height="35" HorizontalAlignment="Left" Margin="10,52,0,0" Name="label9" Padding="5,5,5,0" VerticalAlignment="Top" />

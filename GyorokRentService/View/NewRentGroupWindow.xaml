@@ -51,7 +51,7 @@
         <Button Command="{Binding acceptGroup}" Height="64" HorizontalAlignment="Left" Margin="550,550,0,0" Name="btnDoRent" VerticalAlignment="Top" Width="64" Background="{x:Null}" BorderThickness="0" BorderBrush="{x:Null}">
             <Image HorizontalAlignment="Left" Margin="0,0,0,0" Name="imgApply" Stretch="Fill" VerticalAlignment="Top" Source="/GyorokRentService;component/Images/IconAccept64.png" />
         </Button>
-        <Label Content="Kaukció:" FontSize="20" FontWeight="Bold" Height="40" HorizontalAlignment="Left" Margin="167,548,0,0" Name="label13" VerticalAlignment="Top" />
+        <Label Content="Kaució:" FontSize="20" FontWeight="Bold" Height="40" HorizontalAlignment="Left" Margin="167,548,0,0" Name="label13" VerticalAlignment="Top" />
         <TextBox FontSize="20" FontWeight="Normal" Height="40" HorizontalAlignment="Left" Margin="273,552,0,0" Name="textBlock2" Text="{Binding deposit}" VerticalAlignment="Top" Width="105" HorizontalContentAlignment="Right" BorderThickness="0" />
         <Label Content="Ft" FontSize="20" FontWeight="Normal" Height="40" HorizontalAlignment="Left" Margin="384,548,0,0" Name="label14" VerticalAlignment="Top" />
         <Label Content="Óra" FontSize="16" FontWeight="Bold" Height="35" HorizontalAlignment="Left" Margin="420,139,0,0" Name="label15" VerticalAlignment="Top" />

@@ -135,7 +135,9 @@ namespace GyorokRentService.ViewModel
         {
             if (!IsInDesignMode)
             {
+                IsBusy = false;
                 searchText = "";
+                RefreshCityList();
                 AppMessages.CityListModified.Register(this, cID => { RefreshCityList(); selectedCity.id = cID; });
             }
         }
@@ -143,9 +145,11 @@ namespace GyorokRentService.ViewModel
         public void RefreshCityList()
         {
             Task t = Task.Factory.StartNew(() => 
-            { 
+            {
+                IsBusy = true;
                 allCities = DataProxy.Instance.GetAllCities();
                 Filtering();
+                IsBusy = false;
             });
         }
 

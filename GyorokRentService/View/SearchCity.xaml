@@ -2,12 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:VM="clr-namespace:GyorokRentService.ViewModel"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="Város választás" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" Height="420" Width="385">
     
     <Window.DataContext>
         <VM:SearchCity_ViewModel/>
     </Window.DataContext>
-    
+
+    <xctk:BusyIndicator IsBusy="{Binding isBusy}">
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="Keresés:" FontSize="16" FontWeight="Bold" Margin="5" Name="lblSearch" />
@@ -53,4 +55,5 @@
             </Button>
         </Grid>
     </StackPanel>
+    </xctk:BusyIndicator>
 </Window>

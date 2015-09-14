@@ -6,12 +6,13 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:local="clr-namespace:GyorokRentService.ViewModel"
              xmlns:c="clr-namespace:GyorokRentService"
+             xmlns:conv="clr-namespace:GyorokRentService.Converters"
              mc:Ignorable="d" Height="400" Width="470" BorderBrush="Black" BorderThickness="2">
     <UserControl.Resources>
         <c:ToolStatusToFontWeightConverter x:Key="toolStatToFW"/>
         <c:ToolStatusToForegroundConverter x:Key="toolStatToFG"/>
         <c:ToolStatusToBoolConverter x:Key="toolStatToBool"/>
-        <c:BooleanToVisibilityConverter x:Key="boolToVis"/>
+        <conv:BooleanToVisibilityConverter x:Key="boolToVis"/>
     </UserControl.Resources>
     <Grid VerticalAlignment="Top">
         <Label Content="Keresés:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,10,0,0" Name="lblSearch" Padding="5,5,5,0" VerticalAlignment="Top" Width="87" />

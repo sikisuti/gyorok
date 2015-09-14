@@ -189,9 +189,6 @@ namespace GyorokRentService.ViewModel
                 readOnlyMode = true;
                 modifyButtonVisibility = Visibility.Collapsed;
                 modifyEnableButtonVisibility = Visibility.Visible;
-
-                //AppMessages.ToolToSelect.Register(this, setTool);
-                AppMessages.NewRentAdded.Register(this, r => { selectedTool = null; });
             }
         }
     }

@@ -41,11 +41,26 @@ namespace GyorokRentService
             UCCustomerSelector.customerPicker_VM.CustomerSelected += (s, a) => 
             {
                 UCNewRent.newRent_VM.customerSelected((CustomerBase_Representation)s);
+                UCCustomerSelector.expCustomer.IsExpanded = false;
             };
 
             UCToolSelector.toolPicker_VM.ToolSelected += (s, a) => 
             {
                 UCNewRent.newRent_VM.toolSelected((Tool_Representation)s);
+            };
+
+            ((NewRent_ViewModel)UCNewRent.DataContext).RentGroupChanged += (s, a) =>
+            {
+                RentalGroup_Representation rentalGroup = s as RentalGroup_Representation;
+                if (rentalGroup.rentals.Count() != 0)
+                {
+                    ((CustomerSelector_ViewModel)UCCustomerSelector.DataContext).isReadonly = true;
+                }
+                else
+                {
+                    ((CustomerSelector_ViewModel)UCCustomerSelector.DataContext).isReadonly = false;
+                }
+                ((ToolSelector_ViewModel)UCToolSelector.DataContext).selectedTool = null;
             };
         }
     }
