@@ -21,8 +21,11 @@ namespace GyorokRentService.View
     /// </summary>
     public partial class CustomerSelector : UserControl
     {
-        public searchCustomer_ModelView customerPicker_VM { get; set; }
+        CustomerSelector_ViewModel viewModel;
+
         Window customerPickerWindow;
+        searchCustomer customerPicker;
+        public searchCustomer_ModelView customerPicker_VM { get; set; }
 
         public CustomerSelector()
         {
@@ -32,33 +35,38 @@ namespace GyorokRentService.View
         public CustomerSelector(CustomerType ct)
         {
             InitializeComponent();
-            var viewModel = new CustomerSelector_ViewModel(ct);
+            viewModel = new CustomerSelector_ViewModel(ct);
             this.DataContext = viewModel;
-            var customerPicker = new searchCustomer(searchCustomerType.searchCustomer);
 
+            BuildSearchCustomerWindow();        
+                
+            viewModel.customerPickerExpanded += (s, a) =>
+            {
+                if (!customerPickerWindow.IsLoaded)
+                {
+                    BuildSearchCustomerWindow();
+                }
+                customerPickerWindow.Show();
+                expCustomer.IsExpanded = false;
+            };
+        }
+
+        private void BuildSearchCustomerWindow()
+        {
+            customerPicker = new searchCustomer(searchCustomerType.searchCustomer);
             customerPicker_VM = customerPicker.DataContext as searchCustomer_ModelView;
-
             customerPickerWindow = new Window()
             {
+                Title = "Ügyfél választó",
                 Content = customerPicker,
                 SizeToContent = SizeToContent.WidthAndHeight
             };
 
-            customerPicker_VM.CustomerSelected += (s, a) => 
+            customerPicker_VM.CustomerSelected += (s, a) =>
             {
                 viewModel.CustomerSelected((CustomerBase_Representation)s);
                 customerPickerWindow.Hide();
             };
-            viewModel.customerPickerExpanded += (s, a) =>
-            {
-                if (customerPicker_VM.allCustomer == null && customerPicker_VM.IsBusy == false)
-                {
-                    customerPicker_VM.RefreshCustomerList();
-                }
-                customerPickerWindow.Show();
-                //grdExpander.Children.Add(customerPicker);
-            };
-            viewModel.customerPickerCollapsed += (s, a) => { grdExpander.Children.Clear(); };
         }
     }
 }

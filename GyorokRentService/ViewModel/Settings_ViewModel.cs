@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GalaSoft.MvvmLight;
 using SQLConnectionLib;
 using System.Configuration;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
 using GyorokRentService.View;
 using System.Windows.Forms;
 using NLog;
 using MiddleLayer.Representations;
 using MiddleLayer;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace GyorokRentService.ViewModel
 {

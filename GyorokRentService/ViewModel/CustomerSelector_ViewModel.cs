@@ -13,6 +13,7 @@ using GyorokRentService.ViewModel;
 using SQLConnectionLib;
 using MiddleLayer.Representations;
 using MiddleLayer;
+using GyorokRentService.View;
 
 namespace GyorokRentService.ViewModel
 {
@@ -81,7 +82,6 @@ namespace GyorokRentService.ViewModel
 
         public CustomerType customerMode;
                 
-        private int _zExpander;
         private Visibility _modifyEnableButtonVisibility;
         private CustomerBase_Representation _selectedContact;
         private Visibility _commentSaveVisibility;
@@ -94,24 +94,6 @@ namespace GyorokRentService.ViewModel
         private string _customerNameLabel;
         private string _city;
                  
-        public int zExpander
-        {
-            get
-            {
-                return _zExpander;
-            }
-
-            set
-            {
-                if (_zExpander == value)
-                {
-                    return;
-                }
-
-                _zExpander = value;
-                RaisePropertyChanged("zExpander");
-            }
-        }
         public Visibility modifyEnableButtonVisibility
         {
             get
@@ -146,6 +128,7 @@ namespace GyorokRentService.ViewModel
 
                 _selectedContact = value;
                 RaisePropertyChanged("selectedContact");
+                RaisePropertyChanged("deleteContact");
 
                 if (selectedContact != null)
                 {
@@ -320,7 +303,6 @@ namespace GyorokRentService.ViewModel
         void onExpandExecute()
         {
             OnCustomerPickerExpand();
-            zExpander = 2;
             AppMessages.CustomerExpandChanged.Send(true);
         }
         bool CanonExpandExecute()
@@ -331,7 +313,6 @@ namespace GyorokRentService.ViewModel
         void onCollapseExecute()
         {
             OnCustomerPickerCollapse();
-            zExpander = 0;
             AppMessages.CustomerExpandChanged.Send(false);
         }
         bool CanonCollapseExecute()
@@ -380,11 +361,22 @@ namespace GyorokRentService.ViewModel
         public ICommand openEditContacts { get { return new RelayCommand(openEditContactsExecute, CanopenEditContactsExecute); } }
         void openEditContactsExecute()
         {
-            View.SearchCustomerWindow ContactsWindow = new View.SearchCustomerWindow(searchCustomerType.searchContact);
-            View.searchCustomer searchContact = ContactsWindow.grdMain.Children[0] as View.searchCustomer;
-            searchCustomer_ModelView searchContactVM = searchContact.DataContext as searchCustomer_ModelView;
-            searchContactVM.CustomerSelected += (s, a) => { addContact((CustomerBase_Representation)s); };
-            ContactsWindow.Show();
+            var customerPicker = new searchCustomer(searchCustomerType.searchContact);
+            var customerPicker_VM = customerPicker.DataContext as searchCustomer_ModelView;
+            var customerPickerWindow = new Window()
+            {
+                Title = "Kapcsolattartó választó",
+                Content = customerPicker,
+                SizeToContent = SizeToContent.WidthAndHeight
+            };
+
+            customerPicker_VM.CustomerSelected += (s, a) =>
+            {
+                DataProxy.Instance.AddContact(selectedCustomer, (CustomerBase_Representation)s);
+                selectedCustomer.contacts.Add((CustomerBase_Representation)s);
+                customerPickerWindow.Close();
+            };
+            customerPickerWindow.Show();
         }
         bool CanopenEditContactsExecute()
         {
@@ -396,7 +388,7 @@ namespace GyorokRentService.ViewModel
             try
             {
                 DataProxy.Instance.DeleteContact(selectedCustomer, selectedContact);
-                refreshContacts();
+                selectedCustomer.contacts.Remove(selectedContact);
             }
             catch (Exception)
             {                
@@ -406,7 +398,7 @@ namespace GyorokRentService.ViewModel
         }
         bool CandeleteContactExecute()
         {
-            return true;
+            return selectedContact != null;
         }
         public ICommand saveComments { get { return new RelayCommand(saveCommentsExecute, () => true); } }
         void saveCommentsExecute()
@@ -472,16 +464,6 @@ namespace GyorokRentService.ViewModel
                 selectedContact = selectedCustomer.contacts.FirstOrDefault();
             }            
         }
-
-        //private void CheckRentValidation(CustomerBase_Representation c){
-        //    bool valid = true;
-
-        //    if (!selectedCustomer.isFirm)
-        //    {
-        //    }
-
-        //    if (valid) AppMessages.CustomerToRent.Send(c);
-        //}
 
         public void CustomerSelected(CustomerBase_Representation customer)
         {

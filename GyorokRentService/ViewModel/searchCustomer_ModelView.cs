@@ -23,7 +23,7 @@ namespace GyorokRentService.ViewModel
         public event EventHandler CustomerSelected;
         public void OnCustomerSelected(EventArgs e)
         {
-            if (customerSelected != null)
+            if (CustomerSelected != null)
             {
                 CustomerSelected(_selectedCustomer, e);
             }
@@ -209,7 +209,7 @@ namespace GyorokRentService.ViewModel
                     default:
                         break;
                 }
-                OnCustomerSelected(null);
+                OnCustomerSelected(EventArgs.Empty);
             }
             catch (Exception ex)
             {
@@ -287,8 +287,6 @@ namespace GyorokRentService.ViewModel
             {
                 _searchText = "";
                 AppMessages.CustomerListModified.Register(this, s => RefreshCustomerList());
-                //AppMessages.ContactPersonToSelect.Register(this, (c) => RefreshCustomerList());
-                //AppMessages.CustomerToSelect.Register(this, (c) => RefreshCustomerList()); 
                 firmBorderBrush = Brushes.Black;
                 personBorderBrush = Brushes.Black;
                 switch (controlType)
@@ -308,6 +306,7 @@ namespace GyorokRentService.ViewModel
                         break;
                 }
                 IsBusy = false;
+                RefreshCustomerList();
             }
         }
 
