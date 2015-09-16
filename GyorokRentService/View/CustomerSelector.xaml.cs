@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GyorokRentService.ViewModel;
 using MiddleLayer.Representations;
+using MiddleLayer;
 
 namespace GyorokRentService.View
 {
@@ -27,6 +28,13 @@ namespace GyorokRentService.View
         searchCustomer customerPicker;
         public searchCustomer_ModelView customerPicker_VM { get; set; }
 
+        Window contactPickerWindow;
+        searchCustomer contactPicker;
+        public searchCustomer_ModelView contactPicker_VM { get; set; }
+
+        Window cityPickerWindow;
+        SearchCity_ViewModel cityPicker_VM;
+
         public CustomerSelector()
         {
             InitializeComponent();
@@ -38,16 +46,34 @@ namespace GyorokRentService.View
             viewModel = new CustomerSelector_ViewModel(ct);
             this.DataContext = viewModel;
 
-            BuildSearchCustomerWindow();        
+            BuildSearchCustomerWindow();
                 
             viewModel.customerPickerExpanded += (s, a) =>
             {
-                if (!customerPickerWindow.IsLoaded)
+                if (customerPickerWindow == null || !customerPickerWindow.IsLoaded)
                 {
                     BuildSearchCustomerWindow();
                 }
                 customerPickerWindow.Show();
                 expCustomer.IsExpanded = false;
+            };
+
+            viewModel.contactRequest += (s, a) =>
+            {
+                if (contactPickerWindow == null || !contactPickerWindow.IsLoaded)
+                {
+                    BuildSearchContactWindow();
+                }
+                contactPickerWindow.Show();
+            };
+
+            viewModel.cityRequest += (s, a) => 
+            {
+                if (cityPickerWindow == null || !cityPickerWindow.IsLoaded)
+                {
+                    BuildCityChooserWindow();
+                }
+                cityPickerWindow.Show();
             };
         }
 
@@ -64,8 +90,39 @@ namespace GyorokRentService.View
 
             customerPicker_VM.CustomerSelected += (s, a) =>
             {
-                viewModel.CustomerSelected((CustomerBase_Representation)s);
+                viewModel.selectedCustomer = (CustomerBase_Representation)s;
                 customerPickerWindow.Hide();
+            };
+        }
+
+        private void BuildSearchContactWindow()
+        {
+            contactPicker = new searchCustomer(searchCustomerType.searchContact);
+            contactPicker_VM = contactPicker.DataContext as searchCustomer_ModelView;
+            contactPickerWindow = new Window()
+            {
+                Title = "Kapcsolattartó választó",
+                Content = contactPicker,
+                SizeToContent = SizeToContent.WidthAndHeight
+            };
+
+            contactPicker_VM.CustomerSelected += (s, a) =>
+            {
+                DataProxy.Instance.AddContact(viewModel.selectedCustomer, (CustomerBase_Representation)s);
+                viewModel.selectedCustomer.contacts.Add((CustomerBase_Representation)s);
+                contactPickerWindow.Hide();
+            };
+        }
+
+        private void BuildCityChooserWindow()
+        {
+            cityPickerWindow = new SearchCity();
+            cityPicker_VM = cityPickerWindow.DataContext as SearchCity_ViewModel;
+
+            cityPicker_VM.citySelected += (s, a) =>
+            {
+                viewModel.selectedCustomer.city = (City_Representation)s;
+                cityPickerWindow.Hide();
             };
         }
     }

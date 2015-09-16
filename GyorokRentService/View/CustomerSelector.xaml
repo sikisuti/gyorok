@@ -195,7 +195,7 @@
                     <Label Content="%" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-                    <Button IsEnabled="{Binding customerSelected}" Visibility="{Binding modifyEnableButtonVisibility}" Command="{Binding switchModifyMode}" Height="48" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
+                    <Button Visibility="{Binding isEditable, Converter={StaticResource boolToVis}, ConverterParameter=true}" Command="{Binding switchModifyMode}" Height="48" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
                         <Grid>
                             <Image Source="/GyorokRentService;component/Images/IconEdit48.png"/>
                         </Grid>

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace GyorokRentService.ViewModel
 {
-    class SearchCity_ViewModel : ViewModelBase
+    public class SearchCity_ViewModel : ViewModelBase
     {
         public event EventHandler citySelected;
         private void onCitySelected()
