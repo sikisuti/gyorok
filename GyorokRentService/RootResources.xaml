@@ -3,14 +3,23 @@
                     xmlns:local="clr-namespace:GyorokRentService"
                     xmlns:conv="clr-namespace:GyorokRentService.Converters"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:valid="clr-namespace:GyorokRentService.Validations">
 
+    <sys:Double x:Key="GlobalFontSize">16</sys:Double>
+    <FontWeight x:Key="GlobalFontWeight">Normal</FontWeight>
+    
+    <Style TargetType="{x:Type Label}">
+        <Setter Property="FontSize" Value="{StaticResource GlobalFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource GlobalFontWeight}" />
+    </Style>
 
     <local:FilledToVisibilityConverter x:Key="fillToVis"/>
     <local:BooleanToReadOnlyTextBgConverter x:Key="readOnlyToBg"/>
     <local:BooleanToReadOnlyTextBorderConverter x:Key="readOnlyToBorder"/>
     <conv:BooleanToVisibilityConverter x:Key="boolToVis"/>
     <conv:BoolInverterConverter x:Key="boolInverter" />
+    <conv:ObjectExistsToBool x:Key="objectExistsToBool" />
     <local:MultiBooleanToBooleanConverter x:Key="multiBoolToBool"/>
 
     <Color x:Key="RentBackgroundColor">#FFF0FFF0</Color>
@@ -67,6 +76,9 @@
 
     <Style x:Key="CustomEditableTextBox" TargetType="{x:Type TextBox}">
         <Setter Property="IsReadOnly" Value="{Binding isEditable, Converter={StaticResource boolInverter}}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="{StaticResource GlobalFontSize}" />
+        <Setter Property="FontWeight" Value="{StaticResource GlobalFontWeight}" />
         <Style.Triggers>
             <Trigger Property="IsReadOnly" Value="true">
                 <Setter Property="Background" Value="{StaticResource RentBgBrush}"/>
@@ -80,6 +92,8 @@
         <Setter Property="AutoCloseCalendar" Value="True"/>
         <Setter Property="ShowButtonSpinner" Value="False"/>
         <Setter Property="Format" Value="LongDate"/>
+        <Setter Property="FontSize" Value="{StaticResource GlobalFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource GlobalFontWeight}" />
         <Style.Triggers>
             <Trigger Property="IsReadOnly" Value="true">
                 <Setter Property="Background" Value="{StaticResource RentBgBrush}"/>

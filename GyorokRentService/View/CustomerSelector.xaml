@@ -10,7 +10,6 @@
              xmlns:conv="clr-namespace:GyorokRentService.Converters"
              xmlns:valid="clr-namespace:GyorokRentService.Validations"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             FontSize="16" FontWeight="Normal"
              mc:Ignorable="d" BorderThickness="1">
     
     <UserControl.Resources>
@@ -160,7 +159,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Margin="5">
                     <Label Content="Megjegyzés:" FontWeight="Bold" />
-                    <TextBox IsEnabled="{Binding customerSelected}" Text="{Binding selectedCustomer.comment}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="99" >
+                    <TextBox IsEnabled="{Binding selectedCustomer, Converter={StaticResource objectExistsToBool}}" Text="{Binding selectedCustomer.comment}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="99" >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewKeyDown">
                                 <i:InvokeCommandAction Command="{Binding mustSave}"/>
@@ -170,7 +169,7 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="5">
                     <Label Content="Problémák:" FontWeight="Bold" />
-                    <TextBox IsEnabled="{Binding customerSelected}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="99" Text="{Binding selectedCustomer.problems, Mode=TwoWay}" >
+                    <TextBox IsEnabled="{Binding selectedCustomer, Converter={StaticResource objectExistsToBool}}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="99" Text="{Binding selectedCustomer.problems, Mode=TwoWay}" >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewKeyDown">
                                 <i:InvokeCommandAction Command="{Binding mustSave}"/>
@@ -186,12 +185,12 @@
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Label Content="Kedvezmény:" FontWeight="Bold" />
-                    <TextBox IsReadOnly="{Binding readOnlyMode}" Text="{Binding selectedCustomer.defaultDiscount}" Width="41" BorderThickness="{Binding readOnlyMode, Converter={StaticResource readOnlyToBorder}}" Background="{Binding readOnlyMode, Converter={StaticResource readOnlyToBg}}" />
+                    <TextBox Style="{StaticResource CustomEditableTextBox}" Text="{Binding selectedCustomer.defaultDiscount}" Width="41" />
                     <Label Content="%" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">

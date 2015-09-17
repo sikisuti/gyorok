@@ -55,6 +55,24 @@ namespace GyorokRentService.ViewModel
             }
         }
 
+        public event EventHandler customerSelected;
+        public void OnCustomerSelected(EventArgs e)
+        {
+            if (customerSelected != null)
+            {
+                customerSelected(selectedCustomer, e);
+            }
+        }
+
+        public event EventHandler contactSelected;
+        public void OnContactSelected(EventArgs e)
+        {
+            if (contactSelected != null)
+            {
+                contactSelected(selectedContact, e);
+            }
+        }
+
         ObservableCollection<CustomerBase_Representation> temp = new ObservableCollection<CustomerBase_Representation>();
         private CustomerBase_Representation _selectedCustomer;
         public CustomerBase_Representation selectedCustomer
@@ -69,6 +87,7 @@ namespace GyorokRentService.ViewModel
                     _selectedCustomer = value;
                     RaisePropertyChanged("selectedCustomer");
                     RaisePropertyChanged("switchModifyMode");
+                    OnCustomerSelected(EventArgs.Empty);
                 }              
             }
         }
@@ -104,14 +123,7 @@ namespace GyorokRentService.ViewModel
         public CustomerType customerMode;
         private CustomerBase_Representation _selectedContact;
         private Visibility _commentSaveVisibility;
-        private Visibility _wrongMothersName;
-        private Visibility _wrongAddress;
-        private Visibility _wrongPhone;
-        private Visibility _wrongBirthDate;
-        private Visibility _wrongWorkPlace; 
-        private bool _customerSelected;
         private string _customerNameLabel;
-        private string _city;
                  
         public CustomerBase_Representation selectedContact
         {
@@ -131,10 +143,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("selectedContact");
                 RaisePropertyChanged("deleteContact");
 
-                if (selectedContact != null)
-                {
-                    AppMessages.ContactSelected.Send(selectedContact);
-                }
+                OnContactSelected(EventArgs.Empty);
             }
         }
         public Visibility commentSaveVisibility
@@ -155,114 +164,6 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("commentSaveVisibility");
             }
         }
-        public Visibility wrongMothersName
-        {
-            get
-            {
-                return _wrongMothersName;
-            }
-
-            set
-            {
-                if (_wrongMothersName == value)
-                {
-                    return;
-                }
-
-                _wrongMothersName = value;
-                RaisePropertyChanged("wrongMothersName");
-            }
-        }
-        public Visibility wrongAddress
-        {
-            get
-            {
-                return _wrongAddress;
-            }
-
-            set
-            {
-                if (_wrongAddress == value)
-                {
-                    return;
-                }
-
-                _wrongAddress = value;
-                RaisePropertyChanged("wrongAddress");
-            }
-        }
-        public Visibility wrongPhone
-        {
-            get
-            {
-                return _wrongPhone;
-            }
-
-            set
-            {
-                if (_wrongPhone == value)
-                {
-                    return;
-                }
-
-                _wrongPhone = value;
-                RaisePropertyChanged("wrongPhone");
-            }
-        }
-        public Visibility wrongBirthDate
-        {
-            get
-            {
-                return _wrongBirthDate;
-            }
-
-            set
-            {
-                if (_wrongBirthDate == value)
-                {
-                    return;
-                }
-
-                _wrongBirthDate = value;
-                RaisePropertyChanged("wrongBirthDate");
-            }
-        }
-        public Visibility wrongWorkPlace
-        {
-            get
-            {
-                return _wrongWorkPlace;
-            }
-
-            set
-            {
-                if (_wrongWorkPlace == value)
-                {
-                    return;
-                }
-
-                _wrongWorkPlace = value;
-                RaisePropertyChanged("wrongWorkPlace");
-            }
-        }
-        public bool customerSelected
-        {
-            get
-            {
-                return _customerSelected;
-            }
-
-            set
-            {
-                if (_customerSelected == value)
-                {
-                    return;
-                }
-
-                _customerSelected = value;
-                RaisePropertyChanged("customerSelected");
-            }
-        }
         public string customerNameLabel
         {
             get
@@ -281,30 +182,11 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("customerNameLabel");
             }
         }
-        public string city
-        {
-            get
-            {
-                return _city;
-            }
-
-            set
-            {
-                if (_city == value)
-                {
-                    return;
-                }
-
-                _city = value;
-                RaisePropertyChanged("city");
-            }
-        }
         
         public ICommand onExpand { get { return new RelayCommand(onExpandExecute, CanonExpandExecute); } }
         void onExpandExecute()
         {
             OnCustomerPickerExpand();
-            AppMessages.CustomerExpandChanged.Send(true);
         }
         bool CanonExpandExecute()
         {
@@ -314,7 +196,6 @@ namespace GyorokRentService.ViewModel
         void onCollapseExecute()
         {
             OnCustomerPickerCollapse();
-            AppMessages.CustomerExpandChanged.Send(false);
         }
         bool CanonCollapseExecute()
         {
@@ -335,7 +216,6 @@ namespace GyorokRentService.ViewModel
             if (selectedCustomer != null)
             {
                 isEditable = true;
-                modifyEnableButtonVisibility = Visibility.Hidden; 
             }
         }
         bool CanswitchModifyModeExecute()
@@ -346,14 +226,8 @@ namespace GyorokRentService.ViewModel
         void doModifyExecute()
         {
             DataProxy.Instance.UpdateCustomer(selectedCustomer);
-            AppMessages.CustomerModified.Send(selectedCustomer);
-            if (customerMode == CustomerType.Rent)
-            {
-                //CheckRentValidation(selectedCustomer); 
-            }
             
             isEditable = false;
-            modifyEnableButtonVisibility = Visibility.Visible;
         }
         bool CandoModifyExecute()
         {
@@ -409,7 +283,6 @@ namespace GyorokRentService.ViewModel
                 isEditable = false;
                 isReadonly = false;
                 commentSaveVisibility = Visibility.Collapsed;
-                modifyEnableButtonVisibility = Visibility.Visible;
 
                 customerMode = ct;
 
@@ -424,13 +297,6 @@ namespace GyorokRentService.ViewModel
                     default:
                         break;
                 }
-
-                wrongMothersName = Visibility.Hidden;
-                wrongAddress = Visibility.Hidden;
-                wrongPhone = Visibility.Hidden;
-                wrongBirthDate = Visibility.Hidden;
-                wrongWorkPlace = Visibility.Hidden;
-                customerSelected = false;
             }
         }
 

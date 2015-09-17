@@ -50,19 +50,6 @@ namespace GyorokRentService
             }
         }
 
-        public static class CustomerModified
-        {
-            public static void Send(CustomerBase_Representation c)
-            {
-                Messenger.Default.Send(c, MessageTypes.customerModified);
-            }
-
-            public static void Register(object recipient, Action<CustomerBase_Representation> action)
-            {
-                Messenger.Default.Register(recipient, MessageTypes.customerModified, action);
-            }
-        }
-
         public static class CloseNewCustomerWindow
         {
             public static void Send(string s)
@@ -138,19 +125,6 @@ namespace GyorokRentService
             public static void Register(object recipient, Action<Tool_Representation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.toolModified, action);
-            }
-        }
-
-        public static class CustomerExpandChanged
-        {
-            public static void Send(bool e)
-            {
-                Messenger.Default.Send(e, MessageTypes.customerExpandChanged);
-            }
-
-            public static void Register(object recipient, Action<bool> action)
-            {
-                Messenger.Default.Register(recipient, MessageTypes.customerExpandChanged, action);
             }
         }
 

@@ -102,8 +102,7 @@ namespace GyorokRentService.ViewModel
             //t = new Timer(10000);
             //t.Start();
             //t.Elapsed += new ElapsedEventHandler(t_Elapsed);
-
-            AppMessages.CustomerExpandChanged.Register(this, setCustomerColumnSpan);
+            
             AppMessages.ToolExpandChanged.Register(this, setToolRowSpan);
             AppMessages.RentGroupClosed.Register(this, s => rentChangeEnabled = true);
             AppMessages.NewWorksheetAdded.Register(this, ws => serviceChangeEnabled = false);

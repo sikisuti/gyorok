@@ -295,7 +295,6 @@ namespace GyorokRentService.ViewModel
                         filterType = 3;
                         _custORcont = searchCustomerType.searchCustomer;
                         visibilityType = Visibility.Visible;
-                        AppMessages.CustomerModified.Register(this, s => RefreshCustomerList());
                         break;
                     case searchCustomerType.searchContact:
                         filterType = 2;

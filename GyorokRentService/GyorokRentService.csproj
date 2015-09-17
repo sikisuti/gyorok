@@ -154,6 +154,7 @@
     <Compile Include="Converters.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolInverterConverter.cs" />
+    <Compile Include="Converters\ObjectExistsToBool.cs" />
     <Compile Include="CustomInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
