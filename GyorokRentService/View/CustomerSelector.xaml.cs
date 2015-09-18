@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using GyorokRentService.ViewModel;
 using MiddleLayer.Representations;
 using MiddleLayer;
+using Common.Enumerations;
 
 namespace GyorokRentService.View
 {
@@ -79,7 +80,7 @@ namespace GyorokRentService.View
 
         private void BuildSearchCustomerWindow()
         {
-            customerPicker = new searchCustomer(searchCustomerType.searchCustomer);
+            customerPicker = new searchCustomer(searchCustomerTypeEnum.Customer);
             customerPicker_VM = customerPicker.DataContext as searchCustomer_ModelView;
             customerPickerWindow = new Window()
             {
@@ -97,7 +98,7 @@ namespace GyorokRentService.View
 
         private void BuildSearchContactWindow()
         {
-            contactPicker = new searchCustomer(searchCustomerType.searchContact);
+            contactPicker = new searchCustomer(searchCustomerTypeEnum.Contact);
             contactPicker_VM = contactPicker.DataContext as searchCustomer_ModelView;
             contactPickerWindow = new Window()
             {

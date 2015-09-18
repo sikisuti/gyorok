@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using GyorokRentService.ViewModel;
+using Common.Enumerations;
 
 namespace GyorokRentService.View
 {
@@ -22,7 +23,7 @@ namespace GyorokRentService.View
         public SearchCustomerWindow()
         {            
         }
-        public SearchCustomerWindow(searchCustomerType displayType)
+        public SearchCustomerWindow(searchCustomerTypeEnum displayType)
         {
             InitializeComponent();
             AppMessages.ContactPersonToSelect.Register(this, (c) => this.Close());

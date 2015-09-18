@@ -15,6 +15,7 @@ using MiddleLayer.Representations;
 using MiddleLayer;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Enumerations;
 
 namespace GyorokRentService.ViewModel
 {
@@ -30,11 +31,48 @@ namespace GyorokRentService.ViewModel
         }
 
         public List<CustomerBase_Representation> allCustomer;
+        
+        private CustomerBase_Representation _selectedCustomer;
+        public CustomerBase_Representation selectedCustomer
+        {
+            get { return _selectedCustomer; }
+            set
+            {
+                if (_selectedCustomer != value)
+                {
+                    _selectedCustomer = value;
+                    RaisePropertyChanged("selectedCustomer");
+                }
+            }
+        }
 
-        CustomerBase_Representation _selectedCustomer; 
-        searchCustomerType _custORcont;
-        //CustomerType _rentORservice;
-        int filterType;
+        private searchCustomerTypeEnum _searchCustomerType;
+        public searchCustomerTypeEnum searchCustomerType
+        {
+            get { return _searchCustomerType; }
+            set
+            {
+                if (_searchCustomerType != value)
+                {
+                    _searchCustomerType = value;
+                    RaisePropertyChanged("searchCustomerType");
+                }
+            }
+        }
+
+        private FilterTypeEnum _filterType;
+        public FilterTypeEnum filterType
+        {
+            get { return _filterType; }
+            set
+            {
+                if (_filterType != value)
+                {
+                    _filterType = value;
+                    RaisePropertyChanged("filterType");
+                }
+            }
+        }
 
         private bool _IsBusy;
         public bool IsBusy
@@ -52,67 +90,7 @@ namespace GyorokRentService.ViewModel
 
         private string _searchText;
         private ObservableCollection<CustomerBase_Representation> _foundCustomers;
-        private long _selectedCustomerID;
         private Visibility _visibilityType;
-        private Brush _firmBorderBrush;
-        public Brush firmBorderBrush
-        {
-            get
-            {
-                return _firmBorderBrush;
-            }
-
-            set
-            {
-                if (_firmBorderBrush == value)
-                {
-                    return;
-                }
-
-                _firmBorderBrush = value;
-                RaisePropertyChanged("firmBorderBrush");
-            }
-        }
-
-        private Brush _personBorderBrush;
-        public Brush personBorderBrush
-        {
-            get
-            {
-                return _personBorderBrush;
-            }
-
-            set
-            {
-                if (_personBorderBrush == value)
-                {
-                    return;
-                }
-
-                _personBorderBrush = value;
-                RaisePropertyChanged("personBorderBrush");
-            }
-        }
-
-        private Brush _bothBorderBrush;
-        public Brush bothBorderBrush
-        {
-            get
-            {
-                return _bothBorderBrush;
-            }
-
-            set
-            {
-                if (_bothBorderBrush == value)
-                {
-                    return;
-                }
-
-                _bothBorderBrush = value;
-                RaisePropertyChanged("bothBorderBrush");
-            }
-        }
                 
         public string searchText
         {
@@ -150,24 +128,6 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("foundCustomers");
             }
         }
-        public long selectedCustomerID
-        {
-            get
-            {
-                return _selectedCustomerID;
-            }
-
-            set
-            {
-                if (_selectedCustomerID == value)
-                {
-                    return;
-                }
-
-                _selectedCustomerID = value;
-                RaisePropertyChanged("selectedCustomerID");
-            }
-        }
         public Visibility visibilityType
         {
             get
@@ -197,18 +157,17 @@ namespace GyorokRentService.ViewModel
         {
             try
             {
-                _selectedCustomer = DataProxy.Instance.GetCustomerById(_selectedCustomerID);
-                switch (_custORcont)
-                {
-                    case searchCustomerType.searchCustomer:
-                        AppMessages.CustomerToSelect.Send(_selectedCustomer);
-                        break;
-                    case searchCustomerType.searchContact:
-                        AppMessages.ContactPersonToSelect.Send(_selectedCustomer);
-                        break;
-                    default:
-                        break;
-                }
+                //switch (_custORcont)
+                //{
+                //    case searchCustomerType.searchCustomer:
+                //        AppMessages.CustomerToSelect.Send(selectedCustomer);
+                //        break;
+                //    case searchCustomerType.searchContact:
+                //        AppMessages.ContactPersonToSelect.Send(selectedCustomer);
+                //        break;
+                //    default:
+                //        break;
+                //}
                 OnCustomerSelected(EventArgs.Empty);
             }
             catch (Exception ex)
@@ -219,49 +178,40 @@ namespace GyorokRentService.ViewModel
         public ICommand openNewCustomerWindow { get { return new RelayCommand(openNewCustomerWindowExecute, () => true); } }
         void openNewCustomerWindowExecute()
         {
-            View.NewCustomerWindow wndNewCustomer = new View.NewCustomerWindow(_custORcont);
+            View.NewCustomerWindow wndNewCustomer = new View.NewCustomerWindow(searchCustomerType);
             wndNewCustomer.Show();
         }
         public ICommand filterFirm { get { return new RelayCommand(filterFirmExecute, () => true); } }
         void filterFirmExecute()
         {
-            if (filterType != 1)
+            if (filterType != FilterTypeEnum.Firm)
             {
-                filterType = 1;
+                filterType = FilterTypeEnum.Firm;
                 FilterList();
-                firmBorderBrush = null;
-                personBorderBrush = Brushes.Black;
-                bothBorderBrush = Brushes.Black;
             }
         }
         public ICommand filterPerson { get { return new RelayCommand(filterPersonExecute, () => true); } }
         void filterPersonExecute()
         {
-            if (filterType != 2)
+            if (filterType != FilterTypeEnum.Person)
             {
-                filterType = 2;
+                filterType = FilterTypeEnum.Person;
                 FilterList();
-                firmBorderBrush = Brushes.Black;
-                personBorderBrush = null;
-                bothBorderBrush = Brushes.Black;
             }
         }
         public ICommand filterBoth { get { return new RelayCommand(filterBothExecute, () => true); } }
         void filterBothExecute()
         {
-            if (filterType != 3)
+            if (filterType != FilterTypeEnum.All)
             {
-                filterType = 3;
+                filterType = FilterTypeEnum.All;
                 FilterList();
-                firmBorderBrush = Brushes.Black;
-                personBorderBrush = Brushes.Black;
-                bothBorderBrush = null;
             }
         }
         public ICommand delPerson { get { return new RelayCommand(delPersonExecute, () => true); } }
         void delPersonExecute()
         {
-            if (_selectedCustomerID != 0)
+            if (selectedCustomer != null)
             {
                 MessageBoxResult result;
 
@@ -269,9 +219,8 @@ namespace GyorokRentService.ViewModel
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    SQLConnection.Execute.delCustomer(_selectedCustomerID);
-                    _selectedCustomerID = 0;
-                    AppMessages.CustomerListModified.Send("");
+                    SQLConnection.Execute.delCustomer(selectedCustomer.id);
+                    selectedCustomer = null;
                 } 
             }
         }
@@ -281,25 +230,19 @@ namespace GyorokRentService.ViewModel
         {
             IsBusy = false;    
         }
-        public searchCustomer_ModelView(searchCustomerType controlType)
+        public searchCustomer_ModelView(searchCustomerTypeEnum controlType)
         {
             if (!this.IsInDesignMode)
             {
                 _searchText = "";
-                AppMessages.CustomerListModified.Register(this, s => RefreshCustomerList());
-                firmBorderBrush = Brushes.Black;
-                personBorderBrush = Brushes.Black;
+                searchCustomerType = controlType;
                 switch (controlType)
                 {
-                    case searchCustomerType.searchCustomer: 
-                        filterType = 3;
-                        _custORcont = searchCustomerType.searchCustomer;
-                        visibilityType = Visibility.Visible;
+                    case searchCustomerTypeEnum.Customer:
+                        filterType = FilterTypeEnum.All;
                         break;
-                    case searchCustomerType.searchContact:
-                        filterType = 2;
-                        _custORcont = searchCustomerType.searchContact;
-                        visibilityType = Visibility.Hidden;
+                    case searchCustomerTypeEnum.Contact:
+                        filterType = FilterTypeEnum.Person;
                         break;
                     default:
                         break;
@@ -325,20 +268,15 @@ namespace GyorokRentService.ViewModel
         {
             if (allCustomer != null)
             {
-                if (filterType == 3)
+                if (filterType == FilterTypeEnum.All)
                 {
                     foundCustomers = new ObservableCollection<CustomerBase_Representation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower())).OrderBy(oc => oc.customerName));
                 }
                 else
                 {
-                    foundCustomers = new ObservableCollection<CustomerBase_Representation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower()) && c.isFirm == (filterType == 1)).OrderBy(oc => oc.customerName));
+                    foundCustomers = new ObservableCollection<CustomerBase_Representation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower()) && c.isFirm == (filterType == FilterTypeEnum.Firm)).OrderBy(oc => oc.customerName));
                 } 
             }
         }
-    }
-    public enum searchCustomerType
-    {
-        searchCustomer,
-        searchContact
     }
 }

@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using GyorokRentService.ViewModel;
+using Common.Enumerations;
 
 namespace GyorokRentService.View
 {
@@ -23,25 +24,25 @@ namespace GyorokRentService.View
         {
             
         }
-        public NewCustomerWindow(searchCustomerType displayType)
+        public NewCustomerWindow(searchCustomerTypeEnum displayType)
         {
             InitializeComponent();
             AppMessages.ContactPersonToSelect.Register(this, (c) => this.Close());
             AppMessages.CustomerToSelect.Register(this, (c) => this.Close());
             switch (displayType)
             {
-                case searchCustomerType.searchCustomer:
+                case searchCustomerTypeEnum.Customer:
                     //var viewModel1 = new NewCustomerWindow_ViewModel(searchCustomerType.searchCustomer);
                     //viewModel1.RequestClose += (s, e) => this.Close();
 
-                    grdMain.Children.Add(new NewCustomerUC(searchCustomerType.searchCustomer));
+                    grdMain.Children.Add(new NewCustomerUC(searchCustomerTypeEnum.Customer));
                     //this.DataContext = viewModel1;
                     break;
-                case searchCustomerType.searchContact:
+                case searchCustomerTypeEnum.Contact:
                     //var viewModel2 = new NewCustomerWindow_ViewModel(searchCustomerType.searchContact);
                     //viewModel2.RequestClose += (s, e) => this.Close();
 
-                    grdMain.Children.Add(new NewCustomerUC(searchCustomerType.searchContact));
+                    grdMain.Children.Add(new NewCustomerUC(searchCustomerTypeEnum.Contact));
                     //this.DataContext = viewModel2;
                     break;
                 default:

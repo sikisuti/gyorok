@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GyorokRentService.ViewModel;
+using Common.Enumerations;
 
 namespace GyorokRentService.View
 {
@@ -24,17 +25,17 @@ namespace GyorokRentService.View
         {
             
         }
-        public NewCustomerUC(searchCustomerType displayType)
+        public NewCustomerUC(searchCustomerTypeEnum displayType)
         {
             InitializeComponent();
             switch (displayType)
             {
-                case searchCustomerType.searchCustomer:
-                    var DC1 = new ViewModel.NewCustomer_ViewModel(searchCustomerType.searchCustomer);
+                case searchCustomerTypeEnum.Customer:
+                    var DC1 = new ViewModel.NewCustomer_ViewModel(searchCustomerTypeEnum.Customer);
                     this.DataContext = DC1;
                     break;
-                case searchCustomerType.searchContact:
-                    var DC2 = new ViewModel.NewCustomer_ViewModel(searchCustomerType.searchContact);
+                case searchCustomerTypeEnum.Contact:
+                    var DC2 = new ViewModel.NewCustomer_ViewModel(searchCustomerTypeEnum.Contact);
                     this.DataContext = DC2;
                     break;
                 default:

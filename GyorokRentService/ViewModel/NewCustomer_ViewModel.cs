@@ -10,13 +10,13 @@ using System.Windows.Input;
 using GyorokRentService.ViewModel;
 using System.Windows;
 using SQLConnectionLib;
+using Common.Enumerations;
 
 namespace GyorokRentService.ViewModel
 {
     class NewCustomer_ViewModel : ViewModelBase
     {
-        //dbGyorokEntities db;
-        searchCustomerType _type;
+        searchCustomerTypeEnum _type;
         long _cityID;
 
         private string _newCustomerName;
@@ -336,10 +336,10 @@ namespace GyorokRentService.ViewModel
                 DataProxy.Instance.AddCustomer(newCustomer);
                 switch (_type)
                 {
-                    case searchCustomerType.searchCustomer:
+                    case searchCustomerTypeEnum.Customer:
                         AppMessages.CustomerToSelect.Send(newCustomer);
                         break;
-                    case searchCustomerType.searchContact:
+                    case searchCustomerTypeEnum.Contact:
                         AppMessages.ContactPersonToSelect.Send(newCustomer);
                         break;
                     default:
@@ -363,7 +363,7 @@ namespace GyorokRentService.ViewModel
         {
             
         }
-        public NewCustomer_ViewModel(searchCustomerType displayType)
+        public NewCustomer_ViewModel(searchCustomerTypeEnum displayType)
         {
             if (!this.IsInDesignMode)
             {
@@ -373,12 +373,12 @@ namespace GyorokRentService.ViewModel
                 AppMessages.CityToSelect.Register(this, c => { _cityID = c.id; postalCode = c.postalCode; city = c.city; });
                 switch (displayType)
                 {
-                    case searchCustomerType.searchCustomer:
-                        _type = searchCustomerType.searchCustomer;
+                    case searchCustomerTypeEnum.Customer:
+                        _type = searchCustomerTypeEnum.Customer;
                         visibleMode = Visibility.Visible;
                         break;
-                    case searchCustomerType.searchContact:
-                        _type = searchCustomerType.searchContact;
+                    case searchCustomerTypeEnum.Contact:
+                        _type = searchCustomerTypeEnum.Contact;
                         visibleMode = Visibility.Hidden;
                         break;
                     default:
