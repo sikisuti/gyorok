@@ -30,6 +30,15 @@ namespace GyorokRentService.ViewModel
             }
         }
 
+        public event EventHandler NewCustomerRequested;
+        public void OnNewCustomerRequested(EventArgs e)
+        {
+            if (NewCustomerRequested != null)
+            {
+                NewCustomerRequested(null, e);
+            }
+        }
+
         public List<CustomerBase_Representation> allCustomer;
         
         private CustomerBase_Representation _selectedCustomer;
@@ -70,6 +79,7 @@ namespace GyorokRentService.ViewModel
                 {
                     _filterType = value;
                     RaisePropertyChanged("filterType");
+                    FilterList();
                 }
             }
         }
@@ -90,7 +100,6 @@ namespace GyorokRentService.ViewModel
 
         private string _searchText;
         private ObservableCollection<CustomerBase_Representation> _foundCustomers;
-        private Visibility _visibilityType;
                 
         public string searchText
         {
@@ -128,24 +137,6 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("foundCustomers");
             }
         }
-        public Visibility visibilityType
-        {
-            get
-            {
-                return _visibilityType;
-            }
-
-            set
-            {
-                if (_visibilityType == value)
-                {
-                    return;
-                }
-
-                _visibilityType = value;
-                RaisePropertyChanged("visibilityType");
-            }
-        }
 
         public ICommand searchTextChanged { get { return new RelayCommand(searchTextChangedExecute, () => true); } }
         void searchTextChangedExecute()
@@ -155,58 +146,27 @@ namespace GyorokRentService.ViewModel
         public ICommand customerSelected { get { return new RelayCommand(customerSelectedExecute, () => true); } }
         void customerSelectedExecute()
         {
-            try
-            {
-                //switch (_custORcont)
-                //{
-                //    case searchCustomerType.searchCustomer:
-                //        AppMessages.CustomerToSelect.Send(selectedCustomer);
-                //        break;
-                //    case searchCustomerType.searchContact:
-                //        AppMessages.ContactPersonToSelect.Send(selectedCustomer);
-                //        break;
-                //    default:
-                //        break;
-                //}
-                OnCustomerSelected(EventArgs.Empty);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            OnCustomerSelected(EventArgs.Empty);
         }
         public ICommand openNewCustomerWindow { get { return new RelayCommand(openNewCustomerWindowExecute, () => true); } }
         void openNewCustomerWindowExecute()
         {
-            View.NewCustomerWindow wndNewCustomer = new View.NewCustomerWindow(searchCustomerType);
-            wndNewCustomer.Show();
+            OnNewCustomerRequested(EventArgs.Empty);
         }
         public ICommand filterFirm { get { return new RelayCommand(filterFirmExecute, () => true); } }
         void filterFirmExecute()
         {
-            if (filterType != FilterTypeEnum.Firm)
-            {
-                filterType = FilterTypeEnum.Firm;
-                FilterList();
-            }
+            filterType = FilterTypeEnum.Firm;
         }
         public ICommand filterPerson { get { return new RelayCommand(filterPersonExecute, () => true); } }
         void filterPersonExecute()
         {
-            if (filterType != FilterTypeEnum.Person)
-            {
-                filterType = FilterTypeEnum.Person;
-                FilterList();
-            }
+            filterType = FilterTypeEnum.Person;
         }
         public ICommand filterBoth { get { return new RelayCommand(filterBothExecute, () => true); } }
         void filterBothExecute()
         {
-            if (filterType != FilterTypeEnum.All)
-            {
-                filterType = FilterTypeEnum.All;
-                FilterList();
-            }
+            filterType = FilterTypeEnum.All;
         }
         public ICommand delPerson { get { return new RelayCommand(delPersonExecute, () => true); } }
         void delPersonExecute()

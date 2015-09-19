@@ -16,6 +16,20 @@ namespace GyorokRentService.ViewModel
 {
     class NewCustomer_ViewModel : ViewModelBase
     {
+        private CustomerBase_Representation _newCustomer;
+        public CustomerBase_Representation newCustomer
+        {
+            get { return _newCustomer; }
+            set
+            {
+                if (_newCustomer != value)
+                {
+                    _newCustomer = value;
+                    RaisePropertyChanged("newCustomer");
+                }
+            }
+        }
+
         searchCustomerTypeEnum _type;
         long _cityID;
 

@@ -18,12 +18,13 @@
         <Setter Property="FontWeight" Value="{StaticResource GlobalFontWeight}" />
     </Style>
 
-    <local:FilledToVisibilityConverter x:Key="fillToVis"/>
-    <local:BooleanToReadOnlyTextBgConverter x:Key="readOnlyToBg"/>
-    <local:BooleanToReadOnlyTextBorderConverter x:Key="readOnlyToBorder"/>
     <conv:BooleanToVisibilityConverter x:Key="boolToVis"/>
     <conv:BoolInverterConverter x:Key="boolInverter" />
     <conv:ObjectExistsToBool x:Key="objectExistsToBool" />
+    <conv:FilterTypeToButtonBorderBrush x:Key="filterTypeToBorder"/>
+    <local:FilledToVisibilityConverter x:Key="fillToVis"/>
+    <local:BooleanToReadOnlyTextBgConverter x:Key="readOnlyToBg"/>
+    <local:BooleanToReadOnlyTextBorderConverter x:Key="readOnlyToBorder"/>
     <local:MultiBooleanToBooleanConverter x:Key="multiBoolToBool"/>
 
     <Color x:Key="RentBackgroundColor">#FFF0FFF0</Color>

@@ -32,6 +32,18 @@ namespace GyorokRentService.View
             InitializeComponent();
             dataContext = new searchCustomer_ModelView(displayType);
             this.DataContext = dataContext;
+
+            dataContext.NewCustomerRequested += (s, a) =>
+            {
+                NewCustomerUC newCustomerUC = new NewCustomerUC(displayType);
+                Window newCustomerWindow = new Window()
+                {
+                    Title = "Új ügyfél",
+                    Content = newCustomerUC,
+                    SizeToContent = SizeToContent.WidthAndHeight
+                };
+                newCustomerWindow.Show();
+            };
         }
 
         private void textBox3_TextChanged(object sender, TextChangedEventArgs e)
