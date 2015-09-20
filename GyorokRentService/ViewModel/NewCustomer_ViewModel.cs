@@ -381,9 +381,8 @@ namespace GyorokRentService.ViewModel
         {
             if (!this.IsInDesignMode)
             {
-                isPerson = true;
-                defaultDiscount = 0;
-                newBirthDate = null;
+                newCustomer = new CustomerBase_Representation();
+                newCustomer.isFirm = false;
                 AppMessages.CityToSelect.Register(this, c => { _cityID = c.id; postalCode = c.postalCode; city = c.city; });
                 switch (displayType)
                 {

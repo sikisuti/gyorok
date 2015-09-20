@@ -15,14 +15,14 @@
 
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <RadioButton Visibility="{Binding visibleMode}" GroupName="1" IsChecked="{Binding newCustomer.isFirm}" Content="Cég" />
-            <RadioButton GroupName="2" Content="Magánszemély" />
+            <RadioButton Margin="5" Visibility="{Binding visibleMode}" GroupName="1" IsChecked="{Binding newCustomer.isFirm}" Content="Cég" />
+            <RadioButton Margin="5" GroupName="1" IsChecked="{Binding newCustomer.isFirm, Converter={StaticResource boolInverter}}" Content="Magánszemély" />
         </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
+                <ColumnDefinition MinWidth="200"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition MinWidth="200" MaxWidth="300"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -35,24 +35,56 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Label Content="Kölcsönző neve:" FontWeight="Bold" />
-            <TextBox Grid.Column="2" Text="{Binding newCustomer.customerName}" />
+            <TextBox Grid.Column="2" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="newCustomer.customerName">
+                        <Binding.ValidationRules>
+                            <valid:FieldNotEmpty ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Label Grid.Row="1" Content="Azonosító szám:" FontWeight="Bold" />
             <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding newCustomer.IdNumber}" />
             <Label Grid.Row="2" Content="Anyja neve:" FontWeight="Bold" Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
-            <TextBox Grid.Row="2" Grid.Column="2" Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Text="{Binding newCustomer.mothersName}" />
+            <TextBox Grid.Row="2" Grid.Column="2" Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" >
+                <TextBox.Text>
+                    <Binding Path="newCustomer.mothersName">
+                        <Binding.ValidationRules>
+                            <valid:FieldNotEmpty ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Label Grid.Row="3" Content="Cím:" FontWeight="Bold" />
             <Button Grid.Row="3" Grid.Column="1" Content="..." Command="{Binding openCityChooser}" Height="23" Width="29" />
             <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
                 <Label Content="{Binding newCustomer.City.postalCode}" />
                 <Label Content="{Binding newCustomer.City.city}" />
             </StackPanel>
-            <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding newCustomer.customerAddress}" />
+            <TextBox Grid.Row="4" Grid.Column="2" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" >
+                <TextBox.Text>
+                    <Binding Path="newCustomer.customerAddress">
+                        <Binding.ValidationRules>
+                            <valid:FieldNotEmpty ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Label Grid.Row="5" Content="Telefon:" FontWeight="Bold" />
-            <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding newCustomer.customerPhone}" />
+            <TextBox Grid.Row="5" Grid.Column="2" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" >
+                <TextBox.Text>
+                    <Binding Path="newCustomer.customerPhone">
+                        <Binding.ValidationRules>
+                            <valid:FieldNotEmpty ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Label Grid.Row="6" Content="Születési dátum:" FontWeight="Bold" Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
             <xctk:DateTimePicker Grid.Column="2" Grid.Row="6" 
                                      Style="{StaticResource CustomEditableDatePicker}"
-                                     Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" 
+                                     Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" 
                                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
                 <xctk:DateTimePicker.Value>
                     <Binding Path="newCustomer.birthDate">
@@ -63,7 +95,15 @@
                 </xctk:DateTimePicker.Value>
             </xctk:DateTimePicker>
             <Label Grid.Row="7" Content="Munkahely:" FontWeight="Bold" Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
-            <TextBox Grid.Row="7" Grid.Column="2" Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Text="{Binding newCustomer.workplace}" />
+            <TextBox Grid.Row="7" Grid.Column="2" Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" >
+                <TextBox.Text>
+                    <Binding Path="newCustomer.workplace">
+                        <Binding.ValidationRules>
+                            <valid:FieldNotEmpty ValidatesOnTargetUpdated="True"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </Grid>
         <Grid>
             <Grid.ColumnDefinitions>

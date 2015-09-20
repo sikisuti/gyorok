@@ -189,7 +189,6 @@
     <Compile Include="ViewModel\searchTool_ModelView.cs" />
     <Compile Include="ViewModel\CustomerSelector_ViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\NewCustomerWindow_ViewModel.cs" />
     <Compile Include="ViewModel\NewCustomer_ViewModel.cs" />
     <Compile Include="ViewModel\RentalsSum_ViewModel.cs" />
     <Compile Include="ViewModel\searchCustomer_ModelView.cs" />
@@ -236,9 +235,6 @@
     </Compile>
     <Compile Include="View\NewCustomerUC.xaml.cs">
       <DependentUpon>NewCustomerUC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\NewCustomerWindow.xaml.cs">
-      <DependentUpon>NewCustomerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RentalsSum.xaml.cs">
       <DependentUpon>RentalsSum.xaml</DependentUpon>
@@ -342,10 +338,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\NewCustomerUC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\NewCustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
