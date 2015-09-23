@@ -80,8 +80,11 @@ namespace GyorokRentService.View
 
         private void BuildSearchCustomerWindow()
         {
-            customerPicker = new searchCustomer(searchCustomerTypeEnum.Customer);
-            customerPicker_VM = customerPicker.DataContext as searchCustomer_ModelView;
+            if (customerPicker == null)
+            {
+                customerPicker = new searchCustomer(searchCustomerTypeEnum.Customer);
+                customerPicker_VM = customerPicker.DataContext as searchCustomer_ModelView; 
+            }
             customerPickerWindow = new Window()
             {
                 Title = "Ügyfél választó",

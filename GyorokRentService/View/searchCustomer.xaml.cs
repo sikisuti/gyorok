@@ -13,6 +13,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GyorokRentService.ViewModel;
 using Common.Enumerations;
+using MiddleLayer.Representations;
+using MiddleLayer;
 
 namespace GyorokRentService.View
 {
@@ -22,6 +24,10 @@ namespace GyorokRentService.View
     public partial class searchCustomer : UserControl
     {
         public searchCustomer_ModelView dataContext { get; set; }
+
+        NewCustomer_ViewModel newCustomerVM;
+        NewCustomerUC newCustomerUC;
+        Window newCustomerWindow;
 
         public searchCustomer()
         {
@@ -35,14 +41,26 @@ namespace GyorokRentService.View
 
             dataContext.NewCustomerRequested += (s, a) =>
             {
-                NewCustomerUC newCustomerUC = new NewCustomerUC(displayType);
-                Window newCustomerWindow = new Window()
+                newCustomerUC = new NewCustomerUC(displayType);
+                newCustomerWindow = new Window()
                 {
                     Title = "Új ügyfél",
                     Content = newCustomerUC,
                     SizeToContent = SizeToContent.WidthAndHeight
                 };
+                newCustomerVM = newCustomerUC.DataContext as NewCustomer_ViewModel;
+                newCustomerVM.CustomerInserted += (so, ar) =>
+                {
+                    dataContext.selectedCustomer = (CustomerBase_Representation)so;
+                    dataContext.OnCustomerSelected(EventArgs.Empty);
+                    newCustomerWindow.Close();
+                };
                 newCustomerWindow.Show();
+            };
+
+            DataProxy.Instance.CustomersChanged += (s, a) =>
+            {
+                dataContext.RefreshCustomerList();
             };
         }
 

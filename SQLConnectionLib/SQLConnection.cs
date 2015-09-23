@@ -428,10 +428,11 @@ namespace SQLConnectionLib
                 return db.Cities.SingleOrDefault(c => c.cityID == id);
         }
 
-        public void AddCustomer(Customers customer)
+        public long AddCustomer(Customers customer)
         {
                 db.Customers.AddObject(customer);
                 db.SaveChanges();
+            return customer.customerID;
         }
 
         public List<Customers> GetAllCustomers()
@@ -537,6 +538,11 @@ namespace SQLConnectionLib
         public List<PayTypes> GetPayTypes()
         {
             return db.PayTypes.ToList();
+        }
+
+        public long GetCustomersVersion()
+        {
+            return db.TableVersions.SingleOrDefault(tv => tv.tableName == "Customers").tableVersion;
         }
     }
 }

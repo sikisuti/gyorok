@@ -17,6 +17,11 @@
         <Setter Property="FontSize" Value="{StaticResource GlobalFontSize}"/>
         <Setter Property="FontWeight" Value="{StaticResource GlobalFontWeight}" />
     </Style>
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="FontSize" Value="{StaticResource GlobalFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource GlobalFontWeight}" />
+    </Style>
+    
 
     <conv:BooleanToVisibilityConverter x:Key="boolToVis"/>
     <conv:BoolInverterConverter x:Key="boolInverter" />

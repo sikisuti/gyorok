@@ -43,8 +43,8 @@
             <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding customerName}" Header="Név" Width="200"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding postalCode}" Header="Ir.szám" Width="40"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Cities.city}" Header="Város" Width="120"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding city.postalCode}" Header="Ir.szám" Width="40"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding city.city}" Header="Város" Width="120"/>
                         <GridViewColumn DisplayMemberBinding="{Binding customerAddress}" Header="Cím" Width="240"/>
                         <GridViewColumn DisplayMemberBinding="{Binding IDNumber}" Header="Azonosító" Width="100"/>
                     </GridView>

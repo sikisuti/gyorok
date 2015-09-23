@@ -13,6 +13,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GyorokRentService.ViewModel;
 using Common.Enumerations;
+using MiddleLayer.Representations;
+using GyorokRentService.Validations;
 
 namespace GyorokRentService.View
 {
@@ -21,6 +23,11 @@ namespace GyorokRentService.View
     /// </summary>
     public partial class NewCustomerUC : UserControl
     {
+        NewCustomer_ViewModel viewModel;
+
+        SearchCity cityChooserWindow;
+        SearchCity_ViewModel cityChooserVM;
+
         public NewCustomerUC()
         {
             
@@ -28,19 +35,24 @@ namespace GyorokRentService.View
         public NewCustomerUC(searchCustomerTypeEnum displayType)
         {
             InitializeComponent();
-            switch (displayType)
+
+            BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
+            BindingOperations.GetBinding(txtIDNumber, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
+
+            viewModel = new NewCustomer_ViewModel(displayType);
+            DataContext = viewModel;
+
+            viewModel.CityRequested += (s, a) =>
             {
-                case searchCustomerTypeEnum.Customer:
-                    var DC1 = new ViewModel.NewCustomer_ViewModel(searchCustomerTypeEnum.Customer);
-                    this.DataContext = DC1;
-                    break;
-                case searchCustomerTypeEnum.Contact:
-                    var DC2 = new ViewModel.NewCustomer_ViewModel(searchCustomerTypeEnum.Contact);
-                    this.DataContext = DC2;
-                    break;
-                default:
-                    break;
-            }
+                cityChooserWindow = new SearchCity();
+                cityChooserVM = cityChooserWindow.DataContext as SearchCity_ViewModel;
+                cityChooserVM.citySelected += (so, ar) =>
+                {
+                    viewModel.newCustomer.city = (City_Representation)so;
+                    cityChooserWindow.Close();
+                };
+                cityChooserWindow.Show();
+            };
         }
     }
 }

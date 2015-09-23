@@ -56,9 +56,10 @@ namespace SQLConnectionLib
         {
             return testCustomers;
         }
-        public void AddCustomer(Customers customer)
+        public long AddCustomer(Customers customer)
         {
             testCustomers.Add(customer);
+            return customer.customerID;
         }
 
         public List<Customers> GetContacts(Customers firm)
@@ -179,6 +180,11 @@ namespace SQLConnectionLib
         }
 
         public List<PayTypes> GetPayTypes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public long GetCustomersVersion()
         {
             throw new NotImplementedException();
         }

@@ -209,6 +209,12 @@ namespace GyorokRentService.ViewModel
                 }
                 IsBusy = false;
                 RefreshCustomerList();
+
+                DataProxy.Instance.CustomersChanged += (s, a) =>
+                {
+                    RefreshCustomerList();
+                };
+                
             }
         }
 

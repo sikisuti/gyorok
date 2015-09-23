@@ -7,11 +7,16 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace MiddleLayer
 {
     public sealed class DataProxy
     {
+        Timer dbChangeCheckTimer;
+
+        long customersVersion;
+
         private static readonly DataProxy _instance = new DataProxy();
         public static DataProxy Instance
         {
@@ -23,6 +28,27 @@ namespace MiddleLayer
 
         private DataProxy()
         {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                customersVersion = dataSource.GetCustomersVersion();
+            }
+
+            dbChangeCheckTimer = new Timer(10000);
+            dbChangeCheckTimer.Elapsed += (s, a) =>
+            {
+                dbChangeCheckTimer.Stop();
+                using (ISQLConnection dataSource = DataSource)
+                {
+                    var actVersion = dataSource.GetCustomersVersion();
+                    if (customersVersion != actVersion)
+                    {
+                        customersVersion = actVersion;
+                        OnCustomersChanged(EventArgs.Empty);
+                    }
+                }
+                dbChangeCheckTimer.Start();
+            };
+            dbChangeCheckTimer.Start();
         }
 
         private ISQLConnection DataSource
@@ -30,6 +56,15 @@ namespace MiddleLayer
             get
             {
                 return DIContainer.Instance.Get<SQLConnection>();
+            }
+        }
+
+        public event EventHandler CustomersChanged;
+        private void OnCustomersChanged(EventArgs e)
+        {
+            if (CustomersChanged != null)
+            {
+                CustomersChanged(null, e);
             }
         }
 
@@ -60,11 +95,11 @@ namespace MiddleLayer
                 return RepresentationConverter.convertCustomer(dataSource.GetCustomerById(id)); 
             }
         }
-        public void AddCustomer(CustomerBase_Representation customer)
+        public long AddCustomer(CustomerBase_Representation customer)
         {
             using (ISQLConnection dataSource = DataSource)
             {
-                dataSource.AddCustomer(RepresentationConverter.convertCustomer(customer)); 
+                return dataSource.AddCustomer(RepresentationConverter.convertCustomer(customer)); 
             }
         }
         public void UpdateCustomer(CustomerBase_Representation customer)
