@@ -66,6 +66,7 @@ namespace GyorokRentService.ViewModel
                 }
 
                 _searchText = value;
+                FilterTools();
                 RaisePropertyChanged("searchText");
             }
         }
@@ -101,7 +102,7 @@ namespace GyorokRentService.ViewModel
                     return;
                 }
 
-                if (value.toolStatus.id == (long)ToolStatusEnum.Rented)
+                if (value != null && value.toolStatus.id == (long)ToolStatusEnum.Rented)
                 {
                     Rental_Representation rental = DataProxy.Instance.GetLastRentalByToolId(value.id);
 
@@ -134,12 +135,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("plannedBringBackDate");
             }
         }
-
-        public ICommand searchTextChanged { get { return new RelayCommand(searchTextChangedExecute, () => true); } }
-        void searchTextChangedExecute()
-        {
-            RefreshToolList();
-        }
+        
         public ICommand toolSelected { get { return new RelayCommand(toolSelectedExecute, () => true); } }
         void toolSelectedExecute()
         {
@@ -174,11 +170,9 @@ namespace GyorokRentService.ViewModel
             if (!this.IsInDesignMode)
             {
                 searchText = "";
-                //AppMessages.ToolToSelect.Register(this, (t) => RefreshToolList());
-                AppMessages.ToolModified.Register(this, s => RefreshToolList());
-                AppMessages.ToolListModified.Register(this, t => RefreshToolList());
-                AppMessages.RentalPaid.Register(this, p => RefreshToolList());
-                AppMessages.RentGroupClosed.Register(this, rg => RefreshToolList());
+                RefreshToolList();
+
+                DataProxy.Instance.ToolsChanged += (s, a) => { RefreshToolList(); };
             }
         }
 
@@ -196,7 +190,11 @@ namespace GyorokRentService.ViewModel
 
         private void FilterTools()
         {
-            foundTools = new ObservableCollection<Tool_Representation>(allTools.Where(t => t.toolName.ToLower().StartsWith(_searchText.ToLower())).OrderBy(ot => ot.toolName).ToList());
+            if (allTools != null)
+            {
+                foundTools = new ObservableCollection<Tool_Representation>(allTools.Where(t => t.toolName.ToLower().StartsWith(_searchText.ToLower())).OrderBy(ot => ot.toolName).ToList());
+            }
+            
         }
     }
 }

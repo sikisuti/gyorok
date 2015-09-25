@@ -26,6 +26,20 @@ namespace GyorokRentService.ViewModel
                 ToolPickerExpanded(null, null);
             }
         }
+        
+        private bool _isEditable;
+        public bool isEditable
+        {
+            get { return _isEditable; }
+            set
+            {
+                if (_isEditable != value)
+                {
+                    _isEditable = value;
+                    RaisePropertyChanged("isEditable");
+                }
+            }
+        }
 
         ObservableCollection<Tool_Representation> temp = new ObservableCollection<Tool_Representation>();
         private Tool_Representation _selectedTool;
@@ -45,9 +59,6 @@ namespace GyorokRentService.ViewModel
        
         private bool _isExpanded;
         private int _zExpander;
-        private bool _readOnlyMode;
-        private Visibility _modifyButtonVisibility;
-        private Visibility _modifyEnableButtonVisibility;
         
         public bool isExpanded
         {
@@ -85,60 +96,6 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("zExpander");
             }
         }
-        public bool readOnlyMode
-        {
-            get
-            {
-                return _readOnlyMode;
-            }
-
-            set
-            {
-                if (_readOnlyMode == value)
-                {
-                    return;
-                }                
-
-                _readOnlyMode = value;
-                RaisePropertyChanged("readOnlyMode");
-            }
-        }
-        public Visibility modifyButtonVisibility
-        {
-            get
-            {
-                return _modifyButtonVisibility;
-            }
-
-            set
-            {
-                if (_modifyButtonVisibility == value)
-                {
-                    return;
-                }
-
-                _modifyButtonVisibility = value;
-                RaisePropertyChanged("modifyButtonVisibility");
-            }
-        }
-        public Visibility modifyEnableButtonVisibility
-        {
-            get
-            {
-                return _modifyEnableButtonVisibility;
-            }
-
-            set
-            {
-                if (_modifyEnableButtonVisibility == value)
-                {
-                    return;
-                }
-
-                _modifyEnableButtonVisibility = value;
-                RaisePropertyChanged("modifyEnableButtonVisibility");
-            }
-        }
         
         public ICommand onExpand { get { return new RelayCommand(onExpandExecute, () => true); } }
         void onExpandExecute()
@@ -158,9 +115,7 @@ namespace GyorokRentService.ViewModel
         {
             if (selectedTool != null)
             {
-                readOnlyMode = false;
-                modifyButtonVisibility = Visibility.Visible;
-                modifyEnableButtonVisibility = Visibility.Hidden; 
+                isEditable = true;
             }
         }
         bool CanswitchModifyModeExecute()
@@ -171,11 +126,8 @@ namespace GyorokRentService.ViewModel
         void doModifyExecute()
         {
             DataProxy.Instance.UpdateTool(selectedTool);
-            AppMessages.ToolModified.Send(selectedTool);
 
-            readOnlyMode = true;
-            modifyButtonVisibility = Visibility.Collapsed;
-            modifyEnableButtonVisibility = Visibility.Visible; 
+            isEditable = false;
         }
         bool CandoModifyExecute()
         {
@@ -186,9 +138,7 @@ namespace GyorokRentService.ViewModel
         {
             if (!this.IsInDesignMode)            
             {
-                readOnlyMode = true;
-                modifyButtonVisibility = Visibility.Collapsed;
-                modifyEnableButtonVisibility = Visibility.Visible;
+                isEditable = false;
             }
         }
     }

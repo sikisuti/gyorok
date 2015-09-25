@@ -14,6 +14,7 @@ using SQLConnectionLib;
 using MiddleLayer.Representations;
 using MiddleLayer;
 using GyorokRentService.View;
+using Common.Enumerations;
 
 namespace GyorokRentService.ViewModel
 {
@@ -120,7 +121,7 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        public CustomerType customerMode;
+        public OperationTypeEnum customerMode;
         private CustomerBase_Representation _selectedContact;
         private Visibility _commentSaveVisibility;
         private string _customerNameLabel;
@@ -276,7 +277,7 @@ namespace GyorokRentService.ViewModel
         public CustomerSelector_ViewModel()
         {            
         }
-        public CustomerSelector_ViewModel(CustomerType ct)
+        public CustomerSelector_ViewModel(OperationTypeEnum ct)
         {
             if (!this.IsInDesignMode)
             {
@@ -288,10 +289,10 @@ namespace GyorokRentService.ViewModel
 
                 switch (ct)
                 {
-                    case CustomerType.Rent:
+                    case OperationTypeEnum.Rental:
                         customerNameLabel = "Kölcsönző neve:";
                         break;
-                    case CustomerType.Service:
+                    case OperationTypeEnum.Service:
                         customerNameLabel = "Ügyfél neve:";
                         break;
                     default:
@@ -314,10 +315,5 @@ namespace GyorokRentService.ViewModel
                 selectedContact = selectedCustomer.contacts.FirstOrDefault();
             }            
         }
-    }
-
-    public enum CustomerType { 
-        Rent,
-        Service
     }
 }

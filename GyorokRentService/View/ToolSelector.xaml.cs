@@ -21,24 +21,19 @@ namespace GyorokRentService.View
     /// </summary>
     public partial class ToolSelector : UserControl
     {
+        ToolSelector_ViewModel viewModel;
+
+        searchTool toolPickerUC;
         public searchTool_ModelView toolPicker_VM { get; set; }
         Window toolPickerWindow;
 
         public ToolSelector()
         {
             InitializeComponent();
-            var viewModel = new ToolSelector_ViewModel();
-            this.DataContext = viewModel;
+            viewModel = new ToolSelector_ViewModel();
+            DataContext = viewModel;            
 
-            searchTool toolPickerUC = new searchTool();
-            toolPicker_VM = new searchTool_ModelView();
-            toolPickerUC.DataContext = toolPicker_VM;
-
-            toolPickerWindow = new Window()
-            {
-                Content = toolPickerUC,
-                SizeToContent = SizeToContent.WidthAndHeight
-            };
+            BuildSearchToolWindow();
 
             toolPicker_VM.ToolSelected += (s, a) => 
             {
@@ -47,11 +42,34 @@ namespace GyorokRentService.View
             };
             viewModel.ToolPickerExpanded += (s, a) =>
             {
-                if (toolPicker_VM.allTools == null && toolPicker_VM.IsBusy == false)
+                if (toolPickerWindow == null || toolPickerWindow.IsLoaded == false)
                 {
-                    toolPicker_VM.RefreshToolList();
+                    BuildSearchToolWindow();
                 }
                 toolPickerWindow.Show();
+                expToolPicker.IsExpanded = false;
+            };
+        }
+
+        private void BuildSearchToolWindow()
+        {
+            if (toolPickerUC == null)
+            {
+                toolPickerUC = new searchTool();
+                toolPicker_VM = toolPickerUC.DataContext as searchTool_ModelView;
+            }
+
+            toolPickerWindow = new Window()
+            {
+                Content = toolPickerUC,
+                Title = "Gép választó",
+                SizeToContent = SizeToContent.WidthAndHeight
+            };
+
+            toolPicker_VM.ToolSelected += (s, a) =>
+            {
+                viewModel.selectedTool = (Tool_Representation)s;
+                toolPickerWindow.Hide();
             };
         }
     }

@@ -13,17 +13,6 @@
         d:DesignHeight="300" d:DesignWidth="1000">
 
     <Window.Resources>
-        <Color x:Key="RentMainColor">#FFA0FFA0</Color>
-        <Color x:Key="RentBackgroundColor">#FFF0FFF0</Color>
-        <Color x:Key="ServiceBackgroundColor">#FFF0F0FF</Color>
-        <Color x:Key="ServiceMainColor">#FFA0A0FF</Color>
-        <Color x:Key="ServiceSubColor1">#FFB0B0FF</Color>
-        <Color x:Key="ServiceSubColor2">#FFC0C0FF</Color>
-        <Color x:Key="ServiceSubColor3">#FFD0D0FF</Color>
-
-        <SolidColorBrush x:Key="ServiceBgBrush" Color="#FFF0F0FF"/>
-        <SolidColorBrush x:Key="RentBgBrush" Color="#FFF0FFF0"/>
-
         <LinearGradientBrush x:Key="RentMainBackground" EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="{StaticResource RentMainColor}" Offset="0" />
             <GradientStop Color="{StaticResource RentBackgroundColor}" Offset="1" />

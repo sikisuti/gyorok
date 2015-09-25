@@ -49,6 +49,7 @@
     <Compile Include="Dependency Injection\DIContainer.cs" />
     <Compile Include="Enumerations\ErrorTypeEnum.cs" />
     <Compile Include="Enumerations\FilterTypeEnum.cs" />
+    <Compile Include="Enumerations\OperationTypeEnum.cs" />
     <Compile Include="Enumerations\PayTypeEnum.cs" />
     <Compile Include="Enumerations\SearchCustomerTypeEnum.cs" />
     <Compile Include="Enumerations\ToolStatusEnum.cs" />

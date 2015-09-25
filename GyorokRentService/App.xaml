@@ -4,10 +4,107 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:vm="clr-namespace:GyorokRentService.ViewModel" 
+             xmlns:conv="clr-namespace:GyorokRentService.Converters"
+             xmlns:local="clr-namespace:GyorokRentService"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              StartupUri="MainWindow.xaml" 
              ShutdownMode="OnMainWindowClose"
              mc:Ignorable="d">
-  <Application.Resources>
-    <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-  </Application.Resources>
+  <Application.Resources>     
+
+        <!--CONVERTERS-->
+
+        <conv:BooleanToVisibilityConverter x:Key="boolToVis"/>
+        <conv:BoolInverterConverter x:Key="boolInverter" />
+        <conv:ObjectExistsToBool x:Key="objectExistsToBool" />
+        <conv:FilterTypeToButtonBorderBrush x:Key="filterTypeToBorder"/>
+        <local:FilledToVisibilityConverter x:Key="fillToVis"/>
+        <local:BooleanToReadOnlyTextBgConverter x:Key="readOnlyToBg"/>
+        <local:BooleanToReadOnlyTextBorderConverter x:Key="readOnlyToBorder"/>
+        <local:MultiBooleanToBooleanConverter x:Key="multiBoolToBool"/>
+
+        <!--CONTROL STYLES-->
+
+        <Style x:Key="BaseStyle" TargetType="{x:Type Control}">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+        </Style>
+
+        <!--Label-->
+        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        <!--ListBox-->
+        <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseStyle}">
+        </Style>
+        <!--ListView-->
+        <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseStyle}">
+        </Style>
+        <!--TextBox-->
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}">
+        </Style>
+        <Style x:Key="CustomEditableTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="IsReadOnly" Value="{Binding isEditable, Converter={StaticResource boolInverter}}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="IsReadOnly" Value="true">
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!--DateTimePicker-->
+        <Style x:Key="CustomEditableDatePicker" TargetType="{x:Type xctk:DateTimePicker}" BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="IsReadOnly" Value="{Binding isEditable, Converter={StaticResource boolInverter}}"/>
+            <Setter Property="AutoCloseCalendar" Value="True"/>
+            <Setter Property="ShowButtonSpinner" Value="False"/>
+            <Setter Property="Format" Value="LongDate"/>
+            <Style.Triggers>
+                <Trigger Property="IsReadOnly" Value="true">
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--COLORS-->
+
+        <Color x:Key="RentBackgroundColor">#FFF0FFF0</Color>
+        <Color x:Key="RentMainColor">#FFA0FFA0</Color>
+        <Color x:Key="RentSubColor1">#FFB0FFB0</Color>
+        <Color x:Key="RentSubColor2">#FFC0FFC0</Color>
+
+        <Color x:Key="ServiceBackgroundColor">#FFF0F0FF</Color>
+        <Color x:Key="ServiceMainColor">#FFA0A0FF</Color>
+        <Color x:Key="ServiceSubColor1">#FFB0B0FF</Color>
+        <Color x:Key="ServiceSubColor2">#FFC0C0FF</Color>
+        <Color x:Key="ServiceSubColor3">#FFD0D0FF</Color>
+
+        <SolidColorBrush x:Key="RentBgBrush" Color="{StaticResource RentBackgroundColor}"/>
+        <SolidColorBrush x:Key="ServiceBgBrush" Color="{StaticResource ServiceBackgroundColor}"/>
+
+        <!--VALIDATION ERROR TEMPLATE-->
+      
+        <ControlTemplate x:Key="validationErrorTemplate">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                    <Grid Width="12" Height="12">
+                        <Ellipse Width="12" Height="12" 
+                            Fill="Red" HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"
+                     
+                     ></Ellipse>
+                        <TextBlock Foreground="White" FontWeight="Heavy" 
+                            FontSize="8" HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" TextAlignment="Center"
+                            ToolTip="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">X</TextBlock>
+                    </Grid>
+                    <TextBlock Foreground="Red" FontSize="12" Margin="2,0,0,0" VerticalAlignment="Center"
+                   Text="{Binding ElementName=ErrorAdorner, 
+                   Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+                   ></TextBlock>
+                </StackPanel>
+                <AdornedElementPlaceholder 
+        x:Name="ErrorAdorner" ></AdornedElementPlaceholder>
+            </DockPanel>
+        </ControlTemplate>
+    </Application.Resources>
 </Application>

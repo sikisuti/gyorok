@@ -544,5 +544,10 @@ namespace SQLConnectionLib
         {
             return db.TableVersions.SingleOrDefault(tv => tv.tableName == "Customers").tableVersion;
         }
+
+        public long GetToolsVersion()
+        {
+            return db.TableVersions.SingleOrDefault(tv => tv.tableName == "Tools").tableVersion;
+        }
     }
 }

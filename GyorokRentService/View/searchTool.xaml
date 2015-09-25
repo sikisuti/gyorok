@@ -7,56 +7,74 @@
              xmlns:local="clr-namespace:GyorokRentService.ViewModel"
              xmlns:c="clr-namespace:GyorokRentService"
              xmlns:conv="clr-namespace:GyorokRentService.Converters"
-             mc:Ignorable="d" Height="400" Width="470" BorderBrush="Black" BorderThickness="2">
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" BorderBrush="Black" BorderThickness="2">
+    
     <UserControl.Resources>
-        <c:ToolStatusToFontWeightConverter x:Key="toolStatToFW"/>
-        <c:ToolStatusToForegroundConverter x:Key="toolStatToFG"/>
-        <c:ToolStatusToBoolConverter x:Key="toolStatToBool"/>
-        <conv:BooleanToVisibilityConverter x:Key="boolToVis"/>
+        <Style x:Key="ToolListItemStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="Black"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding toolStatus.id}" Value="3">
+                    <Setter Property="Foreground" Value="Gray"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-    <Grid VerticalAlignment="Top">
-        <Label Content="Keresés:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,10,0,0" Name="lblSearch" Padding="5,5,5,0" VerticalAlignment="Top" Width="87" />
-        <TextBox Text="{Binding searchText, UpdateSourceTrigger=PropertyChanged}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="90,12,0,0" Name="textBox3" VerticalAlignment="Top" Width="291" >
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="TextChanged">
-                    <i:InvokeCommandAction Command="{Binding searchTextChanged}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </TextBox>
-        <ListBox FontSize="16" FontWeight="Normal" ItemsSource="{Binding foundTools}" SelectedValuePath="toolID" SelectedItem="{Binding selectedTool}" Height="269" HorizontalAlignment="Left" Margin="12,53,0,0" Name="listBox1" VerticalAlignment="Top" Width="450">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition SharedSizeGroup="col0" Width="0"/>
-                            <ColumnDefinition SharedSizeGroup="col1" Width="200"/>
-                            <ColumnDefinition SharedSizeGroup="col2" Width="130"/>
-                            <ColumnDefinition SharedSizeGroup="col3" Width="80"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding toolID}"/>
-                        <TextBlock Text='{Binding toolName}' Grid.Column="1" Foreground="{Binding toolStatusID, Converter={StaticResource toolStatToFG}}" ToolTip="1234"/>
-                        <TextBlock Text='{Binding toolManufacturer}' Grid.Column="2" Foreground="{Binding toolStatusID, Converter={StaticResource toolStatToFG}}"/>
-                        <TextBlock Text='{Binding IDNumber}' Grid.Column="3" Foreground="{Binding toolStatusID, Converter={StaticResource toolStatToFG}}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Button IsEnabled="{Binding selectedTool.toolStatusID, Converter={StaticResource toolStatToBool}}" Command="{Binding toolSelected}" Height="64" HorizontalAlignment="Left" Margin="390,328,0,0" Name="button1" VerticalAlignment="Top" Width="64" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
-            <Image Source="/GyorokRentService;component/Images/IconAccept64.png" />
-        </Button>
-        <Button Command="{Binding openNewToolWindow}" Height="64" HorizontalAlignment="Left" Margin="5,328,0,0" Name="button2" VerticalAlignment="Top" Width="64" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
-            <Image Source="/GyorokRentService;component/Images/IconAddProcess.png" />
-        </Button>
-        <Button Command="{Binding delTool}" FontSize="16" FontWeight="Normal" Height="64" HorizontalAlignment="Left" Margin="70,328,0,0" Name="btnEditContacts" VerticalAlignment="Top" Width="64" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
-            <Image Source="/GyorokRentService;component/Images/IconRemoveProcess64.png" />
-        </Button>
-        <Label Content="{Binding plannedBringBackDate}" Height="35" Foreground="Red" FontSize="16" FontWeight="Normal" HorizontalAlignment="Left" Margin="140,348,0,0" Name="label1" VerticalAlignment="Top" />
 
-        <Border BorderBrush="Black" BorderThickness="1" Background="#80000000" Visibility="{Binding IsBusy, Converter={StaticResource boolToVis}}">
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}" BusyContent="Adatok betöltése">
+        <StackPanel Margin="5">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Keresés:" FontWeight="Bold" />
+                <TextBox Text="{Binding searchText, UpdateSourceTrigger=PropertyChanged}" Width="291" />
+            </StackPanel>
+            <ListView ItemsSource="{Binding foundTools}" SelectedItem="{Binding selectedTool}" Height="269" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Gép" Width="200">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding toolName}" Style="{StaticResource ToolListItemStyle}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Gyártó" Width="130">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding toolManufacturer}" Style="{StaticResource ToolListItemStyle}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Azonosító" Width="80" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding IDNumber}" Style="{StaticResource ToolListItemStyle}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
             <Grid>
-                <TextBlock Margin="0" TextWrapping="Wrap" Text="Adatok betöltése..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Foreground="#7EFFFFFF"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding openNewToolWindow}" Height="64" Width="64" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
+                        <Image Source="/GyorokRentService;component/Images/IconAddProcess.png" />
+                    </Button>
+                    <Button Command="{Binding delTool}" Height="64" Width="64" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">
+                        <Image Source="/GyorokRentService;component/Images/IconRemoveProcess64.png" />
+                    </Button>
+                </StackPanel>
+                <Label Grid.Column="1" Content="{Binding plannedBringBackDate}" Foreground="Red" HorizontalAlignment="Center"  />
+                <StackPanel Grid.Column="2" Orientation="Horizontal" FlowDirection="RightToLeft">
+                    <Button Command="{Binding toolSelected}" Height="64" Width="64" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
+                        <Image Source="/GyorokRentService;component/Images/IconAccept64.png" />
+                    </Button>
+                </StackPanel>
             </Grid>
-        </Border>
-
-    </Grid>
+        </StackPanel>
+    </xctk:BusyIndicator>
 </UserControl>

@@ -188,5 +188,10 @@ namespace SQLConnectionLib
         {
             throw new NotImplementedException();
         }
+
+        public long GetToolsVersion()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

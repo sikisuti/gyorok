@@ -28,16 +28,12 @@ namespace GyorokRentService.View
         SearchCity cityChooserWindow;
         SearchCity_ViewModel cityChooserVM;
 
-        public NewCustomerUC()
-        {
-            
-        }
         public NewCustomerUC(searchCustomerTypeEnum displayType)
         {
             InitializeComponent();
 
             BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
-            BindingOperations.GetBinding(txtIDNumber, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
+            BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
 
             viewModel = new NewCustomer_ViewModel(displayType);
             DataContext = viewModel;

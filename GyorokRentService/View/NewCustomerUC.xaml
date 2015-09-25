@@ -38,8 +38,7 @@
             <TextBox Name="txtCustomerName" 
                      Grid.Column="2" 
                      Text="{Binding newCustomer.customerName, UpdateSourceTrigger=PropertyChanged}"
-                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
-            </TextBox>
+                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
             <Label Grid.Row="1" Content="Azonosító szám:" FontWeight="Bold" />
             <TextBox Name="txtIDNumber"
                      Grid.Row="1" Grid.Column="2" 

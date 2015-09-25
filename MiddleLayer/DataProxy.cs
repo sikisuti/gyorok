@@ -16,6 +16,7 @@ namespace MiddleLayer
         Timer dbChangeCheckTimer;
 
         long customersVersion;
+        long toolsVersion;
 
         private static readonly DataProxy _instance = new DataProxy();
         public static DataProxy Instance
@@ -31,6 +32,7 @@ namespace MiddleLayer
             using (ISQLConnection dataSource = DataSource)
             {
                 customersVersion = dataSource.GetCustomersVersion();
+                toolsVersion = dataSource.GetToolsVersion();
             }
 
             dbChangeCheckTimer = new Timer(10000);
@@ -44,6 +46,13 @@ namespace MiddleLayer
                     {
                         customersVersion = actVersion;
                         OnCustomersChanged(EventArgs.Empty);
+                    }
+
+                    actVersion = dataSource.GetToolsVersion();
+                    if (toolsVersion != actVersion)
+                    {
+                        toolsVersion = actVersion;
+                        OnToolsChanged(EventArgs.Empty);
                     }
                 }
                 dbChangeCheckTimer.Start();
@@ -65,6 +74,15 @@ namespace MiddleLayer
             if (CustomersChanged != null)
             {
                 CustomersChanged(null, e);
+            }
+        }
+
+        public event EventHandler ToolsChanged;
+        private void OnToolsChanged(EventArgs e)
+        {
+            if (ToolsChanged != null)
+            {
+                ToolsChanged(null, e);
             }
         }
 

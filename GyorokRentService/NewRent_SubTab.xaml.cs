@@ -1,4 +1,5 @@
-﻿using GyorokRentService.View;
+﻿using Common.Enumerations;
+using GyorokRentService.View;
 using GyorokRentService.ViewModel;
 using MiddleLayer.Representations;
 using System;
@@ -29,7 +30,7 @@ namespace GyorokRentService
 
             InitializeComponent();
 
-            UCCustomerSelector = new CustomerSelector(CustomerType.Rent);
+            UCCustomerSelector = new CustomerSelector(OperationTypeEnum.Rental);
             grdCustomer.Children.Add(UCCustomerSelector);
 
             UCToolSelector = new ToolSelector();

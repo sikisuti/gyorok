@@ -13,6 +13,7 @@ namespace SQLConnectionLib
         DbSettings GetSettings();
 
         long GetCustomersVersion();
+        long GetToolsVersion();
 
         Customers GetCustomerById(long id);
         List<Customers> GetAllCustomers();
