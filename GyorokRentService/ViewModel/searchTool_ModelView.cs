@@ -28,6 +28,15 @@ namespace GyorokRentService.ViewModel
             }
         }
 
+        public event EventHandler NewToolRequested;
+        private void OnNewToolRequested(EventArgs e)
+        {
+            if (NewToolRequested != null)
+            {
+                NewToolRequested(null, e);
+            }
+        }
+
         ObservableCollection<Tools> temp = new ObservableCollection<Tools>();
 
         public List<Tool_Representation> allTools;
@@ -144,8 +153,7 @@ namespace GyorokRentService.ViewModel
         public ICommand openNewToolWindow { get { return new RelayCommand(openNewToolWindowExecute, () => true); } }
         void openNewToolWindowExecute()
         {
-            View.NewTool wndNewTool = new View.NewTool();
-            wndNewTool.Show();
+            OnNewToolRequested(EventArgs.Empty);
         }
         public ICommand delTool { get { return new RelayCommand(delToolExecute, () => true); } }
         void delToolExecute()
@@ -159,8 +167,9 @@ namespace GyorokRentService.ViewModel
                 if (result == MessageBoxResult.Yes)
                 {
                     DataProxy.Instance.DeleteToolById(selectedTool.id);
-                    foundTools.Remove(selectedTool);
-                    AppMessages.ToolListModified.Send("");
+                    allTools.Remove(selectedTool);
+                    FilterTools();
+                    // TODO: Ha már ki volt választva, akkor a ToolSelector-ból is törölni kell!
                 } 
             }
         }

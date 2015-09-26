@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using GyorokRentService.ViewModel;
+using GyorokRentService.Validations;
+using Common.Dependency_Injection;
 
 namespace GyorokRentService.View
 {
@@ -24,7 +26,11 @@ namespace GyorokRentService.View
             InitializeComponent();
             var viewModel = new NewTool_ViewModel();
             this.DataContext = viewModel;
-            AppMessages.ToolToSelect.Register(this, t => this.Close());
+
+            BindingOperations.GetBinding(txtToolName, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+            BindingOperations.GetBinding(txtIDNumber, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+            BindingOperations.GetBinding(txtCost, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+            BindingOperations.GetBinding(txtCost, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldOnlyLong>());
         }
     }
 }

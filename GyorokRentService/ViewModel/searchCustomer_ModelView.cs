@@ -117,6 +117,7 @@ namespace GyorokRentService.ViewModel
 
                 _searchText = value;
                 RaisePropertyChanged("searchText");
+                FilterList();
             }
         }
         public ObservableCollection<CustomerBase_Representation> foundCustomers
@@ -136,12 +137,6 @@ namespace GyorokRentService.ViewModel
                 _foundCustomers = value;
                 RaisePropertyChanged("foundCustomers");
             }
-        }
-
-        public ICommand searchTextChanged { get { return new RelayCommand(searchTextChangedExecute, () => true); } }
-        void searchTextChangedExecute()
-        {
-            FilterList();
         }
         public ICommand customerSelected { get { return new RelayCommand(customerSelectedExecute, () => true); } }
         void customerSelectedExecute()
@@ -179,9 +174,11 @@ namespace GyorokRentService.ViewModel
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    SQLConnection.Execute.delCustomer(selectedCustomer.id);
-                    selectedCustomer = null;
-                } 
+                    DataProxy.Instance.DeleteCustomerById(selectedCustomer.id);
+                    allCustomer.Remove(selectedCustomer);
+                    FilterList();
+                    // TODO: Ha már ki volt választva, akkor a CustomerSelector-ból is törölni kell!
+                }
             }
         }
 

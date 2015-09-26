@@ -549,5 +549,19 @@ namespace SQLConnectionLib
         {
             return db.TableVersions.SingleOrDefault(tv => tv.tableName == "Tools").tableVersion;
         }
+
+        public long AddTool(Tools tool)
+        {
+            db.Tools.AddObject(tool);
+            db.SaveChanges();
+            return tool.toolID;
+        }
+
+        public void DeleteCustomerById(long id)
+        {
+            Customers customerToDelete = db.Customers.SingleOrDefault(c => c.customerID == id);
+            customerToDelete.isDeleted = true;
+            db.SaveChanges();
+        }
     }
 }

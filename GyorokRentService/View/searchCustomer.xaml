@@ -22,13 +22,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Keresés:" FontWeight="Bold" />
-                    <TextBox Text="{Binding searchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CustomEditableTextBox}" Width="291" >
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="TextChanged">
-                                <i:InvokeCommandAction Command="{Binding searchTextChanged}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </TextBox>
+                    <TextBox Text="{Binding searchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CustomEditableTextBox}" Width="291" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Column="1">
                     <Button Command="{Binding filterFirm}" FontSize="12" Content="Cég" Height="23" Width="75" Background="{x:Null}" 

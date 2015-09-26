@@ -127,6 +127,13 @@ namespace MiddleLayer
                 dataSource.UpdateCustomer(RepresentationConverter.convertCustomer(customer)); 
             }
         }
+        public void DeleteCustomerById(long id)
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                dataSource.DeleteCustomerById(id);
+            }
+        }
 
         public ObservableCollection<CustomerBase_Representation> GetContacts(CustomerBase_Representation firm)
         {
@@ -179,6 +186,13 @@ namespace MiddleLayer
             using (ISQLConnection dataSource = DataSource)
             {
                 return dataSource.GetAllTools().Select(t => RepresentationConverter.convertTool(t)).ToList();
+            }
+        }
+        public long AddTool(Tool_Representation tool)
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                return dataSource.AddTool(RepresentationConverter.convertTool(tool));
             }
         }
         public void UpdateTool(Tool_Representation tool)

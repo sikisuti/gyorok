@@ -1,24 +1,82 @@
 ﻿<Window x:Class="GyorokRentService.View.NewTool"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Új gép bevitel" Height="400" Width="400">
-    <Grid>
-        <TextBox Text="{Binding newToolName, UpdateSourceTrigger=PropertyChanged}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="153,10,0,0" Name="textBox5" VerticalAlignment="Top" Width="198" />
-        <Label Content="Gép neve:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,10,0,0" Name="label1" VerticalAlignment="Top" Width="137" />
-        <TextBox Text="{Binding newToolManufacturer}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="153,43,0,0" Name="textBox1" VerticalAlignment="Top" Width="198" />
-        <Label Content="Gyártó:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,43,0,0" Name="label2" VerticalAlignment="Top" Width="137" />
-        <TextBox Text="{Binding newToolIdNumber, UpdateSourceTrigger=PropertyChanged}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="153,79,0,0" Name="textBox2" VerticalAlignment="Top" Width="198" />
-        <Label Content="Cikkszám:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,79,0,0" Name="label3" VerticalAlignment="Top" Width="137" />
-        <TextBox Text="{Binding newToolSerial}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="153,115,0,0" Name="textBox3" VerticalAlignment="Top" Width="198" />
-        <Label Content="Gyári azonosító:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,115,0,0" Name="label4" VerticalAlignment="Top" Width="137" />
-        <TextBox Text="{Binding newRentPrice, UpdateSourceTrigger=PropertyChanged}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="153,151,0,0" Name="textBox4" VerticalAlignment="Top" Width="198" />
-        <Label Content="Ár (Ft/nap):" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,151,0,0" Name="label5" VerticalAlignment="Top" Width="137" />
-        <Button IsEnabled="{Binding contentOK}" Command="{Binding insertNewTool}" FontSize="16" Height="64" HorizontalAlignment="Left" Margin="285,287,0,0" Name="button1" VerticalAlignment="Top" Width="64" Background="{x:Null}" BorderBrush="{x:Null}">
-            <Image Source="/GyorokRentService;component/Images/IconAccept64.png"/>
-        </Button>
-        <Label Content="Beiktatás:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,237,0,0" Name="label6" VerticalAlignment="Top" Width="137" />
-        <DatePicker SelectedDate="{Binding fromDate}" SelectedDateFormat="Long" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="153,237,0,0" Name="datePicker1" VerticalAlignment="Top" Width="198" />
-        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="153,187,0,0" Name="textBox6" Text="{Binding defaultDeposit}" VerticalAlignment="Top" Width="198" />
-        <Label Content="Kaukció:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="10,187,0,0" Name="label7" VerticalAlignment="Top" Width="137" />
-    </Grid>
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Új gép bevitel" SizeToContent="WidthAndHeight">
+    <StackPanel Margin="5">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition MinWidth="200"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label Content="Gép neve:" />
+            <TextBox Name="txtToolName" 
+                     Grid.Column="1"
+                     Text="{Binding newTool.toolName, UpdateSourceTrigger=PropertyChanged}" 
+                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
+            <Label Grid.Row="1" Content="Gyártó:" />
+            <TextBox Name="txtManufacturer" 
+                     Grid.Row="1" Grid.Column="1"
+                     Text="{Binding newTool.toolManufacturer}" 
+                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
+            <Label Grid.Row="2" Content="Cikkszám:" />
+            <TextBox Name="txtIDNumber" 
+                     Grid.Row="2" Grid.Column="1" 
+                     Text="{Binding newTool.IDNumber, UpdateSourceTrigger=PropertyChanged}" 
+                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
+            <Label Grid.Row="3" Content="Gyári azonosító:" />
+            <TextBox Name="txtSerial" 
+                     Grid.Row="3" Grid.Column="1" 
+                     Text="{Binding newTool.serialNumber}" 
+                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
+            <Label Grid.Row="4" Content="Ár (Ft/nap):" />
+            <TextBox Name="txtCost"
+                     Grid.Row="4" Grid.Column="1" 
+                     Text="{Binding newTool.rentPrice, UpdateSourceTrigger=PropertyChanged}" 
+                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
+            <Label Grid.Row="5" Content="Beiktatás:" />
+            <xctk:DateTimePicker Name="dtpFromDate" 
+                                 Grid.Row="5" Grid.Column="1" 
+                                 Value="{Binding newTool.fromDate}" 
+                                 Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
+            <Label Grid.Row="6" Content="Kaució:" />
+            <TextBox Name="txtDefaultDeposit" 
+                     Grid.Row="6" Grid.Column="1" 
+                     Text="{Binding newTool.defaultDeposit}" 
+                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
+        </Grid>
+        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+            <Button Command="{Binding insertNewTool}" Height="64" Width="64" Background="{x:Null}" BorderBrush="{x:Null}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=txtToolName, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=txtManufacturer, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=txtIDNumber, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=txtSerial, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=txtCost, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=dtpFromDate, Path=(Validation.HasError)}" Value="false" />
+                                    <Condition Binding="{Binding ElementName=txtDefaultDeposit, Path=(Validation.HasError)}" Value="false" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Image Source="/GyorokRentService;component/Images/IconAccept64.png"/>
+            </Button>
+        </StackPanel>
+    </StackPanel>
 </Window>

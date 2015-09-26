@@ -19,6 +19,7 @@ namespace SQLConnectionLib
         List<Customers> GetAllCustomers();
         long AddCustomer(Customers customer);
         void UpdateCustomer(Customers customer);
+        void DeleteCustomerById(long id);
 
         List<Customers> GetContacts(Customers firm);
         Contacts GetContactByFirmAndAgent(Customers firm, Customers agent);
@@ -30,6 +31,7 @@ namespace SQLConnectionLib
         void DeleteCityById(long id);
 
         List<Tools> GetAllTools();
+        long AddTool(Tools tool);
         void UpdateTool(Tools tool);
         void DeleteToolById(long id);
 

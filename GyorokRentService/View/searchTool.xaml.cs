@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GyorokRentService.ViewModel;
+using MiddleLayer.Representations;
 
 namespace GyorokRentService.View
 {
@@ -20,11 +21,26 @@ namespace GyorokRentService.View
     /// </summary>
     public partial class searchTool : UserControl
     {
+        NewTool_ViewModel newToolViewModel;
+
         public searchTool()
         {
             InitializeComponent();
             var viewModel = new searchTool_ModelView();
             this.DataContext = viewModel;
+
+            viewModel.NewToolRequested += (s, a) =>
+            {
+                NewTool newToolWindow = new NewTool();
+                newToolViewModel = newToolWindow.DataContext as NewTool_ViewModel;
+                newToolViewModel.ToolInserted += (so, ar) =>
+                {
+                    viewModel.selectedTool = so as Tool_Representation;
+                    viewModel.OnToolSelected();
+                    newToolWindow.Close();
+                };
+                newToolWindow.Show();
+            };
         }
     }
 }

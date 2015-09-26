@@ -17,6 +17,7 @@ using MiddleLayer;
 using Common.Enumerations;
 using GyorokRentService.Validations;
 using Xceed.Wpf.Toolkit;
+using Common.Dependency_Injection;
 
 namespace GyorokRentService.View
 {
@@ -136,18 +137,18 @@ namespace GyorokRentService.View
             switch (operationType)
             {
                 case OperationTypeEnum.Rental:
-                    BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
-                    BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
-                    BindingOperations.GetBinding(txtIDNumber, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
-                    BindingOperations.GetBinding(txtMothersName, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
-                    BindingOperations.GetBinding(txtCustomerAddress, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
-                    BindingOperations.GetBinding(dtpBirthDate, DateTimePicker.ValueProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
-                    BindingOperations.GetBinding(txtWorkplace, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
+                    BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+                    BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+                    BindingOperations.GetBinding(txtIDNumber, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+                    BindingOperations.GetBinding(txtMothersName, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+                    BindingOperations.GetBinding(txtCustomerAddress, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+                    BindingOperations.GetBinding(dtpBirthDate, DateTimePicker.ValueProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+                    BindingOperations.GetBinding(txtWorkplace, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
                     break;
 
                 case OperationTypeEnum.Service:
-                    BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
-                    BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
+                    BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+                    BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
                     break;
 
                 default:

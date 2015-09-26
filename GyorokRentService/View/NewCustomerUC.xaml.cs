@@ -15,6 +15,7 @@ using GyorokRentService.ViewModel;
 using Common.Enumerations;
 using MiddleLayer.Representations;
 using GyorokRentService.Validations;
+using Common.Dependency_Injection;
 
 namespace GyorokRentService.View
 {
@@ -32,8 +33,8 @@ namespace GyorokRentService.View
         {
             InitializeComponent();
 
-            BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
-            BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Add(new FieldNotEmpty() { ValidatesOnTargetUpdated = true });
+            BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+            BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
 
             viewModel = new NewCustomer_ViewModel(displayType);
             DataContext = viewModel;

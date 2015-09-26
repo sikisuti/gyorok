@@ -8,6 +8,11 @@ namespace GyorokRentService.Validations
 {
     public class FieldNotEmpty : ValidationRule
     {
+        public FieldNotEmpty() : base()
+        {
+            ValidatesOnTargetUpdated = true;
+        }
+
         public override ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)
         {
             if (value == null || value.ToString() == string.Empty)
