@@ -21,38 +21,42 @@
             <Label Content="Gép neve:" />
             <TextBox Name="txtToolName" 
                      Grid.Column="1"
-                     Text="{Binding newTool.toolName, UpdateSourceTrigger=PropertyChanged}" 
+                     Text="{Binding newTool.toolName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
             <Label Grid.Row="1" Content="Gyártó:" />
             <TextBox Name="txtManufacturer" 
                      Grid.Row="1" Grid.Column="1"
-                     Text="{Binding newTool.toolManufacturer}" 
+                     Text="{Binding newTool.toolManufacturer, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
             <Label Grid.Row="2" Content="Cikkszám:" />
             <TextBox Name="txtIDNumber" 
                      Grid.Row="2" Grid.Column="1" 
-                     Text="{Binding newTool.IDNumber, UpdateSourceTrigger=PropertyChanged}" 
+                     Text="{Binding newTool.IDNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
             <Label Grid.Row="3" Content="Gyári azonosító:" />
             <TextBox Name="txtSerial" 
                      Grid.Row="3" Grid.Column="1" 
-                     Text="{Binding newTool.serialNumber}" 
+                     Text="{Binding newTool.serialNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
             <Label Grid.Row="4" Content="Ár (Ft/nap):" />
             <TextBox Name="txtCost"
                      Grid.Row="4" Grid.Column="1" 
-                     Text="{Binding newTool.rentPrice, UpdateSourceTrigger=PropertyChanged}" 
-                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
+                     Text="{Binding newTool.rentPrice, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"
+                     PreviewTextInput="txtCost_PreviewTextInput"
+                     TextChanged="txtCost_TextChanged"/>
             <Label Grid.Row="5" Content="Beiktatás:" />
             <xctk:DateTimePicker Name="dtpFromDate" 
                                  Grid.Row="5" Grid.Column="1" 
-                                 Value="{Binding newTool.fromDate}" 
+                                 Value="{Binding newTool.fromDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                  Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
             <Label Grid.Row="6" Content="Kaució:" />
             <TextBox Name="txtDefaultDeposit" 
                      Grid.Row="6" Grid.Column="1" 
-                     Text="{Binding newTool.defaultDeposit}" 
-                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
+                     Text="{Binding newTool.defaultDeposit, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                     Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" 
+                     PreviewTextInput="txtDefaultDeposit_PreviewTextInput"
+                     TextChanged="txtDefaultDeposit_TextChanged"/>
         </Grid>
         <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
             <Button Command="{Binding insertNewTool}" Height="64" Width="64" Background="{x:Null}" BorderBrush="{x:Null}">

@@ -10,6 +10,7 @@ using System.Windows;
 using SQLConnectionLib;
 using MiddleLayer.Representations;
 using MiddleLayer;
+using Common.Validations;
 
 namespace GyorokRentService.ViewModel
 {
@@ -69,7 +70,7 @@ namespace GyorokRentService.ViewModel
         {
             if (!this.IsInDesignMode)
             {
-                newTool = new Tool_Representation();
+                newTool = new Tool_Representation() { ValidationRules = new ToolValidationRules() };
                 newTool.toolStatus = new ToolStatus_Representation() { id = 1 };
                 newTool.fromDate = DateTime.Today;
                 newTool.defaultDeposit = 0;

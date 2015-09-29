@@ -26,7 +26,7 @@ namespace GyorokRentService.ViewModel
             }
         }
         //Timer t;
-
+        
         private RentalGroup_Representation _newRentalGroup;
         public RentalGroup_Representation newRentalGroup
         {
@@ -37,6 +37,20 @@ namespace GyorokRentService.ViewModel
                 {
                     _newRentalGroup = value;
                     RaisePropertyChanged("newRentalGroup");
+                }
+            }
+        }
+
+        private Rental_Representation _newRental;
+        public Rental_Representation newRental
+        {
+            get { return _newRental; }
+            set
+            {
+                if (_newRental != value)
+                {
+                    _newRental = value;
+                    RaisePropertyChanged("newRental");
                 }
             }
         }
@@ -59,7 +73,7 @@ namespace GyorokRentService.ViewModel
         private DateTime _rentEnd;
         private List<PayType_Representation> _payType;
         private PayType_Representation _selectedPayTypes;
-        private bool _changeEnabled;        
+        //private bool _changeEnabled;        
 
         public DateTime rentStart
         {
@@ -133,28 +147,33 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("selectedPayType");
             }
         }
-        public bool changeEnabled
-        {
-            get
-            {
-                return _changeEnabled;
-            }
+        //public bool changeEnabled
+        //{
+        //    get
+        //    {
+        //        return _changeEnabled;
+        //    }
 
-            set
-            {
-                if (_changeEnabled == value)
-                {
-                    return;
-                }
+        //    set
+        //    {
+        //        if (_changeEnabled == value)
+        //        {
+        //            return;
+        //        }
 
-                _changeEnabled = value;
-                RaisePropertyChanged("changeEnabled");
-            }
-        }
+        //        _changeEnabled = value;
+        //        RaisePropertyChanged("changeEnabled");
+        //    }
+        //}
 
         public ICommand addRent { get { return new RelayCommand(addRentExecute, () => true); } }
         void addRentExecute()
         {
+            if (!newRental.tool.IsValid)
+            {
+                MessageBox.Show("Gép adatok hiányosak!");
+                return;
+            }
             AddNewRent();
         }
         public ICommand openRentalGroupWindow { get { return new RelayCommand(openRentalGroupWindowExecute, () => true); } }
@@ -165,7 +184,7 @@ namespace GyorokRentService.ViewModel
             newRetGroup_VM.rentGroupAccepted += (s, a) => 
             {
                 newRentalGroup = new RentalGroup_Representation();
-                changeEnabled = true;
+                //changeEnabled = true;
             };
             rg.Show();
         }
@@ -180,9 +199,10 @@ namespace GyorokRentService.ViewModel
 
                 payType = DataProxy.Instance.GetPayTypes();
                 newRentalGroup = new RentalGroup_Representation();
+                newRental = new Rental_Representation();
                 selectedRental = new Rental_Representation();
                 
-                changeEnabled = true;
+                //changeEnabled = true;
             }
         }
 
@@ -221,7 +241,7 @@ namespace GyorokRentService.ViewModel
             {
                 newRentalGroup.rentals.Add(selectedRental.Clone() as Rental_Representation);
                 selectedRental = new Rental_Representation();
-                changeEnabled = false;
+                //changeEnabled = false;
                 OnRentGroupChanged();
             }
         }

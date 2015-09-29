@@ -26,7 +26,7 @@ namespace GyorokRentService.View
     /// </summary>
     public partial class CustomerSelector : UserControl
     {
-        CustomerSelector_ViewModel viewModel;
+        public CustomerSelector_ViewModel viewModel { get; set; }
 
         Window customerPickerWindow;
         searchCustomer customerPicker;

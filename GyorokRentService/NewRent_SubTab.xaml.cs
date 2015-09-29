@@ -1,4 +1,5 @@
 ﻿using Common.Enumerations;
+using Common.Validations;
 using GyorokRentService.View;
 using GyorokRentService.ViewModel;
 using MiddleLayer.Representations;
@@ -41,13 +42,15 @@ namespace GyorokRentService
 
             UCCustomerSelector.customerPicker_VM.CustomerSelected += (s, a) => 
             {
-                UCNewRent.newRent_VM.customerSelected((CustomerBase_Representation)s);
+                UCNewRent.newRent_VM.newRental.customer = (CustomerBase_Representation)s;
                 UCCustomerSelector.expCustomer.IsExpanded = false;
             };
 
             UCToolSelector.toolPicker_VM.ToolSelected += (s, a) => 
             {
-                UCNewRent.newRent_VM.toolSelected((Tool_Representation)s);
+                Tool_Representation tool = s as Tool_Representation;
+                tool.ValidationRules = new ToolValidationRules();
+                UCNewRent.newRent_VM.newRental.tool = tool;
             };
 
             ((NewRent_ViewModel)UCNewRent.DataContext).RentGroupChanged += (s, a) =>

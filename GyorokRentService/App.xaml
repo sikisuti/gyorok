@@ -40,6 +40,9 @@
         <!--ListView-->
         <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseStyle}">
         </Style>
+        <!--ComboBox-->
+        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseStyle}">
+        </Style>
         <!--TextBox-->
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}">
         </Style>
@@ -53,11 +56,13 @@
             </Style.Triggers>
         </Style>
         <!--DateTimePicker-->
-        <Style x:Key="CustomEditableDatePicker" TargetType="{x:Type xctk:DateTimePicker}" BasedOn="{StaticResource BaseStyle}">
-            <Setter Property="IsReadOnly" Value="{Binding isEditable, Converter={StaticResource boolInverter}}"/>
+        <Style x:Key="BaseDateTimePickerStyle" TargetType="{x:Type xctk:DateTimePicker}" BasedOn="{StaticResource BaseStyle}">
             <Setter Property="AutoCloseCalendar" Value="True"/>
             <Setter Property="ShowButtonSpinner" Value="False"/>
-            <Setter Property="Format" Value="LongDate"/>
+            <Setter Property="Format" Value="LongDate"/>            
+        </Style>
+        <Style x:Key="CustomEditableDatePicker" TargetType="{x:Type xctk:DateTimePicker}" BasedOn="{StaticResource BaseDateTimePickerStyle}">
+            <Setter Property="IsReadOnly" Value="{Binding isEditable, Converter={StaticResource boolInverter}}"/>
             <Style.Triggers>
                 <Trigger Property="IsReadOnly" Value="true">
                     <Setter Property="BorderThickness" Value="0"/>

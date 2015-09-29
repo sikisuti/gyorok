@@ -45,7 +45,7 @@
                 <TextBox Name="txtToolName" 
                          Grid.Column="1" Grid.Row="1"
                          Visibility="{Binding isEditable, Converter={StaticResource boolToVis}}" 
-                         Text="{Binding selectedTool.toolName, UpdateSourceTrigger=PropertyChanged}" 
+                         Text="{Binding selectedTool.toolName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                          Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
                 <Expander Name="expToolPicker" 
                           IsExpanded="{Binding isExpanded}" 
@@ -70,33 +70,37 @@
                 <Label Grid.Row="2" Content="Gyártó:" FontWeight="Bold" />
                 <TextBox Name="txtManufacturer" 
                          Grid.Column="1" Grid.Row="2"                  
-                         Text="{Binding selectedTool.toolManufacturer}"         
+                         Text="{Binding selectedTool.toolManufacturer, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"         
                          Style="{StaticResource CustomEditableTextBoxForRent}" 
                          Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
                 <Label Grid.Row="3" Content="Cikkszám:" FontWeight="Bold" />
                 <TextBox Name="txtIDNumber" 
                          Grid.Column="1" Grid.Row="3" 
-                         Text="{Binding selectedTool.IDNumber}" 
+                         Text="{Binding selectedTool.IDNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                          Style="{StaticResource CustomEditableTextBoxForRent}" 
                          Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
                 <Label Grid.Row="4" Content="Gyári azonosító:" FontWeight="Bold" />
                 <TextBox Name="txtSerialNumber" 
                          Grid.Column="1" Grid.Row="4" 
-                         Text="{Binding selectedTool.serialNumber}" 
+                         Text="{Binding selectedTool.serialNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                          Style="{StaticResource CustomEditableTextBoxForRent}" 
                          Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
                 <Label Grid.Row="5" Content="Ár (Ft/nap):" FontWeight="Bold" />
                 <TextBox Name="txtPrice" 
                          Grid.Column="1" Grid.Row="5" 
-                         Text="{Binding selectedTool.rentPrice}" 
+                         Text="{Binding selectedTool.rentPrice, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                          Style="{StaticResource CustomEditableTextBoxForRent}" 
-                         Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
+                         Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"
+                         PreviewTextInput="txtPrice_PreviewTextInput"
+                         TextChanged="txtPrice_TextChanged"/>
                 <Label Grid.Row="6" Content="Kaució:" FontWeight="Bold" />
                 <TextBox Name="txtDefaultDeposit" 
                          Grid.Column="1" Grid.Row="6" 
-                         Text="{Binding selectedTool.defaultDeposit, StringFormat=C0}" xml:lang="hu-HU" 
+                         Text="{Binding selectedTool.defaultDeposit, StringFormat=C0, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" xml:lang="hu-HU" 
                          Style="{StaticResource CustomEditableTextBoxForRent}" 
-                         Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
+                         Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"
+                         PreviewTextInput="txtDefaultDeposit_PreviewTextInput"
+                         TextChanged="txtDefaultDeposit_TextChanged"/>
             </Grid>
             <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
                 <Button Visibility="{Binding isEditable, Converter={StaticResource boolToVis}, ConverterParameter=true}" Command="{Binding switchModifyMode}" Height="48" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">

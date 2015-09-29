@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Common.Validations.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
 namespace MiddleLayer.Representations
 {
-    public class Tool_Representation : RepresentationBase
+    public class Tool_Representation : RepresentationBase, IDataErrorInfo
     {
         private string _toolName;
         public string toolName
@@ -131,6 +133,70 @@ namespace MiddleLayer.Representations
                     _toolStatus = value;
                     RaisePropertyChanged("toolStatus");
                 }
+            }
+        }
+
+        public IToolValidationRules ValidationRules { get; set; }
+
+        public bool IsValid
+        {
+            get{ return string.IsNullOrEmpty(Error); }            
+        }
+
+        public string Error
+        {
+            get
+            {
+                string errorMessage = string.Empty;
+
+                errorMessage += this["toolName"];
+                errorMessage += this["toolManufacturer"];
+                errorMessage += this["IDNumber"];
+                errorMessage += this["serialNumber"];
+                errorMessage += this["rentPrice"];
+                errorMessage += this["fromDate"];
+                errorMessage += this["defaultDeposit"];
+
+                return errorMessage;
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string errorMessage = string.Empty;
+                switch (columnName)
+                {
+                    case "toolName":
+                        errorMessage = ValidationRules.NameValidation(toolName);
+                        break;
+
+                    case "toolManufacturer":
+                        errorMessage = ValidationRules.ManufacturerValidation(toolManufacturer);
+                        break;
+
+                    case "IDNumber":
+                        errorMessage = ValidationRules.IDNumberValidation(IDNumber);
+                        break;
+
+                    case "serialNumber":
+                        errorMessage = ValidationRules.SerialValidation(serialNumber);
+                        break;
+
+                    case "rentPrice":
+                        errorMessage = ValidationRules.RentPriceValidation(rentPrice);
+                        break;
+
+                    case "fromDate":
+                        errorMessage = ValidationRules.FromDateValidation(fromDate);
+                        break;
+
+                    case "defaultDeposit":
+                        errorMessage = ValidationRules.DefaultDepositValidation(defaultDeposit);
+                        break;
+                }
+                return errorMessage;
             }
         }
     }
