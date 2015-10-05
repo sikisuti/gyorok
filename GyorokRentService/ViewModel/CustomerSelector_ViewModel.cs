@@ -15,6 +15,7 @@ using MiddleLayer.Representations;
 using MiddleLayer;
 using GyorokRentService.View;
 using Common.Enumerations;
+using Common.Validations;
 
 namespace GyorokRentService.ViewModel
 {
@@ -74,21 +75,35 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        ObservableCollection<CustomerBase_Representation> temp = new ObservableCollection<CustomerBase_Representation>();
-        private CustomerBase_Representation _selectedCustomer;
-        public CustomerBase_Representation selectedCustomer
+        ObservableCollection<CustomerBaseRepresentation> temp = new ObservableCollection<CustomerBaseRepresentation>();
+        private CustomerBaseRepresentation _selectedCustomer;
+        public CustomerBaseRepresentation selectedCustomer
         {
             get { return _selectedCustomer; }
             set
             {
                 if (_selectedCustomer != value)
                 {
-                    if (value != null) value.contacts = DataProxy.Instance.GetContacts(value);
+                    //if (value != null) value.contacts = DataProxy.Instance.GetContacts(value);
+
+                    switch (customerMode)
+                    {
+                        case OperationTypeEnum.Rental:
+                            if (value.isFirm)
+                                ((FirmRepresentation)value).ValidationRules = new FirmValidationForRent();
+                            else
+                                ((PersonRepresentation)value).ValidationRules = new PersonValidationForRent();
+                            break;
+                        case OperationTypeEnum.Service:
+                            break;
+                        default:
+                            break;
+                    }
 
                     _selectedCustomer = value;
                     RaisePropertyChanged("selectedCustomer");
                     RaisePropertyChanged("switchModifyMode");
-                    OnCustomerSelected(EventArgs.Empty);
+                    //OnCustomerSelected(EventArgs.Empty);
                 }              
             }
         }
@@ -122,11 +137,11 @@ namespace GyorokRentService.ViewModel
         }
 
         public OperationTypeEnum customerMode;
-        private CustomerBase_Representation _selectedContact;
+        private CustomerBaseRepresentation _selectedContact;
         private Visibility _commentSaveVisibility;
         private string _customerNameLabel;
                  
-        public CustomerBase_Representation selectedContact
+        public CustomerBaseRepresentation selectedContact
         {
             get
             {
@@ -249,7 +264,10 @@ namespace GyorokRentService.ViewModel
             try
             {
                 DataProxy.Instance.DeleteContact(selectedCustomer, selectedContact);
-                selectedCustomer.contacts.Remove(selectedContact);
+                if (selectedCustomer.GetType() == typeof(FirmRepresentation))
+                {
+                    ((FirmRepresentation)selectedCustomer).contacts.Remove(selectedContact);
+                }
             }
             catch (Exception)
             {                
@@ -301,7 +319,7 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        private void addContact(CustomerBase_Representation c)
+        private void addContact(CustomerBaseRepresentation c)
         {
             DataProxy.Instance.AddContact(selectedCustomer, c);
             refreshContacts(); 
@@ -309,11 +327,14 @@ namespace GyorokRentService.ViewModel
 
         private void refreshContacts()
         {
-            selectedCustomer.contacts = DataProxy.Instance.GetContacts(selectedCustomer);
-            if (selectedCustomer.contacts != null && selectedCustomer.contacts.Count() > 0)
+            if (selectedCustomer.GetType() == typeof(FirmRepresentation))
             {
-                selectedContact = selectedCustomer.contacts.FirstOrDefault();
-            }            
+                ((FirmRepresentation)selectedCustomer).contacts = DataProxy.Instance.GetContacts(selectedCustomer);
+                if (((FirmRepresentation)selectedCustomer).contacts != null && ((FirmRepresentation)selectedCustomer).contacts.Count() > 0)
+                {
+                    selectedContact = ((FirmRepresentation)selectedCustomer).contacts.FirstOrDefault();
+                }
+            }                      
         }
     }
 }

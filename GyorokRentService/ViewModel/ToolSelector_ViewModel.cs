@@ -41,9 +41,9 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        ObservableCollection<Tool_Representation> temp = new ObservableCollection<Tool_Representation>();
-        private Tool_Representation _selectedTool;
-        public Tool_Representation selectedTool
+        ObservableCollection<ToolRepresentation> temp = new ObservableCollection<ToolRepresentation>();
+        private ToolRepresentation _selectedTool;
+        public ToolRepresentation selectedTool
         {
             get { return _selectedTool; }
             set

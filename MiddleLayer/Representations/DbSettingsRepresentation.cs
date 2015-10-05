@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MiddleLayer.Representations
 {
-    public class DbSettings_Representation : RepresentationBase
+    public class DbSettingsRepresentation : RepresentationBase
     {
 
         private string _ServerIP;

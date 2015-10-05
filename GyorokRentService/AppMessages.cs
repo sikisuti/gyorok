@@ -26,12 +26,12 @@ namespace GyorokRentService
 
         public static class CustomerToSelect
         {
-            public static void Send(CustomerBase_Representation selectedCustomer)
+            public static void Send(CustomerBaseRepresentation selectedCustomer)
             {
                 Messenger.Default.Send(selectedCustomer, MessageTypes.customerToSelect);
             }
 
-            public static void Register(object recipient, Action<CustomerBase_Representation> action)
+            public static void Register(object recipient, Action<CustomerBaseRepresentation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.customerToSelect, action);
             }
@@ -39,12 +39,12 @@ namespace GyorokRentService
 
         public static class CustomerToRent
         {
-            public static void Send(CustomerBase_Representation selectedCustomer)
+            public static void Send(CustomerBaseRepresentation selectedCustomer)
             {
                 Messenger.Default.Send(selectedCustomer, MessageTypes.customerToRent);
             }
 
-            public static void Register(object recipient, Action<CustomerBase_Representation> action)
+            public static void Register(object recipient, Action<CustomerBaseRepresentation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.customerToRent, action);
             }
@@ -65,12 +65,12 @@ namespace GyorokRentService
 
         public static class ContactPersonToSelect
         {
-            public static void Send(CustomerBase_Representation selectedContactPerson)
+            public static void Send(CustomerBaseRepresentation selectedContactPerson)
             {
                 Messenger.Default.Send(selectedContactPerson, MessageTypes.contactPersonToSelect);
             }
 
-            public static void Register(object recipient, Action<CustomerBase_Representation> action)
+            public static void Register(object recipient, Action<CustomerBaseRepresentation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.contactPersonToSelect, action);
             }
@@ -78,12 +78,12 @@ namespace GyorokRentService
 
         public static class ContactSelected
         {
-            public static void Send(CustomerBase_Representation selectedContactPerson)
+            public static void Send(CustomerBaseRepresentation selectedContactPerson)
             {
                 Messenger.Default.Send(selectedContactPerson, MessageTypes.contactSelected);
             }
 
-            public static void Register(object recipient, Action<CustomerBase_Representation> action)
+            public static void Register(object recipient, Action<CustomerBaseRepresentation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.contactSelected, action);
             }
@@ -117,12 +117,12 @@ namespace GyorokRentService
 
         public static class ToolModified
         {
-            public static void Send(Tool_Representation t)
+            public static void Send(ToolRepresentation t)
             {
                 Messenger.Default.Send(t, MessageTypes.toolModified);
             }
 
-            public static void Register(object recipient, Action<Tool_Representation> action)
+            public static void Register(object recipient, Action<ToolRepresentation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.toolModified, action);
             }
@@ -182,12 +182,12 @@ namespace GyorokRentService
 
         public static class NewRentRemoved
         {
-            public static void Send(Rental_Representation r)
+            public static void Send(RentalRepresentation r)
             {
                 Messenger.Default.Send(r, MessageTypes.newRentRemoved);
             }
 
-            public static void Register(object recipient, Action<Rental_Representation> action)
+            public static void Register(object recipient, Action<RentalRepresentation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.newRentRemoved, action);
             }
@@ -312,12 +312,12 @@ namespace GyorokRentService
 
         public static class CityToSelect
         {
-            public static void Send(City_Representation selectedCustomer)
+            public static void Send(CityRepresentation selectedCustomer)
             {
                 Messenger.Default.Send(selectedCustomer, MessageTypes.cityToSelect);
             }
 
-            public static void Register(object recipient, Action<City_Representation> action)
+            public static void Register(object recipient, Action<CityRepresentation> action)
             {
                 Messenger.Default.Register(recipient, MessageTypes.cityToSelect, action);
             }

@@ -25,7 +25,7 @@ namespace GyorokRentService.ViewModel
         }
 
         private RentalGroup_Representation _rentalGroup;
-        private Rental_Representation _selectedRent;   
+        private RentalRepresentation _selectedRent;   
         
         public RentalGroup_Representation rentalGroup
         {
@@ -45,7 +45,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("rentalGroup");
             }
         }
-        public Rental_Representation selectedRent
+        public RentalRepresentation selectedRent
         {
             get
             {
@@ -85,7 +85,7 @@ namespace GyorokRentService.ViewModel
             }
 
             RentalGroup_Representation rentalGroupToAdd = new RentalGroup_Representation() {  };
-            foreach (Rental_Representation rental in rentalGroup.rentals)
+            foreach (RentalRepresentation rental in rentalGroup.rentals)
             {                
                 rental.tool.toolStatus.id = 3;
                 rental.tool.rentCounter += 1;

@@ -50,8 +50,8 @@ namespace MiddleLayer.Representations
             }
         }
 
-        private ObservableCollection<Rental_Representation> _rentals;
-        public ObservableCollection<Rental_Representation> rentals
+        private ObservableCollection<RentalRepresentation> _rentals;
+        public ObservableCollection<RentalRepresentation> rentals
         {
             get { return _rentals; }
             set
@@ -66,7 +66,7 @@ namespace MiddleLayer.Representations
 
         public RentalGroup_Representation()
         {
-            rentals = new ObservableCollection<Rental_Representation>();
+            rentals = new ObservableCollection<RentalRepresentation>();
         }
     }
 }

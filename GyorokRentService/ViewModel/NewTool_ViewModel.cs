@@ -25,8 +25,8 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        private Tool_Representation _newTool;
-        public Tool_Representation newTool
+        private ToolRepresentation _newTool;
+        public ToolRepresentation newTool
         {
             get { return _newTool; }
             set
@@ -70,8 +70,8 @@ namespace GyorokRentService.ViewModel
         {
             if (!this.IsInDesignMode)
             {
-                newTool = new Tool_Representation() { ValidationRules = new ToolValidationRules() };
-                newTool.toolStatus = new ToolStatus_Representation() { id = 1 };
+                newTool = new ToolRepresentation() { ValidationRules = new ToolValidationRules() };
+                newTool.toolStatus = new ToolStatusRepresentation() { id = 1 };
                 newTool.fromDate = DateTime.Today;
                 newTool.defaultDeposit = 0;
             }

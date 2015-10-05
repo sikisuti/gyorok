@@ -30,7 +30,7 @@
                 <StackPanel Orientation="Horizontal" Grid.Row="1">
                     <Label Content="Engedmény:" />
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding selectedRental.discount}" Width="30" />
+                        <TextBox Text="{Binding newRental.discount}" Width="30" />
                         <Label Content="%" FontWeight="Normal"/>
                  </StackPanel>
                 </StackPanel>
@@ -43,13 +43,13 @@
                 </Button>
             </Grid>
             <StackPanel Orientation="Horizontal" Margin="5">
-                <ListView ItemsSource="{Binding newRentalGroup.rentals}" SelectedItem="{Binding selectedRental}">
+                <ListView ItemsSource="{Binding newRentalGroup.rentals}" SelectedItem="{Binding selectedRental}" Height="100">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding tool}" Header="Gép" Width="100" />
-                            <GridViewColumn DisplayMemberBinding="{Binding IDNumber}" Header="Azonosító" Width="100" />
-                            <GridViewColumn DisplayMemberBinding="{Binding rentalEnd}" Header="Lejárat" Width="100" />
-                            <GridViewColumn DisplayMemberBinding="{Binding discount}" Header="Kedvezmény" Width="100" />
+                            <GridViewColumn DisplayMemberBinding="{Binding tool.toolName}" Header="Gép" Width="150" />
+                            <GridViewColumn DisplayMemberBinding="{Binding tool.IDNumber}" Header="Azonosító" Width="100" />
+                            <GridViewColumn DisplayMemberBinding="{Binding rentalEnd, StringFormat=yyyy.MM.dd}" Header="Lejárat" Width="130" />
+                            <GridViewColumn DisplayMemberBinding="{Binding discount, StringFormat={}{0} %}" Header="Kedvezmény" Width="100" />
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -67,7 +67,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Label Content="Fizetési mód:" />
-                <ComboBox Grid.Column="1" Width="150" IsEnabled="{Binding changeEnabled}" ItemsSource="{Binding payType}" SelectedItem="{Binding selectedPayType}" DisplayMemberPath="payTypeName" SelectedValuePath="payTypeID" SelectedIndex="0" />
+                <ComboBox Grid.Column="1" Width="150" IsEnabled="{Binding changeEnabled}" ItemsSource="{Binding payType}" SelectedItem="{Binding selectedPayType}" DisplayMemberPath="payTypeName" />
                 
             </Grid>
             <!--<StackPanel Orientation="Horizontal">

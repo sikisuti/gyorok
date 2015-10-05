@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MiddleLayer.Representations
 {
-    public class RepresentationBase : ViewModelBase
+    public abstract class RepresentationBase : ViewModelBase
     {
         private long _id;
         public long id

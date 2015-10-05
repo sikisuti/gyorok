@@ -54,7 +54,13 @@
     <Compile Include="Enumerations\SearchCustomerTypeEnum.cs" />
     <Compile Include="Enumerations\ToolStatusEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validations\FirmValidationForCreation.cs" />
+    <Compile Include="Validations\FirmValidationForRent.cs" />
+    <Compile Include="Validations\Interfaces\IFirmValidation.cs" />
+    <Compile Include="Validations\Interfaces\IPersonValidation.cs" />
     <Compile Include="Validations\Interfaces\IToolValidationRules.cs" />
+    <Compile Include="Validations\PersonValidationForCreation.cs" />
+    <Compile Include="Validations\PersonValidationForRent.cs" />
     <Compile Include="Validations\ToolValidationRule.cs" />
     <Compile Include="Validations\ValidationRulesBase.cs" />
   </ItemGroup>

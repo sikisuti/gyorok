@@ -42,13 +42,13 @@ namespace GyorokRentService
 
             UCCustomerSelector.customerPicker_VM.CustomerSelected += (s, a) => 
             {
-                UCNewRent.newRent_VM.newRental.customer = (CustomerBase_Representation)s;
+                UCNewRent.newRent_VM.newRental.customer = (CustomerBaseRepresentation)s;
                 UCCustomerSelector.expCustomer.IsExpanded = false;
             };
 
             UCToolSelector.toolPicker_VM.ToolSelected += (s, a) => 
             {
-                Tool_Representation tool = s as Tool_Representation;
+                ToolRepresentation tool = s as ToolRepresentation;
                 tool.ValidationRules = new ToolValidationRules();
                 UCNewRent.newRent_VM.newRental.tool = tool;
             };

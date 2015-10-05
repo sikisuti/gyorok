@@ -15,8 +15,8 @@
 
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <RadioButton Margin="5" Visibility="{Binding visibleMode}" GroupName="1" IsChecked="{Binding newCustomer.isFirm}" Content="Cég" />
-            <RadioButton Margin="5" GroupName="1" IsChecked="{Binding newCustomer.isFirm, Converter={StaticResource boolInverter}}" Content="Magánszemély" />
+            <RadioButton Margin="5" Visibility="{Binding visibleMode}" GroupName="1" IsChecked="{Binding isPerson, Converter={StaticResource boolInverter}}" Content="Cég" />
+            <RadioButton Margin="5" GroupName="1" IsChecked="{Binding isPerson}" Content="Magánszemély" />
         </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -37,18 +37,18 @@
             <Label Content="Kölcsönző neve:" />
             <TextBox Name="txtCustomerName" 
                      Grid.Column="2" 
-                     Text="{Binding newCustomer.customerName, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding newCustomer.customerName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
             <Label Grid.Row="1" Content="Azonosító szám:" />
             <TextBox Name="txtIDNumber"
                      Grid.Row="1" Grid.Column="2" 
-                     Text="{Binding newCustomer.IDNumber, UpdateSourceTrigger=PropertyChanged}" 
+                     Text="{Binding newCustomer.IDNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
             <Label Grid.Row="2" Content="Anyja neve:" Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
             <TextBox Name="txtMothersName" 
                      Grid.Row="2" Grid.Column="2" 
                      Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" 
-                     Text="{Binding newCustomer.mothersName, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding newCustomer.mothersName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
             <Label Grid.Row="3" Content="Cím:" />
             <Button Grid.Row="3" Grid.Column="1" Content="..." Command="{Binding openCityChooser}" Height="23" Width="29" />
@@ -58,17 +58,17 @@
             </StackPanel>
             <TextBox Name="txtCustomerAddress" 
                      Grid.Row="4" Grid.Column="2" 
-                     Text="{Binding newCustomer.customerAddress, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding newCustomer.customerAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
             <Label Grid.Row="5" Content="Telefon:" />
             <TextBox Name="txtCustomerPhone" 
                      Grid.Row="5" Grid.Column="2" 
-                     Text="{Binding newCustomer.customerPhone, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding newCustomer.customerPhone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
             <Label Grid.Row="6" Content="Születési dátum:" Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
             <xctk:DateTimePicker Name="dtpBirthDate" 
                                  Grid.Column="2" Grid.Row="6" 
-                                 Value="{Binding newCustomer.birthDate, UpdateSourceTrigger=PropertyChanged}"
+                                 Value="{Binding newCustomer.birthDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  Style="{StaticResource CustomEditableDatePicker}"
                                  Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" 
                                  Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
@@ -76,7 +76,7 @@
             <TextBox Name="txtWorkplace" 
                      Grid.Row="7" Grid.Column="2" 
                      Visibility="{Binding newCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" 
-                     Text="{Binding newCustomer.workplace, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding newCustomer.workplace, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
         </Grid>
         <Grid>
@@ -101,7 +101,7 @@
         </Grid>
         <StackPanel Orientation="Horizontal">
             <Label Content="Kedvezmény:" />
-            <TextBox Text="{Binding newCustomer.defaultDiscount}" />
+            <TextBox Text="{Binding newCustomer.defaultDiscount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
             <Label Content="%" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Column="1">

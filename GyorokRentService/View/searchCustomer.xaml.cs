@@ -51,7 +51,7 @@ namespace GyorokRentService.View
                 newCustomerVM = newCustomerUC.DataContext as NewCustomer_ViewModel;
                 newCustomerVM.CustomerInserted += (so, ar) =>
                 {
-                    dataContext.selectedCustomer = (CustomerBase_Representation)so;
+                    dataContext.selectedCustomer = (CustomerBaseRepresentation)so;
                     dataContext.OnCustomerSelected(EventArgs.Empty);
                     newCustomerWindow.Close();
                 };

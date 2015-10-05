@@ -20,8 +20,8 @@ namespace GyorokRentService.ViewModel
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
 
-        private DbSettings_Representation _dbSettings;
-        public DbSettings_Representation dbSettings
+        private DbSettingsRepresentation _dbSettings;
+        public DbSettingsRepresentation dbSettings
         {
             get { return _dbSettings; }
             set

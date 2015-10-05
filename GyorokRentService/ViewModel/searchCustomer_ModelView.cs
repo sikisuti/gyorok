@@ -39,10 +39,10 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        public List<CustomerBase_Representation> allCustomer;
+        public List<CustomerBaseRepresentation> allCustomer;
         
-        private CustomerBase_Representation _selectedCustomer;
-        public CustomerBase_Representation selectedCustomer
+        private CustomerBaseRepresentation _selectedCustomer;
+        public CustomerBaseRepresentation selectedCustomer
         {
             get { return _selectedCustomer; }
             set
@@ -99,7 +99,7 @@ namespace GyorokRentService.ViewModel
         }
 
         private string _searchText;
-        private ObservableCollection<CustomerBase_Representation> _foundCustomers;
+        private ObservableCollection<CustomerBaseRepresentation> _foundCustomers;
                 
         public string searchText
         {
@@ -120,7 +120,7 @@ namespace GyorokRentService.ViewModel
                 FilterList();
             }
         }
-        public ObservableCollection<CustomerBase_Representation> foundCustomers
+        public ObservableCollection<CustomerBaseRepresentation> foundCustomers
         {
             get
             {
@@ -233,11 +233,11 @@ namespace GyorokRentService.ViewModel
             {
                 if (filterType == FilterTypeEnum.All)
                 {
-                    foundCustomers = new ObservableCollection<CustomerBase_Representation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower())).OrderBy(oc => oc.customerName));
+                    foundCustomers = new ObservableCollection<CustomerBaseRepresentation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower())).OrderBy(oc => oc.customerName));
                 }
                 else
                 {
-                    foundCustomers = new ObservableCollection<CustomerBase_Representation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower()) && c.isFirm == (filterType == FilterTypeEnum.Firm)).OrderBy(oc => oc.customerName));
+                    foundCustomers = new ObservableCollection<CustomerBaseRepresentation>(allCustomer.Where(c => c.customerName.ToLower().StartsWith(_searchText.ToLower()) && c.isFirm == (filterType == FilterTypeEnum.Firm)).OrderBy(oc => oc.customerName));
                 } 
             }
         }

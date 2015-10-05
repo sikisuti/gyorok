@@ -33,9 +33,6 @@ namespace GyorokRentService.View
         {
             InitializeComponent();
 
-            BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
-            BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
-
             viewModel = new NewCustomer_ViewModel(displayType);
             DataContext = viewModel;
 
@@ -45,7 +42,7 @@ namespace GyorokRentService.View
                 cityChooserVM = cityChooserWindow.DataContext as SearchCity_ViewModel;
                 cityChooserVM.citySelected += (so, ar) =>
                 {
-                    viewModel.newCustomer.city = (City_Representation)so;
+                    viewModel.newCustomer.city = (CityRepresentation)so;
                     cityChooserWindow.Close();
                 };
                 cityChooserWindow.Show();

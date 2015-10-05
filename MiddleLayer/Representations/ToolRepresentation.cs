@@ -8,7 +8,7 @@ using System.Text;
 
 namespace MiddleLayer.Representations
 {
-    public class Tool_Representation : RepresentationBase, IDataErrorInfo
+    public class ToolRepresentation : RepresentationBase, IDataErrorInfo
     {
         private string _toolName;
         public string toolName
@@ -122,8 +122,8 @@ namespace MiddleLayer.Representations
             }
         }
         
-        private ToolStatus_Representation _toolStatus;
-        public ToolStatus_Representation toolStatus
+        private ToolStatusRepresentation _toolStatus;
+        public ToolStatusRepresentation toolStatus
         {
             get { return _toolStatus; }
             set
@@ -147,15 +147,46 @@ namespace MiddleLayer.Representations
         {
             get
             {
+                if (ValidationRules == null)
+                    return "Nincs gép érvényességi szabály";
+
                 string errorMessage = string.Empty;
 
-                errorMessage += this["toolName"];
-                errorMessage += this["toolManufacturer"];
-                errorMessage += this["IDNumber"];
-                errorMessage += this["serialNumber"];
-                errorMessage += this["rentPrice"];
-                errorMessage += this["fromDate"];
-                errorMessage += this["defaultDeposit"];
+                if (this["toolName"] != string.Empty)
+                {
+                    if (errorMessage != string.Empty) errorMessage += Environment.NewLine;
+                    errorMessage += "Gép név nem megfelelő";
+                }
+                if (this["toolManufacturer"] != string.Empty)
+                {
+                    if (errorMessage != string.Empty) errorMessage += Environment.NewLine;
+                    errorMessage += "Gép gyártó nem megfelelő";
+                }
+                if (this["IDNumber"] != string.Empty)
+                {
+                    if (errorMessage != string.Empty) errorMessage += Environment.NewLine;
+                    errorMessage += "Gép azonosító nem megfelelő";
+                }
+                if (this["serialNumber"] != string.Empty)
+                {
+                    if (errorMessage != string.Empty) errorMessage += Environment.NewLine;
+                    errorMessage += "Gép gyári azonosító nem megfelelő";
+                }
+                if (this["rentPrice"] != string.Empty)
+                {
+                    if (errorMessage != string.Empty) errorMessage += Environment.NewLine;
+                    errorMessage += "Gép bérlési költség nem megfelelő";
+                }
+                if (this["fromDate"] != string.Empty)
+                {
+                    if (errorMessage != string.Empty) errorMessage += Environment.NewLine;
+                    errorMessage += "Gép beiktatási dátum nem megfelelő";
+                }
+                if (this["defaultDeposit"] != string.Empty)
+                {
+                    if (errorMessage != string.Empty) errorMessage += Environment.NewLine;
+                    errorMessage += "Gép kaució nem megfelelő";
+                }
 
                 return errorMessage;
             }

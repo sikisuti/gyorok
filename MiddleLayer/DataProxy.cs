@@ -86,12 +86,12 @@ namespace MiddleLayer
             }
         }
 
-        public DbSettings_Representation GetDbSettings()
+        public DbSettingsRepresentation GetDbSettings()
         {
             return RepresentationConverter.convertDbSettings(DataSource.GetSettings());
         }
 
-        public List<CustomerBase_Representation> GetAllCustomers()
+        public List<CustomerBaseRepresentation> GetAllCustomers()
         {
             using (ISQLConnection dataSource = DataSource)
             {
@@ -106,21 +106,21 @@ namespace MiddleLayer
                 return customerList.ToList(); 
             }
         }
-        public CustomerBase_Representation GetCustomerById(long id)
+        public CustomerBaseRepresentation GetCustomerById(long id)
         {
             using (ISQLConnection dataSource = DataSource)
             {
                 return RepresentationConverter.convertCustomer(dataSource.GetCustomerById(id)); 
             }
         }
-        public long AddCustomer(CustomerBase_Representation customer)
+        public long AddCustomer(CustomerBaseRepresentation customer)
         {
             using (ISQLConnection dataSource = DataSource)
             {
                 return dataSource.AddCustomer(RepresentationConverter.convertCustomer(customer)); 
             }
         }
-        public void UpdateCustomer(CustomerBase_Representation customer)
+        public void UpdateCustomer(CustomerBaseRepresentation customer)
         {
             using (ISQLConnection dataSource = DataSource)
             {
@@ -135,23 +135,23 @@ namespace MiddleLayer
             }
         }
 
-        public ObservableCollection<CustomerBase_Representation> GetContacts(CustomerBase_Representation firm)
+        public ObservableCollection<CustomerBaseRepresentation> GetContacts(CustomerBaseRepresentation firm)
         {
             using (ISQLConnection dataSource = DataSource)
             {
                 List<Customers> contactList = dataSource.GetContacts(RepresentationConverter.convertCustomer(firm));
-                List<CustomerBase_Representation> contactListRep = contactList.Select(c => RepresentationConverter.convertCustomer(c)).ToList();
-                return new ObservableCollection<CustomerBase_Representation>(contactListRep); 
+                List<CustomerBaseRepresentation> contactListRep = contactList.Select(c => RepresentationConverter.convertCustomer(c)).ToList();
+                return new ObservableCollection<CustomerBaseRepresentation>(contactListRep); 
             }
         }
-        public void DeleteContact(CustomerBase_Representation firm, CustomerBase_Representation agent)
+        public void DeleteContact(CustomerBaseRepresentation firm, CustomerBaseRepresentation agent)
         {
             using (ISQLConnection dataSource = DataSource)
             {
                 dataSource.DeleteContact(RepresentationConverter.convertCustomer(firm), RepresentationConverter.convertCustomer(agent)); 
             }
         }
-        public void AddContact(CustomerBase_Representation firm, CustomerBase_Representation agent)
+        public void AddContact(CustomerBaseRepresentation firm, CustomerBaseRepresentation agent)
         {
             using (ISQLConnection dataSource = DataSource)
             {
@@ -159,14 +159,14 @@ namespace MiddleLayer
             }
         }
 
-        public City_Representation GetCityById(long id)
+        public CityRepresentation GetCityById(long id)
         {
             using (ISQLConnection dataSource = DataSource)
             {
                 return RepresentationConverter.convertCity(dataSource.GetCityById(id)); 
             }
         }
-        public List<City_Representation> GetAllCities()
+        public List<CityRepresentation> GetAllCities()
         {
             using (ISQLConnection dataSource = DataSource)
             {
@@ -181,21 +181,21 @@ namespace MiddleLayer
             }
         }
 
-        public List<Tool_Representation> GetAllTools()
+        public List<ToolRepresentation> GetAllTools()
         {
             using (ISQLConnection dataSource = DataSource)
             {
                 return dataSource.GetAllTools().Select(t => RepresentationConverter.convertTool(t)).ToList();
             }
         }
-        public long AddTool(Tool_Representation tool)
+        public long AddTool(ToolRepresentation tool)
         {
             using (ISQLConnection dataSource = DataSource)
             {
                 return dataSource.AddTool(RepresentationConverter.convertTool(tool));
             }
         }
-        public void UpdateTool(Tool_Representation tool)
+        public void UpdateTool(ToolRepresentation tool)
         {
             using (ISQLConnection datasource = DataSource)
             {
@@ -210,14 +210,14 @@ namespace MiddleLayer
             }
         }
 
-        public Rental_Representation GetLastRentalByToolId(long toolId)
+        public RentalRepresentation GetLastRentalByToolId(long toolId)
         {
             using (ISQLConnection dataSource = DataSource)
             {
                 return RepresentationConverter.convertRental(dataSource.GetLastRentalByToolId(toolId));
             }
         }
-        public void AddRental(Rental_Representation rental)
+        public void AddRental(RentalRepresentation rental)
         {
             using (ISQLConnection dataSource = DataSource)
             {
@@ -246,7 +246,7 @@ namespace MiddleLayer
                 RentalGroups rentalGroupToAdd = RepresentationConverter.convertRentalGroup(rentalGroup);
                 dataSource.AddRentalGroup(rentalGroupToAdd);
 
-                foreach (Rental_Representation rental in rentalGroup.rentals)
+                foreach (RentalRepresentation rental in rentalGroup.rentals)
                 {
                     rental.group.id = rentalGroupToAdd.groupID;
                     AddRental(rental);
@@ -254,7 +254,7 @@ namespace MiddleLayer
             }
         }
 
-        public List<PayType_Representation> GetPayTypes()
+        public List<PayTypeRepresentation> GetPayTypes()
         {
             using (ISQLConnection dataSource = DataSource)
             {

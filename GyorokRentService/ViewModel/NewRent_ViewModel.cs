@@ -12,6 +12,7 @@ using System.Windows;
 using SQLConnectionLib;
 using MiddleLayer.Representations;
 using MiddleLayer;
+using Common.Enumerations;
 
 namespace GyorokRentService.ViewModel
 {
@@ -23,6 +24,15 @@ namespace GyorokRentService.ViewModel
             if (RentGroupChanged != null)
             {
                 RentGroupChanged(newRentalGroup, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler RentalGroupFinalizationRequested;
+        public void OnRentalGroupFinalizationRequested(EventArgs e)
+        {
+            if (RentalGroupFinalizationRequested != null)
+            {
+                RentalGroupFinalizationRequested(newRentalGroup, e);
             }
         }
         //Timer t;
@@ -41,8 +51,8 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        private Rental_Representation _newRental;
-        public Rental_Representation newRental
+        private RentalRepresentation _newRental;
+        public RentalRepresentation newRental
         {
             get { return _newRental; }
             set
@@ -55,8 +65,8 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        private Rental_Representation _selectedRental;
-        public Rental_Representation selectedRental
+        private RentalRepresentation _selectedRental;
+        public RentalRepresentation selectedRental
         {
             get { return _selectedRental; }
             set
@@ -71,8 +81,8 @@ namespace GyorokRentService.ViewModel
         
         private DateTime _rentStart;
         private DateTime _rentEnd;
-        private List<PayType_Representation> _payType;
-        private PayType_Representation _selectedPayTypes;
+        private List<PayTypeRepresentation> _payType;
+        private PayTypeRepresentation _selectedPayTypes;
         //private bool _changeEnabled;        
 
         public DateTime rentStart
@@ -111,7 +121,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("rentEnd");
             }
         }
-        public List<PayType_Representation> payType
+        public List<PayTypeRepresentation> payType
         {
             get
             {
@@ -129,7 +139,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("payType");
             }
         }
-        public PayType_Representation selectedPayType
+        public PayTypeRepresentation selectedPayType
         {
             get
             {
@@ -169,9 +179,42 @@ namespace GyorokRentService.ViewModel
         public ICommand addRent { get { return new RelayCommand(addRentExecute, () => true); } }
         void addRentExecute()
         {
-            if (!newRental.tool.IsValid)
+            string errorMessage = string.Empty;
+
+            if (newRental.customer != null)
             {
-                MessageBox.Show("Gép adatok hiányosak!");
+                if (!newRental.customer.IsValid)
+                {
+                    errorMessage += newRental.customer.Error;
+                }
+            }
+            else
+            {
+                errorMessage += "Nincs ügyfél kiválasztva";
+            }
+
+            if (errorMessage != string.Empty) errorMessage += Environment.NewLine;
+
+            if (newRental.tool != null)
+            {
+                if (!newRental.tool.IsValid)
+                {
+                    errorMessage += newRental.tool.Error;
+                }
+                if (newRental.tool.toolStatus.id != (long)ToolStatusEnum.AbleToRent)
+                {
+                    var r = DataProxy.Instance.GetLastRentalByToolId(newRental.tool.id);
+                    errorMessage += "A gép már ki van kölcsönözve" + Environment.NewLine + "Lejárat: " + r.rentalEnd.ToLongDateString();
+                }
+            }
+            else
+            {
+                errorMessage += "Nincs gép kiválasztva";
+            }
+            
+            if (errorMessage != string.Empty)
+            {
+                MessageBox.Show(errorMessage, "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             AddNewRent();
@@ -179,14 +222,7 @@ namespace GyorokRentService.ViewModel
         public ICommand openRentalGroupWindow { get { return new RelayCommand(openRentalGroupWindowExecute, () => true); } }
         void openRentalGroupWindowExecute()
         {
-            NewRentGroupWindow rg = new NewRentGroupWindow(newRentalGroup);
-            NewRentGroup_ViewModel newRetGroup_VM = rg.DataContext as NewRentGroup_ViewModel;
-            newRetGroup_VM.rentGroupAccepted += (s, a) => 
-            {
-                newRentalGroup = new RentalGroup_Representation();
-                //changeEnabled = true;
-            };
-            rg.Show();
+            OnRentalGroupFinalizationRequested(EventArgs.Empty);
         }
 
         public NewRent_ViewModel()
@@ -199,8 +235,11 @@ namespace GyorokRentService.ViewModel
 
                 payType = DataProxy.Instance.GetPayTypes();
                 newRentalGroup = new RentalGroup_Representation();
-                newRental = new Rental_Representation();
-                selectedRental = new Rental_Representation();
+                newRental = new RentalRepresentation();
+                selectedRental = new RentalRepresentation();
+
+                selectedPayType = payType.SingleOrDefault(pt => pt.id == 1);
+                newRental.payType = selectedPayType;
                 
                 //changeEnabled = true;
             }
@@ -211,71 +250,36 @@ namespace GyorokRentService.ViewModel
         //    CalcStartHour();
         //}
 
-        private DateTime CalcEndHour()
-        {
-            //rentStart = DateTime.Today;
-            //rentEnd = DateTime.Today + TimeSpan.FromDays(1);
-            int hour;
-            if (DateTime.Now.Minute > 30)
-            {
-                if (DateTime.Now.Hour == 23)
-                {
-                    hour = 0;
-                }
-                else
-                {
-                    hour = DateTime.Now.Hour + 1;
-                }
-            }
-            else
-            {
-                hour = DateTime.Now.Hour;
-            }
-            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hour, 0, 0);
-            //rentEnd = rentStart + TimeSpan.FromDays(1);
-        }
+        //private DateTime CalcEndHour()
+        //{
+        //    //rentStart = DateTime.Today;
+        //    //rentEnd = DateTime.Today + TimeSpan.FromDays(1);
+        //    int hour;
+        //    if (DateTime.Now.Minute > 30)
+        //    {
+        //        if (DateTime.Now.Hour == 23)
+        //        {
+        //            hour = 0;
+        //        }
+        //        else
+        //        {
+        //            hour = DateTime.Now.Hour + 1;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        hour = DateTime.Now.Hour;
+        //    }
+        //    return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hour, 0, 0);
+        //    //rentEnd = rentStart + TimeSpan.FromDays(1);
+        //}
 
         private void AddNewRent()
         {
-            if (CheckFillsOK())
-            {
-                newRentalGroup.rentals.Add(selectedRental.Clone() as Rental_Representation);
-                selectedRental = new Rental_Representation();
-                //changeEnabled = false;
-                OnRentGroupChanged();
-            }
-        }
-
-        private bool CheckFillsOK()
-        {
-            if (selectedRental.customer != null || selectedRental.contact != null)
-            {
-                if (selectedRental.tool != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    MessageBox.Show("Válassz cikket!");
-                    return false;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Válassz ügyfelet!");
-                return false;
-            }
-        }
-
-        public void customerSelected(CustomerBase_Representation customer)
-        {
-            selectedRental.customer = customer;
-            selectedRental.discount = customer.defaultDiscount ?? 0;
-        }
-
-        public void toolSelected(Tool_Representation tool)
-        {
-            selectedRental.tool = tool;
+            newRentalGroup.rentals.Add(newRental.Clone() as RentalRepresentation);
+            newRental.tool = null;
+            //changeEnabled = false;
+            OnRentGroupChanged();
         }
     }
 }

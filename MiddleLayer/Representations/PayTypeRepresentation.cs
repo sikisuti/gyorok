@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MiddleLayer.Representations
 {
-    public class PayType_Representation : RepresentationBase
+    public class PayTypeRepresentation : RepresentationBase
     {
         private string _payTypeName;
         public string payTypeName

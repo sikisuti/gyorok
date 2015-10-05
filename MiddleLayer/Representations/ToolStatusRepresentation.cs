@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MiddleLayer.Representations
 {
-    public class ToolStatus_Representation : RepresentationBase
+    public class ToolStatusRepresentation : RepresentationBase
     {
         private string _statusName;
         public string statusName

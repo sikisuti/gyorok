@@ -52,7 +52,7 @@
             <TextBox Name="txtCustomerName" 
                      Grid.Column="2" Grid.Row="1"  
                      Visibility="{Binding isEditable, Converter={StaticResource boolToVis}}" 
-                     Text="{Binding selectedCustomer.customerName, UpdateSourceTrigger=PropertyChanged}" 
+                     Text="{Binding selectedCustomer.customerName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
             <Label Content="{Binding customerNameLabel}" Grid.Row="1" />
             <Expander x:Name="expCustomer"
@@ -77,7 +77,7 @@
             <Label Content="Azonosító szám:" Grid.Row="2" />
                 <TextBox Name="txtIDNumber" 
                          Grid.Column="2" Grid.Row="2" 
-                         Text="{Binding selectedCustomer.IDNumber, UpdateSourceTrigger=PropertyChanged}" 
+                         Text="{Binding selectedCustomer.IDNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                          Style="{StaticResource CustomEditableTextBoxForRent}"
                          Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
                 <Label Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Content="Anyja neve:" Grid.Row="3" />
@@ -85,7 +85,7 @@
                          Style="{StaticResource CustomEditableTextBoxForRent}" 
                          Grid.Row="3" Grid.Column="2" 
                          Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" 
-                         Text="{Binding selectedCustomer.mothersName, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding selectedCustomer.mothersName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                          Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
                 <Label Content="Cím:" Grid.Row="4" />
                 <Button Grid.Column="1" Grid.Row="4" Visibility="{Binding isEditable, Converter={StaticResource boolToVis}}" Command="{Binding openCityChooser}" Content="..." Height="23" Width="29" />
@@ -93,26 +93,26 @@
                 <TextBox Name="txtCustomerAddress" 
                          Grid.Column="2" Grid.Row="5" 
                          Style="{StaticResource CustomEditableTextBoxForRent}" 
-                         Text="{Binding selectedCustomer.customerAddress, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding selectedCustomer.customerAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                          Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
                 <Label Content="Telefon:" Grid.Row="6" />
                 <TextBox Name="txtCustomerPhone" 
                          Grid.Column="2" Grid.Row="6" 
                          Style="{StaticResource CustomEditableTextBoxForRent}" 
-                         Text="{Binding selectedCustomer.customerPhone, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding selectedCustomer.customerPhone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                          Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
                 <Label Grid.Row="7" Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Content="Születési dátum:" FontWeight="Bold" />
                 <xctk:DateTimePicker Name="dtpBirthDate" 
                                      Grid.Column="2" Grid.Row="7" 
                                      Style="{StaticResource CustomEditableDatePickerForRent}"
-                                     Value="{Binding selectedCustomer.birthDate, UpdateSourceTrigger=PropertyChanged}"
+                                     Value="{Binding selectedCustomer.birthDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                      Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" 
                                      Validation.ErrorTemplate="{StaticResource validationErrorTemplate}"/>
                 <Label Grid.Row="8" Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Content="Munkahely:" />
                 <TextBox Name="txtWorkplace" 
                          Grid.Column="2" Grid.Row="8" 
                          Style="{StaticResource CustomEditableTextBoxForRent}" 
-                         Text="{Binding selectedCustomer.workplace, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding selectedCustomer.workplace, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                          Visibility="{Binding selectedCustomer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" 
                          Validation.ErrorTemplate="{StaticResource validationErrorTemplate}" />
             </Grid>
@@ -191,7 +191,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Label Content="Kedvezmény:" FontWeight="Bold" />
-                    <TextBox Style="{StaticResource CustomEditableTextBoxForRent}" Text="{Binding selectedCustomer.defaultDiscount}" Width="41" />
+                    <TextBox Style="{StaticResource CustomEditableTextBoxForRent}" Text="{Binding selectedCustomer.defaultDiscount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="41" />
                     <Label Content="%" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">

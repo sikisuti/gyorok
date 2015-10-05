@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MiddleLayer.Representations
 {
-    public class CustomerBase_Representation : RepresentationBase
+    public class DetailedCustomerRepresentatiton : RepresentationBase
     {
         private string _customerName;
         public string customerName
@@ -19,8 +17,7 @@ namespace MiddleLayer.Representations
                 {
                     _customerName = value;
                     RaisePropertyChanged("customerName");
-                }
-            }
+                } }
         }
 
         private string _IDNumber;
@@ -33,10 +30,9 @@ namespace MiddleLayer.Representations
                 {
                     _IDNumber = value;
                     RaisePropertyChanged("IDNumber");
-                }
-            }
+                } }
         }
-
+        
         private string _mothersName;
         public string mothersName
         {
@@ -47,20 +43,8 @@ namespace MiddleLayer.Representations
                 {
                     _mothersName = value;
                     RaisePropertyChanged("mothersName");
-                } }
-        }
-
-        private City_Representation _city;
-        public City_Representation city
-        {
-            get { return _city; }
-            set
-            {
-                if (_city != value)
-                {
-                    _city = value;
-                    RaisePropertyChanged("city");
-                } }
+                }
+            }
         }
 
         private string _customerAddress;
@@ -73,7 +57,8 @@ namespace MiddleLayer.Representations
                 {
                     _customerAddress = value;
                     RaisePropertyChanged("customerAddress");
-                } }
+                }
+            }
         }
 
         private string _customerPhone;
@@ -84,8 +69,10 @@ namespace MiddleLayer.Representations
             {
                 if (_customerPhone != value)
                 {
-                    _customerPhone = value; 
-                } }
+                    _customerPhone = value;
+                    RaisePropertyChanged("customerPhone");
+                }
+            }
         }
 
         private DateTime? _birthDate;
@@ -98,7 +85,8 @@ namespace MiddleLayer.Representations
                 {
                     _birthDate = value;
                     RaisePropertyChanged("birthDate");
-                } }
+                }
+            }
         }
 
         private string _workplace;
@@ -111,7 +99,8 @@ namespace MiddleLayer.Representations
                 {
                     _workplace = value;
                     RaisePropertyChanged("workplace");
-                } }
+                }
+            }
         }
 
         private bool _isFirm;
@@ -124,7 +113,8 @@ namespace MiddleLayer.Representations
                 {
                     _isFirm = value;
                     RaisePropertyChanged("isFirm");
-                } }
+                }
+            }
         }
 
         private string _comment;
@@ -137,7 +127,8 @@ namespace MiddleLayer.Representations
                 {
                     _comment = value;
                     RaisePropertyChanged("comment");
-                } }
+                }
+            }
         }
 
         private string _problems;
@@ -150,7 +141,8 @@ namespace MiddleLayer.Representations
                 {
                     _problems = value;
                     RaisePropertyChanged("problems");
-                } }
+                }
+            }
         }
 
         private double? _defaultDiscount;
@@ -163,7 +155,8 @@ namespace MiddleLayer.Representations
                 {
                     _defaultDiscount = value;
                     RaisePropertyChanged("defaultDiscount");
-                } }
+                }
+            }
         }
 
         private int _rentCounter;
@@ -176,9 +169,10 @@ namespace MiddleLayer.Representations
                 {
                     _rentCounter = value;
                     RaisePropertyChanged("rentCounter");
-                } }
+                }
+            }
         }
-
+        
         private int _serviceCounter;
         public int serviceCounter
         {
@@ -189,20 +183,50 @@ namespace MiddleLayer.Representations
                 {
                     _serviceCounter = value;
                     RaisePropertyChanged("serviceCounter");
-                } }
+                }
+            }
         }
 
-        private ObservableCollection<CustomerBase_Representation> _contacts;
-        public ObservableCollection<CustomerBase_Representation> contacts
+        private string _postalCode;
+        public string postalCode
         {
-            get { return _contacts; }
+            get { return _postalCode; }
             set
             {
-                if (_contacts != value)
+                if (_postalCode != value)
                 {
-                    _contacts = value;
-                    RaisePropertyChanged("contacts");
-                } }
+                    _postalCode = value;
+                    RaisePropertyChanged("postalCode");
+                }
+            }
+        }
+
+        private string _city;
+        public string city
+        {
+            get { return _city; }
+            set
+            {
+                if (_city != value)
+                {
+                    _city = value;
+                    RaisePropertyChanged("city");
+                }
+            }
+        }
+
+        private bool? _cityDeleted;
+        public bool? cityDeleted
+        {
+            get { return _cityDeleted; }
+            set
+            {
+                if (_cityDeleted != value)
+                {
+                    _cityDeleted = value;
+                    RaisePropertyChanged("cityDeleted");
+                }
+            }
         }
     }
 }

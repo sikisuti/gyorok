@@ -11,9 +11,9 @@ namespace MiddleLayer
 {
     public static class RepresentationConverter
     {
-        public static DbSettings_Representation convertDbSettings(DbSettings settings)
+        public static DbSettingsRepresentation convertDbSettings(DbSettings settings)
         {
-            return new DbSettings_Representation()
+            return new DbSettingsRepresentation()
             {
                 ApplicationName = settings.ApplicationName,
                 InitialCatalog = settings.InitialCatalog,
@@ -31,56 +31,62 @@ namespace MiddleLayer
             };
         }
 
-        public static CustomerBase_Representation convertCustomer(Customers customer)
-        {
-            if (customer == null)
-            {
-                return null;
-            }
+        public static CustomerBaseRepresentation convertCustomer(Customers customer)
+        { 
+            if (customer == null) return null;
+
+            CustomerBaseRepresentation convertedCustomer;
+
+            if (customer.isFirm)
+                convertedCustomer = new FirmRepresentation();
+            else
+                convertedCustomer = new PersonRepresentation();
 
             // TODO: Implement concurency checking (rowVersion)
-            CustomerBase_Representation customerRepresentation = new CustomerBase_Representation()
+            convertedCustomer.id = customer.customerID;
+            convertedCustomer.comment = customer.comment;
+            convertedCustomer.customerAddress = customer.customerAddress;
+            convertedCustomer.customerName = customer.customerName;
+            convertedCustomer.customerPhone = customer.customerPhone;
+            convertedCustomer.defaultDiscount = customer.defaultDiscount;
+            convertedCustomer.IDNumber = customer.IDNumber;
+            convertedCustomer.isDeleted = customer.isDeleted;
+            convertedCustomer.isFirm = customer.isFirm;
+            convertedCustomer.problems = customer.problems;
+            convertedCustomer.rentCounter = customer.rentCounter;
+            convertedCustomer.serviceCounter = customer.serviceCounter;
+            if (customer.isFirm)
             {
-                id = customer.customerID,
-                birthDate = customer.birthDate,
-                comment = customer.comment,
-                customerAddress = customer.customerAddress,
-                customerName = customer.customerName,
-                customerPhone = customer.customerPhone,
-                defaultDiscount = customer.defaultDiscount,
-                IDNumber = customer.IDNumber,
-                isDeleted = customer.isDeleted,
-                isFirm = customer.isFirm,
-                mothersName = customer.mothersName,
-                problems = customer.problems,
-                rentCounter = customer.rentCounter,
-                serviceCounter = customer.serviceCounter,
-                workplace = customer.workPlace,
-                contacts = new ObservableCollection<CustomerBase_Representation>()
-            };
-
-            if (customer.Contacts != null)
-            {
-                foreach (Contacts contact in customer.Contacts)
+                ((FirmRepresentation)convertedCustomer).contacts = new ObservableCollection<CustomerBaseRepresentation>();
+                if (customer.Contacts != null)
                 {
-                    customerRepresentation.contacts.Add(DataProxy.Instance.GetCustomerById(contact.agentID));
+                    foreach (Contacts contact in customer.Contacts)
+                    {
+                        ((FirmRepresentation)convertedCustomer).contacts.Add(DataProxy.Instance.GetCustomerById(contact.agentID));
+                    }
                 }
             }
+            else
+            {
+                ((PersonRepresentation)convertedCustomer).birthDate = customer.birthDate;
+                ((PersonRepresentation)convertedCustomer).mothersName = customer.mothersName;
+                ((PersonRepresentation)convertedCustomer).workplace = customer.workPlace;
+            }
+
 
             if (customer.Cities != null)
             {
-                customerRepresentation.city = convertCity(customer.Cities);
+                convertedCustomer.city = convertCity(customer.Cities);
             }
 
-            return customerRepresentation;
+            return convertedCustomer;
         }
-        public static Customers convertCustomer(CustomerBase_Representation customer)
+        public static Customers convertCustomer(CustomerBaseRepresentation customer)
         {
             // TODO: Implement concurency checking (rowVersion)
-            var newCustomer = new Customers()
+            var convertedCustomer = new Customers()
             {
                 customerID = customer.id,
-                birthDate = customer.birthDate,
                 comment = customer.comment,
                 customerAddress = customer.customerAddress,
                 customerName = customer.customerName,
@@ -89,24 +95,29 @@ namespace MiddleLayer
                 IDNumber = customer.IDNumber,
                 isDeleted = customer.isDeleted,
                 isFirm = customer.isFirm,
-                mothersName = customer.mothersName,
                 problems = customer.problems,
                 rentCounter = customer.rentCounter,
-                serviceCounter = customer.serviceCounter,
-                workPlace = customer.workplace
+                serviceCounter = customer.serviceCounter
             };
+
+            if (customer.GetType() == typeof(PersonRepresentation))
+            {
+                convertedCustomer.birthDate = ((PersonRepresentation)customer).birthDate;
+                convertedCustomer.mothersName = ((PersonRepresentation)customer).mothersName;
+                convertedCustomer.workPlace = ((PersonRepresentation)customer).workplace;
+            }
 
             if (customer.city != null)
             {
-                newCustomer.cityID = customer.city.id;
+                convertedCustomer.cityID = customer.city.id;
             }
 
-            return newCustomer;
+            return convertedCustomer;
         }
 
-        public static City_Representation convertCity(Cities city)
+        public static CityRepresentation convertCity(Cities city)
         {
-            return new City_Representation()
+            return new CityRepresentation()
             {
                 city = city.city,
                 id = city.cityID,
@@ -115,7 +126,7 @@ namespace MiddleLayer
             };
         }
 
-        public static Tools convertTool(Tool_Representation tool)
+        public static Tools convertTool(ToolRepresentation tool)
         {
             Tools convertedTool = new Tools()
             {
@@ -134,9 +145,9 @@ namespace MiddleLayer
 
             return convertedTool;
         }
-        public static Tool_Representation convertTool(Tools tool)
+        public static ToolRepresentation convertTool(Tools tool)
         {
-            Tool_Representation convertedTool = new Tool_Representation()
+            ToolRepresentation convertedTool = new ToolRepresentation()
             {
                 id = tool.toolID,
                 defaultDeposit = tool.defaultDeposit,
@@ -154,18 +165,18 @@ namespace MiddleLayer
             return convertedTool;
         }
 
-        public static ToolStatus_Representation convertToolStatus(ToolStatuses toolStatus)
+        public static ToolStatusRepresentation convertToolStatus(ToolStatuses toolStatus)
         {
-            return new ToolStatus_Representation()
+            return new ToolStatusRepresentation()
             {
                 id = toolStatus.toolStatusID,
                 statusName = toolStatus.statusName
             };
         }
 
-        public static Rental_Representation convertRental(Rentals rental)
+        public static RentalRepresentation convertRental(Rentals rental)
         {
-            Rental_Representation convertedRental = new Rental_Representation()
+            RentalRepresentation convertedRental = new RentalRepresentation()
             {
                 actualPrice = rental.actualPrice,
                 contact = convertCustomer(rental.Customers1),
@@ -187,7 +198,7 @@ namespace MiddleLayer
 
             return convertedRental;
         }
-        public static Rentals convertRental(Rental_Representation rental)
+        public static Rentals convertRental(RentalRepresentation rental)
         {
             Rentals convertedRental = new Rentals()
             {
@@ -234,9 +245,9 @@ namespace MiddleLayer
             return convertedRentalGroup;
         }
 
-        public static PayType_Representation convertPayType(PayTypes payType)
+        public static PayTypeRepresentation convertPayType(PayTypes payType)
         {
-            PayType_Representation convertedPayType = new PayType_Representation()
+            PayTypeRepresentation convertedPayType = new PayTypeRepresentation()
             {
                 id = payType.payTypeID,
                 payTypeName = payType.payTypeName

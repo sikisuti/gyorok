@@ -6,10 +6,10 @@ using System.Text;
 
 namespace MiddleLayer.Representations
 {
-    public class Rental_Representation : RepresentationBase, ICloneable
+    public class RentalRepresentation : RepresentationBase, ICloneable
     {
-        private CustomerBase_Representation _customer;
-        public CustomerBase_Representation customer
+        private CustomerBaseRepresentation _customer;
+        public CustomerBaseRepresentation customer
         {
             get { return _customer; }
             set
@@ -22,8 +22,8 @@ namespace MiddleLayer.Representations
             }
         }
 
-        private CustomerBase_Representation _contact;
-        public CustomerBase_Representation contact
+        private CustomerBaseRepresentation _contact;
+        public CustomerBaseRepresentation contact
         {
             get { return _contact; }
             set
@@ -36,8 +36,8 @@ namespace MiddleLayer.Representations
             }
         }
 
-        private Tool_Representation _tool;
-        public Tool_Representation tool
+        private ToolRepresentation _tool;
+        public ToolRepresentation tool
         {
             get { return _tool; }
             set
@@ -106,8 +106,8 @@ namespace MiddleLayer.Representations
             }
         }
 
-        private PayType_Representation _payType;
-        public PayType_Representation payType
+        private PayTypeRepresentation _payType;
+        public PayTypeRepresentation payType
         {
             get { return _payType; }
             set
@@ -176,14 +176,14 @@ namespace MiddleLayer.Representations
             }
         }
 
-        public Rental_Representation()
+        public RentalRepresentation()
         {
             rentalEnd = DateTime.Today.AddDays(1);
         }
 
         public object Clone()
         {
-            Rental_Representation clonedRental = this.MemberwiseClone() as Rental_Representation;
+            RentalRepresentation clonedRental = this.MemberwiseClone() as RentalRepresentation;
 
             return clonedRental;
         }

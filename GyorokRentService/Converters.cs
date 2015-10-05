@@ -592,7 +592,7 @@ namespace GyorokRentService
 
                 try
                 {
-                    City_Representation c = DataProxy.Instance.GetCityById((long)value);
+                    CityRepresentation c = DataProxy.Instance.GetCityById((long)value);
                     return c.postalCode + " " + c.city;
                 }
                 catch (Exception)

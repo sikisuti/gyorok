@@ -39,7 +39,7 @@ namespace GyorokRentService.ViewModel
 
         ObservableCollection<Tools> temp = new ObservableCollection<Tools>();
 
-        public List<Tool_Representation> allTools;
+        public List<ToolRepresentation> allTools;
 
         private bool _IsBusy;
         public bool IsBusy
@@ -56,8 +56,8 @@ namespace GyorokRentService.ViewModel
         }
 
         private string _searchText;
-        private ObservableCollection<Tool_Representation> _foundTools;
-        private Tool_Representation _selectedTool;
+        private ObservableCollection<ToolRepresentation> _foundTools;
+        private ToolRepresentation _selectedTool;
         private string _plannedBringBackDate;        
                 
         public string searchText
@@ -79,7 +79,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("searchText");
             }
         }
-        public ObservableCollection<Tool_Representation> foundTools
+        public ObservableCollection<ToolRepresentation> foundTools
         {
             get
             {
@@ -97,7 +97,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("foundTools");
             }
         }
-        public Tool_Representation selectedTool
+        public ToolRepresentation selectedTool
         {
             get
             {
@@ -113,7 +113,7 @@ namespace GyorokRentService.ViewModel
 
                 if (value != null && value.toolStatus.id == (long)ToolStatusEnum.Rented)
                 {
-                    Rental_Representation rental = DataProxy.Instance.GetLastRentalByToolId(value.id);
+                    RentalRepresentation rental = DataProxy.Instance.GetLastRentalByToolId(value.id);
 
                     plannedBringBackDate = "Vissza: " + rental.rentalEnd.ToString("D");
                 }
@@ -201,7 +201,7 @@ namespace GyorokRentService.ViewModel
         {
             if (allTools != null)
             {
-                foundTools = new ObservableCollection<Tool_Representation>(allTools.Where(t => t.toolName.ToLower().StartsWith(_searchText.ToLower())).OrderBy(ot => ot.toolName).ToList());
+                foundTools = new ObservableCollection<ToolRepresentation>(allTools.Where(t => t.toolName.ToLower().StartsWith(_searchText.ToLower())).OrderBy(ot => ot.toolName).ToList());
             }
             
         }

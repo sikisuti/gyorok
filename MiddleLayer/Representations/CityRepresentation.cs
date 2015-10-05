@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiddleLayer.Representations
 {
-    public class City_Representation : RepresentationBase
+    public class CityRepresentation : RepresentationBase
     {
         private string _postalCode;
         public string postalCode

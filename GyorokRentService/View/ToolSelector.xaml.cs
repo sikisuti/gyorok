@@ -39,7 +39,7 @@ namespace GyorokRentService.View
 
             toolPicker_VM.ToolSelected += (s, a) => 
             {
-                viewModel.selectedTool = (Tool_Representation)s;
+                viewModel.selectedTool = (ToolRepresentation)s;
                 toolPickerWindow.Hide();
             };
             viewModel.ToolPickerExpanded += (s, a) =>
@@ -70,7 +70,7 @@ namespace GyorokRentService.View
 
             toolPicker_VM.ToolSelected += (s, a) =>
             {
-                Tool_Representation tool = s as Tool_Representation;
+                ToolRepresentation tool = s as ToolRepresentation;
                 tool.ValidationRules = new ToolValidationRules();
                 viewModel.selectedTool = tool;
                 toolPickerWindow.Hide();

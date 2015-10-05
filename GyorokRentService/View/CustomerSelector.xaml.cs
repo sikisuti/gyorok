@@ -46,8 +46,6 @@ namespace GyorokRentService.View
             this.DataContext = viewModel;
 
             BuildSearchCustomerWindow();
-
-            SetValidation(ct);
                 
             viewModel.customerPickerExpanded += (s, a) =>
             {
@@ -94,7 +92,7 @@ namespace GyorokRentService.View
 
             customerPicker_VM.CustomerSelected += (s, a) =>
             {
-                viewModel.selectedCustomer = (CustomerBase_Representation)s;
+                viewModel.selectedCustomer = (CustomerBaseRepresentation)s;
                 customerPickerWindow.Hide();
             };
         }
@@ -112,8 +110,8 @@ namespace GyorokRentService.View
 
             contactPicker_VM.CustomerSelected += (s, a) =>
             {
-                DataProxy.Instance.AddContact(viewModel.selectedCustomer, (CustomerBase_Representation)s);
-                viewModel.selectedCustomer.contacts.Add((CustomerBase_Representation)s);
+                DataProxy.Instance.AddContact(viewModel.selectedCustomer, (PersonRepresentation)s);
+                ((FirmRepresentation)viewModel.selectedCustomer).contacts.Add((CustomerBaseRepresentation)s);
                 contactPickerWindow.Hide();
             };
         }
@@ -125,46 +123,46 @@ namespace GyorokRentService.View
 
             cityPicker_VM.citySelected += (s, a) =>
             {
-                viewModel.selectedCustomer.city = (City_Representation)s;
+                viewModel.selectedCustomer.city = (CityRepresentation)s;
                 cityPickerWindow.Hide();
             };
         }
 
-        public void SetValidation(OperationTypeEnum operationType)
-        {
-            ClearValidationRules();
+        //public void SetValidation(OperationTypeEnum operationType)
+        //{
+        //    ClearValidationRules();
             
-            switch (operationType)
-            {
-                case OperationTypeEnum.Rental:
-                    BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
-                    BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
-                    BindingOperations.GetBinding(txtIDNumber, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
-                    BindingOperations.GetBinding(txtMothersName, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
-                    BindingOperations.GetBinding(txtCustomerAddress, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
-                    BindingOperations.GetBinding(dtpBirthDate, DateTimePicker.ValueProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
-                    BindingOperations.GetBinding(txtWorkplace, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
-                    break;
+        //    switch (operationType)
+        //    {
+        //        case OperationTypeEnum.Rental:
+        //            BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+        //            BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+        //            BindingOperations.GetBinding(txtIDNumber, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+        //            BindingOperations.GetBinding(txtMothersName, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+        //            BindingOperations.GetBinding(txtCustomerAddress, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+        //            BindingOperations.GetBinding(dtpBirthDate, DateTimePicker.ValueProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+        //            BindingOperations.GetBinding(txtWorkplace, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+        //            break;
 
-                case OperationTypeEnum.Service:
-                    BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
-                    BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
-                    break;
+        //        case OperationTypeEnum.Service:
+        //            BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+        //            BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Add(DIContainer.Instance.Get<FieldNotEmpty>());
+        //            break;
 
-                default:
-                    break;
-            }
-        }
+        //        default:
+        //            break;
+        //    }
+        //}
 
-        private void ClearValidationRules()
-        {
-            BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Clear();
-            BindingOperations.GetBinding(txtIDNumber, TextBox.TextProperty).ValidationRules.Clear();
-            BindingOperations.GetBinding(txtMothersName, TextBox.TextProperty).ValidationRules.Clear();
-            BindingOperations.GetBinding(txtCustomerAddress, TextBox.TextProperty).ValidationRules.Clear();
-            BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Clear();
-            BindingOperations.GetBinding(dtpBirthDate, DateTimePicker.ValueProperty).ValidationRules.Clear();
-            BindingOperations.GetBinding(txtWorkplace, TextBox.TextProperty).ValidationRules.Clear();
-        }
+        //private void ClearValidationRules()
+        //{
+        //    BindingOperations.GetBinding(txtCustomerName, TextBox.TextProperty).ValidationRules.Clear();
+        //    BindingOperations.GetBinding(txtIDNumber, TextBox.TextProperty).ValidationRules.Clear();
+        //    BindingOperations.GetBinding(txtMothersName, TextBox.TextProperty).ValidationRules.Clear();
+        //    BindingOperations.GetBinding(txtCustomerAddress, TextBox.TextProperty).ValidationRules.Clear();
+        //    BindingOperations.GetBinding(txtCustomerPhone, TextBox.TextProperty).ValidationRules.Clear();
+        //    BindingOperations.GetBinding(dtpBirthDate, DateTimePicker.ValueProperty).ValidationRules.Clear();
+        //    BindingOperations.GetBinding(txtWorkplace, TextBox.TextProperty).ValidationRules.Clear();
+        //}
     }
 }

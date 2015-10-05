@@ -54,16 +54,18 @@
     <Compile Include="Dependency Injection\CoreNinjectModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepresentationConverter.cs" />
-    <Compile Include="Representations\City_Representation.cs" />
-    <Compile Include="Representations\CustomerBase_Representation.cs" />
-    <Compile Include="Representations\DbSettings_Representation.cs" />
-    <Compile Include="Representations\DetailedCustomer_Representatiton.cs" />
-    <Compile Include="Representations\PayType_Representation.cs" />
+    <Compile Include="Representations\CityRepresentation.cs" />
+    <Compile Include="Representations\CustomerBaseRepresentation.cs" />
+    <Compile Include="Representations\DbSettingsRepresentation.cs" />
+    <Compile Include="Representations\DetailedCustomerRepresentatiton.cs" />
+    <Compile Include="Representations\FirmRepresentation.cs" />
+    <Compile Include="Representations\PayTypeRepresentation.cs" />
+    <Compile Include="Representations\PersonRepresentation.cs" />
     <Compile Include="Representations\RentalGroup_Representation.cs" />
-    <Compile Include="Representations\Rental_Representation.cs" />
+    <Compile Include="Representations\RentalRepresentation.cs" />
     <Compile Include="Representations\RepresentationBase.cs" />
-    <Compile Include="Representations\ToolStatus_Representation.cs" />
-    <Compile Include="Representations\Tool_Representation.cs" />
+    <Compile Include="Representations\ToolStatusRepresentation.cs" />
+    <Compile Include="Representations\ToolRepresentation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

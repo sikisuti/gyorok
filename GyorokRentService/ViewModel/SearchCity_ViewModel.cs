@@ -25,7 +25,7 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        public List<City_Representation> allCities;
+        public List<CityRepresentation> allCities;
 
         private bool _IsBusy;
         public bool IsBusy
@@ -41,8 +41,8 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        private ObservableCollection<City_Representation> _cityList;
-        public ObservableCollection<City_Representation> cityList
+        private ObservableCollection<CityRepresentation> _cityList;
+        public ObservableCollection<CityRepresentation> cityList
         {
             get
             {
@@ -61,8 +61,8 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        private City_Representation _selectedCity;
-        public City_Representation selectedCity
+        private CityRepresentation _selectedCity;
+        public CityRepresentation selectedCity
         {
             get { return _selectedCity; }
             set
@@ -155,7 +155,7 @@ namespace GyorokRentService.ViewModel
 
         private void Filtering()
         {
-            cityList = new ObservableCollection<City_Representation>(allCities.Where(c => c.city.ToLower().StartsWith(_searchText.ToLower()) && c.isDeleted == false).OrderBy(co => co.city));
+            cityList = new ObservableCollection<CityRepresentation>(allCities.Where(c => c.city.ToLower().StartsWith(_searchText.ToLower()) && c.isDeleted == false).OrderBy(co => co.city));
         }
     }
 }

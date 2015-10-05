@@ -11,6 +11,7 @@ using GyorokRentService.ViewModel;
 using System.Windows;
 using SQLConnectionLib;
 using Common.Enumerations;
+using Common.Validations;
 
 namespace GyorokRentService.ViewModel
 {
@@ -34,8 +35,8 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        private CustomerBase_Representation _newCustomer;
-        public CustomerBase_Representation newCustomer
+        private CustomerBaseRepresentation _newCustomer;
+        public CustomerBaseRepresentation newCustomer
         {
             get { return _newCustomer; }
             set
@@ -44,6 +45,26 @@ namespace GyorokRentService.ViewModel
                 {
                     _newCustomer = value;
                     RaisePropertyChanged("newCustomer");
+                }
+            }
+        }
+        
+        private bool _isPerson;
+        public bool isPerson
+        {
+            get { return _isPerson; }
+            set
+            {
+                if (_isPerson != value)
+                {
+                    _isPerson = value;
+
+                    if (value)
+                        newCustomer = new PersonRepresentation() { ValidationRules = new PersonValidationForCreation() };
+                    else
+                        newCustomer = new FirmRepresentation() { ValidationRules = new FirmValidationForCreation() };
+
+                    RaisePropertyChanged("isPerson");
                 }
             }
         }
@@ -71,8 +92,7 @@ namespace GyorokRentService.ViewModel
         {
             if (!this.IsInDesignMode)
             {
-                newCustomer = new CustomerBase_Representation();
-                newCustomer.isFirm = false;
+                isPerson = true;                    
                 _type = displayType;
             }
         }

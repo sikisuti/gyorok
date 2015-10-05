@@ -35,7 +35,7 @@ namespace GyorokRentService.View
                 newToolViewModel = newToolWindow.DataContext as NewTool_ViewModel;
                 newToolViewModel.ToolInserted += (so, ar) =>
                 {
-                    viewModel.selectedTool = so as Tool_Representation;
+                    viewModel.selectedTool = so as ToolRepresentation;
                     viewModel.OnToolSelected();
                     newToolWindow.Close();
                 };
