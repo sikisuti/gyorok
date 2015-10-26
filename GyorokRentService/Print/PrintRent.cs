@@ -8,78 +8,86 @@ using System.Windows.Forms;
 using System.Configuration;
 using SQLConnectionLib;
 using System.IO;
+using MiddleLayer.Representations;
 
 namespace GyorokRentService.Print
 {
     class PrintRent
     {
-        //dbGyorokEntities db = new dbGyorokEntities();
-        List<RentalSum> rentalsToPrint = new List<RentalSum>();
+        RentalGroup_Representation rentalsToPrint;
         RentCalculates calc = new RentCalculates();
-        long totalCost;
-        long deposit;
+        //long totalCost;
+        //long deposit;
         string contract;
-        string comment;
+        //string comment;
 
-        public PrintRent(List<RentalSum> r)
+        //public PrintRent(List<RentalSum> r)
+        //{
+        //    rentalsToPrint = r;
+        //    Printing();
+        //}
+
+        public PrintRent(RentalGroup_Representation rentalGroup)
         {
-            rentalsToPrint = r;
-            Printing();
-        }
-
-        public PrintRent(long groupID)
-        {
-
-            rentalsToPrint = SQLConnection.Execute.RentalSumView.Where(rs => rs.groupID == groupID).ToList();
-            Printing();
-        }
-
-        private void CalcTotalCost()
-        {
-            long gID = rentalsToPrint[0].groupID;
-            deposit = (long)SQLConnection.Execute.RentalGroupsTable.Single(rg => rg.groupID == gID).deposit;
-            totalCost = 0;
-            foreach (var item in rentalsToPrint)
+            rentalsToPrint = rentalGroup;
+            try
             {
-                //if (item.isPaid != true)
-                //{
-                    totalCost += calc.getRentCost(item.rentalStart, item.rentalEnd, (long)item.actualPrice, (float)item.discount); // (long)((item.rentalEnd - item.rentalStart).Days * item.actualPrice * (1 - item.discount));
-                //}
+                Printing();
             }
-            //totalCost -= deposit;
-        }
-
-        private string CalcPartCost(DateTime start, DateTime end, long price, float discount)
-        {
-            int hours;
-
-            hours = calc.getIntervalInHours(start, end);
-            if (hours == 0)
+            catch (Exception ex)
             {
-                hours = 1;
+                throw ex;
             }
-
-            return ((long)Math.Round((double)(hours * (price / 10) * (1 - discount)), 0)).ToString("C0");
-            
         }
+
+        //private void CalcTotalCost()
+        //{
+        //    long gID = rentalsToPrint[0].groupID;
+        //    deposit = (long)SQLConnection.Execute.RentalGroupsTable.Single(rg => rg.groupID == gID).deposit;
+        //    totalCost = 0;
+        //    foreach (var item in rentalsToPrint)
+        //    {
+        //        //if (item.isPaid != true)
+        //        //{
+        //            totalCost += calc.getRentCost(item.rentalStart, item.rentalEnd, (long)item.actualPrice, (float)item.discount); // (long)((item.rentalEnd - item.rentalStart).Days * item.actualPrice * (1 - item.discount));
+        //        //}
+        //    }
+        //    //totalCost -= deposit;
+        //}
+
+        //private string CalcPartCost(DateTime start, DateTime end, long price, float discount)
+        //{
+        //    int hours;
+
+        //    hours = calc.getIntervalInHours(start, end);
+        //    if (hours == 0)
+        //    {
+        //        hours = 1;
+        //    }
+
+        //    return ((long)Math.Round((double)(hours * (price / 10) * (1 - discount)), 0)).ToString("C0");
+
+        //}
 
         public void Printing()
         {
-            long rtpID;
+            //long rtpID;
             PrintDialog pDialog = new PrintDialog();
-            FileStream fs = new FileStream(@"Kölcsönzés_Feltételek.txt", FileMode.Open, FileAccess.Read);
-            StreamReader sr = new StreamReader(fs);
-            rtpID = rentalsToPrint[0].groupID;
-            comment = SQLConnection.Execute.RentalGroupsTable.Single(r => r.groupID == rtpID).comment;
+            try
+            {
+                FileStream fs = new FileStream(@"Kölcsönzés_Feltételek.txt", FileMode.Open, FileAccess.Read);
+                StreamReader sr = new StreamReader(fs);
+                contract = sr.ReadToEnd();
+            }
+            catch (Exception)
+            {
+                contract = string.Empty;
+            }
 
-            contract = sr.ReadToEnd();
-
-            CalcTotalCost();
+            //CalcTotalCost();
 
             try
             {
-                try
-                {
                     PrintDocument pd = new PrintDocument();
                     pd.PrintPage += new PrintPageEventHandler(pd_PrintRent);
 
@@ -89,16 +97,10 @@ namespace GyorokRentService.Print
                         // Print the document.
                         pd.Print();
                     }
-                    
-                }
-                finally
-                {
-                    
-                }
             }
             catch (Exception ex)
             {
-                
+                throw ex;
             }
         }
 
@@ -136,23 +138,19 @@ namespace GyorokRentService.Print
             ev.Graphics.DrawString("Mely létrejött a " + Properties.Settings.Default.CompanyName + " - továbbiakban bérbeadó -, és Bérlő között",
                 new Font(FontFamily.GenericSerif, 10, FontStyle.Bold), Brushes.Black, subTitle, centerFormat);
             ev.Graphics.DrawString("Bérlő neve:", new Font(FontFamily.GenericSerif, 12, FontStyle.Bold), Brushes.Black, personDatas, new StringFormat());
-            ev.Graphics.DrawString(rentalsToPrint[0].customerName, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 100, personDatas.Y, new StringFormat());
+            ev.Graphics.DrawString(rentalsToPrint.rentals[0].customer.customerName, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 100, personDatas.Y, new StringFormat());
             ev.Graphics.DrawString("Címe:", new Font(FontFamily.GenericSerif, 12, FontStyle.Bold), Brushes.Black, personDatas.X, personDatas.Y + 20, new StringFormat());
-            if (rentalsToPrint[0].customerCityID != null)
-            {
-                ev.Graphics.DrawString(rentalsToPrint[0].customerPostalCode + " " + rentalsToPrint[0].customerCity + ", " + rentalsToPrint[0].customerAddress, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 100, personDatas.Y + 20, new StringFormat());
-            }
-            else
-            {
-                ev.Graphics.DrawString(rentalsToPrint[0].customerAddress, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 100, personDatas.Y + 20, new StringFormat());
-            }            
+            ev.Graphics.DrawString(rentalsToPrint.rentals[0].customer.GetAddressString(), new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 100, personDatas.Y + 20, new StringFormat());
             ev.Graphics.DrawString("Szem. ig. sz., tel.:", new Font(FontFamily.GenericSerif, 12, FontStyle.Bold), Brushes.Black, personDatas.X, personDatas.Y + 50, new StringFormat());
-            ev.Graphics.DrawString(rentalsToPrint[0].cIDNumber + ", " + rentalsToPrint[0].customerPhone, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 150, personDatas.Y + 50, new StringFormat());
+            ev.Graphics.DrawString(rentalsToPrint.rentals[0].customer.IDNumber + ", " + rentalsToPrint.rentals[0].customer.customerPhone, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 150, personDatas.Y + 50, new StringFormat());
             ev.Graphics.DrawString("Cég (megbízó):", new Font(FontFamily.GenericSerif, 12, FontStyle.Bold), Brushes.Black, personDatas.X, personDatas.Y + 70, new StringFormat());
-            ev.Graphics.DrawString(rentalsToPrint[0].contactName, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 150, personDatas.Y + 70, new StringFormat());
+            if (rentalsToPrint.rentals[0].contact != null)
+            {
+                ev.Graphics.DrawString(rentalsToPrint.rentals[0].contact.customerName, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 150, personDatas.Y + 70, new StringFormat()); 
+            }
             ev.Graphics.DrawString("Bérleti idő kezdete:                            napján                     órától", new Font(FontFamily.GenericSerif, 12, FontStyle.Bold), Brushes.Black, personDatas.X, personDatas.Y + 100, new StringFormat());
-            ev.Graphics.DrawString(rentalsToPrint[0].rentalStart.ToString("d"), new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 150, personDatas.Y + 100, new StringFormat());
-            ev.Graphics.DrawString(rentalsToPrint[0].rentalStart.ToString("t"), new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 350, personDatas.Y + 100, new StringFormat());
+            ev.Graphics.DrawString(rentalsToPrint.rentals[0].rentalStart.ToString("d"), new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 150, personDatas.Y + 100, new StringFormat());
+            ev.Graphics.DrawString(rentalsToPrint.rentals[0].rentalStart.ToString("t"), new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, personDatas.X + 350, personDatas.Y + 100, new StringFormat());
             ev.Graphics.DrawString("Bérleti tárgy", new Font(FontFamily.GenericSerif, 10, FontStyle.Bold), Brushes.Black, rentDatas, new StringFormat());
             ev.Graphics.DrawString("Gyártó", new Font(FontFamily.GenericSerif, 10, FontStyle.Bold), Brushes.Black, rentDatas.X + 140, rentDatas.Y, new StringFormat());
             ev.Graphics.DrawString("Azonosító", new Font(FontFamily.GenericSerif, 10, FontStyle.Bold), Brushes.Black, rentDatas.X + 270, rentDatas.Y, new StringFormat());
@@ -163,19 +161,19 @@ namespace GyorokRentService.Print
             ev.Graphics.DrawString("Eng. %", new Font(FontFamily.GenericSerif, 10, FontStyle.Bold), Brushes.Black, rentDatas.X + 630, rentDatas.Y, new StringFormat());
             ev.Graphics.DrawString("Díj", new Font(FontFamily.GenericSerif, 10, FontStyle.Bold), Brushes.Black, rentDatas.X + 700, rentDatas.Y, new StringFormat());
             int posY = rentDatas.Y + 30;
-            foreach (var item in rentalsToPrint)
+            foreach (var item in rentalsToPrint.rentals)
             {
                 //if (item.isPaid != true)
                 //{
-                    ev.Graphics.DrawString(item.toolName, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, rentDatas.X, posY, new StringFormat());
-                    ev.Graphics.DrawString(item.toolManufacturer, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, rentDatas.X + 140, posY, new StringFormat());
-                    if (item.serialNumber == null)
+                    ev.Graphics.DrawString(item.tool.toolName, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, rentDatas.X, posY, new StringFormat());
+                    ev.Graphics.DrawString(item.tool.toolManufacturer, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, rentDatas.X + 140, posY, new StringFormat());
+                    if (item.tool.serialNumber == null)
                     {
-                        ev.Graphics.DrawString(item.tIDNumber, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, rentDatas.X + 270, posY, new StringFormat()); 
+                        ev.Graphics.DrawString(item.tool.IDNumber, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, rentDatas.X + 270, posY, new StringFormat()); 
                     }
                     else
                     {
-                        ev.Graphics.DrawString(item.serialNumber, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, rentDatas.X + 270, posY, new StringFormat()); 
+                        ev.Graphics.DrawString(item.tool.serialNumber, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, rentDatas.X + 270, posY, new StringFormat()); 
                     }
                     ev.Graphics.DrawString(item.rentalEnd.ToShortDateString(), new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, rentDatas.X + 410, posY, new StringFormat());
                     ev.Graphics.DrawString(calc.getIntervalDays(item.rentalStart, item.rentalEnd).ToString(), new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, rentDatas.X + 500, posY, new StringFormat());
@@ -187,12 +185,12 @@ namespace GyorokRentService.Print
                 //}
 
             }
-            ev.Graphics.DrawString("Díj a lejárat idejéig:  " + totalCost.ToString("C0") + "\nLetét:  " + deposit.ToString("C0") + ", azaz", new Font(FontFamily.GenericSerif, 12, FontStyle.Bold), Brushes.Black, sumDatas, new StringFormat());
+            ev.Graphics.DrawString("Díj a lejárat idejéig:  " + rentalsToPrint.TotalCost.ToString("C0") + "\nLetét:  " + rentalsToPrint.deposit.ToString("C0") + ", azaz", new Font(FontFamily.GenericSerif, 12, FontStyle.Bold), Brushes.Black, sumDatas, new StringFormat());
             ev.Graphics.DrawString("A bérleti díj a bérelt tárgy visszaszállításának napján került számlázásra, addig letétként szerepel.", new Font(FontFamily.GenericSerif, 10, FontStyle.Regular), Brushes.Black, sumDatas.X, sumDatas.Y + 50, new StringFormat());
             ev.Graphics.DrawString("A bérelt tárgyat megtisztítva kérjük visszaszállítani!", new Font(FontFamily.GenericSerif, 10, FontStyle.Regular), Brushes.Black, sumDatas.X, sumDatas.Y + 67, new StringFormat());
             ev.Graphics.DrawString("A Tisztítás felára: " + Properties.Settings.Default.CostOfClean + ",- Ft.", new Font(FontFamily.GenericSerif, 12, FontStyle.Bold), Brushes.Black, sumDatas.X + 290, sumDatas.Y + 65, new StringFormat());
             ev.Graphics.DrawString("Megjegyzés:", new Font(FontFamily.GenericSerif, 12, FontStyle.Bold), Brushes.Black, sumDatas.X, sumDatas.Y + 85, new StringFormat());
-            ev.Graphics.DrawString(comment, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, commentRect, new StringFormat());
+            ev.Graphics.DrawString(rentalsToPrint.comment, new Font(FontFamily.GenericSerif, 12, FontStyle.Regular), Brushes.Black, commentRect, new StringFormat());
             ev.Graphics.DrawString(contract, new Font(FontFamily.GenericSerif, 8, FontStyle.Regular), Brushes.Black, contractRect, new StringFormat());
             ev.Graphics.DrawString("Fent leírt feltételeket elolvastam, és magamra nézve tudomásul vettem:", new Font(FontFamily.GenericSerif, 8, FontStyle.Italic), Brushes.Black, contractRect.Left + 20, contractRect.Top + contractRect.Height + 20, new StringFormat());
             ev.Graphics.DrawString("Visszavétel:", new Font(FontFamily.GenericSerif, 10, FontStyle.Italic), Brushes.Black, contractRect.Left + 450, contractRect.Top + contractRect.Height + 50, new StringFormat());

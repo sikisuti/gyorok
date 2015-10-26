@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:enm="clr-namespace:Common.Enumerations;assembly=Common"
              mc:Ignorable="d" BorderThickness="1">
     <UserControl.BorderBrush>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -25,7 +26,28 @@
                 </Grid.RowDefinitions>
                 <StackPanel Margin="10">
                     <Label Content="Tervezett visszahozatal:" HorizontalAlignment="Center" />
-                    <xctk:DateTimePicker Value="{Binding selectedRental.rentalEnd}" Style="{StaticResource BaseDateTimePickerStyle}" FormatString="yyyy/MMMM/dd HH:mm" Width="Auto"/>
+                    <RadioButton GroupName="1" 
+                                 Style="{StaticResource {x:Type ToggleButton}}" 
+                                 Content="Fél nap" 
+                                 IsChecked="{Binding newRental.rentTerm, Converter={StaticResource boolToTerm}, ConverterParameter={x:Static enm:RentTermEnum.HalfDay}}">
+                    </RadioButton>
+                    <RadioButton GroupName="1" 
+                                 Style="{StaticResource {x:Type ToggleButton}}"
+                                 Content="Egy nap"
+                                 IsChecked="{Binding newRental.rentTerm, Converter={StaticResource boolToTerm}, ConverterParameter={x:Static enm:RentTermEnum.OneDay}}">
+                    </RadioButton>
+                    <RadioButton GroupName="1" 
+                                 Style="{StaticResource {x:Type ToggleButton}}"
+                                 IsChecked="{Binding newRental.rentTerm, Converter={StaticResource boolToTerm}, ConverterParameter={x:Static enm:RentTermEnum.Custom}}">
+                        <Grid>
+                        <xctk:DateTimePicker Value="{Binding newRental.rentalEnd}" 
+                                             Style="{StaticResource BaseDateTimePickerStyle}" 
+                                             Format="FullDateTime"
+                                             Width="220"
+                                             Visibility="{Binding newRental.rentalEnd, Converter={StaticResource filledToVis}}"/>
+                        <TextBlock Text="Egyedi" Visibility="{Binding newRental.rentalEnd, Converter={StaticResource filledToVis}, ConverterParameter=true}"/>
+                        </Grid>
+                    </RadioButton>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="1">
                     <Label Content="Engedmény:" />
@@ -42,33 +64,36 @@
                     <Image HorizontalAlignment="Left" Margin="0,0,0,0" Name="image2" Stretch="Fill" VerticalAlignment="Top" Source="/GyorokRentService;component/Images/IconPageAdd64.png" />
                 </Button>
             </Grid>
-            <StackPanel Orientation="Horizontal" Margin="5">
-                <ListView ItemsSource="{Binding newRentalGroup.rentals}" SelectedItem="{Binding selectedRental}" Height="100">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding tool.toolName}" Header="Gép" Width="150" />
-                            <GridViewColumn DisplayMemberBinding="{Binding tool.IDNumber}" Header="Azonosító" Width="100" />
-                            <GridViewColumn DisplayMemberBinding="{Binding rentalEnd, StringFormat=yyyy.MM.dd}" Header="Lejárat" Width="130" />
-                            <GridViewColumn DisplayMemberBinding="{Binding discount, StringFormat={}{0} %}" Header="Kedvezmény" Width="100" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-                <Button Command="{Binding openRentalGroupWindow}" Height="64" Width="64" BorderThickness="0" Background="{x:Null}" BorderBrush="{x:Null}">
-                    <Image Source="/GyorokRentService;component/Images/IconNext64.png" />
-                </Button>
-            </StackPanel>
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Label Content="Fizetési mód:" />
-                <ComboBox Grid.Column="1" Width="150" IsEnabled="{Binding changeEnabled}" ItemsSource="{Binding payType}" SelectedItem="{Binding selectedPayType}" DisplayMemberPath="payTypeName" />
-                
+                <ListView ItemsSource="{Binding newRentalGroup.rentals}" SelectedItem="{Binding selectedRental}" Height="100">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding tool.toolName}" Header="Gép" Width="150" />
+                            <GridViewColumn DisplayMemberBinding="{Binding tool.IDNumber}" Header="Azonosító" Width="100" />
+                            <GridViewColumn DisplayMemberBinding="{Binding IntervalDay}" Header="Nap" Width="60" />
+                            <GridViewColumn DisplayMemberBinding="{Binding discount, StringFormat={}{0} %}" Header="Kedvezmény" Width="100" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Button Grid.Column="1" Command="{Binding openRentalGroupWindow}" Height="64" Width="64" BorderThickness="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Image Source="/GyorokRentService;component/Images/IconNext64.png" />
+                </Button>
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5">
+                    <Label Content="Fizetési mód:" />
+                    <ComboBox Grid.Column="1" Width="150" IsEnabled="{Binding changeEnabled}" ItemsSource="{Binding payType}" SelectedItem="{Binding selectedPayType}" DisplayMemberPath="payTypeName" />
+
+                </StackPanel>
+                <Button Grid.Row="1" Command="{Binding deleteRent}" Height="36" HorizontalAlignment="Right" Width="36" Background="{x:Null}" BorderThickness="0" BorderBrush="{x:Null}">
+                    <Image Stretch="Fill" Source="/GyorokRentService;component/Images/IconPageRemove48.png" />
+                </Button>
             </Grid>
             <!--<StackPanel Orientation="Horizontal">
                 <Label Content="Foglalva:" FontSize="10" />

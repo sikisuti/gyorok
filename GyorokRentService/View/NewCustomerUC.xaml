@@ -9,10 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="538" d:DesignWidth="650" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:my="clr-namespace:GyorokRentService.View">
     
-    <UserControl.Resources>
-        <ResourceDictionary Source="/RootResources.xaml"/>
-    </UserControl.Resources>
-
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <RadioButton Margin="5" Visibility="{Binding visibleMode}" GroupName="1" IsChecked="{Binding isPerson, Converter={StaticResource boolInverter}}" Content="Cég" />

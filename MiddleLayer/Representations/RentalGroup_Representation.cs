@@ -8,8 +8,8 @@ namespace MiddleLayer.Representations
 {
     public class RentalGroup_Representation : RepresentationBase
     {
-        private long? _deposit;
-        public long? deposit
+        private long _deposit;
+        public long deposit
         {
             get { return _deposit; }
             set
@@ -63,10 +63,23 @@ namespace MiddleLayer.Representations
                 }
             }
         }
+        
+        public long TotalCost { get { return rentals.Sum(r => r.TotalPrice); } }
 
         public RentalGroup_Representation()
         {
             rentals = new ObservableCollection<RentalRepresentation>();
+        }
+
+        public void ResetDeposit()
+        {
+            deposit = rentals.Sum(r => r.tool.defaultDeposit) ?? 0;
+        }
+
+        public void RemoveRental(RentalRepresentation rental)
+        {
+            rentals.Remove(rental);
+            RaisePropertyChanged("TotalCost");
         }
     }
 }

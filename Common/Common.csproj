@@ -51,6 +51,7 @@
     <Compile Include="Enumerations\FilterTypeEnum.cs" />
     <Compile Include="Enumerations\OperationTypeEnum.cs" />
     <Compile Include="Enumerations\PayTypeEnum.cs" />
+    <Compile Include="Enumerations\RentTermEnum.cs" />
     <Compile Include="Enumerations\SearchCustomerTypeEnum.cs" />
     <Compile Include="Enumerations\ToolStatusEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

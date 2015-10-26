@@ -169,7 +169,7 @@ namespace SQLConnectionLib
             throw new NotImplementedException();
         }
 
-        public void AddRentalGroup(RentalGroups rentalGroup)
+        public long AddRentalGroup(RentalGroups rentalGroup)
         {
             throw new NotImplementedException();
         }

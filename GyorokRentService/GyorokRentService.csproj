@@ -158,6 +158,8 @@
     <Compile Include="Converters.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolInverterConverter.cs" />
+    <Compile Include="Converters\BoolToTermConverter.cs" />
+    <Compile Include="Converters\FilledToVisibilityConverter.cs" />
     <Compile Include="Converters\FilterTypeToButtonBorderBrush.cs" />
     <Compile Include="Converters\ObjectExistsToBool.cs" />
     <Compile Include="CustomInstaller.cs">
@@ -177,9 +179,6 @@
       <DependentUpon>Rent_Tab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Validations\FieldNotEmpty.cs" />
     <Compile Include="Validations\FieldOnlyLong.cs" />
     <Compile Include="ViewModel\CustomerSum_ViewModel.cs" />
@@ -284,14 +283,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Rent_Tab.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="RootResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

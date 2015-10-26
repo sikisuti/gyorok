@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GyorokRentService.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,30 @@ namespace GyorokRentService.View
     /// </summary>
     public partial class RentalsSum : UserControl
     {
+        RentalsSum_ViewModel viewModel { get; set; }
+
         public RentalsSum()
         {
             InitializeComponent();
+
+            viewModel = new RentalsSum_ViewModel();
+            DataContext = viewModel;
+        }
+
+        private void expRentalGroupChooser_Expanded(object sender, RoutedEventArgs e)
+        {
+            SearchRental_ViewModel searchRental_VM = new SearchRental_ViewModel();
+            Window searchRentalWindow = new Window()
+            {
+                Title = "Kölcsönzés választó",
+                Content = searchRental_VM
+            };
+            searchRentalWindow.Show();
+        }
+
+        private void expRentalGroupChooser_Collapsed(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

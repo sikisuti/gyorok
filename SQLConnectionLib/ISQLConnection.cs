@@ -40,7 +40,7 @@ namespace SQLConnectionLib
         void DeleteRentalById(long id);
 
         RentalGroups GetRentalGroupById(long id);
-        void AddRentalGroup(RentalGroups rentalGroup);
+        long AddRentalGroup(RentalGroups rentalGroup);
 
         List<PayTypes> GetPayTypes();
     }

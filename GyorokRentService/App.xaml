@@ -18,6 +18,8 @@
         <conv:BoolInverterConverter x:Key="boolInverter" />
         <conv:ObjectExistsToBool x:Key="objectExistsToBool" />
         <conv:FilterTypeToButtonBorderBrush x:Key="filterTypeToBorder"/>
+        <conv:BoolToTermConverter x:Key="boolToTerm" />
+        <conv:FilledToVisibilityConverter x:Key="filledToVis" />
         <local:FilledToVisibilityConverter x:Key="fillToVis"/>
         <local:BooleanToReadOnlyTextBgConverter x:Key="readOnlyToBg"/>
         <local:BooleanToReadOnlyTextBorderConverter x:Key="readOnlyToBorder"/>
@@ -33,6 +35,7 @@
         <!--Label-->
         <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}">
             <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
         <!--ListBox-->
         <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseStyle}">
@@ -54,6 +57,10 @@
                     <Setter Property="BorderThickness" Value="0"/>
                 </Trigger>
             </Style.Triggers>
+        </Style>
+        <!-- TextBlock -->
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         <!--DateTimePicker-->
         <Style x:Key="BaseDateTimePickerStyle" TargetType="{x:Type xctk:DateTimePicker}" BasedOn="{StaticResource BaseStyle}">

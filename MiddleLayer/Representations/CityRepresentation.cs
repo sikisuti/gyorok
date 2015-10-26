@@ -33,5 +33,10 @@ namespace MiddleLayer.Representations
                     RaisePropertyChanged("city");
                 } }
         }
+
+        public override string ToString()
+        {
+            return postalCode + " " + city;
+        }
     }
 }

@@ -10,17 +10,29 @@ using System.Collections.ObjectModel;
 using SQLConnectionLib;
 using MiddleLayer.Representations;
 using MiddleLayer;
+using NLog;
 
 namespace GyorokRentService.ViewModel
 {
     class NewRentGroup_ViewModel : ViewModelBase
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public event EventHandler rentGroupAccepted;
         public void OnRentGroupAccepted()
         {
             if (rentGroupAccepted != null)
             {
                 rentGroupAccepted(null, null);
+            }
+        }
+
+        public event EventHandler rentGroupCancelled;
+        public void OnRentGroupCancelled(EventArgs e)
+        {
+            if (rentGroupCancelled != null)
+            {
+                rentGroupCancelled(null, e);
             }
         }
 
@@ -61,43 +73,50 @@ namespace GyorokRentService.ViewModel
 
                 _selectedRent = value;
                 RaisePropertyChanged("selectedRent");
+                RaisePropertyChanged("deleteRent");
             }
         }
 
-        public ICommand deleteRent { get { return new RelayCommand(deleteRentExecute, () => true); } }
+        public ICommand deleteRent { get { return new RelayCommand(deleteRentExecute, canDeleteRentExecute); } }
         void deleteRentExecute()
         {
-            DataProxy.Instance.DeleteRentalById(selectedRent.id);
-            AppMessages.NewRentRemoved.Send(selectedRent);
-            rentalGroup.rentals.Remove(selectedRent);
+            rentalGroup.RemoveRental(selectedRent);
+            selectedRent = null;
+            rentalGroup.ResetDeposit();
+        }
+        bool canDeleteRentExecute()
+        {
+            return selectedRent != null;
         }
         public ICommand cancelGroup { get { return new RelayCommand(cancelGroupExecute, () => true); } }
         void cancelGroupExecute()
         {
-            AppMessages.RentGroupClosed.Send(null);            
+            OnRentGroupCancelled(EventArgs.Empty);          
         }
         public ICommand acceptGroup { get { return new RelayCommand(acceptGroupExecute, () => true); } }
         void acceptGroupExecute()
         {
-            if (rentalGroup.rentals.Count == 0)
-            {
-                return;
-            }
-
-            RentalGroup_Representation rentalGroupToAdd = new RentalGroup_Representation() {  };
+            if (rentalGroup.rentals.Count == 0) return;
+            
             foreach (RentalRepresentation rental in rentalGroup.rentals)
             {                
                 rental.tool.toolStatus.id = 3;
                 rental.tool.rentCounter += 1;
-                rental.rentalStart = CalcStartHour();
+                rental.rentalStart = DateTime.Now;
                 rental.isPaid = false;
                 rental.customer.rentCounter += 1;
-                rentalGroupToAdd.rentals.Add(rental);
+                rental.rentalStart = DateTime.Now;
             }
-            DataProxy.Instance.AddRentalGroup(rentalGroupToAdd);
-            new Print.PrintRent(rentalGroupToAdd.id);
+            rentalGroup.id = DataProxy.Instance.AddRentalGroup(rentalGroup);
+            try
+            {
+                new Print.PrintRent(rentalGroup);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Printing error");
+            }
             OnRentGroupAccepted();
-            AppMessages.RentGroupClosed.Send(null);
         }
 
         public NewRentGroup_ViewModel()
@@ -108,27 +127,32 @@ namespace GyorokRentService.ViewModel
         public NewRentGroup_ViewModel(RentalGroup_Representation r)
         {
             rentalGroup = r;
+            r.ResetDeposit();
+            foreach (RentalRepresentation rental in rentalGroup.rentals)
+            {
+                rental.rentalStart = DateTime.Today;
+            }
         }
         
-        private DateTime CalcStartHour()
-        {
-            int hour;
-            if (DateTime.Now.Minute > 30)
-            {
-                if (DateTime.Now.Hour == 23)
-                {
-                    hour = 0;
-                }
-                else
-                {
-                    hour = DateTime.Now.Hour + 1;
-                }
-            }
-            else
-            {
-                hour = DateTime.Now.Hour;
-            }
-            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hour, 0, 0);
-        }
+        //private DateTime CalcStartHour()
+        //{
+        //    int hour;
+        //    if (DateTime.Now.Minute > 30)
+        //    {
+        //        if (DateTime.Now.Hour == 23)
+        //        {
+        //            hour = 0;
+        //        }
+        //        else
+        //        {
+        //            hour = DateTime.Now.Hour + 1;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        hour = DateTime.Now.Hour;
+        //    }
+        //    return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hour, 0, 0);
+        //}
     }
 }

@@ -21,6 +21,7 @@ namespace GyorokRentService.ViewModel
         public event EventHandler RentGroupChanged;
         public void OnRentGroupChanged()
         {
+            RaisePropertyChanged("openRentalGroupWindow");
             if (RentGroupChanged != null)
             {
                 RentGroupChanged(newRentalGroup, EventArgs.Empty);
@@ -47,6 +48,7 @@ namespace GyorokRentService.ViewModel
                 {
                     _newRentalGroup = value;
                     RaisePropertyChanged("newRentalGroup");
+                    OnRentGroupChanged();
                 }
             }
         }
@@ -75,6 +77,7 @@ namespace GyorokRentService.ViewModel
                 {
                     _selectedRental = value;
                     RaisePropertyChanged("selectedRental");
+                    RaisePropertyChanged("deleteRent");
                 }
             }
         }
@@ -219,10 +222,30 @@ namespace GyorokRentService.ViewModel
             }
             AddNewRent();
         }
-        public ICommand openRentalGroupWindow { get { return new RelayCommand(openRentalGroupWindowExecute, () => true); } }
+        public ICommand openRentalGroupWindow { get { return new RelayCommand(openRentalGroupWindowExecute, canOpenRentalGroupWindowExecute); } }
         void openRentalGroupWindowExecute()
         {
             OnRentalGroupFinalizationRequested(EventArgs.Empty);
+        }
+        bool canOpenRentalGroupWindowExecute()
+        {
+            return newRentalGroup.rentals.Count > 0;
+        }
+        public ICommand deleteRent { get { return new RelayCommand(deleteRentExecute, canDeleteRentExecute); } }
+        void deleteRentExecute()
+        {
+            if (MessageBoxResult.Yes != MessageBox.Show("Valóban törölni akarod a kijelölt bérlést?", "Bérlés törlése", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No))
+            {
+                return;
+            }
+
+            newRentalGroup.rentals.Remove(selectedRental);
+            selectedRental = null;
+            OnRentGroupChanged();
+        }
+        bool canDeleteRentExecute()
+        {
+            return selectedRental != null;
         }
 
         public NewRent_ViewModel()
@@ -236,7 +259,6 @@ namespace GyorokRentService.ViewModel
                 payType = DataProxy.Instance.GetPayTypes();
                 newRentalGroup = new RentalGroup_Representation();
                 newRental = new RentalRepresentation();
-                selectedRental = new RentalRepresentation();
 
                 selectedPayType = payType.SingleOrDefault(pt => pt.id == 1);
                 newRental.payType = selectedPayType;

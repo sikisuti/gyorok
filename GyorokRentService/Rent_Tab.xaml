@@ -60,7 +60,7 @@
                 
             </TabItem>
             <TabItem Style="{StaticResource StyleRentSub2}" Header="Kölcsönzések" Name="tiRentalList">
-                <Grid>
+                <!--<Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="*"/>
@@ -72,10 +72,10 @@
                             </Label.Content>
                         </Label>
                     </Grid>
-                    <Grid Name="grdRentalSum" Grid.Row="1">
+                    <Grid Name="grdRentalSum" Grid.Row="1">-->
                         <!--RentalSum added from codebehind-->
-                    </Grid>
-                </Grid>
+                    <!--</Grid>
+                </Grid>-->
             </TabItem>
         </TabControl>
     </Grid>

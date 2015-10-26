@@ -7,16 +7,24 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using SQLConnectionLib;
+using MiddleLayer.Representations;
 
 namespace GyorokRentService.ViewModel
 {
     class SearchRental_ViewModel : ViewModelBase
     {
-        //dbGyorokEntities db;
+        public event EventHandler RentGroupSelected;
+        public void OnRentGroupSelected(EventArgs e)
+        {
+            if (RentGroupSelected != null)
+            {
+                RentGroupSelected(selectedGroup, e);
+            }
+        }
 
         private string _searchText;
-        private ObservableCollection<GroupList> _groupSum;
-        private GroupList _selectedGroup;
+        private ObservableCollection<RentalGroup_Representation> _groupSum;
+        private RentalGroup_Representation _selectedGroup;
         private bool _showOlds;
         
         public string searchText
@@ -37,7 +45,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("searchText");
             }
         }
-        public ObservableCollection<GroupList> groupSum
+        public ObservableCollection<RentalGroup_Representation> groupSum
         {
             get
             {
@@ -55,7 +63,7 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("groupSum");
             }
         }
-        public GroupList selectedGroup
+        public RentalGroup_Representation selectedGroup
         {
             get
             {
@@ -93,26 +101,15 @@ namespace GyorokRentService.ViewModel
             }
         }
 
-        public ICommand searchTextChanged { get { return new RelayCommand(searchTextChangedExecute, CansearchTextChangedExecute); } }
+        public ICommand searchTextChanged { get { return new RelayCommand(searchTextChangedExecute, () => true); } }
         void searchTextChangedExecute()
         {
             RefreshRentalList();
         }
-        bool CansearchTextChangedExecute()
-        {
-            return true;
-        }
         public ICommand customerSelected { get { return new RelayCommand(customerSelectedExecute, CancustomerSelectedExecute); } }
         void customerSelectedExecute()
         {
-            try
-            {
-                AppMessages.GroupToSelect.Send(selectedGroup);
-            }
-            catch (Exception)
-            {
-
-            }
+            OnRentGroupSelected(EventArgs.Empty);
         }
         bool CancustomerSelectedExecute()
         {
@@ -154,30 +151,5 @@ namespace GyorokRentService.ViewModel
                                  .Distinct().OrderBy(g => g.RentStart).ToList()); 
             }
         }
-    }
-
-    public class GroupList
-    {
-        private long groupID;
-        public long GroupID
-        {
-            get { return groupID; }
-            set { groupID = value; }
-        }
-
-        private string customerName;
-        public string CustomerName
-        {
-            get { return customerName; }
-            set { customerName = value; }
-        }
-
-        private DateTime rentStart;
-        public DateTime RentStart
-        {
-            get { return rentStart; }
-            set { rentStart = value; }
-        }
-
     }
 }

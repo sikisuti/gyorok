@@ -203,18 +203,22 @@ namespace MiddleLayer
             Rentals convertedRental = new Rentals()
             {
                 actualPrice = rental.actualPrice,
-                contactID = rental.contact.id,
                 customerID = rental.customer.id,
                 discount = (float)rental.discount,
                 isClean = rental.isClean,
                 rentalID = rental.id,
+                rentalEnd = rental.rentalEnd,
                 isPaid = rental.isPaid,
                 payTypeID = rental.payType.id,
-                rentalEnd = rental.rentalEnd,
                 rentalRealEnd = rental.rentalRealEnd,
                 rentalStart = rental.rentalStart,
                 toolID = rental.tool.id
             };
+
+            if (rental.customer.isFirm && rental.contact != null)
+            {
+                convertedRental.contactID = rental.contact.id;
+            }
 
             return convertedRental;
         }

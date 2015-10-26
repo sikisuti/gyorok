@@ -26,6 +26,7 @@ namespace GyorokRentService
             InitializeComponent();
 
             tiNewRent.Content = new NewRent_SubTab();
+            tiRentalList.Content = new RentalsSum();
         }
     }
 }

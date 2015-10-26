@@ -86,18 +86,21 @@ namespace GyorokRentService.ViewModel
                 {
                     //if (value != null) value.contacts = DataProxy.Instance.GetContacts(value);
 
-                    switch (customerMode)
+                    if (value != null)
                     {
-                        case OperationTypeEnum.Rental:
-                            if (value.isFirm)
-                                ((FirmRepresentation)value).ValidationRules = new FirmValidationForRent();
-                            else
-                                ((PersonRepresentation)value).ValidationRules = new PersonValidationForRent();
-                            break;
-                        case OperationTypeEnum.Service:
-                            break;
-                        default:
-                            break;
+                        switch (customerMode)
+                        {
+                            case OperationTypeEnum.Rental:
+                                if (value.isFirm)
+                                    ((FirmRepresentation)value).ValidationRules = new FirmValidationForRent();
+                                else
+                                    ((PersonRepresentation)value).ValidationRules = new PersonValidationForRent();
+                                break;
+                            case OperationTypeEnum.Service:
+                                break;
+                            default:
+                                break;
+                        } 
                     }
 
                     _selectedCustomer = value;

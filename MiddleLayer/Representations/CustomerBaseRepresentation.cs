@@ -178,5 +178,18 @@ namespace MiddleLayer.Representations
         protected abstract string GetError();
         protected abstract string GetValidation(string columnName);
 
+        public string GetAddressString()
+        {
+            StringBuilder rtn = new StringBuilder();
+
+            if (city != null)
+            {
+                rtn.Append(city.ToString());
+            }
+
+            rtn.Append(customerAddress);
+
+            return rtn.ToString();
+        }
     }
 }

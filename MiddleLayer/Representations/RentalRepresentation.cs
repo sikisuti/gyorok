@@ -176,9 +176,65 @@ namespace MiddleLayer.Representations
             }
         }
 
+        private RentTermEnum _rentTerm;
+        public RentTermEnum rentTerm
+        {
+            get { return _rentTerm; }
+            set
+            {
+                if (_rentTerm != value)
+                {
+                    if (value != RentTermEnum.Custom)
+                    {
+                        rentalEnd = new DateTime(0);
+                    }
+                    else
+                    {
+                        rentalEnd = DateTime.Now.AddDays(1);
+                    }
+                    _rentTerm = value;
+                    RaisePropertyChanged("rentTerm");
+                }
+            }
+        }
+
+        public decimal IntervalDay {
+            get
+            {
+                decimal rtn = 0;
+
+                switch (rentTerm)
+                {
+                    case RentTermEnum.OneHour:
+                        return 0.2m;
+                        break;
+                    case RentTermEnum.HalfDay:
+                        return 0.5m;
+                        break;
+                    case RentTermEnum.OneDay:
+                        return 1;
+                        break;
+                    case RentTermEnum.ThreeDays:
+                        rtn = 3;
+                        break;
+                    case RentTermEnum.OneWeek:
+                        rtn = 7;
+                        break;
+                    case RentTermEnum.Custom:
+                        rtn = (rentalEnd - rentalStart).Days;
+                        break;
+                    default:
+                        break;
+                }
+                return rtn;
+            }
+        }
+
+        public long TotalPrice { get { return (long)Math.Round(IntervalDay * tool.rentPrice, 0); } }
+
         public RentalRepresentation()
         {
-            rentalEnd = DateTime.Today.AddDays(1);
+            rentTerm = RentTermEnum.OneDay;
         }
 
         public object Clone()

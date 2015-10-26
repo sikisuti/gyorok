@@ -239,18 +239,26 @@ namespace MiddleLayer
                 return RepresentationConverter.convertRentalGroup(dataSource.GetRentalGroupById(id));
             }
         }
-        public void AddRentalGroup(RentalGroup_Representation rentalGroup)
+        public long AddRentalGroup(RentalGroup_Representation rentalGroup)
         {
             using (ISQLConnection dataSource = DataSource)
             {
                 RentalGroups rentalGroupToAdd = RepresentationConverter.convertRentalGroup(rentalGroup);
-                dataSource.AddRentalGroup(rentalGroupToAdd);
-
                 foreach (RentalRepresentation rental in rentalGroup.rentals)
                 {
-                    rental.group.id = rentalGroupToAdd.groupID;
-                    AddRental(rental);
+                    rentalGroupToAdd.Rentals.Add(RepresentationConverter.convertRental(rental));
+                    dataSource.UpdateTool(RepresentationConverter.convertTool(rental.tool));
+                    dataSource.UpdateCustomer(RepresentationConverter.convertCustomer(rental.customer));
                 }
+                rentalGroup.id = dataSource.AddRentalGroup(rentalGroupToAdd);
+
+                //foreach (RentalRepresentation rental in rentalGroup.rentals)
+                //{
+                //    rental.group = rentalGroup;
+                //    AddRental(rental);
+                //}
+
+                return rentalGroup.id;
             }
         }
 

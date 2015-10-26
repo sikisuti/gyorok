@@ -53,7 +53,7 @@ namespace GyorokRentService
                 UCNewRent.newRent_VM.newRental.tool = tool;
             };
 
-            ((NewRent_ViewModel)UCNewRent.DataContext).RentGroupChanged += (s, a) =>
+            UCNewRent.newRent_VM.RentGroupChanged += (s, a) =>
             {
                 RentalGroup_Representation rentalGroup = s as RentalGroup_Representation;
                 if (rentalGroup.rentals.Count() != 0)
@@ -65,6 +65,24 @@ namespace GyorokRentService
                     ((CustomerSelector_ViewModel)UCCustomerSelector.DataContext).isReadonly = false;
                 }
                 ((ToolSelector_ViewModel)UCToolSelector.DataContext).selectedTool = null;
+            };
+
+            UCNewRent.newRent_VM.RentalGroupFinalizationRequested += (s, a) =>
+            {
+                NewRentGroupWindow rg = new NewRentGroupWindow((RentalGroup_Representation)s);
+                NewRentGroup_ViewModel newRentGroup_VM = rg.DataContext as NewRentGroup_ViewModel;
+                newRentGroup_VM.rentGroupAccepted += (so, ar) =>
+                {
+                    UCNewRent.newRent_VM.newRentalGroup = new RentalGroup_Representation();
+                    UCCustomerSelector.viewModel.selectedCustomer = null;
+                    UCToolSelector.viewModel.selectedTool = null;
+                    rg.Close();
+                };
+                newRentGroup_VM.rentGroupCancelled += (so, ar) =>
+                {
+                    rg.Close();
+                };
+                rg.Show();
             };
         }
     }

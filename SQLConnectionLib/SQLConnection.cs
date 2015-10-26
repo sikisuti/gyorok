@@ -523,10 +523,11 @@ namespace SQLConnectionLib
             }            
         }
 
-        public void AddRentalGroup(RentalGroups rentalGroup)
+        public long AddRentalGroup(RentalGroups rentalGroup)
         {
             db.RentalGroups.AddObject(rentalGroup);
             db.SaveChanges();
+            return rentalGroup.groupID;
         }
 
         public void AddRental(Rentals rental)
