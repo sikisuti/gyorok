@@ -9,6 +9,7 @@
              xmlns:c="clr-namespace:GyorokRentService"
              mc:Ignorable="d" 
              BorderThickness="1">
+    
     <UserControl.BorderBrush>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="Black" Offset="0" />
@@ -16,34 +17,29 @@
         </LinearGradientBrush>
     </UserControl.BorderBrush>
     <UserControl.Resources>
-        <c:BooleanToFGConverter x:Key="boolToFG"/>
-        <c:FilledToBoolConverter x:Key="fillToBool"/>
+        <Style x:Key="RentElementStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="{StaticResource mainFontSize}" />
+            <Setter Property="Foreground" Value="Black"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding isPaid}" Value="True">
+                    <Setter Property="Foreground" Value="Gray"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <local:RentalsSum_ViewModel/>
-    </UserControl.DataContext>
-    <Grid>
+    
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
     <StackPanel>
         <Expander Name="expRentalGroupChooser" 
-                  Header="{Binding selectedCustomerName}" 
                   FontSize="30" FontWeight="Bold" 
-                  Expanded="expRentalGroupChooser_Expanded"
-                  Collapsed="expRentalGroupChooser_Collapsed">
-            <!--<i:Interaction.Triggers>
-                <i:EventTrigger EventName="Expanded">
-                    <i:InvokeCommandAction Command="{Binding onExpand}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="Collapsed">
-                    <i:InvokeCommandAction Command="{Binding onCollapse}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>-->
-            <Grid x:Name="grdExpander" VerticalAlignment="Top" Background="White" Margin="0,0,0,0">
-                <!--<view:SearchRental/>-->
-            </Grid>
+                  Expanded="expRentalGroupChooser_Expanded">
+                <Expander.Header>
+                    <TextBlock FontSize="30" Text="{Binding selectedRentalGroup.rentals[0].customer.customerName}"/>
+                </Expander.Header>
         </Expander>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -58,21 +54,23 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Label Content="Azonosító szám:" />
-                <Label Grid.Column="1" Content="{Binding cIDNumber}" FontWeight="Normal" />
-                <Label Grid.Row="1" Content="Anyja neve:" Visibility="{Binding isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
-                <Label Grid.Row="1" Grid.Column="1" FontWeight="Normal" Visibility="{Binding isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Content="{Binding mothersName}" />
+                <TextBlock Grid.Column="1" Text="{Binding selectedRentalGroup.rentals[0].customer.IDNumber}" FontWeight="Normal" />
+                <Label Grid.Row="1" Content="Anyja neve:" Visibility="{Binding selectedRentalGroup.rentals[0].customer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
+                <TextBlock Grid.Row="1" Grid.Column="1" FontWeight="Normal" Visibility="{Binding selectedRentalGroup.rentals[0].customer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Text="{Binding selectedRentalGroup.rentals[0].customer.mothersName}" />
                 <Label Grid.Row="2" Content="Cím:" />
-                <Label Grid.Row="2" Grid.Column="1" Content="{Binding cAddress}" FontWeight="Normal" />
-                <Label Grid.Row="3" Content="Telefon:" />
-                <Label Grid.Row="3" Grid.Column="1" Content="{Binding cPhone}" FontWeight="Normal" />
-                <Label Grid.Row="4" Content="Születési dátum:" Visibility="{Binding isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
-                <Label Grid.Row="4" Grid.Column="1" Content="{Binding birthDate, StringFormat='yyyy. MMMM dd.'}" FontWeight="Normal" Visibility="{Binding isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
-                <Label Grid.Row="5" Content="Munkahely:" Visibility="{Binding isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
-                <Label Grid.Row="5" Grid.Column="1" Visibility="{Binding isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Content="{Binding workPlace}" />
-                <Label Grid.Row="6" Content="Kapcsolattartó:" Visibility="{Binding isFirm, Converter={StaticResource boolToVis}}" />
-                <Label Grid.Row="6" Grid.Column="1" Content="{Binding contactName}" Visibility="{Binding isFirm, Converter={StaticResource boolToVis}}" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding selectedRentalGroup.rentals[0].customer.city}" FontWeight="Normal" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding selectedRentalGroup.rentals[0].customer.customerAddress}" FontWeight="Normal" />
+                <Label Grid.Row="4" Content="Telefon:" />
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding selectedRentalGroup.rentals[0].customer.customerPhone}" FontWeight="Normal" />
+                <Label Grid.Row="5" Content="Születési dátum:" Visibility="{Binding selectedRentalGroup.rentals[0].customer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
+                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding selectedRentalGroup.rentals[0].customer.birthDate, StringFormat=D}" xml:lang="hu-HU" FontWeight="Normal" Visibility="{Binding selectedRentalGroup.rentals[0].customer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
+                <Label Grid.Row="6" Content="Munkahely:" Visibility="{Binding selectedRentalGroup.rentals[0].customer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" />
+                <TextBlock Grid.Row="6" Grid.Column="1" Visibility="{Binding selectedRentalGroup.rentals[0].customer.isFirm, Converter={StaticResource boolToVis}, ConverterParameter=true}" Text="{Binding selectedRentalGroup.rentals[0].customer.workplace}" />
+                <Label Grid.Row="7" Content="Kapcsolattartó:" Visibility="{Binding selectedRentalGroup.rentals[0].customer.isFirm, Converter={StaticResource boolToVis}}" />
+                <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding selectedRentalGroup.rentals[0].contact.customerName}" Visibility="{Binding selectedRentalGroup.rentals[0].customer.isFirm, Converter={StaticResource boolToVis}}" />
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -81,7 +79,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel>
                     <Label Content="Megjegyzés a személyhez:" />
-                    <TextBox IsEnabled="{Binding selectedCustomerName, Converter={StaticResource fillToBool}}" AcceptsReturn="True" Height="78" Text="{Binding cComment}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="205" BorderThickness="1">
+                    <TextBox IsEnabled="{Binding selectedRentalGroup, Converter={StaticResource filledToBool}}" AcceptsReturn="True" Height="78" Text="{Binding selectedRentalGroup.rentals[0].customer.comment}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" BorderThickness="1">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="LostFocus">
                                 <i:InvokeCommandAction Command="{Binding saveComments}"/>
@@ -91,7 +89,7 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <Label Content="Problémák:" />
-                    <TextBox IsEnabled="{Binding selectedCustomerName, Converter={StaticResource fillToBool}}" AcceptsReturn="True" Height="78" Text="{Binding cProblems}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="211" BorderThickness="1">
+                    <TextBox IsEnabled="{Binding selectedRentalGroup, Converter={StaticResource filledToBool}}" AcceptsReturn="True" Height="78" Text="{Binding selectedRentalGroup.rentals[0].customer.problems}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" BorderThickness="1">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="LostFocus">
                                 <i:InvokeCommandAction Command="{Binding saveComments}"/>
@@ -100,9 +98,9 @@
                     </TextBox>
                 </StackPanel>
             </Grid>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Letét:" FontSize="20" />
-                <TextBox BorderThickness="1" FontSize="20" FontWeight="Bold" Text="{Binding deposit, StringFormat=C0, UpdateSourceTrigger=PropertyChanged}" xml:lang="hu-HU" >
+                <TextBox BorderThickness="1" FontSize="20" Text="{Binding selectedRentalGroup.deposit, StringFormat=C0, UpdateSourceTrigger=PropertyChanged}" xml:lang="hu-HU" MinWidth="100" >
                     <TextBox.InputBindings>
                         <KeyBinding Command="{Binding saveDeposit}" Key="Enter"/>
                     </TextBox.InputBindings>
@@ -113,17 +111,10 @@
                     </i:Interaction.Triggers>
                 </TextBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Összes díj:" FontSize="24" FontWeight="Bold" />
-                <TextBox BorderThickness="0" FontSize="24" FontWeight="Bold" Height="40" Text="{Binding totalCost, StringFormat=C0}" xml:lang="hu-HU" Background="{x:Null}" BorderBrush="{x:Null}" />
+                <TextBlock FontSize="24" FontWeight="Bold" Text="{Binding selectedRentalGroup.TotalCost, StringFormat=C0}" xml:lang="hu-HU" />
             </StackPanel>
-        
-        
-        
-        
-        
-        
-        
         
         <!--<Button Visibility="{Binding saveDepositVisibility}" Command="{Binding saveDeposit}" Height="32" HorizontalAlignment="Left" Margin="500,541,0,0" Name="btnSaveDeposit" VerticalAlignment="Top" Width="32" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
             <Image Source="/GyorokRentService;component/Images/IconSave32.png"/>
@@ -135,32 +126,33 @@
             <Image Source="/GyorokRentService;component/Images/IconSave32.png"/>
         </Button>-->
         
-        
-        
-        
-        
-        
     </StackPanel>
         <StackPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Kölcsönzés kezdete:" IsEnabled="{Binding isNotPaid}" />
-                <TextBox Background="{x:Null}" BorderThickness="0" IsReadOnly="True" Text="{Binding rentalStart, StringFormat='yyyy. MMMM dd. HH:mm'}" BorderBrush="{x:Null}" />
+                <Label Content="Kölcsönzés kezdete:" />
+                <TextBlock Text="{Binding selectedRentalGroup.rentals[0].rentalStart, StringFormat=f}" xml:lang="hu-HU" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <ListBox ItemsSource="{Binding rentGroupItems}" SelectedValue="{Binding selectedRent}" FontSize="24" FontWeight="Normal" Height="102" HorizontalAlignment="Left" Name="listBox1" VerticalAlignment="Top" Width="330">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200"/>
-                                    <ColumnDefinition Width="100"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text='{Binding toolName}' Foreground='{Binding isPaid, Converter={StaticResource boolToFG}}'/>
-                                <TextBlock Text='{Binding tIDNumber}' Foreground='{Binding isPaid, Converter={StaticResource boolToFG}}' Grid.Column="1"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <ListView ItemsSource="{Binding selectedRentalGroup.rentals}" SelectedValue="{Binding selectedRental}" FontSize="24" FontWeight="Normal" Height="102" HorizontalAlignment="Left" Name="listBox1" VerticalAlignment="Top" Width="330">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Gép" Width="200">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding tool.toolName}" Style="{StaticResource RentElementStyle}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Azonosító" Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding tool.IDNumber}" Style="{StaticResource RentElementStyle}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
                 <Button Command="{Binding print}" Height="48" Width="48" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
                     <Grid>
                         <Image Source="/GyorokRentService;component/Images/IconPrint48.png"/>
@@ -170,15 +162,15 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <Label Content="Megjegyzés a bérlésekhez:" />
-                    <TextBox AcceptsReturn="True" Height="99" Text="{Binding rComment}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="295">
+                    <TextBox AcceptsReturn="True" Height="99" Text="{Binding selectedRentalGroup.comment}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="295">
                         <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewKeyDown">
-                                <i:InvokeCommandAction Command="{Binding rentMustSave}" />
+                            <i:EventTrigger EventName="LostFocus">
+                                <i:InvokeCommandAction Command="{Binding saveRentComments}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
                 </StackPanel>
-                <CheckBox IsEnabled="{Binding isNotPaid}" IsChecked="{Binding isClean}" FontSize="20" FontWeight="Normal" Content="Cikk állapota rendben" Height="30" HorizontalAlignment="Left" Name="checkBox1" VerticalAlignment="Top" />
+                <CheckBox IsEnabled="{Binding selectedRental.isPaid, Converter={StaticResource boolInverter}}" IsChecked="{Binding selectedRental.isClean}" FontSize="20" Content="Cikk állapota rendben" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
@@ -192,12 +184,12 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Label Content="Tervezett lejárat:" IsEnabled="{Binding isNotPaid}" />
-                        <TextBox Grid.Column="1" IsEnabled="{Binding isNotPaid}" BorderThickness="0" IsReadOnly="True" Panel.ZIndex="1" Text="{Binding rentalEnd, StringFormat='yyyy. MMMM dd.'}" xml:lang="hu-HU" Background="{x:Null}" BorderBrush="{x:Null}" />
-                        <Label Grid.Row="1" Content="Egységár:" IsEnabled="{Binding isNotPaid}" />
-                        <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" IsEnabled="{Binding isNotPaid}" BorderThickness="0" IsReadOnly="True" Text="{Binding actualPrice, StringFormat=C0}" xml:lang="hu-HU" Width="130" Background="{x:Null}" BorderBrush="{x:Null}" />
-                        <Label Grid.Row="2" Content="Engedmény:" IsEnabled="{Binding isNotPaid}" />
-                        <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" IsEnabled="{Binding isNotPaid}" BorderThickness="1" Text="{Binding discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} %}" Width="44">
+                        <Label Content="Tervezett lejárat:" />
+                        <TextBlock Grid.Column="1" Text="{Binding selectedRental.rentalEnd, StringFormat=f}" xml:lang="hu-HU" HorizontalAlignment="Left" />
+                        <Label Grid.Row="1" Content="Egységár:" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding selectedRental.actualPrice, StringFormat=C0}" xml:lang="hu-HU" HorizontalAlignment="Left" />
+                        <Label Grid.Row="2" Content="Engedmény:" IsEnabled="{Binding selectedRental.isPaid, Converter={StaticResource boolInverter}}" />
+                        <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" IsEnabled="{Binding selectedRental.isPaid, Converter={StaticResource boolInverter}}" Text="{Binding selectedRental.discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} %}" Width="44">
                             <TextBox.InputBindings>
                                 <KeyBinding Command="{Binding saveDiscount}" Key="Enter"/>
                             </TextBox.InputBindings>

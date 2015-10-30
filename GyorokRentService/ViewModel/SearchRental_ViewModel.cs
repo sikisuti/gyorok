@@ -8,6 +8,8 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using SQLConnectionLib;
 using MiddleLayer.Representations;
+using System.Threading.Tasks;
+using MiddleLayer;
 
 namespace GyorokRentService.ViewModel
 {
@@ -22,8 +24,24 @@ namespace GyorokRentService.ViewModel
             }
         }
 
+        private bool _IsBusy;
+        public bool IsBusy  
+        {
+            get { return _IsBusy; }
+            set
+            {
+                if (_IsBusy != value)
+                {
+                    _IsBusy = value;
+                    RaisePropertyChanged("IsBusy");
+                }
+            }
+        }
+
+        private List<RentalGroup_Representation> allRentalGroups;
+
         private string _searchText;
-        private ObservableCollection<RentalGroup_Representation> _groupSum;
+        private ObservableCollection<RentalGroup_Representation> _rentalGroups;
         private RentalGroup_Representation _selectedGroup;
         private bool _showOlds;
         
@@ -45,22 +63,22 @@ namespace GyorokRentService.ViewModel
                 RaisePropertyChanged("searchText");
             }
         }
-        public ObservableCollection<RentalGroup_Representation> groupSum
+        public ObservableCollection<RentalGroup_Representation> rentalGroups
         {
             get
             {
-                return _groupSum;
+                return _rentalGroups;
             }
 
             set
             {
-                if (_groupSum == value)
+                if (_rentalGroups == value)
                 {
                     return;
                 }
 
-                _groupSum = value;
-                RaisePropertyChanged("groupSum");
+                _rentalGroups = value;
+                RaisePropertyChanged("rentalGroups");
             }
         }
         public RentalGroup_Representation selectedGroup
@@ -97,14 +115,14 @@ namespace GyorokRentService.ViewModel
 
                 _showOlds = value;
                 RaisePropertyChanged("showOlds");
-                RefreshRentalList();
+                FilterList();
             }
         }
 
         public ICommand searchTextChanged { get { return new RelayCommand(searchTextChangedExecute, () => true); } }
         void searchTextChangedExecute()
         {
-            RefreshRentalList();
+            FilterList();
         }
         public ICommand customerSelected { get { return new RelayCommand(customerSelectedExecute, CancustomerSelectedExecute); } }
         void customerSelectedExecute()
@@ -120,36 +138,36 @@ namespace GyorokRentService.ViewModel
         {
             if (!this.IsInDesignMode)
             {
+                DataProxy.Instance.RentalChanged += (s, a) =>
+                {
+                    RefreshRentalList();
+                };
+
                 searchText = "";
                 showOlds = false;
                 RefreshRentalList();
-
-                AppMessages.RentGroupClosed.Register(this, gs => RefreshRentalList());
-                AppMessages.RentalPaid.Register(this, s => RefreshRentalList());
-                AppMessages.RentalsChanged.Register(this, rc => RefreshRentalList());
             }
         }
 
         private void RefreshRentalList()
         {
-            if (!showOlds)
+            Task t = new Task(() =>
             {
-                groupSum = new ObservableCollection<GroupList>(
-                                (from r in SQLConnection.Execute.RentalsTable
-                                 join c in SQLConnection.Execute.CustomersTable on r.customerID equals c.customerID
-                                 where c.customerName.StartsWith(searchText) && !(bool)r.isPaid
-                                 select new GroupList { GroupID = r.groupID, CustomerName = c.customerName, RentStart = r.rentalStart })
-                                 .Distinct().OrderBy(g => g.RentStart).ToList());  
-            }
-            else
-            {
-                groupSum = new ObservableCollection<GroupList>(
-                                (from r in SQLConnection.Execute.RentalsTable
-                                 join c in SQLConnection.Execute.CustomersTable on r.customerID equals c.customerID
-                                 where c.customerName.StartsWith(searchText)
-                                 select new GroupList { GroupID = r.groupID, CustomerName = c.customerName, RentStart = r.rentalStart })
-                                 .Distinct().OrderBy(g => g.RentStart).ToList()); 
-            }
+                IsBusy = true;
+                allRentalGroups = DataProxy.Instance.GetAllRentalGroups().Where(rg => rg.rentals.Count > 0).ToList();
+                FilterList();
+                IsBusy = false;
+            });
+            t.Start();            
+        }
+
+        private void FilterList()
+        {
+            rentalGroups = new ObservableCollection<RentalGroup_Representation>(
+                            allRentalGroups.Where(rg => 
+                                (showOlds ? true : rg.rentals.Any(r => !r.isPaid)) && 
+                                rg.rentals.FirstOrDefault().customer.customerName.ToLower().Contains(searchText.ToLower()))
+                                .ToList());  
         }
     }
 }

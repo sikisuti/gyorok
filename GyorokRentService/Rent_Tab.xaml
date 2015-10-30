@@ -56,26 +56,15 @@
     
     <Grid Background="{StaticResource RentBgBrush}">
         <TabControl Name="tcRentSub" TabStripPlacement="Top" Background="{StaticResource RentBgBrush}" BorderThickness="0" BorderBrush="{x:Null}">
-            <TabItem Style="{StaticResource StyleRentSub1}" Header="Új kölcsönzés" Name="tiNewRent">
-                
+            <TabItem Style="{StaticResource StyleRentSub1}" Name="tiNewRent">
+                <TabItem.Header>
+                    <TextBlock Text="Új kölcsönzés" FontSize="20" FontWeight="Bold"/>
+                </TabItem.Header>
             </TabItem>
-            <TabItem Style="{StaticResource StyleRentSub2}" Header="Kölcsönzések" Name="tiRentalList">
-                <!--<Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Label Padding="0,0,0,0" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Name="TitleRents" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
-                            <Label.Content>
-                                <TextBlock Text="Kölcsönzések" TextDecorations="Underline"/>
-                            </Label.Content>
-                        </Label>
-                    </Grid>
-                    <Grid Name="grdRentalSum" Grid.Row="1">-->
-                        <!--RentalSum added from codebehind-->
-                    <!--</Grid>
-                </Grid>-->
+            <TabItem Style="{StaticResource StyleRentSub2}" Name="tiRentalList">
+                <TabItem.Header>
+                    <TextBlock Text="Kölcsönzések" FontSize="20" FontWeight="Bold"/>
+                </TabItem.Header>
             </TabItem>
         </TabControl>
     </Grid>

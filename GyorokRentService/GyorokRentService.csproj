@@ -159,9 +159,11 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolInverterConverter.cs" />
     <Compile Include="Converters\BoolToTermConverter.cs" />
+    <Compile Include="Converters\FilledToBoolConverter.cs" />
     <Compile Include="Converters\FilledToVisibilityConverter.cs" />
     <Compile Include="Converters\FilterTypeToButtonBorderBrush.cs" />
     <Compile Include="Converters\ObjectExistsToBool.cs" />
+    <Compile Include="Converters\VisibilityInverterConverter.cs" />
     <Compile Include="CustomInstaller.cs">
       <SubType>Component</SubType>
     </Compile>

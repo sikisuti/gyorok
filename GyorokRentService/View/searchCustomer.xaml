@@ -21,22 +21,28 @@
                     <TextBox Text="{Binding searchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CustomEditableTextBox}" Width="291" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Column="1">
-                    <Button Command="{Binding filterFirm}" FontSize="12" Content="Cég" Height="23" Width="75" Background="{x:Null}" 
-                            BorderBrush="{Binding filterType, Converter={StaticResource filterTypeToBorder}, ConverterParameter=1}"/>
-                    <Button Command="{Binding filterPerson}" FontSize="12" Background="{x:Null}" Content="Magánszemély" Height="23" Width="101" 
-                            BorderBrush="{Binding filterType, Converter={StaticResource filterTypeToBorder}, ConverterParameter=0}"/>
-                    <Button Command="{Binding filterBoth}" FontSize="12" Background="{x:Null}" Content="Mindkettő" Height="23" Width="75" 
-                            BorderBrush="{Binding filterType, Converter={StaticResource filterTypeToBorder}, ConverterParameter=2}"/>
+                    <Button Command="{Binding filterFirm}" Height="23" Width="75" Background="{x:Null}" 
+                            BorderBrush="{Binding filterType, Converter={StaticResource filterTypeToBorder}, ConverterParameter=1}">
+                        <TextBlock Text="Cég" FontSize="12"/>
+                    </Button>
+                    <Button Command="{Binding filterPerson}" Background="{x:Null}" Height="23" Width="101" 
+                            BorderBrush="{Binding filterType, Converter={StaticResource filterTypeToBorder}, ConverterParameter=0}">
+                        <TextBlock Text="Magánszemély" FontSize="12"/>
+                    </Button>
+                    <Button Command="{Binding filterBoth}" Background="{x:Null}" Height="23" Width="75" 
+                            BorderBrush="{Binding filterType, Converter={StaticResource filterTypeToBorder}, ConverterParameter=2}">
+                        <TextBlock Text="Mindkettő" FontSize="12"/>
+                    </Button>
                 </StackPanel>
             </Grid>   
         <ListView ItemsSource="{Binding foundCustomers}" SelectedItem="{Binding selectedCustomer}" Height="269" MinWidth="724">
             <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding customerName}" Header="Név" Width="200"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding city.postalCode}" Header="Ir.szám" Width="40"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding city.city}" Header="Város" Width="120"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding customerAddress}" Header="Cím" Width="240"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding IDNumber}" Header="Azonosító" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding customerName}" Header="Név" Width="220"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding city.postalCode}" Header="Ir.szám" Width="60"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding city.city}" Header="Város" Width="140"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding customerAddress}" Header="Cím" Width="260"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding IDNumber}" Header="Azonosító" Width="120"/>
                     </GridView>
             </ListView.View>
         </ListView>

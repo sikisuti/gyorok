@@ -198,6 +198,13 @@ namespace GyorokRentService.ViewModel
 
             if (errorMessage != string.Empty) errorMessage += Environment.NewLine;
 
+            if (newRental.customer.isFirm && newRental.contact == null)
+            {
+                errorMessage += "Nincs kapcsolattartó kiválasztva";
+            }
+
+            if (errorMessage != string.Empty) errorMessage += Environment.NewLine;
+
             if (newRental.tool != null)
             {
                 if (!newRental.tool.IsValid)

@@ -203,5 +203,25 @@ namespace SQLConnectionLib
         {
             throw new NotImplementedException();
         }
+
+        public List<RentalGroups> GetAllRentalGroups()
+        {
+            throw new NotImplementedException();
+        }
+
+        public long GetRentalVersion()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateRentalGroup(RentalGroups rentalGroup)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateRental(Rentals rental)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

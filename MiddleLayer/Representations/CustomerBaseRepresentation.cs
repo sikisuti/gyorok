@@ -115,8 +115,8 @@ namespace MiddleLayer.Representations
                 } }
         }
 
-        private double? _defaultDiscount;
-        public double? defaultDiscount
+        private double _defaultDiscount;
+        public double defaultDiscount
         {
             get { return _defaultDiscount; }
             set

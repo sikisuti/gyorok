@@ -232,18 +232,18 @@ namespace GyorokRentService
             }
         }
 
-        public static class GroupToSelect
-        {
-            public static void Send(ViewModel.GroupList selectedGroup)
-            {
-                Messenger.Default.Send(selectedGroup, MessageTypes.groupToSelect);
-            }
+        //public static class GroupToSelect
+        //{
+        //    public static void Send(ViewModel.GroupList selectedGroup)
+        //    {
+        //        Messenger.Default.Send(selectedGroup, MessageTypes.groupToSelect);
+        //    }
 
-            public static void Register(object recipient, Action<ViewModel.GroupList> action)
-            {
-                Messenger.Default.Register(recipient, MessageTypes.groupToSelect, action);
-            }
-        }
+        //    public static void Register(object recipient, Action<ViewModel.GroupList> action)
+        //    {
+        //        Messenger.Default.Register(recipient, MessageTypes.groupToSelect, action);
+        //    }
+        //}
 
         public static class RentalPaid
         {

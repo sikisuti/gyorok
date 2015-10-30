@@ -1,4 +1,5 @@
 ﻿using GyorokRentService.ViewModel;
+using MiddleLayer.Representations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,9 @@ namespace GyorokRentService.View
     {
         RentalsSum_ViewModel viewModel { get; set; }
 
+        Window searchRentalWindow;
+        SearchRental_ViewModel searchRental_VM;
+
         public RentalsSum()
         {
             InitializeComponent();
@@ -32,18 +36,32 @@ namespace GyorokRentService.View
 
         private void expRentalGroupChooser_Expanded(object sender, RoutedEventArgs e)
         {
-            SearchRental_ViewModel searchRental_VM = new SearchRental_ViewModel();
-            Window searchRentalWindow = new Window()
+            if (searchRentalWindow == null || !searchRentalWindow.IsLoaded)
             {
-                Title = "Kölcsönzés választó",
-                Content = searchRental_VM
-            };
+                BuildSearchRentalGroupWindow();
+            }
             searchRentalWindow.Show();
         }
 
-        private void expRentalGroupChooser_Collapsed(object sender, RoutedEventArgs e)
+        private void BuildSearchRentalGroupWindow()
         {
+            if (searchRental_VM == null)
+            {
+                searchRental_VM = new SearchRental_ViewModel();
+                searchRental_VM.RentGroupSelected += (s, a) =>
+                {
+                    viewModel.selectedRentalGroup = (RentalGroup_Representation)s;
+                    searchRentalWindow.Hide();
+                    expRentalGroupChooser.IsExpanded = false;
+                };
+            }
 
+            searchRentalWindow = new Window()
+            {
+                Title = "Kölcsönzés választó",
+                Content = new SearchRental() { DataContext = searchRental_VM },
+                SizeToContent = SizeToContent.WidthAndHeight
+            };
         }
     }
 }

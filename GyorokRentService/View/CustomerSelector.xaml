@@ -31,7 +31,7 @@
     
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <StackPanel Margin="5">
-            <Label HorizontalContentAlignment="Center" FontSize="32" FontWeight="Bold" Content="Ügyfél" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" />
+            <TextBlock HorizontalAlignment="Center" FontSize="32" FontWeight="Bold" Text="Ügyfél"  />
     <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MaxWidth="200" />
@@ -59,9 +59,10 @@
                       IsEnabled="{Binding isReadonly, Converter={StaticResource boolInverter}}" 
                       Visibility="{Binding isEditable, Converter={StaticResource boolToVis}, ConverterParameter=true}"
                       Grid.Row="1" Grid.Column="3"
-                      Header="{Binding selectedCustomer.customerName}" 
-                      FontSize="20" FontWeight="Bold"
                       BorderThickness="5">
+                    <Expander.Header>
+                        <TextBlock Text="{Binding selectedCustomer.customerName}" FontSize="20" FontWeight="Bold"/>
+                    </Expander.Header>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Expanded">
                         <i:InvokeCommandAction Command="{Binding onExpand}"/>
@@ -162,8 +163,8 @@
                     <Label Content="Megjegyzés:" />
                     <TextBox IsEnabled="{Binding selectedCustomer, Converter={StaticResource objectExistsToBool}}" Text="{Binding selectedCustomer.comment}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="99" >
                         <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewKeyDown">
-                                <i:InvokeCommandAction Command="{Binding mustSave}"/>
+                            <i:EventTrigger EventName="LostFocus">
+                                <i:InvokeCommandAction Command="{Binding saveComments}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
@@ -172,17 +173,17 @@
                     <Label Content="Problémák:" />
                     <TextBox IsEnabled="{Binding selectedCustomer, Converter={StaticResource objectExistsToBool}}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="99" Text="{Binding selectedCustomer.problems, Mode=TwoWay}" >
                         <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewKeyDown">
-                                <i:InvokeCommandAction Command="{Binding mustSave}"/>
+                            <i:EventTrigger EventName="LostFocus">
+                                <i:InvokeCommandAction Command="{Binding saveComments}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
                 </StackPanel>
-                <Button Grid.ColumnSpan="2" Grid.Row="1" Command="{Binding saveComments}" Visibility="{Binding commentSaveVisibility}" Height="32" Width="32" BorderBrush="{x:Null}" BorderThickness="0" Background="{x:Null}">
+                <!--<Button Grid.ColumnSpan="2" Grid.Row="1" Command="{Binding saveComments}" Visibility="{Binding commentSaveVisibility}" Height="32" Width="32" BorderBrush="{x:Null}" BorderThickness="0" Background="{x:Null}">
                     <Grid>
                         <Image Source="/GyorokRentService;component/Images/IconSave32.png"/>
                     </Grid>
-                </Button>
+                </Button>-->
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>

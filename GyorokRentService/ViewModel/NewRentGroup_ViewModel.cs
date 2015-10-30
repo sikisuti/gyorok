@@ -101,11 +101,34 @@ namespace GyorokRentService.ViewModel
             foreach (RentalRepresentation rental in rentalGroup.rentals)
             {                
                 rental.tool.toolStatus.id = 3;
+                rental.actualPrice = rental.tool.rentPrice;
                 rental.tool.rentCounter += 1;
                 rental.rentalStart = DateTime.Now;
                 rental.isPaid = false;
                 rental.customer.rentCounter += 1;
                 rental.rentalStart = DateTime.Now;
+                switch (rental.rentTerm)
+                {
+                    case Common.Enumerations.RentTermEnum.OneHour:
+                        rental.rentalEnd = rental.rentalStart.AddHours(1);
+                        break;
+                    case Common.Enumerations.RentTermEnum.HalfDay:
+                        rental.rentalEnd = rental.rentalStart.AddHours(4);
+                        break;
+                    case Common.Enumerations.RentTermEnum.OneDay:
+                        rental.rentalEnd = rental.rentalStart.AddDays(1);
+                        break;
+                    case Common.Enumerations.RentTermEnum.ThreeDays:
+                        rental.rentalEnd = rental.rentalStart.AddDays(3);
+                        break;
+                    case Common.Enumerations.RentTermEnum.OneWeek:
+                        rental.rentalEnd = rental.rentalStart.AddDays(7);
+                        break;
+                    case Common.Enumerations.RentTermEnum.Custom:
+                        break;
+                    default:
+                        break;
+                }
             }
             rentalGroup.id = DataProxy.Instance.AddRentalGroup(rentalGroup);
             try

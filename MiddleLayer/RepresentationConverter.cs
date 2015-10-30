@@ -48,7 +48,7 @@ namespace MiddleLayer
             convertedCustomer.customerAddress = customer.customerAddress;
             convertedCustomer.customerName = customer.customerName;
             convertedCustomer.customerPhone = customer.customerPhone;
-            convertedCustomer.defaultDiscount = customer.defaultDiscount;
+            convertedCustomer.defaultDiscount = customer.defaultDiscount ?? 0;
             convertedCustomer.IDNumber = customer.IDNumber;
             convertedCustomer.isDeleted = customer.isDeleted;
             convertedCustomer.isFirm = customer.isFirm;
@@ -227,7 +227,10 @@ namespace MiddleLayer
         {
             RentalGroup_Representation convertedRentalGroup = new RentalGroup_Representation()
             {
-
+                comment = rentalGroup.comment,
+                deposit = rentalGroup.deposit ?? 0,
+                id = rentalGroup.groupID,
+                isOpen = rentalGroup.isOpen
             };
 
             foreach (Rentals rental in rentalGroup.Rentals)
@@ -241,6 +244,7 @@ namespace MiddleLayer
         {
             RentalGroups convertedRentalGroup = new RentalGroups()
             {
+                groupID = rentalGroup.id,
                 comment = rentalGroup.comment,
                 deposit = rentalGroup.deposit,
                 isOpen = rentalGroup.isOpen

@@ -40,12 +40,21 @@
                                  Style="{StaticResource {x:Type ToggleButton}}"
                                  IsChecked="{Binding newRental.rentTerm, Converter={StaticResource boolToTerm}, ConverterParameter={x:Static enm:RentTermEnum.Custom}}">
                         <Grid>
-                        <xctk:DateTimePicker Value="{Binding newRental.rentalEnd}" 
-                                             Style="{StaticResource BaseDateTimePickerStyle}" 
+                            <xctk:DateTimePicker Name="dtpCustomRentalEnd" Value="{Binding newRental.rentalEnd}" 
                                              Format="FullDateTime"
-                                             Width="220"
-                                             Visibility="{Binding newRental.rentalEnd, Converter={StaticResource filledToVis}}"/>
-                        <TextBlock Text="Egyedi" Visibility="{Binding newRental.rentalEnd, Converter={StaticResource filledToVis}, ConverterParameter=true}"/>
+                                             Width="220">
+                                <xctk:DateTimePicker.Style>
+                                    <Style TargetType="{x:Type xctk:DateTimePicker}" BasedOn="{StaticResource BaseDateTimePickerStyle}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding newRental.rentTerm}" Value="{x:Static enm:RentTermEnum.Custom}">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </xctk:DateTimePicker.Style>
+                            </xctk:DateTimePicker>
+                            <TextBlock Text="Egyedi" Visibility="{Binding ElementName=dtpCustomRentalEnd, Path=Visibility, Converter={StaticResource visInv}}"/>
                         </Grid>
                     </RadioButton>
                 </StackPanel>

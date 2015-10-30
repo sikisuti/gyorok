@@ -17,6 +17,7 @@ namespace MiddleLayer
 
         long customersVersion;
         long toolsVersion;
+        long rentalVersion;
 
         private static readonly DataProxy _instance = new DataProxy();
         public static DataProxy Instance
@@ -33,6 +34,7 @@ namespace MiddleLayer
             {
                 customersVersion = dataSource.GetCustomersVersion();
                 toolsVersion = dataSource.GetToolsVersion();
+                rentalVersion = dataSource.GetRentalVersion();
             }
 
             dbChangeCheckTimer = new Timer(10000);
@@ -53,6 +55,13 @@ namespace MiddleLayer
                     {
                         toolsVersion = actVersion;
                         OnToolsChanged(EventArgs.Empty);
+                    }
+
+                    actVersion = dataSource.GetRentalVersion();
+                    if (rentalVersion != actVersion)
+                    {
+                        rentalVersion = actVersion;
+                        OnRentalChanged(EventArgs.Empty);
                     }
                 }
                 dbChangeCheckTimer.Start();
@@ -83,6 +92,15 @@ namespace MiddleLayer
             if (ToolsChanged != null)
             {
                 ToolsChanged(null, e);
+            }
+        }
+
+        public event EventHandler RentalChanged;
+        private void OnRentalChanged(EventArgs e)
+        {
+            if (RentalChanged != null)
+            {
+                RentalChanged(null, e);
             }
         }
 
@@ -217,11 +235,28 @@ namespace MiddleLayer
                 return RepresentationConverter.convertRental(dataSource.GetLastRentalByToolId(toolId));
             }
         }
+        public List<RentalGroup_Representation> GetAllRentalGroups()
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                List<RentalGroup_Representation> rtn = new List<RentalGroup_Representation>();
+                dataSource.GetAllRentalGroups().ForEach(rg => rtn.Add(RepresentationConverter.convertRentalGroup(rg)));
+
+                return rtn;
+            }
+        }
         public void AddRental(RentalRepresentation rental)
         {
             using (ISQLConnection dataSource = DataSource)
             {
                 dataSource.AddRental(RepresentationConverter.convertRental(rental));
+            }
+        }
+        public void UpdateRental(RentalRepresentation rental)
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                dataSource.UpdateRental(RepresentationConverter.convertRental(rental));
             }
         }
         public void DeleteRentalById(long id)
@@ -259,6 +294,13 @@ namespace MiddleLayer
                 //}
 
                 return rentalGroup.id;
+            }
+        }
+        public void UpdateRentalGroup(RentalGroup_Representation rentalGroup)
+        {
+            using (ISQLConnection dataSource = DataSource)
+            {
+                dataSource.UpdateRentalGroup(RepresentationConverter.convertRentalGroup(rentalGroup));
             }
         }
 

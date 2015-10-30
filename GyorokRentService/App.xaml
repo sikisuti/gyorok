@@ -7,6 +7,7 @@
              xmlns:conv="clr-namespace:GyorokRentService.Converters"
              xmlns:local="clr-namespace:GyorokRentService"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml" 
              ShutdownMode="OnMainWindowClose"
              mc:Ignorable="d">
@@ -20,22 +21,26 @@
         <conv:FilterTypeToButtonBorderBrush x:Key="filterTypeToBorder"/>
         <conv:BoolToTermConverter x:Key="boolToTerm" />
         <conv:FilledToVisibilityConverter x:Key="filledToVis" />
-        <local:FilledToVisibilityConverter x:Key="fillToVis"/>
+        <conv:FilledToBoolConverter x:Key="filledToBool" />
+        <conv:VisibilityInverterConverter x:Key="visInv" />
         <local:BooleanToReadOnlyTextBgConverter x:Key="readOnlyToBg"/>
         <local:BooleanToReadOnlyTextBorderConverter x:Key="readOnlyToBorder"/>
         <local:MultiBooleanToBooleanConverter x:Key="multiBoolToBool"/>
 
         <!--CONTROL STYLES-->
 
+        <System:Double x:Key="mainFontSize">16</System:Double>
+
         <Style x:Key="BaseStyle" TargetType="{x:Type Control}">
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="{StaticResource mainFontSize}"/>
             <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
         <!--Label-->
         <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}">
             <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
         <!--ListBox-->
         <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource BaseStyle}">
@@ -46,12 +51,14 @@
         <!--ComboBox-->
         <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseStyle}">
         </Style>
+        <!--CheckBox-->
+        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource BaseStyle}">
+        </Style>
         <!--TextBox-->
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}">
         </Style>
         <Style x:Key="CustomEditableTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}">
             <Setter Property="IsReadOnly" Value="{Binding isEditable, Converter={StaticResource boolInverter}}"/>
-            <Setter Property="VerticalContentAlignment" Value="Center" />
             <Style.Triggers>
                 <Trigger Property="IsReadOnly" Value="true">
                     <Setter Property="BorderThickness" Value="0"/>
@@ -61,6 +68,7 @@
         <!-- TextBlock -->
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="{StaticResource mainFontSize}"/>
         </Style>
         <!--DateTimePicker-->
         <Style x:Key="BaseDateTimePickerStyle" TargetType="{x:Type xctk:DateTimePicker}" BasedOn="{StaticResource BaseStyle}">

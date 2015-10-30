@@ -162,11 +162,16 @@
         </Grid>-->
         <!--<comp:ProcessStatusDisplay DockPanel.Dock="Bottom"/>-->
         <TabControl Name="tcRentOrService" BorderBrush="{x:Null}" BorderThickness="0">
-            <TabItem Style="{StaticResource StyleRentMain}" Header="Kölcsönzés" Name="tiRent" FontSize="20" FontWeight="Bold">
-                    
+            <TabItem Style="{StaticResource StyleRentMain}" Name="tiRent" >
+                <TabItem.Header>
+                    <TextBlock Text="Kölcsönzés" FontSize="20" FontWeight="Bold"/>
+                </TabItem.Header>
                 </TabItem>
-                <TabItem Style="{StaticResource StyleServiceMain}" Header="Szervíz" Name="tiService" FontSize="20" FontWeight="Bold">
-                    <Grid  Background="{StaticResource ServiceBgBrush}">
+                <TabItem Style="{StaticResource StyleServiceMain}" Name="tiService" >
+                <TabItem.Header>
+                    <TextBlock Text="Szervíz" FontSize="20" FontWeight="Bold"/>
+                </TabItem.Header>
+                <Grid  Background="{StaticResource ServiceBgBrush}">
                         <TabControl Name="tcService" SelectionChanged="tcService_SelectionChanged">
                             <TabItem Style="{StaticResource StyleServiceSub1}" Header="Új munkalap" Name="tiNewWorksheet">
                                 <Grid>

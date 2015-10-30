@@ -4,33 +4,32 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GyorokRentService.ViewModel"
-             mc:Ignorable="d" BorderBrush="Black" BorderThickness="2" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" Height="420" Width="420">
-    <Grid>        
-        <ListBox ItemsSource="{Binding groupSum}" SelectedItem="{Binding selectedGroup}" FontSize="16" FontWeight="Normal" Height="300" HorizontalAlignment="Left" Margin="12,37,0,0" Name="listBox2" VerticalAlignment="Top" Width="300">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="180"/>
-                            <ColumnDefinition Width="80"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding CustomerName}"/>
-                        <TextBlock Text="{Binding RentStart, StringFormat=yyyy.MM.dd}" Grid.Column="1"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Label Content="Keresés:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="12,1,0,0" Name="lblSearch" Padding="5,5,5,0" VerticalAlignment="Top" Width="87" />
-        <TextBox FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="92,3,0,0" Name="textBox3" Text="{Binding searchText, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="132">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="TextChanged">
-                    <i:InvokeCommandAction Command="{Binding searchTextChanged}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </TextBox>
-        <Button Command="{Binding customerSelected}" Height="64" HorizontalAlignment="Left" Margin="250,343,0,0" Name="button1" VerticalAlignment="Top" Width="64" BorderBrush="{x:Null}" BorderThickness="0" Background="{x:Null}">
-                <Image Source="/GyorokRentService;component/Images/IconAccept64.png"/>
-        </Button>
-        <CheckBox Content="Mutasd az régieket is" FontSize="16" Height="30" HorizontalAlignment="Left" IsChecked="{Binding showOlds}" Margin="229,6,0,0" Name="checkBox1" VerticalAlignment="Top" />
-    </Grid>
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}" BusyContent="Adatok betöltése" >
+        <StackPanel Margin="5">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Keresés:" />
+                <TextBox Text="{Binding searchText, UpdateSourceTrigger=PropertyChanged}" Width="132">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding searchTextChanged}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <CheckBox Content="Mutasd az régieket is" IsChecked="{Binding showOlds}" />
+            </StackPanel>
+            <ListView ItemsSource="{Binding rentalGroups}" SelectedItem="{Binding selectedGroup}" Height="300">
+                <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding rentals[0].customer.customerName}" Header="Ügyfél" Width="200" />
+                            <GridViewColumn DisplayMemberBinding="{Binding rentals[0].rentalStart, StringFormat=yyyy.MM.dd}" Header="Kölcsönözve" Width="100"/>
+                        </GridView>
+                </ListView.View>
+            </ListView>
+            <Button Command="{Binding customerSelected}" Height="64" HorizontalAlignment="Right" Width="64" BorderBrush="{x:Null}" BorderThickness="0" Background="{x:Null}">
+                    <Image Source="/GyorokRentService;component/Images/IconAccept64.png"/>
+            </Button>        
+        </StackPanel>
+    </xctk:BusyIndicator>
 </UserControl>

@@ -42,8 +42,15 @@ namespace GyorokRentService
 
             UCCustomerSelector.customerPicker_VM.CustomerSelected += (s, a) => 
             {
-                UCNewRent.newRent_VM.newRental.customer = (CustomerBaseRepresentation)s;
+                CustomerBaseRepresentation customer = (CustomerBaseRepresentation)s;
+                UCNewRent.newRent_VM.newRental.customer = customer;
+                UCNewRent.newRent_VM.newRental.discount = customer.defaultDiscount;
                 UCCustomerSelector.expCustomer.IsExpanded = false;
+            };
+
+            UCCustomerSelector.viewModel.contactSelected += (s, a) =>
+            {
+                UCNewRent.newRent_VM.newRental.contact = (PersonRepresentation)s;
             };
 
             UCToolSelector.toolPicker_VM.ToolSelected += (s, a) => 

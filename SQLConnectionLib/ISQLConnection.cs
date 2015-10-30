@@ -14,6 +14,7 @@ namespace SQLConnectionLib
 
         long GetCustomersVersion();
         long GetToolsVersion();
+        long GetRentalVersion();
 
         Customers GetCustomerById(long id);
         List<Customers> GetAllCustomers();
@@ -37,10 +38,13 @@ namespace SQLConnectionLib
 
         Rentals GetLastRentalByToolId(long toolId);
         void AddRental(Rentals rental);
+        void UpdateRental(Rentals rental);
         void DeleteRentalById(long id);
 
         RentalGroups GetRentalGroupById(long id);
+        List<RentalGroups> GetAllRentalGroups();
         long AddRentalGroup(RentalGroups rentalGroup);
+        void UpdateRentalGroup(RentalGroups rentalGroup);
 
         List<PayTypes> GetPayTypes();
     }
