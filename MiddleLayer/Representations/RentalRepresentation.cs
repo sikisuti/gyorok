@@ -144,6 +144,12 @@ namespace MiddleLayer.Representations
                 {
                     _isClean = value;
                     RaisePropertyChanged("isClean");
+                    RaisePropertyChanged("ActualPrice");
+                    if (group != null)
+                    {
+                        group.AnyRentalChangeAction();
+                        DataProxy.Instance.UpdateRental(this);
+                    }
                 }
             }
         }
@@ -198,18 +204,18 @@ namespace MiddleLayer.Representations
             }
         }
 
-        public decimal IntervalDay {
+        public double IntervalDay {
             get
             {
-                decimal rtn = 0;
+                double rtn = 0;
 
                 switch (rentTerm)
                 {
                     case RentTermEnum.OneHour:
-                        return 0.2m;
+                        return 0.2;
                         break;
                     case RentTermEnum.HalfDay:
-                        return 0.5m;
+                        return 0.5;
                         break;
                     case RentTermEnum.OneDay:
                         return 1;
@@ -230,7 +236,13 @@ namespace MiddleLayer.Representations
             }
         }
 
-        public long TotalPrice { get { return (long)Math.Round(IntervalDay * tool.rentPrice, 0); } }
+        public double ElapsedDays { get { return (DateTime.Now - rentalStart).Days; } }
+
+        public double ElapsedHours { get { return (DateTime.Now - rentalStart).Hours; } }
+
+        public long TotalPrice { get { return (long)Math.Round(IntervalDay * tool.rentPrice * discount, 0); } }
+
+        public long ActualPrice { get { return (long)Math.Round(ElapsedDays * tool.rentPrice * discount, 0) + (isClean ? 0 : 100); } }
 
         public RentalRepresentation()
         {

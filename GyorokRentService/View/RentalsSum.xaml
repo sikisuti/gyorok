@@ -113,7 +113,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Összes díj:" FontSize="24" FontWeight="Bold" />
-                <TextBlock FontSize="24" FontWeight="Bold" Text="{Binding selectedRentalGroup.TotalCost, StringFormat=C0}" xml:lang="hu-HU" />
+                <TextBlock FontSize="24" FontWeight="Bold" Text="{Binding selectedRentalGroup.ActualCost, StringFormat=C0}" xml:lang="hu-HU" />
             </StackPanel>
         
         <!--<Button Visibility="{Binding saveDepositVisibility}" Command="{Binding saveDeposit}" Height="32" HorizontalAlignment="Left" Margin="500,541,0,0" Name="btnSaveDeposit" VerticalAlignment="Top" Width="32" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
@@ -189,34 +189,37 @@
                         <Label Grid.Row="1" Content="Egységár:" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding selectedRental.actualPrice, StringFormat=C0}" xml:lang="hu-HU" HorizontalAlignment="Left" />
                         <Label Grid.Row="2" Content="Engedmény:" IsEnabled="{Binding selectedRental.isPaid, Converter={StaticResource boolInverter}}" />
-                        <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" IsEnabled="{Binding selectedRental.isPaid, Converter={StaticResource boolInverter}}" Text="{Binding selectedRental.discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} %}" Width="44">
-                            <TextBox.InputBindings>
-                                <KeyBinding Command="{Binding saveDiscount}" Key="Enter"/>
-                            </TextBox.InputBindings>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="LostFocus">
-                                    <i:InvokeCommandAction Command="{Binding saveDiscount}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TextBox>
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox HorizontalAlignment="Left" IsEnabled="{Binding selectedRental.isPaid, Converter={StaticResource boolInverter}}" Text="{Binding selectedRental.discount, UpdateSourceTrigger=PropertyChanged, StringFormat=P0}" Width="50">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Command="{Binding saveDiscount}" Key="Enter"/>
+                                </TextBox.InputBindings>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="LostFocus">
+                                        <i:InvokeCommandAction Command="{Binding saveDiscount}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <!--<TextBlock Text="%"/>-->
+                        </StackPanel>
                     </Grid>
                     <StackPanel Orientation="Horizontal">
                         <Label IsEnabled="{Binding isNotPaid}" Content="Kikölcsönözve:" />
-                        <Label IsEnabled="{Binding isNotPaid}" Content="{Binding intervalDays, StringFormat={}{0} napja}" FontSize="20" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Name="label3" Padding="5,5,5,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="53" />
-                        <Label Content="{Binding intervalHours, StringFormat={}{0} órája}" FontSize="20" IsEnabled="{Binding isNotPaid}"  />
+                        <TextBlock IsEnabled="{Binding isNotPaid}" Text="{Binding selectedRental.ElapsedDays, StringFormat=0 napja}" FontSize="20" Margin="0,0,10,0" />
+                        <TextBlock Text="{Binding selectedRental.ElapsedHours, StringFormat= 0 órája}" FontSize="20" IsEnabled="{Binding isNotPaid}"  />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label IsEnabled="{Binding isNotPaid}" Content="Díj:" FontSize="24" FontWeight="Bold" Height="40" HorizontalAlignment="Left" Name="label4" Padding="5,5,5,0" VerticalAlignment="Top" />
-                        <TextBox IsEnabled="{Binding isNotPaid}" Text="{Binding partCost, StringFormat=C0}" xml:lang="hu-HU" FontSize="24" FontWeight="Bold" Height="35" HorizontalAlignment="Left" Name="label5" Padding="5,5,5,0" VerticalAlignment="Top" BorderThickness="0" Background="{x:Null}" BorderBrush="{x:Null}" />
+                        <TextBlock IsEnabled="{Binding isNotPaid}" Text="{Binding selectedRental.ActualPrice, StringFormat=C0}" xml:lang="hu-HU" FontSize="24" FontWeight="Bold" />
                     </StackPanel>
                 </StackPanel>
                 <StackPanel>
-                    <Button Visibility="{Binding rentalReOpenVisibility}" Command="{Binding reOpenRental}" Height="128" Width="128" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
+                    <Button Visibility="{Binding selectedRental.isPaid, Converter={StaticResource boolToVis}}" Command="{Binding reOpenRental}" Height="128" Width="128" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
                         <Grid>
                             <Image Source="/GyorokRentService;component/Images/IconUndo128.png"/>
                         </Grid>
                     </Button>
-                    <Button Visibility="{Binding rentalCloseVisibility}" Command="{Binding closeRental}" Height="128" Width="128" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
+                    <Button Visibility="{Binding selectedRental.isPaid, Converter={StaticResource boolToVis}, ConverterParameter=true}" Command="{Binding closeRental}" Height="128" Width="128" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0">
                         <Grid>
                             <Image Source="/GyorokRentService;component/Images/IconAccept128.png"/>
                         </Grid>

@@ -48,7 +48,7 @@ namespace MiddleLayer
             convertedCustomer.customerAddress = customer.customerAddress;
             convertedCustomer.customerName = customer.customerName;
             convertedCustomer.customerPhone = customer.customerPhone;
-            convertedCustomer.defaultDiscount = customer.defaultDiscount ?? 0;
+            convertedCustomer.defaultDiscount = customer.defaultDiscount == null ? 0 : customer.defaultDiscount ?? 0 / 100;
             convertedCustomer.IDNumber = customer.IDNumber;
             convertedCustomer.isDeleted = customer.isDeleted;
             convertedCustomer.isFirm = customer.isFirm;
@@ -91,7 +91,7 @@ namespace MiddleLayer
                 customerAddress = customer.customerAddress,
                 customerName = customer.customerName,
                 customerPhone = customer.customerPhone,
-                defaultDiscount = customer.defaultDiscount,
+                defaultDiscount = customer.defaultDiscount * 100,
                 IDNumber = customer.IDNumber,
                 isDeleted = customer.isDeleted,
                 isFirm = customer.isFirm,
@@ -181,7 +181,7 @@ namespace MiddleLayer
                 actualPrice = rental.actualPrice,
                 contact = convertCustomer(rental.Customers1),
                 customer = convertCustomer(rental.Customers),
-                discount = rental.discount,
+                discount = rental.discount / 100,
                 //group = DataProxy.Instance.GetRentalGroupById(rental.groupID),    - Couses infinite cycle
                 isClean = rental.isClean,
                 id = rental.rentalID,
@@ -204,7 +204,7 @@ namespace MiddleLayer
             {
                 actualPrice = rental.actualPrice,
                 customerID = rental.customer.id,
-                discount = (float)rental.discount,
+                discount = (float)rental.discount * 100,
                 isClean = rental.isClean,
                 rentalID = rental.id,
                 rentalEnd = rental.rentalEnd,
@@ -212,8 +212,11 @@ namespace MiddleLayer
                 payTypeID = rental.payType.id,
                 rentalRealEnd = rental.rentalRealEnd,
                 rentalStart = rental.rentalStart,
-                toolID = rental.tool.id
+                toolID = rental.tool.id,
+                groupID = rental.group.id
             };
+
+            convertedRental.Tools = convertTool(rental.tool);
 
             if (rental.customer.isFirm && rental.contact != null)
             {
@@ -235,7 +238,9 @@ namespace MiddleLayer
 
             foreach (Rentals rental in rentalGroup.Rentals)
             {
-                convertedRentalGroup.rentals.Add(convertRental(rental));
+                RentalRepresentation rentalToAdd = convertRental(rental);
+                rentalToAdd.group = convertedRentalGroup;
+                convertedRentalGroup.rentals.Add(rentalToAdd);
             }
 
             return convertedRentalGroup;

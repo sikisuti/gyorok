@@ -71,15 +71,14 @@ namespace GyorokRentService.ViewModel
         public ICommand closeRental { get { return new RelayCommand(closeRentalExecute, () => true); } }
         void closeRentalExecute()
         {
-            Rentals rentToClose = new Rentals();
-            Tools rentedTool = new Tools();
+            DataProxy.Instance.UpdateRental(selectedRental);
             
             //rentToClose = SQLConnection.Execute.RentalsTable.Single(r => r.rentalID == selectedRent.rentalID);
             //rentToClose.isPaid = true;
             //rentToClose.rentalRealEnd = DateTime.Now;
 
-            rentedTool = SQLConnection.Execute.ToolsTable.Single(t => t.toolID == rentToClose.toolID);
-            rentedTool.toolStatusID = 1;
+            //rentedTool = SQLConnection.Execute.ToolsTable.Single(t => t.toolID == rentToClose.toolID);
+            //rentedTool.toolStatusID = 1;
             
             SQLConnection.Execute.SaveDb();
             RentalSum tempRS = new RentalSum();

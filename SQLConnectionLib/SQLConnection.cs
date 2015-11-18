@@ -384,6 +384,10 @@ namespace SQLConnectionLib
             rentalToUpdate.rentalRealEnd = rental.rentalRealEnd;
             rentalToUpdate.rentalStart = rental.rentalStart;
             rentalToUpdate.toolID = rental.toolID;
+
+            //rentalToUpdate.ToolsReference.Attach(rental.Tools);
+            //rentalToUpdate.Tools. = EntityState.Modified;
+
             db.SaveChanges();
         }
         public void DeleteRentalById(long id)

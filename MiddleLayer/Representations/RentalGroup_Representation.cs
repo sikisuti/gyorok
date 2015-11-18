@@ -66,6 +66,8 @@ namespace MiddleLayer.Representations
         
         public long TotalCost { get { return rentals.Sum(r => r.TotalPrice); } }
 
+        public long ActualCost { get { return rentals.Sum(r => r.ActualPrice); } }
+
         public RentalGroup_Representation()
         {
             rentals = new ObservableCollection<RentalRepresentation>();
@@ -80,6 +82,11 @@ namespace MiddleLayer.Representations
         {
             rentals.Remove(rental);
             RaisePropertyChanged("TotalCost");
+        }
+
+        public void AnyRentalChangeAction()
+        {
+            RaisePropertyChanged("ActualCost");
         }
     }
 }

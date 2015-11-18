@@ -50,7 +50,9 @@ namespace GyorokRentService.View
                 searchRental_VM = new SearchRental_ViewModel();
                 searchRental_VM.RentGroupSelected += (s, a) =>
                 {
-                    viewModel.selectedRentalGroup = (RentalGroup_Representation)s;
+                    RentalGroup_Representation rentalGroup = (RentalGroup_Representation)s;
+                    viewModel.selectedRentalGroup = rentalGroup;
+                    viewModel.selectedRental = rentalGroup.rentals[0];
                     searchRentalWindow.Hide();
                     expRentalGroupChooser.IsExpanded = false;
                 };
