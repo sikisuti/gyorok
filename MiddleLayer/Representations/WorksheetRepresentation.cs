@@ -357,5 +357,10 @@ namespace MiddleLayer.Representations
                 }
             }
         }
+
+        public WorksheetRepresentation()
+        {
+            errorType = ErrorTypeEnum.Electrical;
+        }
     }
 }

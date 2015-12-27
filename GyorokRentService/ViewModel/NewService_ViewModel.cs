@@ -8,14 +8,16 @@ using GalaSoft.MvvmLight.Command;
 using GyorokRentService.View;
 using System.Collections.ObjectModel;
 using SQLConnectionLib;
+using MiddleLayer.Representations;
+using Common.Enumerations;
 
 namespace GyorokRentService.ViewModel
 {
     public class NewService_ViewModel : ViewModelBase
     {
 
-        private ServiceWorksheets _newService;
-        public ServiceWorksheets newService
+        private WorksheetRepresentation _newService;
+        public WorksheetRepresentation newService
         {
             get { return _newService; }
             set
@@ -446,7 +448,7 @@ namespace GyorokRentService.ViewModel
                 hasWarranty = false;
                 requestQuot = false;
                 //errorType = new ObservableCollection<SQLConnectionLib.ErrorTypes>(SQLConnection.Execute.ErrorTypesTable);
-                selectedErrorType = errorType[0];
+                newService = new WorksheetRepresentation();
                 GetWorksheetIDNumber();
             }
             else
