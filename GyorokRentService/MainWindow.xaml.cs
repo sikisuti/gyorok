@@ -16,6 +16,7 @@ using NLog;
 using GyorokRentService.Components;
 using System.Threading;
 using System.Threading.Tasks;
+using MiddleLayer;
 
 namespace GyorokRentService
 {
@@ -39,9 +40,6 @@ namespace GyorokRentService
             {
                 logger.Info("Application started");
 
-                var mainVM = new MainViewModel();
-                this.DataContext = mainVM;
-
                 //DoBackup();
 
                 //serviceWorkVM = new ServiceWork_ViewModel();
@@ -52,7 +50,13 @@ namespace GyorokRentService
 
                 InitializeComponent();
 
+                DataProxy.Instance.HoursPerDay = Properties.Settings.Default.HoursPerDay;
+
+                var mainVM = new MainViewModel();
+                this.DataContext = mainVM;
+
                 tiRent.Content = new Rent_Tab();
+                tiService.Content = new Service_Tab();
 
                 //serviceWorkScreen.DataContext = serviceWorkVM;
                 //grdService.Children.Add(serviceWorkScreen);

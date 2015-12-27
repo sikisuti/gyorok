@@ -23,8 +23,8 @@
                         <GridViewColumn DisplayMemberBinding="{Binding tool.toolName}" Header="Név" Width="150" />
                         <GridViewColumn DisplayMemberBinding="{Binding tool.IDNumber}" Header="Azonosító" Width="100" />
                         <GridViewColumn DisplayMemberBinding="{Binding IntervalDay}" Header="Nap" Width="50" />
-                        <GridViewColumn DisplayMemberBinding="{Binding tool.rentPrice, StringFormat=0 Ft}" xml:lang="hu-HU" Header="Egységár" Width="70" />
-                        <GridViewColumn DisplayMemberBinding="{Binding discount, StringFormat={}{0} %}" Header="Eng." Width="70" />
+                        <GridViewColumn DisplayMemberBinding="{Binding tool.rentPrice, StringFormat=0 Ft}" xml:lang="hu-HU" Header="Egységár" Width="80" />
+                        <GridViewColumn DisplayMemberBinding="{Binding discount, StringFormat=P0}" Header="Eng." Width="70" />
                         <GridViewColumn DisplayMemberBinding="{Binding TotalPrice, StringFormat=0 Ft}" xml:lang="hu-HU" Header="Díj" Width="80" />
                     </GridView>
             </ListView.View>

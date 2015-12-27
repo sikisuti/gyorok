@@ -71,7 +71,7 @@ namespace GyorokRentService.ViewModel
                     return;
                 }
 
-                modifiedWorksheet = SQLConnection.Execute.ServiceWorksheetsTable.Single(sw => sw.worksheetID == value.worksheetID);
+                //modifiedWorksheet = SQLConnection.Execute.ServiceWorksheetsTable.Single(sw => sw.worksheetID == value.worksheetID);
                                 
                 error = value.errorDescription; 
                 comment = value.wsComment; 
@@ -338,8 +338,8 @@ namespace GyorokRentService.ViewModel
         {
             Parts p = new Parts();
             
-            p = SQLConnection.Execute.PartsTable.Single( pa => pa.partID == selectedPart.partID);
-            SQLConnection.Execute.PartsTable.DeleteObject(p);
+            //p = SQLConnection.Execute.PartsTable.Single( pa => pa.partID == selectedPart.partID);
+            //SQLConnection.Execute.PartsTable.DeleteObject(p);
             SQLConnection.Execute.SaveDb();
             RefreshParts();
         }
@@ -347,7 +347,7 @@ namespace GyorokRentService.ViewModel
         void serviceDoneExecute()
         {
             ServiceWorksheets sw = new ServiceWorksheets();
-            sw = SQLConnection.Execute.ServiceWorksheetsTable.Single(w => w.worksheetID == selectedWorksheet.worksheetID);
+            //sw = SQLConnection.Execute.ServiceWorksheetsTable.Single(w => w.worksheetID == selectedWorksheet.worksheetID);
             sw.statusID = 5;
             if (sw.serviceCost == null)
             {
@@ -362,7 +362,7 @@ namespace GyorokRentService.ViewModel
             long tempSS;
             tempSS = selectedWorksheet.worksheetID;
             ServiceWorksheets sw = new ServiceWorksheets();
-            sw = SQLConnection.Execute.ServiceWorksheetsTable.Single(w => w.worksheetID == tempSS);
+            //sw = SQLConnection.Execute.ServiceWorksheetsTable.Single(w => w.worksheetID == tempSS);
             sw.serviceCost = laborFee;
             sw.discount = discount / 100;
             sw.errorDescription = error;
@@ -376,7 +376,7 @@ namespace GyorokRentService.ViewModel
         void notFixableExecute()
         {
             ServiceWorksheets sw = new ServiceWorksheets();
-            sw = SQLConnection.Execute.ServiceWorksheetsTable.Single(w => w.worksheetID == selectedWorksheet.worksheetID);
+            //sw = SQLConnection.Execute.ServiceWorksheetsTable.Single(w => w.worksheetID == selectedWorksheet.worksheetID);
             sw.statusID = 6;
             if (sw.serviceCost == null)
             {
@@ -391,7 +391,7 @@ namespace GyorokRentService.ViewModel
             long tempSS;
             tempSS = selectedWorksheet.worksheetID;
             ServiceWorksheets sw = new ServiceWorksheets();
-            sw = SQLConnection.Execute.ServiceWorksheetsTable.Single(w => w.worksheetID == tempSS);
+            //sw = SQLConnection.Execute.ServiceWorksheetsTable.Single(w => w.worksheetID == tempSS);
             sw.statusID = 3;
             sw.inQuotMode = true;
             if (sw.serviceCost == null)
@@ -408,7 +408,7 @@ namespace GyorokRentService.ViewModel
             long tempSS;
             tempSS = selectedWorksheet.worksheetID;
             ServiceWorksheets sw = new ServiceWorksheets();
-            sw = SQLConnection.Execute.ServiceWorksheetsTable.Single(w => w.worksheetID == tempSS);
+            //sw = SQLConnection.Execute.ServiceWorksheetsTable.Single(w => w.worksheetID == tempSS);
             if (sw.quotRequested)
             {
                 sw.statusID = 2;
@@ -466,12 +466,12 @@ namespace GyorokRentService.ViewModel
             //}
             //db = new dbGyorokEntities();
             
-            worksheetList = new ObservableCollection<SQLConnectionLib.ServiceSum>(SQLConnection.Execute.ServiceSumView.Where(s => new List<long>() { 1, 2, 3, 4, 7 }.Contains(s.statusID) && !s.isPaid).ToList());
+            //worksheetList = new ObservableCollection<SQLConnectionLib.ServiceSum>(SQLConnection.Execute.ServiceSumView.Where(s => new List<long>() { 1, 2, 3, 4, 7 }.Contains(s.statusID) && !s.isPaid).ToList());
             if (worksheetList.Count > 0)
             {
                 if (prevSelWS != 0 && worksheetList.Select(wsl => wsl.worksheetID).Contains(prevSelWS))
                 {
-                    selectedWorksheet = SQLConnection.Execute.ServiceSumView.Single(ws => ws.worksheetID == prevSelWS);
+                    //selectedWorksheet = SQLConnection.Execute.ServiceSumView.Single(ws => ws.worksheetID == prevSelWS);
                 }
                 else
                 {
@@ -484,7 +484,7 @@ namespace GyorokRentService.ViewModel
         {
             if (_serviceID != 0)
             {
-                builtInParts = new ObservableCollection<Parts>(SQLConnection.Execute.PartsTable.Where(sp => sp.serviceID == _serviceID).ToList());
+                //builtInParts = new ObservableCollection<Parts>(SQLConnection.Execute.PartsTable.Where(sp => sp.serviceID == _serviceID).ToList());
                 CalcTotalCost(); 
             }
         }
@@ -495,7 +495,7 @@ namespace GyorokRentService.ViewModel
             {
                 p.serviceID = _serviceID;
                 p.partID = 0;
-                SQLConnection.Execute.PartsTable.AddObject(p);
+                //SQLConnection.Execute.PartsTable.AddObject(p);
                 SQLConnection.Execute.SaveDb();
                 SetStatus();
                 RefreshParts(); 
@@ -506,7 +506,7 @@ namespace GyorokRentService.ViewModel
         {
             Parts modifiablePart = new Parts();
 
-            modifiablePart = SQLConnection.Execute.PartsTable.Single(part => part.partID == p.partID);
+            //modifiablePart = SQLConnection.Execute.PartsTable.Single(part => part.partID == p.partID);
             modifiablePart.partName = p.partName;
             modifiablePart.partManufacturer = p.partManufacturer;
             modifiablePart.partIDNumber = p.partIDNumber;
@@ -524,7 +524,7 @@ namespace GyorokRentService.ViewModel
             ServiceWorksheets changableWS = new ServiceWorksheets();
             bool waitForPart = false;
 
-            tempParts = SQLConnection.Execute.PartsTable.Where(p => p.serviceID == _serviceID).ToList();
+            //tempParts = SQLConnection.Execute.PartsTable.Where(p => p.serviceID == _serviceID).ToList();
             foreach (var item in tempParts)
             {
                 if (item.mustOrder)
@@ -534,7 +534,7 @@ namespace GyorokRentService.ViewModel
                 }
             }
 
-            changableWS = SQLConnection.Execute.ServiceWorksheetsTable.Single(ws => ws.worksheetID == _serviceID);
+            //changableWS = SQLConnection.Execute.ServiceWorksheetsTable.Single(ws => ws.worksheetID == _serviceID);
             if (waitForPart)
             {
                 if (selectedWorksheet.statusID != 2)

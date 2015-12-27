@@ -60,7 +60,7 @@ namespace GyorokRentService.ViewModel
 
         private void UpdateScreen()
         {
-            customerList = new ObservableCollection<SQLConnectionLib.Customers>(SQLConnection.Execute.CustomersTable);
+            //customerList = new ObservableCollection<SQLConnectionLib.Customers>(SQLConnection.Execute.CustomersTable);
         }
     }
 }

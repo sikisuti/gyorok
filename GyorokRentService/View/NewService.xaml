@@ -14,9 +14,6 @@
             <GradientStop Color="White" Offset="1" />
         </LinearGradientBrush>
     </UserControl.BorderBrush>
-    <UserControl.DataContext>
-        <local:NewService_ViewModel/>
-    </UserControl.DataContext>
     <UserControl.Resources>
         <conv:BooleanToVisibilityConverter x:Key="boolToVis"/>
     </UserControl.Resources>

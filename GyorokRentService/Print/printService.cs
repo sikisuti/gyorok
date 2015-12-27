@@ -30,7 +30,7 @@ namespace GyorokRentService.Print
         {
             //db = new dbGyorokEntities(); 
             pType = printType;
-            serviceToPrint = SQLConnection.Execute.ServiceSumView.Single(ss => ss.worksheetID == sw.worksheetID);
+            //serviceToPrint = SQLConnection.Execute.ServiceSumView.Single(ss => ss.worksheetID == sw.worksheetID);
             Printing();
         }
 
@@ -73,7 +73,7 @@ namespace GyorokRentService.Print
             int yPos;
             long materialCost;
             builtInParts = new List<Parts>();
-            builtInParts = SQLConnection.Execute.PartsTable.Where(pt => pt.serviceID == serviceToPrint.worksheetID).ToList();
+            //builtInParts = SQLConnection.Execute.PartsTable.Where(pt => pt.serviceID == serviceToPrint.worksheetID).ToList();
             materialCost = 0;
             foreach (var item in builtInParts)
             {

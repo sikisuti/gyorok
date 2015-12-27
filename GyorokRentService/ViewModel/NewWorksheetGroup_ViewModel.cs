@@ -135,16 +135,16 @@ namespace GyorokRentService.ViewModel
             long cIDTemp;
 
             cIDTemp = newWorksheets[0].customerID;
-            c = SQLConnection.Execute.CustomersTable.Single(cust => cust.customerID == cIDTemp);
+            //c = SQLConnection.Execute.CustomersTable.Single(cust => cust.customerID == cIDTemp);
             c.serviceCounter += 1;
 
             sg.deposit = deposit;
-            SQLConnection.Execute.ServiceGroupsTable.AddObject(sg);
+            //SQLConnection.Execute.ServiceGroupsTable.AddObject(sg);
             //db.SaveChanges();
             foreach (ServiceWorksheets item in newWorksheets)
             {
                 item.groupID = sg.serviceGroupID;
-                SQLConnection.Execute.ServiceWorksheetsTable.AddObject(item);
+                //SQLConnection.Execute.ServiceWorksheetsTable.AddObject(item);
             }
             SQLConnection.Execute.SaveDb();
             foreach (ServiceWorksheets item in newWorksheets)
@@ -167,7 +167,7 @@ namespace GyorokRentService.ViewModel
 
                     ServiceWorksheets swTemp = new ServiceWorksheets();
                     swTemp = sw[0];
-                    customerName = SQLConnection.Execute.CustomersTable.Single(c => c.customerID == swTemp.customerID).customerName;
+                    //customerName = SQLConnection.Execute.CustomersTable.Single(c => c.customerID == swTemp.customerID).customerName;
                     serviceStart = (DateTime)swTemp.serviceStart;
                     foreach (ServiceWorksheets item in sw)
                     {

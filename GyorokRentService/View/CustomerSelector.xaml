@@ -192,8 +192,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Label Content="Kedvezmény:" FontWeight="Bold" />
-                    <TextBox Style="{StaticResource CustomEditableTextBoxForRent}" Text="{Binding selectedCustomer.defaultDiscount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="41" />
-                    <Label Content="%" />
+                    <TextBox Style="{StaticResource CustomEditableTextBoxForRent}" Text="{Binding selectedCustomer.defaultDiscount, StringFormat=P0, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="50" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button Visibility="{Binding isEditable, Converter={StaticResource boolToVis}, ConverterParameter=true}" Command="{Binding switchModifyMode}" Height="48" Width="48" BorderThickness="0" BorderBrush="{x:Null}" Background="{x:Null}">

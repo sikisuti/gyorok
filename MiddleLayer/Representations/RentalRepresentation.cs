@@ -204,45 +204,51 @@ namespace MiddleLayer.Representations
             }
         }
 
-        public double IntervalDay {
+        public int PlannedHours {
             get
             {
-                double rtn = 0;
-
                 switch (rentTerm)
                 {
                     case RentTermEnum.OneHour:
-                        return 0.2;
-                        break;
-                    case RentTermEnum.HalfDay:
-                        return 0.5;
-                        break;
-                    case RentTermEnum.OneDay:
                         return 1;
                         break;
+                    case RentTermEnum.HalfDay:
+                        return (int)Math.Round((double)(DataProxy.Instance.HoursPerDay / 2), 0);
+                        break;
+                    case RentTermEnum.OneDay:
+                        return DataProxy.Instance.HoursPerDay;
+                        break;
                     case RentTermEnum.ThreeDays:
-                        rtn = 3;
+                        return DataProxy.Instance.HoursPerDay * 3;
                         break;
                     case RentTermEnum.OneWeek:
-                        rtn = 7;
+                        return DataProxy.Instance.HoursPerDay * 7;
                         break;
                     case RentTermEnum.Custom:
-                        rtn = (rentalEnd - rentalStart).Days;
+                        return (rentalEnd - rentalStart).Days;
                         break;
                     default:
+                        return 0;
                         break;
                 }
-                return rtn;
             }
         }
 
-        public double ElapsedDays { get { return (DateTime.Now - rentalStart).Days; } }
+        public double ElapsedDays { get { return ((rentalRealEnd ?? DateTime.Now) - rentalStart).Days; } }
 
-        public double ElapsedHours { get { return (DateTime.Now - rentalStart).Hours; } }
+        public double ElapsedHours
+        {
+            get
+            {
+                var hours = ((rentalRealEnd ?? DateTime.Now) - rentalStart).Hours + 1;
+                if (hours > DataProxy.Instance.HoursPerDay) return DataProxy.Instance.HoursPerDay;
+                return hours;
+            }
+        }
 
-        public long TotalPrice { get { return (long)Math.Round(IntervalDay * tool.rentPrice * discount, 0); } }
+        public long PlannedPrice { get { return (long)Math.Round(PlannedHours * (tool.rentPrice / DataProxy.Instance.HoursPerDay) * (1 - discount), 0); } }
 
-        public long ActualPrice { get { return (long)Math.Round(ElapsedDays * tool.rentPrice * discount, 0) + (isClean ? 0 : 100); } }
+        public long ActualPrice { get { return (long)Math.Round(((ElapsedDays * DataProxy.Instance.HoursPerDay) + ElapsedHours) * (tool.rentPrice / DataProxy.Instance.HoursPerDay) * (1 - discount), 0) + (isClean ? 0 : 100); } }
 
         public RentalRepresentation()
         {

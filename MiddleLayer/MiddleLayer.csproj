@@ -40,6 +40,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
@@ -59,13 +60,16 @@
     <Compile Include="Representations\DbSettingsRepresentation.cs" />
     <Compile Include="Representations\DetailedCustomerRepresentatiton.cs" />
     <Compile Include="Representations\FirmRepresentation.cs" />
+    <Compile Include="Representations\PartRepresentation.cs" />
     <Compile Include="Representations\PayTypeRepresentation.cs" />
     <Compile Include="Representations\PersonRepresentation.cs" />
     <Compile Include="Representations\RentalGroup_Representation.cs" />
     <Compile Include="Representations\RentalRepresentation.cs" />
     <Compile Include="Representations\RepresentationBase.cs" />
+    <Compile Include="Representations\ServiceGroupRepresentation.cs" />
     <Compile Include="Representations\ToolStatusRepresentation.cs" />
     <Compile Include="Representations\ToolRepresentation.cs" />
+    <Compile Include="Representations\WorksheetRepresentation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

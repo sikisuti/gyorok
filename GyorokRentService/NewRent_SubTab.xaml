@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Name="grdCustomer" Grid.Column="0" IsEnabled="{Binding rentChangeEnabled}">
+            <Grid Name="grdCustomer" Grid.Column="0">
                 <!--CustomerSelector added from codebehind-->
             </Grid>
             <Grid Grid.Column="1">

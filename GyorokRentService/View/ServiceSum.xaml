@@ -20,6 +20,17 @@
         <c:statusToFontWeightConverter x:Key="statusToFontWeight"/>
     </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Label Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Name="titleServiceSum" >
+                <Label.Content>
+                    <TextBlock Text="Munkalapok" TextDecorations="Underline"/>
+                </Label.Content>
+            </Label>
+        </Grid>
         <!--<Label Content="Keresés:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Left" Margin="12,14,0,0" Name="lblSearch" Padding="5,5,5,0" VerticalAlignment="Top" Width="73" />-->
         <TextBox Text="{Binding searchCode, UpdateSourceTrigger=PropertyChanged}" FontSize="16" FontWeight="Normal" Height="30" HorizontalAlignment="Left" Margin="70,16,0,0" Name="textBox3" VerticalAlignment="Top" Width="48" >
             <i:Interaction.Triggers>

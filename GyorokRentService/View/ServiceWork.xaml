@@ -19,7 +19,19 @@
         <conv:BoolInverterConverter x:Key="InvBool"/>
         <c:MultiBooleanTrueFalseToVisibilityConverter x:Key="multiBoolTFToVis"/>
     </UserControl.Resources>
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Label Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Name="titleService">
+                <Label.Content>
+                    <TextBlock Text="Javítás" TextDecorations="Underline"/>
+                </Label.Content>
+            </Label>
+        </Grid>
         <ListBox ItemsSource="{Binding worksheetList}" SelectedItem="{Binding selectedWorksheet}" FontSize="16" FontWeight="Normal" Height="154" HorizontalAlignment="Left" Margin="12,35,0,0" Name="listBox1" VerticalAlignment="Top" Width="1150">
             <ListBox.ContextMenu>
                 <ContextMenu>

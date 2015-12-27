@@ -19,6 +19,8 @@ namespace MiddleLayer
         long toolsVersion;
         long rentalVersion;
 
+        public int HoursPerDay { get; set; }
+
         private static readonly DataProxy _instance = new DataProxy();
         public static DataProxy Instance
         {
@@ -279,12 +281,12 @@ namespace MiddleLayer
             using (ISQLConnection dataSource = DataSource)
             {
                 RentalGroups rentalGroupToAdd = RepresentationConverter.convertRentalGroup(rentalGroup);
-                foreach (RentalRepresentation rental in rentalGroup.rentals)
-                {
-                    rentalGroupToAdd.Rentals.Add(RepresentationConverter.convertRental(rental));
-                    dataSource.UpdateTool(RepresentationConverter.convertTool(rental.tool));
-                    dataSource.UpdateCustomer(RepresentationConverter.convertCustomer(rental.customer));
-                }
+                //foreach (RentalRepresentation rental in rentalGroup.rentals)
+                //{
+                    //rentalGroupToAdd.Rentals.Add(RepresentationConverter.convertRental(rental));
+                    //dataSource.UpdateTool(RepresentationConverter.convertTool(rental.tool));
+                    //dataSource.UpdateCustomer(RepresentationConverter.convertCustomer(rental.customer));
+                //}
                 rentalGroup.id = dataSource.AddRentalGroup(rentalGroupToAdd);
 
                 //foreach (RentalRepresentation rental in rentalGroup.rentals)

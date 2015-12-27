@@ -47,7 +47,7 @@ namespace GyorokRentService.View
         {
             InitializeComponent();
 
-            ShownCustomer = SQLConnection.Execute.CustomersTable.FirstOrDefault(c => c.customerID == customerID);
+            //ShownCustomer = SQLConnection.Execute.CustomersTable.FirstOrDefault(c => c.customerID == customerID);
         }
     }
 }

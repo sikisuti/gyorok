@@ -64,7 +64,7 @@ namespace MiddleLayer.Representations
             }
         }
         
-        public long TotalCost { get { return rentals.Sum(r => r.TotalPrice); } }
+        public long TotalCost { get { return rentals.Sum(r => r.PlannedPrice); } }
 
         public long ActualCost { get { return rentals.Sum(r => r.ActualPrice); } }
 

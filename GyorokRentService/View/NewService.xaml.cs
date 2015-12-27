@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GyorokRentService.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,13 @@ namespace GyorokRentService.View
     /// </summary>
     public partial class NewService : UserControl
     {
+        public NewService_ViewModel newService_VM { get; set; }
+
         public NewService()
         {
             InitializeComponent();
+            newService_VM = new NewService_ViewModel();
+            DataContext = newService_VM;
         }
     }
 }

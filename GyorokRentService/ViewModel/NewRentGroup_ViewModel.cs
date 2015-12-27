@@ -11,6 +11,7 @@ using SQLConnectionLib;
 using MiddleLayer.Representations;
 using MiddleLayer;
 using NLog;
+using Common.Enumerations;
 
 namespace GyorokRentService.ViewModel
 {
@@ -100,7 +101,7 @@ namespace GyorokRentService.ViewModel
             
             foreach (RentalRepresentation rental in rentalGroup.rentals)
             {                
-                rental.tool.toolStatus.id = 3;
+                rental.tool.toolStatus.id = (long)ToolStatusEnum.Rented;
                 rental.actualPrice = rental.tool.rentPrice;
                 rental.tool.rentCounter += 1;
                 rental.rentalStart = DateTime.Now;
@@ -113,7 +114,7 @@ namespace GyorokRentService.ViewModel
                         rental.rentalEnd = rental.rentalStart.AddHours(1);
                         break;
                     case Common.Enumerations.RentTermEnum.HalfDay:
-                        rental.rentalEnd = rental.rentalStart.AddHours(4);
+                        rental.rentalEnd = rental.rentalStart.AddHours((int)Math.Round((double)(Properties.Settings.Default.HoursPerDay) / 2, 0));
                         break;
                     case Common.Enumerations.RentTermEnum.OneDay:
                         rental.rentalEnd = rental.rentalStart.AddDays(1);

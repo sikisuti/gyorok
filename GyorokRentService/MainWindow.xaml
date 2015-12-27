@@ -21,18 +21,7 @@
             <GradientStop Color="{StaticResource ServiceMainColor}" Offset="0" />
             <GradientStop Color="{StaticResource ServiceBackgroundColor}" Offset="1" />
         </LinearGradientBrush>
-        <LinearGradientBrush x:Key="ServiceSubBackground1" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="{StaticResource ServiceSubColor1}" Offset="0" />
-            <GradientStop Color="{StaticResource ServiceBackgroundColor}" Offset="1" />
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="ServiceSubBackground2" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="{StaticResource ServiceSubColor2}" Offset="0" />
-            <GradientStop Color="{StaticResource ServiceBackgroundColor}" Offset="1" />
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="ServiceSubBackground3" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="{StaticResource ServiceSubColor3}" Offset="0" />
-            <GradientStop Color="{StaticResource ServiceBackgroundColor}" Offset="1" />
-        </LinearGradientBrush>
+        
 
         <Style x:Key="StyleRentMain" TargetType="{x:Type TabItem}">
             <Setter Property="Template">
@@ -83,64 +72,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="StyleServiceSub1" TargetType="{x:Type TabItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Grid Width="200" Height="30">
-                            <Border Name="Border" Background="{StaticResource ServiceSubBackground1}" BorderBrush="Black" BorderThickness="1,1,1,0">
-                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True"/>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource ServiceBgBrush}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="StyleServiceSub2" TargetType="{x:Type TabItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Grid Width="200">
-                            <Border Name="Border" Background="{StaticResource ServiceSubBackground2}" BorderBrush="Black" BorderThickness="1,1,1,0">
-                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True"/>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource ServiceBgBrush}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="StyleServiceSub3" TargetType="{x:Type TabItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Grid Width="200">
-                            <Border Name="Border" Background="{StaticResource ServiceSubBackground3}" BorderBrush="Black" BorderThickness="1,1,1,0">
-                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True"/>
-                            </Border>
-
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource ServiceBgBrush}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Window.Resources>
-
-    <!--<Viewbox Stretch="Uniform" >-->
 
     <DockPanel LastChildFill="True">
         <!--<Grid DockPanel.Dock="Top">
@@ -171,77 +103,7 @@
                 <TabItem.Header>
                     <TextBlock Text="Szervíz" FontSize="20" FontWeight="Bold"/>
                 </TabItem.Header>
-                <Grid  Background="{StaticResource ServiceBgBrush}">
-                        <TabControl Name="tcService" SelectionChanged="tcService_SelectionChanged">
-                            <TabItem Style="{StaticResource StyleServiceSub1}" Header="Új munkalap" Name="tiNewWorksheet">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Label Padding="0,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center">
-                                            <Label.Content>
-                                                <TextBlock Text="Új munkalap" TextDecorations="Underline"/>
-                                            </Label.Content>
-                                        </Label>
-                                    </Grid>
-                                    <Grid Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Name="grdNewWSCustomer" IsEnabled="{Binding serviceChangeEnabled}" Grid.Column="0" Grid.ColumnSpan="{Binding customerColumnSpan}" Panel.ZIndex="1">
-                                            <!--CustomerSelector added from codebehind-->
-                                        </Grid>
-                                        <Grid Name="grdNewService" Grid.Column="1">
-                                            <!--NewService added from codebehind-->
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </TabItem>
-                            <TabItem Style="{StaticResource StyleServiceSub2}" Header="Javítás" Name="tiWorksheet">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Label Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Name="titleService">
-                                            <Label.Content>
-                                                <TextBlock Text="Javítás" TextDecorations="Underline"/>
-                                            </Label.Content>
-                                        </Label>
-                                    </Grid>
-                                    <Grid Grid.Row="1" Name="grdService"/>
-                                    <!--<view:ServiceWork/>-->
-                                </Grid>
-                            </TabItem>
-                            <TabItem Style="{StaticResource StyleServiceSub3}" Header="Munkalapok" Name="tiWorksheetList" >
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Label Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Name="titleServiceSum" >
-                                            <Label.Content>
-                                                <TextBlock Text="Munkalapok" TextDecorations="Underline"/>
-                                            </Label.Content>
-                                        </Label>
-                                    </Grid>
-                                    <Grid Grid.Row="1" Name="grdServiceSum"/>
-                                    <!--<view:ServiceSum/>-->
-                                </Grid>
-                            </TabItem>
-                        </TabControl>
-                    </Grid>
                 </TabItem>
-                <!--<TabItem Style="{StaticResource StyleServiceMain}" Header="Ügyféltörzs" Name="tiCustomerSum" FontSize="20" FontWeight="Bold">
-                    <Grid Name="grdCustomerSum">
-                        CustomerSum added from codebehind
-                    </Grid>
-                </TabItem>-->
             <TabItem Style="{StaticResource StyleConfigMain}">
                 <TabItem.Header>
                     <Grid>

@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data.Objects;
+//using System.Data.Objects;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Diagnostics;
 using System.Data.Common;
 using System.Data;
 using System.IO;
-using System.Data.EntityClient;
-using System.Data.Metadata.Edm;
+//using System.Data.EntityClient;
+//using System.Data.Metadata.Edm;
 using LoggerLib;
+using System.Data.Entity;
 
 namespace SQLConnectionLib
 {
@@ -38,118 +39,119 @@ namespace SQLConnectionLib
 
         #region Tables
 
-        private ObjectSet<Customers> customersTable;
-        public ObjectSet<Customers> CustomersTable
-        {
-            get { return customersTable; }
-            set { customersTable = value; }
-        }
+        //private ObjectSet<Customers> customersTable;
+        //public ObjectSet<Customers> CustomersTable
+        //{
+        //    get { return customersTable; }
+        //    set { customersTable = value; }
+        //}
 
-        private ObjectSet<Contacts> contactsTable;
-        public ObjectSet<Contacts> ContactsTable
-        {
-            get { return contactsTable; }
-            set { contactsTable = value; }
-        }
+        //private ObjectSet<Contacts> contactsTable;
+        //public ObjectSet<Contacts> ContactsTable
+        //{
+        //    get { return contactsTable; }
+        //    set { contactsTable = value; }
+        //}
 
-        private ObjectSet<Parts> partsTable;
-        public ObjectSet<Parts> PartsTable
-        {
-            get { return partsTable; }
-            set { partsTable = value; }
-        }
+        //private ObjectSet<Parts> partsTable;
+        //public ObjectSet<Parts> PartsTable
+        //{
+        //    get { return partsTable; }
+        //    set { partsTable = value; }
+        //}
 
-        private ObjectSet<Rentals> rentalsTable;
-        public ObjectSet<Rentals> RentalsTable
-        {
-            get { return rentalsTable; }
-            set { rentalsTable = value; }
-        }
+        //private ObjectSet<Rentals> rentalsTable;
+        //public ObjectSet<Rentals> RentalsTable
+        //{
+        //    get { return rentalsTable; }
+        //    set { rentalsTable = value; }
+        //}
 
-        private ObjectSet<PayTypes> payTypesTable;
-        public ObjectSet<PayTypes> PayTypesTable
-        {
-            get { return payTypesTable; }
-            set { payTypesTable = value; }
-        }
+        //private ObjectSet<PayTypes> payTypesTable;
+        //public ObjectSet<PayTypes> PayTypesTable
+        //{
+        //    get { return payTypesTable; }
+        //    set { payTypesTable = value; }
+        //}
 
-        private ObjectSet<RentalGroups> rentalGroupsTable;
-        public ObjectSet<RentalGroups> RentalGroupsTable
-        {
-            get { return rentalGroupsTable; }
-            set { rentalGroupsTable = value; }
-        }
+        //private ObjectSet<RentalGroups> rentalGroupsTable;
+        //public ObjectSet<RentalGroups> RentalGroupsTable
+        //{
+        //    get { return rentalGroupsTable; }
+        //    set { rentalGroupsTable = value; }
+        //}
 
-        private ObjectSet<Tools> toolsTable;
-        public ObjectSet<Tools> ToolsTable
-        {
-            get { return toolsTable; }
-            set { toolsTable = value; }
-        }
+        //private ObjectSet<Tools> toolsTable;
+        //public ObjectSet<Tools> ToolsTable
+        //{
+        //    get { return toolsTable; }
+        //    set { toolsTable = value; }
+        //}
 
-        private ObjectSet<ServiceWorksheets> serviceWorksheetsTable;
-        public ObjectSet<ServiceWorksheets> ServiceWorksheetsTable
-        {
-            get { return serviceWorksheetsTable; }
-            set { serviceWorksheetsTable = value; }
-        }
+        //private ObjectSet<ServiceWorksheets> serviceWorksheetsTable;
+        //public ObjectSet<ServiceWorksheets> ServiceWorksheetsTable
+        //{
+        //    get { return serviceWorksheetsTable; }
+        //    set { serviceWorksheetsTable = value; }
+        //}
 
-        private ObjectSet<ServiceGroups> serviceGroupsTable;
-        public ObjectSet<ServiceGroups> ServiceGroupsTable
-        {
-            get { return serviceGroupsTable; }
-            set { serviceGroupsTable = value; }
-        }        
+        //private ObjectSet<ServiceGroups> serviceGroupsTable;
+        //public ObjectSet<ServiceGroups> ServiceGroupsTable
+        //{
+        //    get { return serviceGroupsTable; }
+        //    set { serviceGroupsTable = value; }
+        //}        
 
-        private ObjectSet<ErrorTypes> errorTypesTable;
-        public ObjectSet<ErrorTypes> ErrorTypesTable
-        {
-            get { return errorTypesTable; }
-            set { errorTypesTable = value; }
-        }
+        //private ObjectSet<ErrorTypes> errorTypesTable;
+        //public ObjectSet<ErrorTypes> ErrorTypesTable
+        //{
+        //    get { return errorTypesTable; }
+        //    set { errorTypesTable = value; }
+        //}
 
-        private ObjectSet<ToolStatuses> toolStatusesTable;
-        public ObjectSet<ToolStatuses> ToolStatusesTable
-        {
-            get { return toolStatusesTable; }
-            set { toolStatusesTable = value; }
-        }
+        //private ObjectSet<ToolStatuses> toolStatusesTable;
+        //public ObjectSet<ToolStatuses> ToolStatusesTable
+        //{
+        //    get { return toolStatusesTable; }
+        //    set { toolStatusesTable = value; }
+        //}
 
-        private ObjectSet<ServiceSum> serviceSumView;
-        public ObjectSet<ServiceSum> ServiceSumView
-        {
-            get { return serviceSumView; }
-            set { serviceSumView = value; }
-        }
+        //private ObjectSet<ServiceSum> serviceSumView;
+        //public ObjectSet<ServiceSum> ServiceSumView
+        //{
+        //    get { return serviceSumView; }
+        //    set { serviceSumView = value; }
+        //}
 
-        private ObjectSet<RentalSum> rentalSumView;
-        public ObjectSet<RentalSum> RentalSumView
-        {
-            get { return rentalSumView; }
-            set { rentalSumView = value; }
-        }
+        //private ObjectSet<RentalSum> rentalSumView;
+        //public ObjectSet<RentalSum> RentalSumView
+        //{
+        //    get { return rentalSumView; }
+        //    set { rentalSumView = value; }
+        //}
 
-        private ObjectSet<DetailedCustomers> detailedCustomersView;
+        //private ObjectSet<DetailedCustomers> detailedCustomersView;
 
-        public ObjectSet<DetailedCustomers> DetailedCustomersView
-        {
-            get { return detailedCustomersView; }
-            set { detailedCustomersView = value; }
-        }        
+        //public ObjectSet<DetailedCustomers> DetailedCustomersView
+        //{
+        //    get { return detailedCustomersView; }
+        //    set { detailedCustomersView = value; }
+        //}        
 
-        private ObjectSet<Cities> citiesTable;
-        public ObjectSet<Cities> CitiesTable
-        {
-            get { return citiesTable; }
-            set { citiesTable = value; }
-        }
+        //private ObjectSet<Cities> citiesTable;
+        //public ObjectSet<Cities> CitiesTable
+        //{
+        //    get { return citiesTable; }
+        //    set { citiesTable = value; }
+        //}
 
         #endregion
 
         public SQLConnection()
         {
-            dbSettings = new DbSettings();
-            db = new dbGyorokEntities(dbSettings.GetEntityConnection());
+            db = new dbGyorokEntities();
+            //dbSettings = new DbSettings();
+            //db = new dbGyorokEntities(dbSettings.GetEntityConnection());
         }
 
         public void DoBackup(string path = null)
@@ -226,7 +228,8 @@ namespace SQLConnectionLib
         }
         public long GetCustomersVersion()
         {
-            return db.TableVersions.SingleOrDefault(tv => tv.tableName == "Customers").tableVersion;
+            var rtn = db.TableVersions.SingleOrDefault(tv => tv.tableName == "Customers").tableVersion;
+            return rtn;
         }
 
         public Customers GetCustomerById(long id)
@@ -240,7 +243,7 @@ namespace SQLConnectionLib
         }
         public long AddCustomer(Customers customer)
         {
-            db.Customers.AddObject(customer);
+            db.Customers.Add(customer);
             db.SaveChanges();
             return customer.customerID;
         }
@@ -293,7 +296,7 @@ namespace SQLConnectionLib
                     agentID = agent.customerID,
                     firmID = firm.customerID
                 };
-                db.Contacts.AddObject(newContact);
+                db.Contacts.Add(newContact);
                 db.SaveChanges();
             }
         }
@@ -302,7 +305,7 @@ namespace SQLConnectionLib
             Contacts contactForDelete = db.Contacts.SingleOrDefault(c => c.firmID == firm.customerID && c.agentID == agent.customerID);
             if (contactForDelete != null)
             {
-                db.Contacts.DeleteObject(contactForDelete);
+                db.Contacts.Remove(contactForDelete);
                 db.SaveChanges();
             }
         }
@@ -318,7 +321,7 @@ namespace SQLConnectionLib
         public void DeleteCityById(long id)
         {
             Cities cityToDelete = db.Cities.SingleOrDefault(c => c.cityID == id);
-            db.Cities.DeleteObject(cityToDelete);
+            db.Cities.Remove(cityToDelete);
             db.SaveChanges();
         }
 
@@ -328,7 +331,7 @@ namespace SQLConnectionLib
         }
         public long AddTool(Tools tool)
         {
-            db.Tools.AddObject(tool);
+            db.Tools.Add(tool);
             db.SaveChanges();
             return tool.toolID;
         }
@@ -366,28 +369,29 @@ namespace SQLConnectionLib
         }
         public void AddRental(Rentals rental)
         {
-            db.Rentals.AddObject(rental);
+            db.Rentals.Add(rental);
             db.SaveChanges();
         }
         public void UpdateRental(Rentals rental)
         {
-            Rentals rentalToUpdate = db.Rentals.SingleOrDefault(r => r.rentalID == rental.rentalID);
-            rentalToUpdate.actualPrice = rental.actualPrice;
-            rentalToUpdate.contactID = rental.contactID;
-            rentalToUpdate.customerID = rental.customerID;
-            rentalToUpdate.discount = rental.discount;
-            rentalToUpdate.groupID = rental.groupID;
-            rentalToUpdate.isClean = rental.isClean;
-            rentalToUpdate.isPaid = rental.isPaid;
-            rentalToUpdate.payTypeID = rental.payTypeID;
-            rentalToUpdate.rentalEnd = rental.rentalEnd;
-            rentalToUpdate.rentalRealEnd = rental.rentalRealEnd;
-            rentalToUpdate.rentalStart = rental.rentalStart;
-            rentalToUpdate.toolID = rental.toolID;
+            db.Rentals.Attach(rental);
+            db.Entry(rental).State = EntityState.Modified;
+            db.Entry(rental.Tools).State = EntityState.Modified;
 
-            //rentalToUpdate.ToolsReference.Attach(rental.Tools);
-            //rentalToUpdate.Tools. = EntityState.Modified;
-
+            //Rentals rentalToUpdate = db.Rentals.SingleOrDefault(r => r.rentalID == rental.rentalID);
+            //rentalToUpdate.actualPrice = rental.actualPrice;
+            //rentalToUpdate.contactID = rental.contactID;
+            //rentalToUpdate.customerID = rental.customerID;
+            //rentalToUpdate.discount = rental.discount;
+            //rentalToUpdate.groupID = rental.groupID;
+            //rentalToUpdate.isClean = rental.isClean;
+            //rentalToUpdate.isPaid = rental.isPaid;
+            //rentalToUpdate.payTypeID = rental.payTypeID;
+            //rentalToUpdate.rentalEnd = rental.rentalEnd;
+            //rentalToUpdate.rentalRealEnd = rental.rentalRealEnd;
+            //rentalToUpdate.rentalStart = rental.rentalStart;
+            //rentalToUpdate.toolID = rental.toolID;
+            
             db.SaveChanges();
         }
         public void DeleteRentalById(long id)
@@ -395,7 +399,7 @@ namespace SQLConnectionLib
             Rentals rentalToDelete = db.Rentals.SingleOrDefault(r => r.rentalID == id);
             if (rentalToDelete != null)
             {
-                db.Rentals.DeleteObject(rentalToDelete);
+                db.Rentals.Remove(rentalToDelete);
             }
         }
 
@@ -414,7 +418,16 @@ namespace SQLConnectionLib
         }
         public long AddRentalGroup(RentalGroups rentalGroup)
         {
-            db.RentalGroups.AddObject(rentalGroup);
+            db.RentalGroups.Add(rentalGroup);
+            foreach (var rental in rentalGroup.Rentals)
+            {
+                db.Entry(rental.Tools).State = EntityState.Modified;
+                db.Entry(rental.Customers).State = EntityState.Modified;
+                if (rental.Customers1 != null)
+                {
+                    db.Entry(rental.Customers1).State = EntityState.Modified;
+                }
+            }
             db.SaveChanges();
             return rentalGroup.groupID;
         }
@@ -456,24 +469,24 @@ namespace SQLConnectionLib
         }
         private void UpdateTables()
         {
-            customersTable = db.Customers;
-            contactsTable = db.Contacts;
-            partsTable = db.Parts;
-            rentalsTable = db.Rentals;
-            payTypesTable = db.PayTypes;
-            rentalGroupsTable = db.RentalGroups;
-            toolsTable = db.Tools;
-            serviceWorksheetsTable = db.ServiceWorksheets;
-            errorTypesTable = db.ErrorTypes;
-            toolStatusesTable = db.ToolStatuses;
-            serviceGroupsTable = db.ServiceGroups;
-            citiesTable = db.Cities;
+            //customersTable = db.Customers;
+            //contactsTable = db.Contacts;
+            //partsTable = db.Parts;
+            //rentalsTable = db.Rentals;
+            //payTypesTable = db.PayTypes;
+            //rentalGroupsTable = db.RentalGroups;
+            //toolsTable = db.Tools;
+            //serviceWorksheetsTable = db.ServiceWorksheets;
+            //errorTypesTable = db.ErrorTypes;
+            //toolStatusesTable = db.ToolStatuses;
+            //serviceGroupsTable = db.ServiceGroups;
+            //citiesTable = db.Cities;
         }
         private void UpdateViews()
         {
-            serviceSumView = db.ServiceSum;
-            rentalSumView = db.RentalSum;
-            DetailedCustomersView = db.DetailedCustomers;
+            //serviceSumView = db.ServiceSum;
+            //rentalSumView = db.RentalSum;
+            //DetailedCustomersView = db.DetailedCustomers;
         }
         public void delCustomer(long pCustomerID)
         {
@@ -489,7 +502,7 @@ namespace SQLConnectionLib
         }
         public void addCity(Cities newCity)
         {
-            db.Cities.AddObject(newCity);
+            db.Cities.Add(newCity);
             db.SaveChanges();
         }
         public void delCity(long pCityID)

@@ -257,7 +257,7 @@ namespace ConnectionTester
             try
             {
                 Status += "Try to retrieve tool statuses ... ";
-                cList = datasource.ToolStatusesTable.ToList();
+                //cList = datasource.ToolStatusesTable.ToList();
 
                 Status += Environment.NewLine;
                 foreach (ToolStatuses item in cList)

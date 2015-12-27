@@ -1,230 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="dbGyorokModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityContainer Name="dbGyorokModelStoreContainer">
-          <EntitySet Name="Cities" EntityType="dbGyorokModel.Store.Cities" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Contacts" EntityType="dbGyorokModel.Store.Contacts" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Customers" EntityType="dbGyorokModel.Store.Customers" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ErrorTypes" EntityType="dbGyorokModel.Store.ErrorTypes" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Parts" EntityType="dbGyorokModel.Store.Parts" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PayTypes" EntityType="dbGyorokModel.Store.PayTypes" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="RentalGroups" EntityType="dbGyorokModel.Store.RentalGroups" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Rentals" EntityType="dbGyorokModel.Store.Rentals" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ServiceGroups" EntityType="dbGyorokModel.Store.ServiceGroups" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ServiceStatuses" EntityType="dbGyorokModel.Store.ServiceStatuses" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ServiceWorksheets" EntityType="dbGyorokModel.Store.ServiceWorksheets" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="SystemParameters" EntityType="dbGyorokModel.Store.SystemParameters" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="TableVersions" EntityType="dbGyorokModel.Store.TableVersions" store:Type="Tables" store:Schema="dbo" store:Name="TableVersions">
-            <DefiningQuery>SELECT 
-      [TableVersions].[tableName] AS [tableName], 
-      [TableVersions].[tableVersion] AS [tableVersion]
-      FROM [dbo].[TableVersions] AS [TableVersions]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Tools" EntityType="dbGyorokModel.Store.Tools" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ToolStatuses" EntityType="dbGyorokModel.Store.ToolStatuses" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="DetailedCustomers" EntityType="dbGyorokModel.Store.DetailedCustomers" store:Type="Views" store:Schema="dbo" store:Name="DetailedCustomers">
-            <DefiningQuery>SELECT 
-      [DetailedCustomers].[customerID] AS [customerID], 
-      [DetailedCustomers].[customerName] AS [customerName], 
-      [DetailedCustomers].[IDNumber] AS [IDNumber], 
-      [DetailedCustomers].[mothersName] AS [mothersName], 
-      [DetailedCustomers].[cityID] AS [cityID], 
-      [DetailedCustomers].[customerAddress] AS [customerAddress], 
-      [DetailedCustomers].[customerPhone] AS [customerPhone], 
-      [DetailedCustomers].[birthDate] AS [birthDate], 
-      [DetailedCustomers].[workPlace] AS [workPlace], 
-      [DetailedCustomers].[isFirm] AS [isFirm], 
-      [DetailedCustomers].[comment] AS [comment], 
-      [DetailedCustomers].[problems] AS [problems], 
-      [DetailedCustomers].[defaultDiscount] AS [defaultDiscount], 
-      [DetailedCustomers].[rentCounter] AS [rentCounter], 
-      [DetailedCustomers].[serviceCounter] AS [serviceCounter], 
-      [DetailedCustomers].[customerDeleted] AS [customerDeleted], 
-      [DetailedCustomers].[postalCode] AS [postalCode], 
-      [DetailedCustomers].[city] AS [city], 
-      [DetailedCustomers].[cityDeleted] AS [cityDeleted]
-      FROM [dbo].[DetailedCustomers] AS [DetailedCustomers]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="RentalSum" EntityType="dbGyorokModel.Store.RentalSum" store:Type="Views" store:Schema="dbo" store:Name="RentalSum">
-            <DefiningQuery>SELECT 
-      [RentalSum].[customerID] AS [customerID], 
-      [RentalSum].[customerName] AS [customerName], 
-      [RentalSum].[cIDNumber] AS [cIDNumber], 
-      [RentalSum].[mothersName] AS [mothersName], 
-      [RentalSum].[customerAddress] AS [customerAddress], 
-      [RentalSum].[customerPhone] AS [customerPhone], 
-      [RentalSum].[birthDate] AS [birthDate], 
-      [RentalSum].[workPlace] AS [workPlace], 
-      [RentalSum].[isFirm] AS [isFirm], 
-      [RentalSum].[comment] AS [comment], 
-      [RentalSum].[problems] AS [problems], 
-      [RentalSum].[toolID] AS [toolID], 
-      [RentalSum].[toolName] AS [toolName], 
-      [RentalSum].[toolManufacturer] AS [toolManufacturer], 
-      [RentalSum].[tIDNumber] AS [tIDNumber], 
-      [RentalSum].[serialNumber] AS [serialNumber], 
-      [RentalSum].[contactName] AS [contactName], 
-      [RentalSum].[rentalStart] AS [rentalStart], 
-      [RentalSum].[rentalEnd] AS [rentalEnd], 
-      [RentalSum].[actualPrice] AS [actualPrice], 
-      [RentalSum].[discount] AS [discount], 
-      [RentalSum].[groupID] AS [groupID], 
-      [RentalSum].[rentalID] AS [rentalID], 
-      [RentalSum].[isPaid] AS [isPaid], 
-      [RentalSum].[rentalRealEnd] AS [rentalRealEnd], 
-      [RentalSum].[isClean] AS [isClean], 
-      [RentalSum].[payTypeID] AS [payTypeID], 
-      [RentalSum].[defaultDiscount] AS [defaultDiscount], 
-      [RentalSum].[cRentCounter] AS [cRentCounter], 
-      [RentalSum].[serviceCounter] AS [serviceCounter], 
-      [RentalSum].[rentPrice] AS [rentPrice], 
-      [RentalSum].[toolStatusID] AS [toolStatusID], 
-      [RentalSum].[fromDate] AS [fromDate], 
-      [RentalSum].[defaultDeposit] AS [defaultDeposit], 
-      [RentalSum].[tRentCounter] AS [tRentCounter], 
-      [RentalSum].[contactIDNumber] AS [contactIDNumber], 
-      [RentalSum].[contactMothersName] AS [contactMothersName], 
-      [RentalSum].[contactAddress] AS [contactAddress], 
-      [RentalSum].[contactPhone] AS [contactPhone], 
-      [RentalSum].[contactBirthDate] AS [contactBirthDate], 
-      [RentalSum].[contactWorkplace] AS [contactWorkplace], 
-      [RentalSum].[contactComment] AS [contactComment], 
-      [RentalSum].[contactProblems] AS [contactProblems], 
-      [RentalSum].[tIsDeleted] AS [tIsDeleted], 
-      [RentalSum].[cIsDeleted] AS [cIsDeleted], 
-      [RentalSum].[customerCityID] AS [customerCityID], 
-      [RentalSum].[customerPostalCode] AS [customerPostalCode], 
-      [RentalSum].[customerCity] AS [customerCity], 
-      [RentalSum].[contactCityID] AS [contactCityID], 
-      [RentalSum].[contactPostalCode] AS [contactPostalCode], 
-      [RentalSum].[contactCity] AS [contactCity]
-      FROM [dbo].[RentalSum] AS [RentalSum]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ServiceSum" EntityType="dbGyorokModel.Store.ServiceSum" store:Type="Views" store:Schema="dbo" store:Name="ServiceSum">
-            <DefiningQuery>SELECT 
-      [ServiceSum].[customerID] AS [customerID], 
-      [ServiceSum].[customerName] AS [customerName], 
-      [ServiceSum].[IDNumber] AS [IDNumber], 
-      [ServiceSum].[mothersName] AS [mothersName], 
-      [ServiceSum].[customerAddress] AS [customerAddress], 
-      [ServiceSum].[customerPhone] AS [customerPhone], 
-      [ServiceSum].[birthDate] AS [birthDate], 
-      [ServiceSum].[workPlace] AS [workPlace], 
-      [ServiceSum].[isFirm] AS [isFirm], 
-      [ServiceSum].[custComment] AS [custComment], 
-      [ServiceSum].[problems] AS [problems], 
-      [ServiceSum].[defaultDiscount] AS [defaultDiscount], 
-      [ServiceSum].[worksheetID] AS [worksheetID], 
-      [ServiceSum].[deviceID] AS [deviceID], 
-      [ServiceSum].[deviceManufacturer] AS [deviceManufacturer], 
-      [ServiceSum].[deviceName] AS [deviceName], 
-      [ServiceSum].[hasWarranty] AS [hasWarranty], 
-      [ServiceSum].[errorTypeID] AS [errorTypeID], 
-      [ServiceSum].[errorDescription] AS [errorDescription], 
-      [ServiceSum].[statusID] AS [statusID], 
-      [ServiceSum].[serviceStart] AS [serviceStart], 
-      [ServiceSum].[serviceEnd] AS [serviceEnd], 
-      [ServiceSum].[isPaid] AS [isPaid], 
-      [ServiceSum].[serviceCost] AS [serviceCost], 
-      [ServiceSum].[wsComment] AS [wsComment], 
-      [ServiceSum].[discount] AS [discount], 
-      [ServiceSum].[statusName] AS [statusName], 
-      [ServiceSum].[errorType] AS [errorType], 
-      [ServiceSum].[inQuotMode] AS [inQuotMode], 
-      [ServiceSum].[quotRequested] AS [quotRequested], 
-      [ServiceSum].[plusParts] AS [plusParts], 
-      [ServiceSum].[yearCounter] AS [yearCounter], 
-      [ServiceSum].[quotAccepted] AS [quotAccepted], 
-      [ServiceSum].[serialID] AS [serialID], 
-      [ServiceSum].[buyDate] AS [buyDate], 
-      [ServiceSum].[warrantyNumber] AS [warrantyNumber], 
-      [ServiceSum].[maxCost] AS [maxCost], 
-      [ServiceSum].[isDeleted] AS [isDeleted], 
-      [ServiceSum].[cityID] AS [cityID], 
-      [ServiceSum].[postalCode] AS [postalCode], 
-      [ServiceSum].[city] AS [city]
-      FROM [dbo].[ServiceSum] AS [ServiceSum]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="SimpleParts" EntityType="dbGyorokModel.Store.SimpleParts" store:Type="Views" store:Schema="dbo" store:Name="SimpleParts">
-            <DefiningQuery>SELECT 
-      [SimpleParts].[partID] AS [partID], 
-      [SimpleParts].[partName] AS [partName], 
-      [SimpleParts].[partPrice] AS [partPrice], 
-      [SimpleParts].[partQuantity] AS [partQuantity], 
-      [SimpleParts].[serviceID] AS [serviceID]
-      FROM [dbo].[SimpleParts] AS [SimpleParts]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK_contacts_Customers" Association="dbGyorokModel.Store.FK_contacts_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Contacts" EntitySet="Contacts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_contacts_Customers1" Association="dbGyorokModel.Store.FK_contacts_Customers1">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Contacts" EntitySet="Contacts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Customers_Cities" Association="dbGyorokModel.Store.FK_Customers_Cities">
-            <End Role="Cities" EntitySet="Cities" />
-            <End Role="Customers" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Parts_ServiceWorksheets" Association="dbGyorokModel.Store.FK_Parts_ServiceWorksheets">
-            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
-            <End Role="Parts" EntitySet="Parts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rentals_Customers" Association="dbGyorokModel.Store.FK_Rentals_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Rentals" EntitySet="Rentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rentals_Customers1" Association="dbGyorokModel.Store.FK_Rentals_Customers1">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Rentals" EntitySet="Rentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rentals_PayTypes" Association="dbGyorokModel.Store.FK_Rentals_PayTypes">
-            <End Role="PayTypes" EntitySet="PayTypes" />
-            <End Role="Rentals" EntitySet="Rentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rentals_RentalGroups" Association="dbGyorokModel.Store.FK_Rentals_RentalGroups">
-            <End Role="RentalGroups" EntitySet="RentalGroups" />
-            <End Role="Rentals" EntitySet="Rentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rentals_Tools" Association="dbGyorokModel.Store.FK_Rentals_Tools">
-            <End Role="Tools" EntitySet="Tools" />
-            <End Role="Rentals" EntitySet="Rentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceWorksheets_Customers" Association="dbGyorokModel.Store.FK_ServiceWorksheets_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceWorksheets_ErrorTypes" Association="dbGyorokModel.Store.FK_ServiceWorksheets_ErrorTypes">
-            <End Role="ErrorTypes" EntitySet="ErrorTypes" />
-            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceWorksheets_ServiceStatuses" Association="dbGyorokModel.Store.FK_ServiceWorksheets_ServiceStatuses">
-            <End Role="ServiceStatuses" EntitySet="ServiceStatuses" />
-            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tools_ToolStatuses" Association="dbGyorokModel.Store.FK_Tools_ToolStatuses">
-            <End Role="ToolStatuses" EntitySet="ToolStatuses" />
-            <End Role="Tools" EntitySet="Tools" />
-          </AssociationSet>
-        </EntityContainer>
+      <Schema Namespace="dbGyorokModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cities">
           <Key>
             <PropertyRef Name="cityID" />
           </Key>
-          <Property Name="cityID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="postalCode" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="city" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="cityID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="postalCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="isDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Contacts">
           <Key>
             <PropertyRef Name="contactID" />
           </Key>
-          <Property Name="contactID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="contactID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="firmID" Type="bigint" Nullable="false" />
           <Property Name="agentID" Type="bigint" Nullable="false" />
         </EntityType>
@@ -232,9 +26,9 @@
           <Key>
             <PropertyRef Name="customerID" />
           </Key>
-          <Property Name="customerID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="customerName" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="IDNumber" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="customerID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDNumber" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="mothersName" Type="nvarchar" MaxLength="50" />
           <Property Name="cityID" Type="bigint" />
           <Property Name="customerAddress" Type="nvarchar" MaxLength="200" />
@@ -254,15 +48,15 @@
             <PropertyRef Name="errorTypeID" />
           </Key>
           <Property Name="errorTypeID" Type="bigint" Nullable="false" />
-          <Property Name="errorType" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="errorType" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Parts">
           <Key>
             <PropertyRef Name="partID" />
           </Key>
-          <Property Name="partID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="partID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="serviceID" Type="bigint" Nullable="false" />
-          <Property Name="partName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="partName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="partManufacturer" Type="nvarchar" MaxLength="50" />
           <Property Name="partIDNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="partPrice" Type="bigint" Nullable="false" />
@@ -274,13 +68,13 @@
             <PropertyRef Name="payTypeID" />
           </Key>
           <Property Name="payTypeID" Type="bigint" Nullable="false" />
-          <Property Name="payTypeName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="payTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="RentalGroups">
           <Key>
             <PropertyRef Name="groupID" />
           </Key>
-          <Property Name="groupID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="groupID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="deposit" Type="bigint" />
           <Property Name="isOpen" Type="bit" />
           <Property Name="comment" Type="ntext" />
@@ -289,13 +83,13 @@
           <Key>
             <PropertyRef Name="rentalID" />
           </Key>
-          <Property Name="rentalID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="rentalID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="customerID" Type="bigint" Nullable="false" />
           <Property Name="contactID" Type="bigint" />
           <Property Name="toolID" Type="bigint" Nullable="false" />
-          <Property Name="rentalStart" Type="datetime2" Nullable="false" />
-          <Property Name="rentalEnd" Type="datetime2" Nullable="false" />
-          <Property Name="rentalRealEnd" Type="datetime2" />
+          <Property Name="rentalStart" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="rentalEnd" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="rentalRealEnd" Type="datetime2" Precision="7" />
           <Property Name="actualPrice" Type="bigint" Nullable="false" />
           <Property Name="payTypeID" Type="bigint" Nullable="false" />
           <Property Name="discount" Type="real" Nullable="false" />
@@ -307,7 +101,7 @@
           <Key>
             <PropertyRef Name="serviceGroupID" />
           </Key>
-          <Property Name="serviceGroupID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="serviceGroupID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="deposit" Type="bigint" />
         </EntityType>
         <EntityType Name="ServiceStatuses">
@@ -315,24 +109,24 @@
             <PropertyRef Name="statusID" />
           </Key>
           <Property Name="statusID" Type="bigint" Nullable="false" />
-          <Property Name="statusName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="statusName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="ServiceWorksheets">
           <Key>
             <PropertyRef Name="worksheetID" />
           </Key>
-          <Property Name="worksheetID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="worksheetID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="customerID" Type="bigint" Nullable="false" />
           <Property Name="serialID" Type="nvarchar" MaxLength="50" />
           <Property Name="deviceID" Type="nvarchar" MaxLength="50" />
           <Property Name="deviceManufacturer" Type="nvarchar" MaxLength="50" />
-          <Property Name="deviceName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="deviceName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="hasWarranty" Type="bit" Nullable="false" />
           <Property Name="errorTypeID" Type="bigint" Nullable="false" />
           <Property Name="errorDescription" Type="ntext" />
           <Property Name="statusID" Type="bigint" Nullable="false" />
-          <Property Name="serviceStart" Type="datetime2" Nullable="false" />
-          <Property Name="serviceEnd" Type="datetime2" />
+          <Property Name="serviceStart" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="serviceEnd" Type="datetime2" Precision="7" />
           <Property Name="isPaid" Type="bit" Nullable="false" />
           <Property Name="groupID" Type="bigint" />
           <Property Name="serviceCost" Type="bigint" />
@@ -343,7 +137,7 @@
           <Property Name="quotAccepted" Type="bit" Nullable="false" />
           <Property Name="plusParts" Type="nvarchar" MaxLength="200" />
           <Property Name="yearCounter" Type="int" Nullable="false" />
-          <Property Name="buyDate" Type="datetime2" />
+          <Property Name="buyDate" Type="datetime2" Precision="7" />
           <Property Name="warrantyNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="maxCost" Type="bigint" />
         </EntityType>
@@ -351,7 +145,7 @@
           <Key>
             <PropertyRef Name="parameterID" />
           </Key>
-          <Property Name="parameterID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="parameterID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="companyName" Type="nvarchar" MaxLength="50" />
           <Property Name="companyAddress" Type="nvarchar" MaxLength="200" />
           <Property Name="companyPhone1" Type="nvarchar" MaxLength="50" />
@@ -360,28 +154,27 @@
           <Property Name="costOfClean" Type="bigint" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'dbGyorok.dbo.TableVersions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
+warning 6002: The table/view 'dbGyorok.dbo.TableVersions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TableVersions">
           <Key>
             <PropertyRef Name="tableName" />
             <PropertyRef Name="tableVersion" />
           </Key>
-          <Property Name="tableName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="tableName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="tableVersion" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Tools">
           <Key>
             <PropertyRef Name="toolID" />
           </Key>
-          <Property Name="toolID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="toolName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="toolID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="toolName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="toolManufacturer" Type="nvarchar" MaxLength="50" />
-          <Property Name="IDNumber" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="IDNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="serialNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="rentPrice" Type="bigint" Nullable="false" />
           <Property Name="toolStatusID" Type="bigint" Nullable="false" />
-          <Property Name="fromDate" Type="datetime2" Nullable="false" />
+          <Property Name="fromDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="defaultDeposit" Type="bigint" />
           <Property Name="rentCounter" Type="int" Nullable="false" />
           <Property Name="isDeleted" Type="bit" Nullable="false" />
@@ -391,11 +184,10 @@
             <PropertyRef Name="toolStatusID" />
           </Key>
           <Property Name="toolStatusID" Type="bigint" Nullable="false" />
-          <Property Name="statusName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="statusName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'dbGyorok.dbo.DetailedCustomers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
+warning 6002: The table/view 'dbGyorok.dbo.DetailedCustomers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="DetailedCustomers">
           <Key>
             <PropertyRef Name="customerID" />
@@ -407,8 +199,8 @@
             <PropertyRef Name="customerDeleted" />
           </Key>
           <Property Name="customerID" Type="bigint" Nullable="false" />
-          <Property Name="customerName" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="IDNumber" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="customerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDNumber" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="mothersName" Type="nvarchar" MaxLength="50" />
           <Property Name="cityID" Type="bigint" />
           <Property Name="customerAddress" Type="nvarchar" MaxLength="200" />
@@ -427,8 +219,7 @@
           <Property Name="cityDeleted" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'dbGyorok.dbo.RentalSum' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
+warning 6002: The table/view 'dbGyorok.dbo.RentalSum' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="RentalSum">
           <Key>
             <PropertyRef Name="customerID" />
@@ -457,8 +248,8 @@
             <PropertyRef Name="cIsDeleted" />
           </Key>
           <Property Name="customerID" Type="bigint" Nullable="false" />
-          <Property Name="customerName" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="cIDNumber" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="customerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cIDNumber" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="mothersName" Type="nvarchar" MaxLength="50" />
           <Property Name="customerAddress" Type="nvarchar" MaxLength="200" />
           <Property Name="customerPhone" Type="varchar" MaxLength="50" />
@@ -468,19 +259,19 @@
           <Property Name="comment" Type="ntext" />
           <Property Name="problems" Type="ntext" />
           <Property Name="toolID" Type="bigint" Nullable="false" />
-          <Property Name="toolName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="toolName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="toolManufacturer" Type="nvarchar" MaxLength="50" />
-          <Property Name="tIDNumber" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="tIDNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="serialNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="contactName" Type="nvarchar" MaxLength="50" />
-          <Property Name="rentalStart" Type="datetime2" Nullable="false" />
-          <Property Name="rentalEnd" Type="datetime2" Nullable="false" />
+          <Property Name="rentalStart" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="rentalEnd" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="actualPrice" Type="bigint" Nullable="false" />
           <Property Name="discount" Type="real" Nullable="false" />
           <Property Name="groupID" Type="bigint" Nullable="false" />
           <Property Name="rentalID" Type="bigint" Nullable="false" />
           <Property Name="isPaid" Type="bit" Nullable="false" />
-          <Property Name="rentalRealEnd" Type="datetime2" />
+          <Property Name="rentalRealEnd" Type="datetime2" Precision="7" />
           <Property Name="isClean" Type="bit" Nullable="false" />
           <Property Name="payTypeID" Type="bigint" Nullable="false" />
           <Property Name="defaultDiscount" Type="float" />
@@ -488,7 +279,7 @@
           <Property Name="serviceCounter" Type="int" Nullable="false" />
           <Property Name="rentPrice" Type="bigint" Nullable="false" />
           <Property Name="toolStatusID" Type="bigint" Nullable="false" />
-          <Property Name="fromDate" Type="datetime2" Nullable="false" />
+          <Property Name="fromDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="defaultDeposit" Type="bigint" />
           <Property Name="tRentCounter" Type="int" Nullable="false" />
           <Property Name="contactIDNumber" Type="varchar" MaxLength="50" />
@@ -509,8 +300,7 @@
           <Property Name="contactCity" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'dbGyorok.dbo.ServiceSum' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
+warning 6002: The table/view 'dbGyorok.dbo.ServiceSum' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ServiceSum">
           <Key>
             <PropertyRef Name="customerID" />
@@ -534,8 +324,8 @@
             <PropertyRef Name="isDeleted" />
           </Key>
           <Property Name="customerID" Type="bigint" Nullable="false" />
-          <Property Name="customerName" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="IDNumber" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="customerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDNumber" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="mothersName" Type="nvarchar" MaxLength="50" />
           <Property Name="customerAddress" Type="nvarchar" MaxLength="200" />
           <Property Name="customerPhone" Type="varchar" MaxLength="50" />
@@ -548,26 +338,26 @@
           <Property Name="worksheetID" Type="bigint" Nullable="false" />
           <Property Name="deviceID" Type="nvarchar" MaxLength="50" />
           <Property Name="deviceManufacturer" Type="nvarchar" MaxLength="50" />
-          <Property Name="deviceName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="deviceName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="hasWarranty" Type="bit" Nullable="false" />
           <Property Name="errorTypeID" Type="bigint" Nullable="false" />
           <Property Name="errorDescription" Type="ntext" />
           <Property Name="statusID" Type="bigint" Nullable="false" />
-          <Property Name="serviceStart" Type="datetime2" Nullable="false" />
-          <Property Name="serviceEnd" Type="datetime2" />
+          <Property Name="serviceStart" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="serviceEnd" Type="datetime2" Precision="7" />
           <Property Name="isPaid" Type="bit" Nullable="false" />
           <Property Name="serviceCost" Type="bigint" />
           <Property Name="wsComment" Type="nvarchar" MaxLength="200" />
           <Property Name="discount" Type="float" Nullable="false" />
-          <Property Name="statusName" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="errorType" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="statusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="errorType" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="inQuotMode" Type="bit" Nullable="false" />
           <Property Name="quotRequested" Type="bit" Nullable="false" />
           <Property Name="plusParts" Type="nvarchar" MaxLength="200" />
           <Property Name="yearCounter" Type="int" Nullable="false" />
           <Property Name="quotAccepted" Type="bit" Nullable="false" />
           <Property Name="serialID" Type="nvarchar" MaxLength="50" />
-          <Property Name="buyDate" Type="datetime2" />
+          <Property Name="buyDate" Type="datetime2" Precision="7" />
           <Property Name="warrantyNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="maxCost" Type="bigint" />
           <Property Name="isDeleted" Type="bit" Nullable="false" />
@@ -576,8 +366,7 @@
           <Property Name="city" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'dbGyorok.dbo.SimpleParts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
+warning 6002: The table/view 'dbGyorok.dbo.SimpleParts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SimpleParts">
           <Key>
             <PropertyRef Name="partID" />
@@ -586,15 +375,15 @@
             <PropertyRef Name="partQuantity" />
             <PropertyRef Name="serviceID" />
           </Key>
-          <Property Name="partID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="partName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="partID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="partName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="partPrice" Type="bigint" Nullable="false" />
           <Property Name="partQuantity" Type="int" Nullable="false" />
           <Property Name="serviceID" Type="bigint" Nullable="false" />
         </EntityType>
         <Association Name="FK_contacts_Customers">
-          <End Role="Customers" Type="dbGyorokModel.Store.Customers" Multiplicity="1" />
-          <End Role="Contacts" Type="dbGyorokModel.Store.Contacts" Multiplicity="*" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="customerID" />
@@ -605,8 +394,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_contacts_Customers1">
-          <End Role="Customers" Type="dbGyorokModel.Store.Customers" Multiplicity="1" />
-          <End Role="Contacts" Type="dbGyorokModel.Store.Contacts" Multiplicity="*" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="customerID" />
@@ -617,8 +406,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Customers_Cities">
-          <End Role="Cities" Type="dbGyorokModel.Store.Cities" Multiplicity="0..1" />
-          <End Role="Customers" Type="dbGyorokModel.Store.Customers" Multiplicity="*" />
+          <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cities">
               <PropertyRef Name="cityID" />
@@ -629,8 +418,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Parts_ServiceWorksheets">
-          <End Role="ServiceWorksheets" Type="dbGyorokModel.Store.ServiceWorksheets" Multiplicity="1" />
-          <End Role="Parts" Type="dbGyorokModel.Store.Parts" Multiplicity="*" />
+          <End Role="ServiceWorksheets" Type="Self.ServiceWorksheets" Multiplicity="1" />
+          <End Role="Parts" Type="Self.Parts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceWorksheets">
               <PropertyRef Name="worksheetID" />
@@ -641,8 +430,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rentals_Customers">
-          <End Role="Customers" Type="dbGyorokModel.Store.Customers" Multiplicity="1" />
-          <End Role="Rentals" Type="dbGyorokModel.Store.Rentals" Multiplicity="*" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="customerID" />
@@ -653,8 +442,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rentals_Customers1">
-          <End Role="Customers" Type="dbGyorokModel.Store.Customers" Multiplicity="0..1" />
-          <End Role="Rentals" Type="dbGyorokModel.Store.Rentals" Multiplicity="*" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="customerID" />
@@ -665,8 +454,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rentals_PayTypes">
-          <End Role="PayTypes" Type="dbGyorokModel.Store.PayTypes" Multiplicity="1" />
-          <End Role="Rentals" Type="dbGyorokModel.Store.Rentals" Multiplicity="*" />
+          <End Role="PayTypes" Type="Self.PayTypes" Multiplicity="1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PayTypes">
               <PropertyRef Name="payTypeID" />
@@ -677,8 +466,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rentals_RentalGroups">
-          <End Role="RentalGroups" Type="dbGyorokModel.Store.RentalGroups" Multiplicity="1" />
-          <End Role="Rentals" Type="dbGyorokModel.Store.Rentals" Multiplicity="*" />
+          <End Role="RentalGroups" Type="Self.RentalGroups" Multiplicity="1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RentalGroups">
               <PropertyRef Name="groupID" />
@@ -689,8 +478,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rentals_Tools">
-          <End Role="Tools" Type="dbGyorokModel.Store.Tools" Multiplicity="1" />
-          <End Role="Rentals" Type="dbGyorokModel.Store.Rentals" Multiplicity="*" />
+          <End Role="Tools" Type="Self.Tools" Multiplicity="1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tools">
               <PropertyRef Name="toolID" />
@@ -701,8 +490,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ServiceWorksheets_Customers">
-          <End Role="Customers" Type="dbGyorokModel.Store.Customers" Multiplicity="1" />
-          <End Role="ServiceWorksheets" Type="dbGyorokModel.Store.ServiceWorksheets" Multiplicity="*" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="ServiceWorksheets" Type="Self.ServiceWorksheets" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="customerID" />
@@ -713,8 +502,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ServiceWorksheets_ErrorTypes">
-          <End Role="ErrorTypes" Type="dbGyorokModel.Store.ErrorTypes" Multiplicity="1" />
-          <End Role="ServiceWorksheets" Type="dbGyorokModel.Store.ServiceWorksheets" Multiplicity="*" />
+          <End Role="ErrorTypes" Type="Self.ErrorTypes" Multiplicity="1" />
+          <End Role="ServiceWorksheets" Type="Self.ServiceWorksheets" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ErrorTypes">
               <PropertyRef Name="errorTypeID" />
@@ -725,8 +514,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ServiceWorksheets_ServiceStatuses">
-          <End Role="ServiceStatuses" Type="dbGyorokModel.Store.ServiceStatuses" Multiplicity="1" />
-          <End Role="ServiceWorksheets" Type="dbGyorokModel.Store.ServiceWorksheets" Multiplicity="*" />
+          <End Role="ServiceStatuses" Type="Self.ServiceStatuses" Multiplicity="1" />
+          <End Role="ServiceWorksheets" Type="Self.ServiceWorksheets" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceStatuses">
               <PropertyRef Name="statusID" />
@@ -737,8 +526,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tools_ToolStatuses">
-          <End Role="ToolStatuses" Type="dbGyorokModel.Store.ToolStatuses" Multiplicity="1" />
-          <End Role="Tools" Type="dbGyorokModel.Store.Tools" Multiplicity="*" />
+          <End Role="ToolStatuses" Type="Self.ToolStatuses" Multiplicity="1" />
+          <End Role="Tools" Type="Self.Tools" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ToolStatuses">
               <PropertyRef Name="toolStatusID" />
@@ -751,96 +540,226 @@
         <Function Name="DoBackup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="path" Type="varchar" Mode="In" />
         </Function>
+        <EntityContainer Name="dbGyorokModelStoreContainer">
+          <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ErrorTypes" EntityType="Self.ErrorTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parts" EntityType="Self.Parts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PayTypes" EntityType="Self.PayTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RentalGroups" EntityType="Self.RentalGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rentals" EntityType="Self.Rentals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceGroups" EntityType="Self.ServiceGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceStatuses" EntityType="Self.ServiceStatuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceWorksheets" EntityType="Self.ServiceWorksheets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemParameters" EntityType="Self.SystemParameters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tools" EntityType="Self.Tools" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ToolStatuses" EntityType="Self.ToolStatuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TableVersions" EntityType="Self.TableVersions" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TableVersions].[tableName] AS [tableName], 
+    [TableVersions].[tableVersion] AS [tableVersion]
+    FROM [dbo].[TableVersions] AS [TableVersions]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="DetailedCustomers" EntityType="Self.DetailedCustomers" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DetailedCustomers].[customerID] AS [customerID], 
+    [DetailedCustomers].[customerName] AS [customerName], 
+    [DetailedCustomers].[IDNumber] AS [IDNumber], 
+    [DetailedCustomers].[mothersName] AS [mothersName], 
+    [DetailedCustomers].[cityID] AS [cityID], 
+    [DetailedCustomers].[customerAddress] AS [customerAddress], 
+    [DetailedCustomers].[customerPhone] AS [customerPhone], 
+    [DetailedCustomers].[birthDate] AS [birthDate], 
+    [DetailedCustomers].[workPlace] AS [workPlace], 
+    [DetailedCustomers].[isFirm] AS [isFirm], 
+    [DetailedCustomers].[comment] AS [comment], 
+    [DetailedCustomers].[problems] AS [problems], 
+    [DetailedCustomers].[defaultDiscount] AS [defaultDiscount], 
+    [DetailedCustomers].[rentCounter] AS [rentCounter], 
+    [DetailedCustomers].[serviceCounter] AS [serviceCounter], 
+    [DetailedCustomers].[customerDeleted] AS [customerDeleted], 
+    [DetailedCustomers].[postalCode] AS [postalCode], 
+    [DetailedCustomers].[city] AS [city], 
+    [DetailedCustomers].[cityDeleted] AS [cityDeleted]
+    FROM [dbo].[DetailedCustomers] AS [DetailedCustomers]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RentalSum" EntityType="Self.RentalSum" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [RentalSum].[customerID] AS [customerID], 
+    [RentalSum].[customerName] AS [customerName], 
+    [RentalSum].[cIDNumber] AS [cIDNumber], 
+    [RentalSum].[mothersName] AS [mothersName], 
+    [RentalSum].[customerAddress] AS [customerAddress], 
+    [RentalSum].[customerPhone] AS [customerPhone], 
+    [RentalSum].[birthDate] AS [birthDate], 
+    [RentalSum].[workPlace] AS [workPlace], 
+    [RentalSum].[isFirm] AS [isFirm], 
+    [RentalSum].[comment] AS [comment], 
+    [RentalSum].[problems] AS [problems], 
+    [RentalSum].[toolID] AS [toolID], 
+    [RentalSum].[toolName] AS [toolName], 
+    [RentalSum].[toolManufacturer] AS [toolManufacturer], 
+    [RentalSum].[tIDNumber] AS [tIDNumber], 
+    [RentalSum].[serialNumber] AS [serialNumber], 
+    [RentalSum].[contactName] AS [contactName], 
+    [RentalSum].[rentalStart] AS [rentalStart], 
+    [RentalSum].[rentalEnd] AS [rentalEnd], 
+    [RentalSum].[actualPrice] AS [actualPrice], 
+    [RentalSum].[discount] AS [discount], 
+    [RentalSum].[groupID] AS [groupID], 
+    [RentalSum].[rentalID] AS [rentalID], 
+    [RentalSum].[isPaid] AS [isPaid], 
+    [RentalSum].[rentalRealEnd] AS [rentalRealEnd], 
+    [RentalSum].[isClean] AS [isClean], 
+    [RentalSum].[payTypeID] AS [payTypeID], 
+    [RentalSum].[defaultDiscount] AS [defaultDiscount], 
+    [RentalSum].[cRentCounter] AS [cRentCounter], 
+    [RentalSum].[serviceCounter] AS [serviceCounter], 
+    [RentalSum].[rentPrice] AS [rentPrice], 
+    [RentalSum].[toolStatusID] AS [toolStatusID], 
+    [RentalSum].[fromDate] AS [fromDate], 
+    [RentalSum].[defaultDeposit] AS [defaultDeposit], 
+    [RentalSum].[tRentCounter] AS [tRentCounter], 
+    [RentalSum].[contactIDNumber] AS [contactIDNumber], 
+    [RentalSum].[contactMothersName] AS [contactMothersName], 
+    [RentalSum].[contactAddress] AS [contactAddress], 
+    [RentalSum].[contactPhone] AS [contactPhone], 
+    [RentalSum].[contactBirthDate] AS [contactBirthDate], 
+    [RentalSum].[contactWorkplace] AS [contactWorkplace], 
+    [RentalSum].[contactComment] AS [contactComment], 
+    [RentalSum].[contactProblems] AS [contactProblems], 
+    [RentalSum].[tIsDeleted] AS [tIsDeleted], 
+    [RentalSum].[cIsDeleted] AS [cIsDeleted], 
+    [RentalSum].[customerCityID] AS [customerCityID], 
+    [RentalSum].[customerPostalCode] AS [customerPostalCode], 
+    [RentalSum].[customerCity] AS [customerCity], 
+    [RentalSum].[contactCityID] AS [contactCityID], 
+    [RentalSum].[contactPostalCode] AS [contactPostalCode], 
+    [RentalSum].[contactCity] AS [contactCity]
+    FROM [dbo].[RentalSum] AS [RentalSum]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ServiceSum" EntityType="Self.ServiceSum" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ServiceSum].[customerID] AS [customerID], 
+    [ServiceSum].[customerName] AS [customerName], 
+    [ServiceSum].[IDNumber] AS [IDNumber], 
+    [ServiceSum].[mothersName] AS [mothersName], 
+    [ServiceSum].[customerAddress] AS [customerAddress], 
+    [ServiceSum].[customerPhone] AS [customerPhone], 
+    [ServiceSum].[birthDate] AS [birthDate], 
+    [ServiceSum].[workPlace] AS [workPlace], 
+    [ServiceSum].[isFirm] AS [isFirm], 
+    [ServiceSum].[custComment] AS [custComment], 
+    [ServiceSum].[problems] AS [problems], 
+    [ServiceSum].[defaultDiscount] AS [defaultDiscount], 
+    [ServiceSum].[worksheetID] AS [worksheetID], 
+    [ServiceSum].[deviceID] AS [deviceID], 
+    [ServiceSum].[deviceManufacturer] AS [deviceManufacturer], 
+    [ServiceSum].[deviceName] AS [deviceName], 
+    [ServiceSum].[hasWarranty] AS [hasWarranty], 
+    [ServiceSum].[errorTypeID] AS [errorTypeID], 
+    [ServiceSum].[errorDescription] AS [errorDescription], 
+    [ServiceSum].[statusID] AS [statusID], 
+    [ServiceSum].[serviceStart] AS [serviceStart], 
+    [ServiceSum].[serviceEnd] AS [serviceEnd], 
+    [ServiceSum].[isPaid] AS [isPaid], 
+    [ServiceSum].[serviceCost] AS [serviceCost], 
+    [ServiceSum].[wsComment] AS [wsComment], 
+    [ServiceSum].[discount] AS [discount], 
+    [ServiceSum].[statusName] AS [statusName], 
+    [ServiceSum].[errorType] AS [errorType], 
+    [ServiceSum].[inQuotMode] AS [inQuotMode], 
+    [ServiceSum].[quotRequested] AS [quotRequested], 
+    [ServiceSum].[plusParts] AS [plusParts], 
+    [ServiceSum].[yearCounter] AS [yearCounter], 
+    [ServiceSum].[quotAccepted] AS [quotAccepted], 
+    [ServiceSum].[serialID] AS [serialID], 
+    [ServiceSum].[buyDate] AS [buyDate], 
+    [ServiceSum].[warrantyNumber] AS [warrantyNumber], 
+    [ServiceSum].[maxCost] AS [maxCost], 
+    [ServiceSum].[isDeleted] AS [isDeleted], 
+    [ServiceSum].[cityID] AS [cityID], 
+    [ServiceSum].[postalCode] AS [postalCode], 
+    [ServiceSum].[city] AS [city]
+    FROM [dbo].[ServiceSum] AS [ServiceSum]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SimpleParts" EntityType="Self.SimpleParts" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SimpleParts].[partID] AS [partID], 
+    [SimpleParts].[partName] AS [partName], 
+    [SimpleParts].[partPrice] AS [partPrice], 
+    [SimpleParts].[partQuantity] AS [partQuantity], 
+    [SimpleParts].[serviceID] AS [serviceID]
+    FROM [dbo].[SimpleParts] AS [SimpleParts]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_contacts_Customers" Association="Self.FK_contacts_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_contacts_Customers1" Association="Self.FK_contacts_Customers1">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customers_Cities" Association="Self.FK_Customers_Cities">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parts_ServiceWorksheets" Association="Self.FK_Parts_ServiceWorksheets">
+            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
+            <End Role="Parts" EntitySet="Parts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rentals_Customers" Association="Self.FK_Rentals_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rentals_Customers1" Association="Self.FK_Rentals_Customers1">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rentals_PayTypes" Association="Self.FK_Rentals_PayTypes">
+            <End Role="PayTypes" EntitySet="PayTypes" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rentals_RentalGroups" Association="Self.FK_Rentals_RentalGroups">
+            <End Role="RentalGroups" EntitySet="RentalGroups" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rentals_Tools" Association="Self.FK_Rentals_Tools">
+            <End Role="Tools" EntitySet="Tools" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceWorksheets_Customers" Association="Self.FK_ServiceWorksheets_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceWorksheets_ErrorTypes" Association="Self.FK_ServiceWorksheets_ErrorTypes">
+            <End Role="ErrorTypes" EntitySet="ErrorTypes" />
+            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceWorksheets_ServiceStatuses" Association="Self.FK_ServiceWorksheets_ServiceStatuses">
+            <End Role="ServiceStatuses" EntitySet="ServiceStatuses" />
+            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tools_ToolStatuses" Association="Self.FK_Tools_ToolStatuses">
+            <End Role="ToolStatuses" EntitySet="ToolStatuses" />
+            <End Role="Tools" EntitySet="Tools" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="dbGyorokModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="dbGyorokEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Cities" EntityType="dbGyorokModel.Cities" />
-          <EntitySet Name="Contacts" EntityType="dbGyorokModel.Contacts" />
-          <EntitySet Name="Customers" EntityType="dbGyorokModel.Customers" />
-          <EntitySet Name="ErrorTypes" EntityType="dbGyorokModel.ErrorTypes" />
-          <EntitySet Name="Parts" EntityType="dbGyorokModel.Parts" />
-          <EntitySet Name="PayTypes" EntityType="dbGyorokModel.PayTypes" />
-          <EntitySet Name="RentalGroups" EntityType="dbGyorokModel.RentalGroups" />
-          <EntitySet Name="Rentals" EntityType="dbGyorokModel.Rentals" />
-          <EntitySet Name="ServiceGroups" EntityType="dbGyorokModel.ServiceGroups" />
-          <EntitySet Name="ServiceStatuses" EntityType="dbGyorokModel.ServiceStatuses" />
-          <EntitySet Name="ServiceWorksheets" EntityType="dbGyorokModel.ServiceWorksheets" />
-          <EntitySet Name="SystemParameters" EntityType="dbGyorokModel.SystemParameters" />
-          <EntitySet Name="TableVersions" EntityType="dbGyorokModel.TableVersions" />
-          <EntitySet Name="Tools" EntityType="dbGyorokModel.Tools" />
-          <EntitySet Name="ToolStatuses" EntityType="dbGyorokModel.ToolStatuses" />
-          <EntitySet Name="DetailedCustomers" EntityType="dbGyorokModel.DetailedCustomers" />
-          <EntitySet Name="RentalSum" EntityType="dbGyorokModel.RentalSum" />
-          <EntitySet Name="ServiceSum" EntityType="dbGyorokModel.ServiceSum" />
-          <EntitySet Name="SimpleParts" EntityType="dbGyorokModel.SimpleParts" />
-          <AssociationSet Name="FK_Customers_Cities" Association="dbGyorokModel.FK_Customers_Cities">
-            <End Role="Cities" EntitySet="Cities" />
-            <End Role="Customers" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_contacts_Customers" Association="dbGyorokModel.FK_contacts_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Contacts" EntitySet="Contacts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_contacts_Customers1" Association="dbGyorokModel.FK_contacts_Customers1">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Contacts" EntitySet="Contacts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rentals_Customers" Association="dbGyorokModel.FK_Rentals_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Rentals" EntitySet="Rentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rentals_Customers1" Association="dbGyorokModel.FK_Rentals_Customers1">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Rentals" EntitySet="Rentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceWorksheets_Customers" Association="dbGyorokModel.FK_ServiceWorksheets_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceWorksheets_ErrorTypes" Association="dbGyorokModel.FK_ServiceWorksheets_ErrorTypes">
-            <End Role="ErrorTypes" EntitySet="ErrorTypes" />
-            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Parts_ServiceWorksheets" Association="dbGyorokModel.FK_Parts_ServiceWorksheets">
-            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
-            <End Role="Parts" EntitySet="Parts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rentals_PayTypes" Association="dbGyorokModel.FK_Rentals_PayTypes">
-            <End Role="PayTypes" EntitySet="PayTypes" />
-            <End Role="Rentals" EntitySet="Rentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rentals_RentalGroups" Association="dbGyorokModel.FK_Rentals_RentalGroups">
-            <End Role="RentalGroups" EntitySet="RentalGroups" />
-            <End Role="Rentals" EntitySet="Rentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rentals_Tools" Association="dbGyorokModel.FK_Rentals_Tools">
-            <End Role="Tools" EntitySet="Tools" />
-            <End Role="Rentals" EntitySet="Rentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceWorksheets_ServiceStatuses" Association="dbGyorokModel.FK_ServiceWorksheets_ServiceStatuses">
-            <End Role="ServiceStatuses" EntitySet="ServiceStatuses" />
-            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tools_ToolStatuses" Association="dbGyorokModel.FK_Tools_ToolStatuses">
-            <End Role="ToolStatuses" EntitySet="ToolStatuses" />
-            <End Role="Tools" EntitySet="Tools" />
-          </AssociationSet>
-          <FunctionImport Name="DoBackup">
-            <Parameter Name="path" Mode="In" Type="String" />
-          </FunctionImport>
-        </EntityContainer>
+      <Schema Namespace="dbGyorokModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Cities">
           <Key>
             <PropertyRef Name="cityID" />
           </Key>
           <Property Name="cityID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="postalCode" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="city" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="postalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="isDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Customers" Relationship="dbGyorokModel.FK_Customers_Cities" FromRole="Cities" ToRole="Customers" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Customers_Cities" FromRole="Cities" ToRole="Customers" />
         </EntityType>
         <EntityType Name="Contacts">
           <Key>
@@ -849,43 +768,43 @@
           <Property Name="contactID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="firmID" Type="Int64" Nullable="false" />
           <Property Name="agentID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Customers" Relationship="dbGyorokModel.FK_contacts_Customers" FromRole="Contacts" ToRole="Customers" />
-          <NavigationProperty Name="Customers1" Relationship="dbGyorokModel.FK_contacts_Customers1" FromRole="Contacts" ToRole="Customers" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_contacts_Customers" FromRole="Contacts" ToRole="Customers" />
+          <NavigationProperty Name="Customers1" Relationship="Self.FK_contacts_Customers1" FromRole="Contacts" ToRole="Customers" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
             <PropertyRef Name="customerID" />
           </Key>
           <Property Name="customerID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="customerName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="IDNumber" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="mothersName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="customerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IDNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mothersName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="cityID" Type="Int64" />
-          <Property Name="customerAddress" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
-          <Property Name="customerPhone" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="birthDate" Type="DateTime" />
-          <Property Name="workPlace" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="customerAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="customerPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="birthDate" Type="DateTime" Precision="0" />
+          <Property Name="workPlace" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="isFirm" Type="Boolean" Nullable="false" />
-          <Property Name="comment" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="problems" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="problems" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="defaultDiscount" Type="Double" />
           <Property Name="rentCounter" Type="Int32" Nullable="false" />
           <Property Name="serviceCounter" Type="Int32" Nullable="false" />
           <Property Name="isDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Cities" Relationship="dbGyorokModel.FK_Customers_Cities" FromRole="Customers" ToRole="Cities" />
-          <NavigationProperty Name="Contacts" Relationship="dbGyorokModel.FK_contacts_Customers" FromRole="Customers" ToRole="Contacts" />
-          <NavigationProperty Name="Contacts1" Relationship="dbGyorokModel.FK_contacts_Customers1" FromRole="Customers" ToRole="Contacts" />
-          <NavigationProperty Name="Rentals" Relationship="dbGyorokModel.FK_Rentals_Customers" FromRole="Customers" ToRole="Rentals" />
-          <NavigationProperty Name="Rentals1" Relationship="dbGyorokModel.FK_Rentals_Customers1" FromRole="Customers" ToRole="Rentals" />
-          <NavigationProperty Name="ServiceWorksheets" Relationship="dbGyorokModel.FK_ServiceWorksheets_Customers" FromRole="Customers" ToRole="ServiceWorksheets" />
+          <NavigationProperty Name="Cities" Relationship="Self.FK_Customers_Cities" FromRole="Customers" ToRole="Cities" />
+          <NavigationProperty Name="Contacts" Relationship="Self.FK_contacts_Customers" FromRole="Customers" ToRole="Contacts" />
+          <NavigationProperty Name="Contacts1" Relationship="Self.FK_contacts_Customers1" FromRole="Customers" ToRole="Contacts" />
+          <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_Customers" FromRole="Customers" ToRole="Rentals" />
+          <NavigationProperty Name="Rentals1" Relationship="Self.FK_Rentals_Customers1" FromRole="Customers" ToRole="Rentals" />
+          <NavigationProperty Name="ServiceWorksheets" Relationship="Self.FK_ServiceWorksheets_Customers" FromRole="Customers" ToRole="ServiceWorksheets" />
         </EntityType>
         <EntityType Name="ErrorTypes">
           <Key>
             <PropertyRef Name="errorTypeID" />
           </Key>
           <Property Name="errorTypeID" Type="Int64" Nullable="false" />
-          <Property Name="errorType" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="ServiceWorksheets" Relationship="dbGyorokModel.FK_ServiceWorksheets_ErrorTypes" FromRole="ErrorTypes" ToRole="ServiceWorksheets" />
+          <Property Name="errorType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ServiceWorksheets" Relationship="Self.FK_ServiceWorksheets_ErrorTypes" FromRole="ErrorTypes" ToRole="ServiceWorksheets" />
         </EntityType>
         <EntityType Name="Parts">
           <Key>
@@ -893,21 +812,21 @@
           </Key>
           <Property Name="partID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="serviceID" Type="Int64" Nullable="false" />
-          <Property Name="partName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="partManufacturer" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="partIDNumber" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="partName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="partManufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="partIDNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="partPrice" Type="Int64" Nullable="false" />
           <Property Name="partQuantity" Type="Int32" Nullable="false" />
           <Property Name="mustOrder" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ServiceWorksheets" Relationship="dbGyorokModel.FK_Parts_ServiceWorksheets" FromRole="Parts" ToRole="ServiceWorksheets" />
+          <NavigationProperty Name="ServiceWorksheets" Relationship="Self.FK_Parts_ServiceWorksheets" FromRole="Parts" ToRole="ServiceWorksheets" />
         </EntityType>
         <EntityType Name="PayTypes">
           <Key>
             <PropertyRef Name="payTypeID" />
           </Key>
           <Property Name="payTypeID" Type="Int64" Nullable="false" />
-          <Property Name="payTypeName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="Rentals" Relationship="dbGyorokModel.FK_Rentals_PayTypes" FromRole="PayTypes" ToRole="Rentals" />
+          <Property Name="payTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_PayTypes" FromRole="PayTypes" ToRole="Rentals" />
         </EntityType>
         <EntityType Name="RentalGroups">
           <Key>
@@ -916,8 +835,8 @@
           <Property Name="groupID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="deposit" Type="Int64" />
           <Property Name="isOpen" Type="Boolean" />
-          <Property Name="comment" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="Rentals" Relationship="dbGyorokModel.FK_Rentals_RentalGroups" FromRole="RentalGroups" ToRole="Rentals" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_RentalGroups" FromRole="RentalGroups" ToRole="Rentals" />
         </EntityType>
         <EntityType Name="Rentals">
           <Key>
@@ -927,20 +846,20 @@
           <Property Name="customerID" Type="Int64" Nullable="false" />
           <Property Name="contactID" Type="Int64" />
           <Property Name="toolID" Type="Int64" Nullable="false" />
-          <Property Name="rentalStart" Type="DateTime" Nullable="false" />
-          <Property Name="rentalEnd" Type="DateTime" Nullable="false" />
-          <Property Name="rentalRealEnd" Type="DateTime" />
+          <Property Name="rentalStart" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="rentalEnd" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="rentalRealEnd" Type="DateTime" Precision="7" />
           <Property Name="actualPrice" Type="Int64" Nullable="false" />
           <Property Name="payTypeID" Type="Int64" Nullable="false" />
           <Property Name="discount" Type="Single" Nullable="false" />
           <Property Name="isClean" Type="Boolean" Nullable="false" />
           <Property Name="groupID" Type="Int64" Nullable="false" />
           <Property Name="isPaid" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Customers" Relationship="dbGyorokModel.FK_Rentals_Customers" FromRole="Rentals" ToRole="Customers" />
-          <NavigationProperty Name="Customers1" Relationship="dbGyorokModel.FK_Rentals_Customers1" FromRole="Rentals" ToRole="Customers" />
-          <NavigationProperty Name="PayTypes" Relationship="dbGyorokModel.FK_Rentals_PayTypes" FromRole="Rentals" ToRole="PayTypes" />
-          <NavigationProperty Name="RentalGroups" Relationship="dbGyorokModel.FK_Rentals_RentalGroups" FromRole="Rentals" ToRole="RentalGroups" />
-          <NavigationProperty Name="Tools" Relationship="dbGyorokModel.FK_Rentals_Tools" FromRole="Rentals" ToRole="Tools" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Rentals_Customers" FromRole="Rentals" ToRole="Customers" />
+          <NavigationProperty Name="Customers1" Relationship="Self.FK_Rentals_Customers1" FromRole="Rentals" ToRole="Customers" />
+          <NavigationProperty Name="PayTypes" Relationship="Self.FK_Rentals_PayTypes" FromRole="Rentals" ToRole="PayTypes" />
+          <NavigationProperty Name="RentalGroups" Relationship="Self.FK_Rentals_RentalGroups" FromRole="Rentals" ToRole="RentalGroups" />
+          <NavigationProperty Name="Tools" Relationship="Self.FK_Rentals_Tools" FromRole="Rentals" ToRole="Tools" />
         </EntityType>
         <EntityType Name="ServiceGroups">
           <Key>
@@ -954,8 +873,8 @@
             <PropertyRef Name="statusID" />
           </Key>
           <Property Name="statusID" Type="Int64" Nullable="false" />
-          <Property Name="statusName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="ServiceWorksheets" Relationship="dbGyorokModel.FK_ServiceWorksheets_ServiceStatuses" FromRole="ServiceStatuses" ToRole="ServiceWorksheets" />
+          <Property Name="statusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ServiceWorksheets" Relationship="Self.FK_ServiceWorksheets_ServiceStatuses" FromRole="ServiceStatuses" ToRole="ServiceWorksheets" />
         </EntityType>
         <EntityType Name="ServiceWorksheets">
           <Key>
@@ -963,79 +882,79 @@
           </Key>
           <Property Name="worksheetID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="customerID" Type="Int64" Nullable="false" />
-          <Property Name="serialID" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="deviceID" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="deviceManufacturer" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="deviceName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="serialID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="deviceID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="deviceManufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="deviceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="hasWarranty" Type="Boolean" Nullable="false" />
           <Property Name="errorTypeID" Type="Int64" Nullable="false" />
-          <Property Name="errorDescription" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="errorDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="statusID" Type="Int64" Nullable="false" />
-          <Property Name="serviceStart" Type="DateTime" Nullable="false" />
-          <Property Name="serviceEnd" Type="DateTime" />
+          <Property Name="serviceStart" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="serviceEnd" Type="DateTime" Precision="7" />
           <Property Name="isPaid" Type="Boolean" Nullable="false" />
           <Property Name="groupID" Type="Int64" />
           <Property Name="serviceCost" Type="Int64" />
-          <Property Name="comment" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="comment" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="discount" Type="Double" Nullable="false" />
           <Property Name="inQuotMode" Type="Boolean" Nullable="false" />
           <Property Name="quotRequested" Type="Boolean" Nullable="false" />
           <Property Name="quotAccepted" Type="Boolean" Nullable="false" />
-          <Property Name="plusParts" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="plusParts" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="yearCounter" Type="Int32" Nullable="false" />
-          <Property Name="buyDate" Type="DateTime" />
-          <Property Name="warrantyNumber" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="buyDate" Type="DateTime" Precision="7" />
+          <Property Name="warrantyNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="maxCost" Type="Int64" />
-          <NavigationProperty Name="Customers" Relationship="dbGyorokModel.FK_ServiceWorksheets_Customers" FromRole="ServiceWorksheets" ToRole="Customers" />
-          <NavigationProperty Name="ErrorTypes" Relationship="dbGyorokModel.FK_ServiceWorksheets_ErrorTypes" FromRole="ServiceWorksheets" ToRole="ErrorTypes" />
-          <NavigationProperty Name="Parts" Relationship="dbGyorokModel.FK_Parts_ServiceWorksheets" FromRole="ServiceWorksheets" ToRole="Parts" />
-          <NavigationProperty Name="ServiceStatuses" Relationship="dbGyorokModel.FK_ServiceWorksheets_ServiceStatuses" FromRole="ServiceWorksheets" ToRole="ServiceStatuses" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_ServiceWorksheets_Customers" FromRole="ServiceWorksheets" ToRole="Customers" />
+          <NavigationProperty Name="ErrorTypes" Relationship="Self.FK_ServiceWorksheets_ErrorTypes" FromRole="ServiceWorksheets" ToRole="ErrorTypes" />
+          <NavigationProperty Name="Parts" Relationship="Self.FK_Parts_ServiceWorksheets" FromRole="ServiceWorksheets" ToRole="Parts" />
+          <NavigationProperty Name="ServiceStatuses" Relationship="Self.FK_ServiceWorksheets_ServiceStatuses" FromRole="ServiceWorksheets" ToRole="ServiceStatuses" />
         </EntityType>
         <EntityType Name="SystemParameters">
           <Key>
             <PropertyRef Name="parameterID" />
           </Key>
           <Property Name="parameterID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="companyName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="companyAddress" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
-          <Property Name="companyPhone1" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="companyPhone2" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="openTime" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="companyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="companyAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="companyPhone1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="companyPhone2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="openTime" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="costOfClean" Type="Int64" />
-        </EntityType>
-        <EntityType Name="TableVersions">
-          <Key>
-            <PropertyRef Name="tableName" />
-            <PropertyRef Name="tableVersion" />
-          </Key>
-          <Property Name="tableName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="tableVersion" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="Tools">
           <Key>
             <PropertyRef Name="toolID" />
           </Key>
           <Property Name="toolID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="toolName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="toolManufacturer" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="IDNumber" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="serialNumber" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="toolName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="toolManufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="serialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="rentPrice" Type="Int64" Nullable="false" />
           <Property Name="toolStatusID" Type="Int64" Nullable="false" />
-          <Property Name="fromDate" Type="DateTime" Nullable="false" />
+          <Property Name="fromDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="defaultDeposit" Type="Int64" />
           <Property Name="rentCounter" Type="Int32" Nullable="false" />
           <Property Name="isDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Rentals" Relationship="dbGyorokModel.FK_Rentals_Tools" FromRole="Tools" ToRole="Rentals" />
-          <NavigationProperty Name="ToolStatuses" Relationship="dbGyorokModel.FK_Tools_ToolStatuses" FromRole="Tools" ToRole="ToolStatuses" />
+          <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_Tools" FromRole="Tools" ToRole="Rentals" />
+          <NavigationProperty Name="ToolStatuses" Relationship="Self.FK_Tools_ToolStatuses" FromRole="Tools" ToRole="ToolStatuses" />
         </EntityType>
         <EntityType Name="ToolStatuses">
           <Key>
             <PropertyRef Name="toolStatusID" />
           </Key>
           <Property Name="toolStatusID" Type="Int64" Nullable="false" />
-          <Property Name="statusName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="Tools" Relationship="dbGyorokModel.FK_Tools_ToolStatuses" FromRole="ToolStatuses" ToRole="Tools" />
+          <Property Name="statusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tools" Relationship="Self.FK_Tools_ToolStatuses" FromRole="ToolStatuses" ToRole="Tools" />
+        </EntityType>
+        <EntityType Name="TableVersions">
+          <Key>
+            <PropertyRef Name="tableName" />
+            <PropertyRef Name="tableVersion" />
+          </Key>
+          <Property Name="tableName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tableVersion" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="DetailedCustomers">
           <Key>
@@ -1048,23 +967,23 @@
             <PropertyRef Name="customerDeleted" />
           </Key>
           <Property Name="customerID" Type="Int64" Nullable="false" />
-          <Property Name="customerName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="IDNumber" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="mothersName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="customerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IDNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mothersName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="cityID" Type="Int64" />
-          <Property Name="customerAddress" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
-          <Property Name="customerPhone" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="birthDate" Type="DateTime" />
-          <Property Name="workPlace" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="customerAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="customerPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="birthDate" Type="DateTime" Precision="0" />
+          <Property Name="workPlace" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="isFirm" Type="Boolean" Nullable="false" />
-          <Property Name="comment" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="problems" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="problems" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="defaultDiscount" Type="Double" />
           <Property Name="rentCounter" Type="Int32" Nullable="false" />
           <Property Name="serviceCounter" Type="Int32" Nullable="false" />
           <Property Name="customerDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="postalCode" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="city" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="postalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="cityDeleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="RentalSum">
@@ -1095,30 +1014,30 @@
             <PropertyRef Name="cIsDeleted" />
           </Key>
           <Property Name="customerID" Type="Int64" Nullable="false" />
-          <Property Name="customerName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="cIDNumber" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="mothersName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="customerAddress" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
-          <Property Name="customerPhone" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="birthDate" Type="DateTime" />
-          <Property Name="workPlace" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="customerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cIDNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mothersName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="customerAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="customerPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="birthDate" Type="DateTime" Precision="0" />
+          <Property Name="workPlace" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="isFirm" Type="Boolean" Nullable="false" />
-          <Property Name="comment" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="problems" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="problems" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="toolID" Type="Int64" Nullable="false" />
-          <Property Name="toolName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="toolManufacturer" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="tIDNumber" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="serialNumber" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="contactName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="rentalStart" Type="DateTime" Nullable="false" />
-          <Property Name="rentalEnd" Type="DateTime" Nullable="false" />
+          <Property Name="toolName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="toolManufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tIDNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="serialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="contactName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rentalStart" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="rentalEnd" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="actualPrice" Type="Int64" Nullable="false" />
           <Property Name="discount" Type="Single" Nullable="false" />
           <Property Name="groupID" Type="Int64" Nullable="false" />
           <Property Name="rentalID" Type="Int64" Nullable="false" />
           <Property Name="isPaid" Type="Boolean" Nullable="false" />
-          <Property Name="rentalRealEnd" Type="DateTime" />
+          <Property Name="rentalRealEnd" Type="DateTime" Precision="7" />
           <Property Name="isClean" Type="Boolean" Nullable="false" />
           <Property Name="payTypeID" Type="Int64" Nullable="false" />
           <Property Name="defaultDiscount" Type="Double" />
@@ -1126,25 +1045,25 @@
           <Property Name="serviceCounter" Type="Int32" Nullable="false" />
           <Property Name="rentPrice" Type="Int64" Nullable="false" />
           <Property Name="toolStatusID" Type="Int64" Nullable="false" />
-          <Property Name="fromDate" Type="DateTime" Nullable="false" />
+          <Property Name="fromDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="defaultDeposit" Type="Int64" />
           <Property Name="tRentCounter" Type="Int32" Nullable="false" />
-          <Property Name="contactIDNumber" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="contactMothersName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="contactAddress" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
-          <Property Name="contactPhone" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="contactBirthDate" Type="DateTime" />
-          <Property Name="contactWorkplace" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="contactComment" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="contactProblems" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="contactIDNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contactMothersName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="contactAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="contactPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contactBirthDate" Type="DateTime" Precision="0" />
+          <Property Name="contactWorkplace" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="contactComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="contactProblems" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="tIsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="cIsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="customerCityID" Type="Int64" />
-          <Property Name="customerPostalCode" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="customerCity" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="customerPostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="customerCity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="contactCityID" Type="Int64" />
-          <Property Name="contactPostalCode" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="contactCity" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="contactPostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="contactCity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ServiceSum">
           <Key>
@@ -1169,46 +1088,46 @@
             <PropertyRef Name="isDeleted" />
           </Key>
           <Property Name="customerID" Type="Int64" Nullable="false" />
-          <Property Name="customerName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="IDNumber" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="mothersName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="customerAddress" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
-          <Property Name="customerPhone" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="birthDate" Type="DateTime" />
-          <Property Name="workPlace" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="customerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IDNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mothersName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="customerAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="customerPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="birthDate" Type="DateTime" Precision="0" />
+          <Property Name="workPlace" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="isFirm" Type="Boolean" Nullable="false" />
-          <Property Name="custComment" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="problems" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="custComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="problems" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="defaultDiscount" Type="Double" />
           <Property Name="worksheetID" Type="Int64" Nullable="false" />
-          <Property Name="deviceID" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="deviceManufacturer" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="deviceName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="deviceID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="deviceManufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="deviceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="hasWarranty" Type="Boolean" Nullable="false" />
           <Property Name="errorTypeID" Type="Int64" Nullable="false" />
-          <Property Name="errorDescription" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="errorDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="statusID" Type="Int64" Nullable="false" />
-          <Property Name="serviceStart" Type="DateTime" Nullable="false" />
-          <Property Name="serviceEnd" Type="DateTime" />
+          <Property Name="serviceStart" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="serviceEnd" Type="DateTime" Precision="7" />
           <Property Name="isPaid" Type="Boolean" Nullable="false" />
           <Property Name="serviceCost" Type="Int64" />
-          <Property Name="wsComment" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="wsComment" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="discount" Type="Double" Nullable="false" />
-          <Property Name="statusName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="errorType" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="statusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="errorType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="inQuotMode" Type="Boolean" Nullable="false" />
           <Property Name="quotRequested" Type="Boolean" Nullable="false" />
-          <Property Name="plusParts" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="plusParts" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="yearCounter" Type="Int32" Nullable="false" />
           <Property Name="quotAccepted" Type="Boolean" Nullable="false" />
-          <Property Name="serialID" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="buyDate" Type="DateTime" />
-          <Property Name="warrantyNumber" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="serialID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="buyDate" Type="DateTime" Precision="7" />
+          <Property Name="warrantyNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="maxCost" Type="Int64" />
           <Property Name="isDeleted" Type="Boolean" Nullable="false" />
           <Property Name="cityID" Type="Int64" />
-          <Property Name="postalCode" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="city" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="postalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SimpleParts">
           <Key>
@@ -1219,14 +1138,14 @@
             <PropertyRef Name="serviceID" />
           </Key>
           <Property Name="partID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="partName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="partName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="partPrice" Type="Int64" Nullable="false" />
           <Property Name="partQuantity" Type="Int32" Nullable="false" />
           <Property Name="serviceID" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="FK_Customers_Cities">
-          <End Role="Cities" Type="dbGyorokModel.Cities" Multiplicity="0..1" />
-          <End Role="Customers" Type="dbGyorokModel.Customers" Multiplicity="*" />
+          <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cities">
               <PropertyRef Name="cityID" />
@@ -1237,8 +1156,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_contacts_Customers">
-          <End Role="Customers" Type="dbGyorokModel.Customers" Multiplicity="1" />
-          <End Role="Contacts" Type="dbGyorokModel.Contacts" Multiplicity="*" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="customerID" />
@@ -1249,8 +1168,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_contacts_Customers1">
-          <End Role="Customers" Type="dbGyorokModel.Customers" Multiplicity="1" />
-          <End Role="Contacts" Type="dbGyorokModel.Contacts" Multiplicity="*" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="customerID" />
@@ -1261,8 +1180,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rentals_Customers">
-          <End Role="Customers" Type="dbGyorokModel.Customers" Multiplicity="1" />
-          <End Role="Rentals" Type="dbGyorokModel.Rentals" Multiplicity="*" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="customerID" />
@@ -1273,8 +1192,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rentals_Customers1">
-          <End Role="Customers" Type="dbGyorokModel.Customers" Multiplicity="0..1" />
-          <End Role="Rentals" Type="dbGyorokModel.Rentals" Multiplicity="*" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="customerID" />
@@ -1285,8 +1204,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ServiceWorksheets_Customers">
-          <End Role="Customers" Type="dbGyorokModel.Customers" Multiplicity="1" />
-          <End Role="ServiceWorksheets" Type="dbGyorokModel.ServiceWorksheets" Multiplicity="*" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="ServiceWorksheets" Type="Self.ServiceWorksheets" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="customerID" />
@@ -1297,8 +1216,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ServiceWorksheets_ErrorTypes">
-          <End Role="ErrorTypes" Type="dbGyorokModel.ErrorTypes" Multiplicity="1" />
-          <End Role="ServiceWorksheets" Type="dbGyorokModel.ServiceWorksheets" Multiplicity="*" />
+          <End Role="ErrorTypes" Type="Self.ErrorTypes" Multiplicity="1" />
+          <End Role="ServiceWorksheets" Type="Self.ServiceWorksheets" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ErrorTypes">
               <PropertyRef Name="errorTypeID" />
@@ -1309,8 +1228,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Parts_ServiceWorksheets">
-          <End Role="ServiceWorksheets" Type="dbGyorokModel.ServiceWorksheets" Multiplicity="1" />
-          <End Role="Parts" Type="dbGyorokModel.Parts" Multiplicity="*" />
+          <End Role="ServiceWorksheets" Type="Self.ServiceWorksheets" Multiplicity="1" />
+          <End Role="Parts" Type="Self.Parts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceWorksheets">
               <PropertyRef Name="worksheetID" />
@@ -1321,8 +1240,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rentals_PayTypes">
-          <End Role="PayTypes" Type="dbGyorokModel.PayTypes" Multiplicity="1" />
-          <End Role="Rentals" Type="dbGyorokModel.Rentals" Multiplicity="*" />
+          <End Role="PayTypes" Type="Self.PayTypes" Multiplicity="1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PayTypes">
               <PropertyRef Name="payTypeID" />
@@ -1333,8 +1252,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rentals_RentalGroups">
-          <End Role="RentalGroups" Type="dbGyorokModel.RentalGroups" Multiplicity="1" />
-          <End Role="Rentals" Type="dbGyorokModel.Rentals" Multiplicity="*" />
+          <End Role="RentalGroups" Type="Self.RentalGroups" Multiplicity="1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RentalGroups">
               <PropertyRef Name="groupID" />
@@ -1345,8 +1264,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rentals_Tools">
-          <End Role="Tools" Type="dbGyorokModel.Tools" Multiplicity="1" />
-          <End Role="Rentals" Type="dbGyorokModel.Rentals" Multiplicity="*" />
+          <End Role="Tools" Type="Self.Tools" Multiplicity="1" />
+          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tools">
               <PropertyRef Name="toolID" />
@@ -1357,8 +1276,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ServiceWorksheets_ServiceStatuses">
-          <End Role="ServiceStatuses" Type="dbGyorokModel.ServiceStatuses" Multiplicity="1" />
-          <End Role="ServiceWorksheets" Type="dbGyorokModel.ServiceWorksheets" Multiplicity="*" />
+          <End Role="ServiceStatuses" Type="Self.ServiceStatuses" Multiplicity="1" />
+          <End Role="ServiceWorksheets" Type="Self.ServiceWorksheets" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceStatuses">
               <PropertyRef Name="statusID" />
@@ -1369,8 +1288,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tools_ToolStatuses">
-          <End Role="ToolStatuses" Type="dbGyorokModel.ToolStatuses" Multiplicity="1" />
-          <End Role="Tools" Type="dbGyorokModel.Tools" Multiplicity="*" />
+          <End Role="ToolStatuses" Type="Self.ToolStatuses" Multiplicity="1" />
+          <End Role="Tools" Type="Self.Tools" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ToolStatuses">
               <PropertyRef Name="toolStatusID" />
@@ -1380,11 +1299,87 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="dbGyorokEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cities" EntityType="Self.Cities" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" />
+          <EntitySet Name="ErrorTypes" EntityType="Self.ErrorTypes" />
+          <EntitySet Name="Parts" EntityType="Self.Parts" />
+          <EntitySet Name="PayTypes" EntityType="Self.PayTypes" />
+          <EntitySet Name="RentalGroups" EntityType="Self.RentalGroups" />
+          <EntitySet Name="Rentals" EntityType="Self.Rentals" />
+          <EntitySet Name="ServiceGroups" EntityType="Self.ServiceGroups" />
+          <EntitySet Name="ServiceStatuses" EntityType="Self.ServiceStatuses" />
+          <EntitySet Name="ServiceWorksheets" EntityType="Self.ServiceWorksheets" />
+          <EntitySet Name="SystemParameters" EntityType="Self.SystemParameters" />
+          <EntitySet Name="Tools" EntityType="Self.Tools" />
+          <EntitySet Name="ToolStatuses" EntityType="Self.ToolStatuses" />
+          <EntitySet Name="TableVersions" EntityType="Self.TableVersions" />
+          <EntitySet Name="DetailedCustomers" EntityType="Self.DetailedCustomers" />
+          <EntitySet Name="RentalSum" EntityType="Self.RentalSum" />
+          <EntitySet Name="ServiceSum" EntityType="Self.ServiceSum" />
+          <EntitySet Name="SimpleParts" EntityType="Self.SimpleParts" />
+          <AssociationSet Name="FK_Customers_Cities" Association="Self.FK_Customers_Cities">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_contacts_Customers" Association="Self.FK_contacts_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_contacts_Customers1" Association="Self.FK_contacts_Customers1">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Contacts" EntitySet="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rentals_Customers" Association="Self.FK_Rentals_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rentals_Customers1" Association="Self.FK_Rentals_Customers1">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceWorksheets_Customers" Association="Self.FK_ServiceWorksheets_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceWorksheets_ErrorTypes" Association="Self.FK_ServiceWorksheets_ErrorTypes">
+            <End Role="ErrorTypes" EntitySet="ErrorTypes" />
+            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parts_ServiceWorksheets" Association="Self.FK_Parts_ServiceWorksheets">
+            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
+            <End Role="Parts" EntitySet="Parts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rentals_PayTypes" Association="Self.FK_Rentals_PayTypes">
+            <End Role="PayTypes" EntitySet="PayTypes" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rentals_RentalGroups" Association="Self.FK_Rentals_RentalGroups">
+            <End Role="RentalGroups" EntitySet="RentalGroups" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rentals_Tools" Association="Self.FK_Rentals_Tools">
+            <End Role="Tools" EntitySet="Tools" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceWorksheets_ServiceStatuses" Association="Self.FK_ServiceWorksheets_ServiceStatuses">
+            <End Role="ServiceStatuses" EntitySet="ServiceStatuses" />
+            <End Role="ServiceWorksheets" EntitySet="ServiceWorksheets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tools_ToolStatuses" Association="Self.FK_Tools_ToolStatuses">
+            <End Role="ToolStatuses" EntitySet="ToolStatuses" />
+            <End Role="Tools" EntitySet="Tools" />
+          </AssociationSet>
+          <FunctionImport Name="DoBackup">
+            <Parameter Name="path" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="dbGyorokModelStoreContainer" CdmEntityContainer="dbGyorokEntities">
           <EntitySetMapping Name="Cities">
             <EntityTypeMapping TypeName="dbGyorokModel.Cities">
@@ -1546,14 +1541,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TableVersions">
-            <EntityTypeMapping TypeName="dbGyorokModel.TableVersions">
-              <MappingFragment StoreEntitySet="TableVersions">
-                <ScalarProperty Name="tableName" ColumnName="tableName" />
-                <ScalarProperty Name="tableVersion" ColumnName="tableVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tools">
             <EntityTypeMapping TypeName="dbGyorokModel.Tools">
               <MappingFragment StoreEntitySet="Tools">
@@ -1576,6 +1563,14 @@
               <MappingFragment StoreEntitySet="ToolStatuses">
                 <ScalarProperty Name="toolStatusID" ColumnName="toolStatusID" />
                 <ScalarProperty Name="statusName" ColumnName="statusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TableVersions">
+            <EntityTypeMapping TypeName="dbGyorokModel.TableVersions">
+              <MappingFragment StoreEntitySet="TableVersions">
+                <ScalarProperty Name="tableName" ColumnName="tableName" />
+                <ScalarProperty Name="tableVersion" ColumnName="tableVersion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1725,7 +1720,7 @@
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
@@ -1734,92 +1729,13 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams>
-      <Diagram Name="dbGyorok">
-        <EntityTypeShape EntityType="dbGyorokModel.Cities" Width="1.5" PointX="0.75" PointY="9" Height="1.9802864583333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.Contacts" Width="1.5" PointX="5.25" PointY="9" Height="1.9802864583333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.Customers" Width="1.5" PointX="3" PointY="7.375" Height="5.2494108072916665" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.ErrorTypes" Width="1.5" PointX="3" PointY="2.125" Height="1.5956835937499996" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.Parts" Width="1.5" PointX="7.5" PointY="2.625" Height="2.7494921874999996" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.PayTypes" Width="1.5" PointX="6" PointY="12.75" Height="1.5956835937499996" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.RentalGroups" Width="1.5" PointX="6" PointY="15.125" Height="1.98028645833333" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.Rentals" Width="1.5" PointX="8.25" PointY="7.75" Height="4.480205078125" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.ServiceGroups" Width="1.5" PointX="9.75" PointY="2" Height="1.4033821614583317" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.ServiceStatuses" Width="1.5" PointX="3" PointY="4.375" Height="1.5956835937499996" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.ServiceWorksheets" Width="1.5" PointX="5.25" PointY="0.75" Height="6.5955208333333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.SystemParameters" Width="1.5" PointX="10.75" PointY="5" Height="2.3648893229166674" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.TableVersions" Width="1.5" PointX="10.75" PointY="9" Height="1.4033821614583388" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.Tools" Width="1.5" PointX="6" PointY="17.875" Height="3.5186979166666674" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.ToolStatuses" Width="1.5" PointX="3.75" PointY="18.75" Height="1.5956835937500031" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.DetailedCustomers" Width="1.5" PointX="10.75" PointY="12" Height="4.6725065104166674" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.RentalSum" Width="1.5" PointX="12.75" PointY="2" Height="10.826152343750003" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.ServiceSum" Width="1.5" PointX="0.75" PointY="14" Height="8.9031380208333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbGyorokModel.SimpleParts" Width="1.5" PointX="2.75" PointY="14" Height="1.9802864583333388" IsExpanded="true" />
-        <AssociationConnector Association="dbGyorokModel.FK_Customers_Cities" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="9.9901432291666659" />
-          <ConnectorPoint PointX="3" PointY="9.9901432291666659" />
-        </AssociationConnector>
-        <AssociationConnector Association="dbGyorokModel.FK_contacts_Customers" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="9.9901432291666659" />
-          <ConnectorPoint PointX="5.25" PointY="9.9901432291666659" />
-        </AssociationConnector>
-        <AssociationConnector Association="dbGyorokModel.FK_contacts_Customers1" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="9.4325716145833329" />
-          <ConnectorPoint PointX="5.25" PointY="9.4325716145833329" />
-        </AssociationConnector>
-        <AssociationConnector Association="dbGyorokModel.FK_Rentals_Customers" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="8.34375" />
-          <ConnectorPoint PointX="8.25" PointY="8.34375" />
-        </AssociationConnector>
-        <AssociationConnector Association="dbGyorokModel.FK_Rentals_Customers1" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="11.636495768229166" />
-          <ConnectorPoint PointX="8.25" PointY="11.636495768229166" />
-        </AssociationConnector>
-        <AssociationConnector Association="dbGyorokModel.FK_ServiceWorksheets_Customers" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="7.375" />
-          <ConnectorPoint PointX="4.875" PointY="7" />
-          <ConnectorPoint PointX="4.875" PointY="7.7205208333333317" />
-          <ConnectorPoint PointX="5.25" PointY="7.3455208333333317" />
-        </AssociationConnector>
-        <AssociationConnector Association="dbGyorokModel.FK_ServiceWorksheets_ErrorTypes" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="2.922841796875" />
-          <ConnectorPoint PointX="5.25" PointY="2.922841796875" />
-        </AssociationConnector>
-        <AssociationConnector Association="dbGyorokModel.FK_Parts_ServiceWorksheets" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.75" PointY="3.99974609375" />
-          <ConnectorPoint PointX="7.5" PointY="3.99974609375" />
-        </AssociationConnector>
-        <AssociationConnector Association="dbGyorokModel.FK_Rentals_PayTypes" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="13.547841796875" />
-          <ConnectorPoint PointX="8.5104141666666653" PointY="13.547841796875" />
-          <ConnectorPoint PointX="8.6770808333333331" PointY="13.547841796875" />
-          <ConnectorPoint PointX="9" PointY="13.547841796875" />
-          <ConnectorPoint PointX="9" PointY="12.230205078125" />
-        </AssociationConnector>
-        <AssociationConnector Association="dbGyorokModel.FK_Rentals_RentalGroups" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="16.115143229166666" />
-          <ConnectorPoint PointX="8.5937475" PointY="16.115143229166666" />
-          <ConnectorPoint PointX="8.5937475" PointY="12.230205078125" />
-        </AssociationConnector>
-        <AssociationConnector Association="dbGyorokModel.FK_Rentals_Tools" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="19.634348958333334" />
-          <ConnectorPoint PointX="9.4062525" PointY="19.634348958333334" />
-          <ConnectorPoint PointX="9.4062525" PointY="12.230205078125" />
-        </AssociationConnector>
-        <AssociationConnector Association="dbGyorokModel.FK_ServiceWorksheets_ServiceStatuses" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="5.172841796875" />
-          <ConnectorPoint PointX="5.25" PointY="5.172841796875" />
-        </AssociationConnector>
-        <AssociationConnector Association="dbGyorokModel.FK_Tools_ToolStatuses" ManuallyRouted="false">
-          <ConnectorPoint PointX="5.25" PointY="19.547841796875" />
-          <ConnectorPoint PointX="6" PointY="19.547841796875" />
-        </AssociationConnector>
-      </Diagram>
-    </Diagrams>
+    <Diagrams></Diagrams>
   </Designer>
 </edmx:Edmx>

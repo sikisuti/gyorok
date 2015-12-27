@@ -11,10 +11,23 @@ using SQLConnectionLib;
 
 namespace GyorokRentService.ViewModel
 {
-    class NewService_ViewModel : ViewModelBase
+    public class NewService_ViewModel : ViewModelBase
     {
-        //dbGyorokEntities db;
-        //List<SQLConnectionLib.ServiceWorksheets> newServiceGroup = new List<SQLConnectionLib.ServiceWorksheets>();
+
+        private ServiceWorksheets _newService;
+        public ServiceWorksheets newService
+        {
+            get { return _newService; }
+            set
+            {
+                if (_newService != value)
+                {
+                    _newService = value;
+                    RaisePropertyChanged("newService");
+                }
+            }
+        }
+        
         long _customerID;
         int yearCnt;
 
@@ -390,7 +403,7 @@ namespace GyorokRentService.ViewModel
                 GetWorksheetIDNumber();
                 newWorksheet.yearCounter = yearCnt;
 
-                SQLConnection.Execute.ServiceWorksheetsTable.AddObject(newWorksheet);
+                //SQLConnection.Execute.ServiceWorksheetsTable.AddObject(newWorksheet);
                 SQLConnection.Execute.SaveDb();
 
                 new Print.printService(newWorksheet, Print.servicePrintType.bringIn);
@@ -432,7 +445,7 @@ namespace GyorokRentService.ViewModel
                 AppMessages.ServiceWorksheetsChanged.Register(this, rc => GetWorksheetIDNumber());
                 hasWarranty = false;
                 requestQuot = false;
-                errorType = new ObservableCollection<SQLConnectionLib.ErrorTypes>(SQLConnection.Execute.ErrorTypesTable);
+                //errorType = new ObservableCollection<SQLConnectionLib.ErrorTypes>(SQLConnection.Execute.ErrorTypesTable);
                 selectedErrorType = errorType[0];
                 GetWorksheetIDNumber();
             }
@@ -444,11 +457,11 @@ namespace GyorokRentService.ViewModel
 
         private void GetWorksheetIDNumber()
         {
-            int lastYear;
+            int lastYear = 0;
 
             try
             {
-                lastYear = (SQLConnection.Execute.ServiceWorksheetsTable.Select(s => s.serviceStart).Max()).Year;
+                //lastYear = (SQLConnection.Execute.ServiceWorksheetsTable.Select(s => s.serviceStart).Max()).Year;
             }
             catch (Exception)
             {
@@ -461,7 +474,7 @@ namespace GyorokRentService.ViewModel
             }
             else
             {
-                yearCnt = SQLConnection.Execute.ServiceWorksheetsTable.Where(wo => wo.serviceStart.Year == DateTime.Now.Year).Select(wo => wo.yearCounter).Max() + 1;
+                //yearCnt = SQLConnection.Execute.ServiceWorksheetsTable.Where(wo => wo.serviceStart.Year == DateTime.Now.Year).Select(wo => wo.yearCounter).Max() + 1;
                 if (yearCnt == null)
                 {
                     yearCnt = 0;

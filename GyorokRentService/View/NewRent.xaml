@@ -61,8 +61,7 @@
                 <StackPanel Orientation="Horizontal" Grid.Row="1">
                     <Label Content="Engedmény:" />
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding newRental.discount}" Width="30" />
-                        <Label Content="%" FontWeight="Normal"/>
+                        <TextBox Text="{Binding newRental.discount, StringFormat=P0}" Width="50" />
                  </StackPanel>
                 </StackPanel>
                 <Button Grid.Column="1" Grid.RowSpan="2" 
@@ -88,7 +87,7 @@
                             <GridViewColumn DisplayMemberBinding="{Binding tool.toolName}" Header="Gép" Width="150" />
                             <GridViewColumn DisplayMemberBinding="{Binding tool.IDNumber}" Header="Azonosító" Width="100" />
                             <GridViewColumn DisplayMemberBinding="{Binding IntervalDay}" Header="Nap" Width="60" />
-                            <GridViewColumn DisplayMemberBinding="{Binding discount, StringFormat={}{0} %}" Header="Kedvezmény" Width="100" />
+                            <GridViewColumn DisplayMemberBinding="{Binding discount, StringFormat=P0}" Header="Kedvezmény" Width="100" />
                         </GridView>
                     </ListView.View>
                 </ListView>

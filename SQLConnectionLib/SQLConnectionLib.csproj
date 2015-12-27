@@ -33,10 +33,18 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net40\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -46,30 +54,101 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dbGyorok.Designer.cs">
+    <Compile Include="Cities.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Contacts.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Customers.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dbGyorokEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>dbGyorok.edmx</DependentUpon>
+      <DependentUpon>dbGyorokEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dbGyorokEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dbGyorokEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbGyorokEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="DbSettings.cs" />
+    <Compile Include="DetailedCustomers.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorTypes.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="ISQLConnection.cs" />
+    <Compile Include="Parts.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayTypes.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="RentalGroups.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Rentals.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RentalSum.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceGroups.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceStatuses.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceSum.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceWorksheets.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleParts.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="SQLConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemParameters.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TableVersions.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="TestDatabase.cs" />
+    <Compile Include="Tools.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ToolStatuses.cs">
+      <DependentUpon>dbGyorokEntities.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">
       <SubType>Designer</SubType>
     </None>
-    <EntityDeploy Include="dbGyorok.edmx">
+    <EntityDeploy Include="dbGyorokEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>dbGyorok.Designer.cs</LastGenOutput>
+      <LastGenOutput>dbGyorokEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="dbGyorokEntities.edmx.diagram">
+      <DependentUpon>dbGyorokEntities.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -80,6 +159,21 @@
       <Project>{EA922396-E5C4-400A-A053-C2A514F78846}</Project>
       <Name>LoggerLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dbGyorokEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbGyorokEntities.edmx</DependentUpon>
+      <LastGenOutput>dbGyorokEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="dbGyorokEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbGyorokEntities.edmx</DependentUpon>
+      <LastGenOutput>dbGyorokEntities.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

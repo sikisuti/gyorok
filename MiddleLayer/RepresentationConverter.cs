@@ -1,4 +1,5 @@
-﻿using MiddleLayer.Representations;
+﻿using Common.Enumerations;
+using MiddleLayer.Representations;
 using SQLConnectionLib;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace MiddleLayer
 {
     public static class RepresentationConverter
     {
+        //Vagy a kölcsönzés mentése vagy a lezárás vagy az újranyitás duplikálja a toolt!!!!!!!!
         public static DbSettingsRepresentation convertDbSettings(DbSettings settings)
         {
             return new DbSettingsRepresentation()
@@ -48,7 +50,7 @@ namespace MiddleLayer
             convertedCustomer.customerAddress = customer.customerAddress;
             convertedCustomer.customerName = customer.customerName;
             convertedCustomer.customerPhone = customer.customerPhone;
-            convertedCustomer.defaultDiscount = customer.defaultDiscount == null ? 0 : customer.defaultDiscount ?? 0 / 100;
+            convertedCustomer.defaultDiscount = customer.defaultDiscount == null ? 0 : (customer.defaultDiscount ?? 0) / 100;
             convertedCustomer.IDNumber = customer.IDNumber;
             convertedCustomer.isDeleted = customer.isDeleted;
             convertedCustomer.isFirm = customer.isFirm;
@@ -212,15 +214,20 @@ namespace MiddleLayer
                 payTypeID = rental.payType.id,
                 rentalRealEnd = rental.rentalRealEnd,
                 rentalStart = rental.rentalStart,
-                toolID = rental.tool.id,
-                groupID = rental.group.id
+                toolID = rental.tool.id
             };
+
+            if (rental.group != null && rental.group.id != default(long))
+            {
+                convertedRental.groupID = rental.group.id;
+            }
 
             convertedRental.Tools = convertTool(rental.tool);
 
             if (rental.customer.isFirm && rental.contact != null)
             {
                 convertedRental.contactID = rental.contact.id;
+                convertedRental.Customers1 = convertCustomer(rental.contact);
             }
 
             return convertedRental;
@@ -255,6 +262,23 @@ namespace MiddleLayer
                 isOpen = rentalGroup.isOpen
             };
 
+            Customers customer = convertCustomer(rentalGroup.rentals.FirstOrDefault().customer);
+            Customers contact = null;
+            if (rentalGroup.rentals.FirstOrDefault().contact != null)
+            {
+                contact = convertCustomer(rentalGroup.rentals.FirstOrDefault().contact);
+            }
+            foreach (var rental in rentalGroup.rentals)
+            {
+                var convertedRental = convertRental(rental);
+                convertedRental.Customers = customer;
+                if (contact != null)
+                {
+                    convertedRental.Customers1 = contact;
+                }
+                convertedRentalGroup.Rentals.Add(convertedRental);                
+            }
+
             return convertedRentalGroup;
         }
 
@@ -267,6 +291,61 @@ namespace MiddleLayer
             };
 
             return convertedPayType;
+        }
+
+        public static WorksheetRepresentation convertWorksheet(ServiceWorksheets worksheet)
+        {
+            WorksheetRepresentation convertedWorksheet = new WorksheetRepresentation()
+            {
+                buyDate = worksheet.buyDate,
+                comment = worksheet.comment,
+                customer = convertCustomer(worksheet.Customers),
+                deviceID = worksheet.deviceID,
+                deviceManufacturer = worksheet.deviceManufacturer,
+                deviceName = worksheet.deviceName,
+                discount = worksheet.discount,
+                errorType = (ErrorTypeEnum)worksheet.errorTypeID,
+                errorDescription = worksheet.errorDescription,
+                hasWarranty = worksheet.hasWarranty,
+                id = worksheet.worksheetID,
+                inQuotMode = worksheet.inQuotMode,
+                isPaid = worksheet.isPaid,
+                maxCost = worksheet.maxCost,
+                parts = new List<PartRepresentation>(),
+                plusParts = worksheet.plusParts,
+                quotAccepted = worksheet.quotAccepted,
+                quotRequested = worksheet.quotRequested,
+                serialID = worksheet.serialID,
+                serviceCost = worksheet.serviceCost,
+                serviceEnd = worksheet.serviceEnd,
+                serviceStart = worksheet.serviceStart,
+                status = (ServiceStatusEnum)worksheet.statusID,
+                warrantyNumber = worksheet.warrantyNumber,
+                yearCounter = worksheet.yearCounter
+            };
+
+            foreach (Parts part in worksheet.Parts)
+            {
+                convertedWorksheet.parts.Add(convertPart(part));
+            }
+
+            return convertedWorksheet;
+        }
+
+        public static PartRepresentation convertPart(Parts part)
+        {
+            PartRepresentation convertedPart = new PartRepresentation()
+            {
+                id = part.partID,
+                mustOrder = part.mustOrder,
+                partIDNumber = part.partIDNumber,
+                partManufacturer = part.partManufacturer,
+                partName = part.partName,
+                partPrice = part.partPrice,
+                partQuantity = part.partQuantity
+            };
+
+            return convertedPart;
         }
     }
 }
